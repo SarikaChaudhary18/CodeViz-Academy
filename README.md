@@ -1,100 +1,152 @@
-# StudyQuest OS - Gamified Study & AI Personalization Platform
+# StudyQuest OS: Gamified Career and Interview Preparation Platform
 
-StudyQuest is a gamified, AI-powered study dashboard designed to make learning immersive, social, and visual. This repository contains the project structure representing a Next.js (App Router), Tailwind CSS, and Framer Motion application.
+StudyQuest OS is a gamified, free-of-cost career development and interview preparation portal. It merges gaming mechanics (RPG skill trees, daily quests, experience multipliers) with interview preparation tools, including AI resume auditing, adaptive mock interview sandboxes, crowdsourced free study materials, Coding Platform trackers, and WebSockets-enabled community forums.
 
 ---
 
-## 📂 Folder Structure
+## Architecture Flow Diagram
 
-```
-studyquest/
-├── public/                     # Static assets (images, icons, etc.)
-└── src/
-    ├── app/                    # Next.js App Router routing structure
-    │   ├── api/                # Backend API routes (e.g., AI buddy endpoints)
-    │   ├── dashboard/          # Nested dashboard page routes
-    │   │   ├── analytics/      # Learning analytics dashboard page
-    │   │   ├── focus/          # Focus mode distraction-free workspace
-    │   │   ├── friends/        # Collaborative goals and friends interface
-    │   │   ├── quests/         # Daily XP quests and progress logs
-    │   │   ├── reports/        # Weekly performance reports
-    │   │   ├── roadmap/        # AI Career Roadmap builder
-    │   │   └── tree/           # RPG Skill Evolution Tree view
-    │   ├── layout.tsx          # Global layout structure (with Sidebar & Navbar)
-    │   └── page.tsx            # Main landing/login portal page
-    ├── components/             # Reusable UI & Feature-specific React components
-    │   ├── features/           # Components grouped by feature domain
-    │   │   ├── analytics/      # Predictors, charts, and metrics
-    │   │   ├── challenges/     # Adaptive difficulty quiz interfaces
-    │   │   ├── evolution-tree/ # RPG Skill Tree (SVG/Canvas based Nodes)
-    │   │   ├── focus-mode/     # Distraction-free timers and background music selector
-    │   │   ├── friends/        # Group lobbies, chat panels, shared progression
-    │   │   ├── heatmap/        # GitHub-style study activity calendar
-    │   │   ├── quests/         # Daily quests lists and progress bars
-    │   │   ├── reports/        # Weekly insights, hours studied, and radar charts
-    │   │   ├── roadmap/        # Flow diagrams for Career Paths (Frontend, AI, etc.)
-    │   │   ├── skill-dna/      # Radar chart UI showing Strengths & Weaknesses
-    │   │   └── study-buddy/    # AI accountability chatbot interface
-    │   ├── layout/             # Global layout components (Sidebar, Header)
-    │   └── ui/                 # Shared visual primitive components (Buttons, Modals, Cards)
-    ├── hooks/                  # Custom React hooks (e.g., useTimer, useXP)
-    ├── lib/                    # Helper libraries, utilities, and API clients
-    ├── styles/                 # Global styles, variables, Tailwind configurations
-    └── types/                  # TypeScript interface definitions (User, Quest, Skill)
+```mermaid
+graph TD
+    Client[React Frontend] -->|REST HTTP Requests| Express[Express API Server]
+    Client -->|Socket.IO Events| WebSockets[WebSockets Chat Engine]
+    Express -->|Queries & Updates| Mongo[(MongoDB Database)]
+    Express -->|Scrapes Contest Feed| Apify[Apify Actor Services]
+    Express -->|Generates LaTeX / Reviews Resumes| AI[AI Large Language Model]
+    WebSockets -->|Persists Message Records| Mongo
 ```
 
 ---
 
-## 🚀 Feature Mapping Guide
+## Detailed Feature Map
 
-Here is where each requested feature has its designated folder:
+| Feature | Basic (Level 1) | Advanced (Level 2) |
+| :--- | :--- | :--- |
+| **Company-Wise Prep Hub** | Top 50 coding questions and core topics list for target companies (Google, Meta, Amazon, Netflix, Uber). | Simulated timed company sandbox assessments with behavioral checklist reviews. |
+| **Job-Wise Prep Paths** | Visual roadmap nodes for core disciplines (Frontend, Backend, DevOps, AI, Fullstack). | Interactive checkpoints requiring quiz verification and capstone project validations. |
+| **AI Resume LaTeX Auditor** | Parsed content review evaluating sections, formats, and impact verbs for an initial ATS rating. | Job Description Matcher and LaTeX Builder generating code for the Harshibar Overleaf Template. |
+| **AI Mock Interview Simulator** | Linear chat-based recruiter asking standard role-relevant questions. | Voice/text recruiter that escalates question difficulty dynamically and scores results. |
+| **Communities & Chatrooms** | Topic-specific WebSocket text channels (General, Frontend-Prep, Leetcode-Daily). | Peer lobbies, custom community squads, group quest sync, and real-time code snippet sharing. |
+| **Hackathon Bulletins** | Event notifications parsed from Devpost, Unstop, and HackerEarth via Apify. | Team finder dashboard matching squad requirements based on profile ratings. |
+| **Coding Profile Trackers** | Stats widgets loading solve counts and contest ratings for LeetCode, CodeChef, and Codeforces. | Streak tracking and coding aggregate boards syncing profile completions to game experience points. |
+| **Interactive DSA Sheets** | Checklist versions of Striver A-Z, Love Babbar 450, and NeetCode 150. | Automated check-offs matching solved problem IDs directly with coding profile trackers. |
+| **Gamified Dashboard Core** | Daily checklists, simple Pomodoro timers, and basic progress bars. | RPG Skill Trees, Github-style activity heatmaps, ambient sounds, and weekly predictive analytics. |
 
-1. **Weekly Reports**  
-   * **Location**: `src/components/features/reports/` and `src/app/dashboard/reports/`  
-   * **Includes**: Hours studied, topics completed, problems solved, productivity score.  
+---
 
-2. **Skill Evolution Tree**  
-   * **Location**: `src/components/features/evolution-tree/` and `src/app/dashboard/tree/`  
-   * **Includes**: An RPG-style interactive node graph showing progression paths, unlocking skills, and leveling up.  
+## Directory Structure
 
-3. **Study Heatmap**  
-   * **Location**: `src/components/features/heatmap/`  
-   * **Includes**: A GitHub-style calendar grid tracking consecutive days studied, customizable color palettes (representing XP gained per day).  
+```
+CodWiz/
+├── backend/
+│   ├── src/
+│   │   ├── config/            # Database configurations and environment rules
+│   │   ├── controllers/       # Route action handlers (auth, resume, chat, quest, etc.)
+│   │   ├── middleware/        # JWT verifications, error handling, rate limiting
+│   │   ├── models/            # Mongoose schemas (User, Message, Community, Quest, etc.)
+│   │   ├── routes/            # Route declarations for API endpoints
+│   │   ├── utils/             # Helper libraries and WebSocket socket.js servers
+│   │   ├── app.js             # Express app setup and middleware initialization
+│   │   └── server.js          # Main listener start entrypoint
+│   ├── .env.example           # Backend environment configuration baseline
+│   ├── package.json           # Node dependencies
+│   ├── tsconfig.json          # TypeScript configurator (reference placeholder)
+│   └── README.md              # Backend documentation
+└── frontend/
+    ├── public/                # Static assets and graphics
+    └── src/
+        ├── assets/            # Vector illustrations and custom style configurations
+        ├── components/
+        │   ├── features/      # Modular feature views
+        │   │   ├── analytics/ # Completion estimators and stats boards
+        │   │   ├── challenges/# Quiz engines with adaptive metrics
+        │   │   ├── communities-chat/ # Real-time Socket.IO chat windows
+        │   │   ├── company-prep/ # Company-wise interview paths
+        │   │   ├── dsa-sheets/ # Striver, Babbar, and NeetCode checklists
+        │   │   ├── evolution-tree/ # Skill tree interactive node charts
+        │   │   ├── focus-mode/ # Focus timers and music selectors
+        │   │   ├── friends/   # Buddy comparative leaderboards
+        │   │   ├── hackathons/# Live feed cards fetched from Apify
+        │   │   ├── heatmap/   # Grid streak trackers
+        │   │   ├── mock-interview/ # AI mock recruiter client UI
+        │   │   ├── platform-tracker/ # User stats from Leetcode, Codechef, etc.
+        │   │   ├── quests/    # Quest checkboxes and XP multipliers
+        │   │   ├── reports/   # Weekly radar performance charts
+        │   │   ├── resume-auditor/ # Upload panel and LaTeX editor view
+        │   │   ├── resource-library/ # Crowdsourced material lists
+        │   │   ├── roadmap/   # Career roadmap viewports
+        │   │   ├── role-prep/ # Job-wise checkpoint cards
+        │   │   └── skill-dna/ # Custom radar chart visualizations
+        │   ├── layout/        # AppLayout containers, Sidebar, Header
+        │   └── ui/            # Basic buttons, models, fields, tooltips
+        ├── hooks/             # React Hooks (useAuth, useTimer, useSocket)
+        ├── lib/               # Server communication clients (Axios configs)
+        ├── styles/            # Tailwind CSS style utilities
+        ├── App.jsx            # Main route dispatcher
+        ├── main.jsx           # Mounting entrypoint
+        └── index.css          # Global CSS containing Tailwind imports
+    ├── index.html             # Vite build HTML skeleton
+    ├── package.json           # React dependencies
+    ├── vite.config.js         # Vite configuration with Tailwind v4
+    └── README.md              # Frontend documentation
+```
 
-4. **AI Career Roadmap**  
-   * **Location**: `src/components/features/roadmap/` and `src/app/dashboard/roadmap/`  
-   * **Includes**: Specialized interactive roadmap trees for roles like:
-     * Frontend Developer
-     * Full Stack Developer
-     * AI Engineer
-     * Data Scientist
-     * Cyber Security Engineer
-     * DevOps Engineer
+---
 
-5. **Focus Mode**  
-   * **Location**: `src/components/features/focus-mode/` and `src/app/dashboard/focus/`  
-   * **Includes**: Distraction-free full-screen environment, Pomodoro timers, ambient sound engines, and minimalist aesthetic.  
+## Technology Stack
 
-6. **AI Study Buddy**  
-   * **Location**: `src/components/features/study-buddy/`  
-   * **Includes**: Interfacable AI mentor/accountability partner that prompts user with study checks, schedules, and tips.  
+### Frontend
+- React JS
+- Vite
+- Tailwind CSS v4 (using @import and vite plugins)
+- Framer Motion (micro-interactions and animations)
+- Recharts (radar charts and analytics)
+- Socket.IO-Client (real-time chat updates)
+- Zustand (lightweight client state management)
 
-7. **Adaptive Difficulty**  
-   * **Location**: `src/components/features/challenges/`  
-   * **Includes**: Interactive quiz widgets where the logic checks performance and escalates or de-escalates question difficulty.  
+### Backend
+- Node.js
+- Express
+- MongoDB with Mongoose ORM
+- Socket.IO (WebSockets room coordinator)
+- PDF-Parse (resume parser)
+- Axios (integration queries)
 
-8. **Daily XP Quests**  
-   * **Location**: `src/components/features/quests/` and `src/app/dashboard/quests/`  
-   * **Includes**: Visual list of daily quests (e.g., "Solve 3 Algorithms", "Study 25 min") with reward multipliers.  
+---
 
-9. **Skill DNA**  
-   * **Location**: `src/components/features/skill-dna/`  
-   * **Includes**: Interactive radar/spider chart showing strengths (e.g., Frontend, Logic) and weaknesses.  
+## Local Setup
 
-10. **Learning Analytics**  
-    * **Location**: `src/components/features/analytics/` and `src/app/dashboard/analytics/`  
-    * **Includes**: Smart graphs predicting course completion time, mastery scores, and recommendations.  
+### Prerequisite
+Ensure Node.js (v18+) and MongoDB are installed on your machine.
 
-11. **Study with Friends**  
-    * **Location**: `src/components/features/friends/` and `src/app/dashboard/friends/`  
-    * **Includes**: Group dashboard showing online buddies, collaborative quests, and comparative leaderboard.  
+### Frontend Installation
+1. Open a terminal and navigate to the frontend directory:
+   ```bash
+   cd frontend
+   ```
+2. Install the package dependencies:
+   ```bash
+   npm install
+   ```
+3. Run the development server:
+   ```bash
+   npm run dev
+   ```
+
+### Backend Installation
+1. Open a terminal and navigate to the backend directory:
+   ```bash
+   cd backend
+   ```
+2. Create your env parameters from the example file:
+   ```bash
+   cp .env.example .env
+   ```
+3. Install the dependencies:
+   ```bash
+   npm install
+   ```
+4. Start the Express server:
+   ```bash
+   npm run start
+   ```
