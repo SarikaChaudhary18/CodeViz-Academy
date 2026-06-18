@@ -1,54 +1,143 @@
-# StudyQuest OS Backend Developer Guide: Line-by-Line Code Specifications
+# StudyQuest OS Backend: Advanced Distributed Architecture & Annotated Code Manual
 
-This guide provides the complete source code listing and line-by-line annotations for every file in the StudyQuest OS backend. It is designed to give developers an absolute understanding of how the distributed system, load balancers, rate limiters, database indexes, and AI integrations operate under high loads.
+This document serves as the master developer specification and detailed operations manual for the StudyQuest OS backend. It is designed to provide an absolute, line-by-line understanding of every script, utility, and configuration in the codebase, along with a deep-dive exploration of the modern backend technologies that make up our distributed system.
 
 ---
 
-## 1. Global Server Entrypoint (`backend/src/server.js`)
+## Part 1: Deep Dive on the Backend Tech Stack
 
-This script manages process forks to scale the application across multiple cores.
+### 1.1 Node.js Internals, V8 Engine, & Concurrent Event Loop
+Node.js is built on top of Google Chrome's V8 JavaScript engine, which compiles JavaScript source code directly into native machine code at runtime. Node.js uses a single-threaded event-driven architecture to achieve high concurrency. Instead of spawning a new operating system thread for every incoming HTTP request (which consumes significant RAM and introduces CPU context-switching latency), Node.js operates on a single execution thread known as the **Event Loop**.
 
-### Complete Annotated Code:
+#### The Event Loop Phases:
+1. **Timers**: Executes callbacks scheduled by `setTimeout()` and `setInterval()`.
+2. **Pending Callbacks**: Executes I/O callbacks deferred to the next loop iteration (e.g., system errors).
+3. **Idle, Prepare**: Used internally by the system.
+4. **Poll**: Retrieves new I/O events; executes I/O-related callbacks (almost all user requests, database reads, file system writes).
+5. **Check**: Executes callbacks scheduled by `setImmediate()`.
+6. **Close Callbacks**: Handles close events like socket disconnections.
+
+#### Libuv & Thread Pool:
+While the Event Loop runs on a single thread, Node.js delegates asynchronous blocking operations (such as file system reads, database queries, and encryption) to **libuv**, a C library that manages an internal thread pool (default size of 4 threads, scalable via `UV_THREADPOOL_SIZE`). This ensures that heavy calculations (like hashing passwords with bcrypt) do not block the event loop from processing new incoming HTTP connections.
+
+---
+
+### 1.2 Process Clustering & Multi-Core Scaling
+Because the event loop runs on a single thread, it can only utilize a single CPU core. On modern servers with 8, 16, or 32 CPU cores, a basic Node.js application leaves the majority of the hardware idle. The **Node.js Cluster Module** solves this by launching a cluster of Node.js processes.
+- **Primary Process (Master)**: Responsible for reading hardware CPU capabilities, forking child processes (workers), and monitoring their lifecycle. The primary process does not listen to incoming sockets directly.
+- **Worker Processes**: Child processes spawned by the primary thread. They execute your application code, establish connection pools, and share the server port.
+- **IPC (Inter-Process Communication)**: Master and worker processes communicate using internal message passing channels to coordinate status checks and recycle dead threads.
+
+---
+
+### 1.3 Nginx Reverse Proxying & Sticky Load Balancing
+When deploying multiple instances of our backend across multiple processes or containers, we place a load balancer in front of them to distribute the network load. We use **Nginx** configured as a reverse proxy.
+
+#### Sticky Sessions (`ip_hash`):
+WebSockets begin as standard HTTP requests. The client sends a handshake request with an `Upgrade: websocket` header. The server accepts this and upgrades the connection to a persistent, bidirectional TCP connection. 
+In a distributed environment, if the handshake request lands on Server A, but the subsequent WebSocket traffic is routed to Server B, the connection fails because Server B has no record of the initial handshake.
+We use the `ip_hash` directive in Nginx. This hashes the client's IP address, ensuring that all requests from a specific user are consistently routed to the same backend server instance. This maintains session integrity for WebSockets.
+
+---
+
+### 1.4 WebSockets, Socket.IO, & Redis Pub/Sub Scaling
+A standard HTTP request follows a unidirectional request-response model. The client requests data, the server responds, and the connection closes. For real-time features like study chatrooms and collaborative quests, this model is inefficient because the client must constantly poll the server for updates.
+**WebSockets** provide a persistent, full-duplex TCP channel between the client and server.
+
+#### Socket.IO Features:
+- **Fallback Support**: If WebSockets are blocked by corporate firewalls or proxies, Socket.IO automatically falls back to HTTP long-polling.
+- **Rooms and Namespaces**: Socket.IO groups sockets into virtual channels called rooms, allowing targeted message broadcasting (e.g., sending messages only to users in the same study squad).
+
+#### Redis Pub/Sub Adapter:
+In a multi-server setup, if User A is connected to Server 1 and sends a message to Room X, User B (who is in Room X but connected to Server 2) will not receive it. 
+To bridge this gap, we use the **Socket.IO Redis Adapter**. The adapter connects all backend servers to a central **Redis** instance. When Server 1 receives a message for Room X, it publishes the message to Redis. Redis then broadcasts this event to all other backend instances, ensuring that every user in Room X receives the message regardless of which server they are connected to.
+
+---
+
+### 1.5 MongoDB Mongoose Client Connection Pooling & Indexing
+MongoDB is a document-oriented, NoSQL database. Instead of structured tables, data is stored in binary JSON documents (BSON). **Mongoose** acts as the object modeling tool (ODM), translating database documents into JavaScript objects.
+
+#### Connection Pooling:
+Setting up a TCP connection between the backend and database is an expensive operation that involves network handshakes and authentication. Under high load, creating a new connection for every request causes latency.
+We configure a **Connection Pool** in Mongoose:
+- `maxPoolSize (100)`: Restricts Mongoose to a maximum of 100 open sockets per worker process, preventing connection exhaustion.
+- `minPoolSize (10)`: Maintains 10 warm connections in the pool at all times to handle sudden spikes in traffic without connection establishment delay.
+
+#### Database Indexing:
+Without indexes, MongoDB must perform a collection scan (reading every document in the database) to find matching records. Under high load, this causes CPU bottlenecks.
+We use **Indexes**:
+- **B-Tree Data Structures**: MongoDB builds B-Tree maps of indexed fields to find records in logarithmic time ($O(\log N)$ instead of $O(N)$).
+- **Compound Indexes**: We use composite indexes (like `{ userId: 1, date: -1 }` on activity logs) to speed up queries that filter by user and sort by date.
+- **Unique Constraints**: Handled at the database level by indexing fields (like `username` or `email`) with unique constraints, preventing race conditions during registration.
+
+---
+
+### 1.6 Security Framework: JWT, Bcrypt, Rate Limiting, & Sanitization
+
+#### JSON Web Tokens (JWT):
+JWT is a stateless authentication mechanism. Instead of storing session IDs in memory, the server signs a payload (containing the user ID, role, and expiration) using a secret key and returns it to the client.
+- **Access Tokens**: Short-lived tokens sent in the `Authorization: Bearer <token>` header to authenticate requests.
+- **Stateless Verification**: The server verifies the token signature cryptographically on every request. This eliminates database session lookups, allowing the API to scale.
+
+#### Bcrypt Password Hashing:
+Bcrypt is a blowfish-based password hashing function. It uses a **salt** (random data appended to the password) and a **work factor** (cost factor) to compute the hash.
+- **Slow Hashing**: Unlike MD5 or SHA256, which are designed to be fast, bcrypt is intentionally slow. This makes brute-force attacks computationally expensive.
+- **Salt Rounds (12)**: Represents the work factor. 12 rounds require $2^{12}$ iterations, balancing security with server performance.
+
+#### NoSQL Injection Prevention (`express-mongo-sanitize`):
+If an attacker sends a JSON payload like `{"email": {"$ne": null}, "password": "xyz"}` to a login endpoint, Mongoose executes a query searching for a user where the email is *not equal* to null. This bypasses authentication. The sanitize middleware strips the `$` and `.` characters from incoming request payloads, blocking query injection.
+
+---
+
+## Part 2: Comprehensive Line-by-Line Code Annotations
+
+---
+
+### 2.1 File: `backend/src/server.js`
+
+This file handles clustering and boots the HTTP server.
+
 ```javascript
-// Import the native Node.js HTTP module to build the server container.
+// Line 1: Import the native Node.js HTTP module to instantiate the web server container.
 const http = require('http');
 
-// Import Node.js Cluster module to scale the process across multiple CPU cores.
+// Line 2: Import the Node.js Cluster module to scale the application across multiple CPU cores.
 const cluster = require('cluster');
 
-// Retrieve CPU core counts from the OS module to determine process forks count.
+// Line 3: Retrieve CPU core counts from the OS module to determine the number of process forks.
 const numCPUs = require('os').cpus().length;
 
-// Import the configured Express application instance from app.js.
+// Line 4: Import the configured Express application instance from app.js.
 const app = require('./app');
 
-// Import the Mongoose connection config setup to hook up MongoDB pool.
-const connectDB = require('./db');
+// Line 5: Import the Mongoose connection manager configuration.
+const connectDB = require('./config/db');
 
-// Import WebSockets Socket.IO initialization handler wrapper.
+// Line 6: Import the WebSockets Socket.IO server initialization wrapper.
 const { initializeSocket } = require('./utils/socket');
 
-// Import Winston logger to capture scaling status asynchronously.
+// Line 7: Import Winston to log server status messages.
 const logger = require('./config/logger');
 
-// Load environment variables from .env file into process.env configurations.
+// Line 8: Load environment configurations from the local .env file.
 require('dotenv').config();
 
-// Define port mapping; default to 5000 if PORT is not configured in env.
+// Line 9: Assign the server port, defaulting to 5000 if not specified in the environment.
 const PORT = process.env.PORT || 5000;
 
-// Verify if the process is the primary/master coordinator thread.
+// Line 10: Check if the current thread is the primary process coordinator.
 if (cluster.isPrimary && process.env.NODE_ENV === 'production') {
-  // Log startup and pid tracking for master/primary process.
+  // Line 11: Log the primary process ID (PID) to trace the master manager thread.
   logger.info(`Primary process ${process.pid} is running.`);
+  // Line 12: Log the number of workers to be spawned based on CPU cores.
   logger.info(`Forking server workers for ${numCPUs} CPU cores...`);
 
-  // Loop through core count and spawn processes matching CPUs.
+  // Line 13: Loop through the core count and spawn worker processes.
   for (let i = 0; i < numCPUs; i++) {
     cluster.fork();
   }
 
-  // Bind listener to monitor crashed workers and auto-fork replacements (self-healing).
+  // Line 14: Monitor worker crashes and fork replacements to ensure high availability.
   cluster.on('exit', (worker, code, signal) => {
     logger.error(`Worker process ${worker.process.pid} died. Code: ${code}, Signal: ${signal}`);
     logger.info('Spawning replacement worker process...');
@@ -56,67 +145,66 @@ if (cluster.isPrimary && process.env.NODE_ENV === 'production') {
   });
 
 } else {
-  // Spawn individual Express and WebSockets server on worker process.
+  // Line 15: Run the server startup logic within worker processes.
   const startServer = async () => {
     try {
-      // Establish pooled MongoDB connections before starting listeners.
+      // Line 16: Connect to MongoDB using the Mongoose connection pool.
       await connectDB();
 
-      // Wrap Express app with native HTTP server.
+      // Line 17: Wrap the Express app with a native HTTP server.
       const server = http.createServer(app);
 
-      // Bind Socket.IO server to the HTTP wrapper for connection handshakes.
+      // Line 18: Bind Socket.IO to the HTTP server to handle WebSocket handshakes.
       initializeSocket(server);
 
-      // Boot HTTP listener on the configured port.
+      // Line 19: Boot the HTTP server listener.
       server.listen(PORT, () => {
         logger.info(`Worker process ${process.pid} started. Server running on port ${PORT}`);
       });
     } catch (err) {
-      // Catch fatal startup errors and exit process.
+      // Line 20: Catch fatal startup errors, log the details, and shut down the worker.
       logger.error(`Failed to launch server on worker process ${process.pid}: ${err.message}`);
       process.exit(1);
     }
   };
 
-  // Run the worker server launcher.
+  // Line 21: Run the server launcher.
   startServer();
 }
 ```
 
 ---
 
-## 2. Express Configuration (`backend/src/app.js`)
+### 2.2 File: `backend/src/app.js`
 
-This file configures the security headers, body parsers, logging streams, and global API routes.
+This file configures the middleware stack and binds global API routes.
 
-### Complete Annotated Code:
 ```javascript
-// Import Express web framework to handle HTTP requests.
+// Line 1: Import Express framework.
 const express = require('express');
 
-// Import CORS middleware to manage cross-origin access lists.
+// Line 2: Import CORS middleware to manage cross-origin request policies.
 const cors = require('cors');
 
-// Import Helmet for HTTP security header modifications.
+// Line 3: Import Helmet to configure secure HTTP headers.
 const helmet = require('helmet');
 
-// Import Mongo-Sanitize to clean incoming req payloads against NoSQL injection.
+// Line 4: Import Mongo-Sanitize to protect against NoSQL injection attacks.
 const mongoSanitize = require('express-mongo-sanitize');
 
-// Import Morgan HTTP request logger middleware.
+// Line 5: Import Morgan to capture HTTP requests logs.
 const morgan = require('morgan');
 
-// Import custom Winston logger module for streaming log outputs.
+// Line 6: Import the Winston logger.
 const logger = require('./config/logger');
 
-// Import the global centralized error handler middleware.
+// Line 7: Import the global centralized error handler middleware.
 const errorHandler = require('./middleware/errorHandler');
 
-// Import rate-limiting middleware configurations.
+// Line 8: Import the rate limiter middleware.
 const { apiLimiter } = require('./middleware/rateLimiter');
 
-// Import all system routes configurations.
+// Line 9: Import auth, resume, community, tracker, sheet, quest, and hackathon routers.
 const authRoutes = require('./routes/authRoutes');
 const resumeRoutes = require('./routes/resumeRoutes');
 const communityRoutes = require('./routes/communityRoutes');
@@ -125,29 +213,29 @@ const sheetRoutes = require('./routes/sheetRoutes');
 const questRoutes = require('./routes/questRoutes');
 const hackathonRoutes = require('./routes/hackathonRoutes');
 
-// Instantiate the Express application.
+// Line 10: Instantiate the Express application.
 const app = express();
 
-// Apply Helmet security headers.
+// Line 11: Apply Helmet to secure HTTP headers.
 app.use(helmet());
 
-// Apply CORS options to permit whitelisted endpoints.
+// Line 12: Configure CORS options.
 app.use(cors({
   origin: process.env.CLIENT_ORIGIN || '*',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-// Apply NoSQL query injection sanitizers to strip MongoDB operators.
+// Line 13: Clean incoming payloads of MongoDB operators.
 app.use(mongoSanitize());
 
-// Configure JSON body parser with size constraints to prevent payload flood.
+// Line 14: Parse JSON payloads with a size limit of 10MB to prevent denial-of-service (DoS) attacks.
 app.use(express.json({ limit: '10mb' }));
 
-// Configure URL-encoded parser for forms formatting.
+// Line 15: Parse URL-encoded forms with a size limit of 10MB.
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// Configure Morgan to stream HTTP log summaries directly to Winston.
+// Line 16: Configure Morgan to stream request logs to the Winston logging pipeline.
 const morganFormat = process.env.NODE_ENV === 'production' ? 'combined' : 'dev';
 app.use(morgan(morganFormat, {
   stream: {
@@ -155,15 +243,15 @@ app.use(morgan(morganFormat, {
   }
 }));
 
-// Setup load balancer health check probe endpoint.
+// Line 17: Expose a health check endpoint for monitoring tools.
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'OK', timestamp: new Date() });
 });
 
-// Apply rate limiter constraints globally under /api.
+// Line 18: Apply the global rate limiter under /api.
 app.use('/api', apiLimiter);
 
-// Bind feature routers to specific API path namespaces.
+// Line 19: Map API routes.
 app.use('/api/auth', authRoutes);
 app.use('/api/resume', resumeRoutes);
 app.use('/api/communities', communityRoutes);
@@ -172,7 +260,7 @@ app.use('/api/sheets', sheetRoutes);
 app.use('/api/quests', questRoutes);
 app.use('/api/hackathons', hackathonRoutes);
 
-// Register global error handler after all routes are bound.
+// Line 20: Register the global error handler after all routes are configured.
 app.use(errorHandler);
 
 module.exports = app;
@@ -180,61 +268,55 @@ module.exports = app;
 
 ---
 
-## 3. Database Connection Pool (`backend/src/config/db.js`)
+### 2.3 File: `backend/src/config/db.js`
 
-This file configures MongoDB connection limits to optimize performance under heavy workloads.
+This file manages connection pools and reconnection logic for MongoDB.
 
-### Complete Annotated Code:
 ```javascript
-// Import Mongoose ODM to model collections and handle connection sockets.
+// Line 1: Import Mongoose.
 const mongoose = require('mongoose');
 
-// Import Winston logger to log connection lifecycle statuses.
+// Line 2: Import Winston logger.
 const logger = require('./logger');
 
 const connectDB = async () => {
-  // Read target MongoDB URI from environment configuration.
+  // Line 3: Read the MongoDB connection URI from environment variables.
   const mongoURI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/studyquest';
   
-  // Set connection pool options to manage high concurrent traffic.
+  // Line 4: Configure connection pool parameters.
   const options = {
-    // Permit up to 100 concurrent sockets in the pool per cluster thread.
-    maxPoolSize: parseInt(process.env.MONGO_MAX_POOL_SIZE, 10) || 100,
-    // Keep 10 connection sockets warm to prevent handshake latency on new requests.
-    minPoolSize: parseInt(process.env.MONGO_MIN_POOL_SIZE, 10) || 10,
-    // Timeout sockets after 45 seconds to free up connection pools.
-    socketTimeoutMS: 45000,
-    // Fail quickly (5 seconds) if the database becomes unreachable.
-    serverSelectionTimeoutMS: 5000,
-    // Run heartbeat checks every 10 seconds to monitor connection health.
-    heartbeatFrequencyMS: 10000,
+    maxPoolSize: parseInt(process.env.MONGO_MAX_POOL_SIZE, 10) || 100, // Maximum open sockets
+    minPoolSize: parseInt(process.env.MONGO_MIN_POOL_SIZE, 10) || 10,   // Minimum warm sockets
+    socketTimeoutMS: 45000,                                            // Close idle sockets after 45s
+    serverSelectionTimeoutMS: 5000,                                    // Time out if database is unreachable
+    heartbeatFrequencyMS: 10000,                                       // Status check frequency
   };
 
   try {
-    // Bind event listener for connection initialization.
+    // Line 5: Log when Mongoose begins connection handshakes.
     mongoose.connection.on('connecting', () => {
       logger.info('Connecting to MongoDB...');
     });
 
-    // Bind event listener for connection success.
+    // Line 6: Log successful database connections.
     mongoose.connection.on('connected', () => {
       logger.info('MongoDB connected successfully.');
     });
 
-    // Bind event listener for database errors.
+    // Line 7: Log database connection errors.
     mongoose.connection.on('error', (err) => {
       logger.error('MongoDB connection error: %s', err.message);
     });
 
-    // Bind event listener for disconnections.
+    // Line 8: Log database disconnections.
     mongoose.connection.on('disconnected', () => {
       logger.warn('MongoDB disconnected. Attempting reconnection...');
     });
 
-    // Initiate Mongoose connection.
+    // Line 9: Establish the database connection.
     await mongoose.connect(mongoURI, options);
   } catch (err) {
-    // Log fatal database startup errors and shut down.
+    // Line 10: Exit process on database connection failures.
     logger.error('Initial MongoDB connection failed: %s', err.message);
     process.exit(1);
   }
@@ -245,19 +327,18 @@ module.exports = connectDB;
 
 ---
 
-## 4. Winston Logger Configuration (`backend/src/config/logger.js`)
+### 2.4 File: `backend/src/config/logger.js`
 
-This file configures the asynchronous logging engine to prevent performance bottlenecks.
+This file configures Winston to handle log rotation and output formats.
 
-### Complete Annotated Code:
 ```javascript
-// Import winston logging libraries.
+// Line 1: Import Winston logging library.
 const winston = require('winston');
 
-// Import path module to resolve log file destinations.
+// Line 2: Import path module to resolve log file destinations.
 const path = require('path');
 
-// Design unified logging format structure.
+// Line 3: Define log formatting rules.
 const logFormat = winston.format.combine(
   winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
   winston.format.errors({ stack: true }),
@@ -266,20 +347,20 @@ const logFormat = winston.format.combine(
 );
 
 const logger = winston.createLogger({
-  // Configure logging levels (info in production, debug in development).
+  // Line 4: Set the log level based on the environment (info in production, debug in development).
   level: process.env.NODE_ENV === 'production' ? 'info' : 'debug',
   format: logFormat,
-  // Add service meta tag to identify logs in distributed systems.
+  // Line 5: Include default metadata with every log entry.
   defaultMeta: { service: 'studyquest-backend' },
   transports: [
-    // Error file transport: handles logging errors specifically.
+    // Line 6: Write error logs to error.log, rotated at 10MB.
     new winston.transports.File({ 
       filename: path.join(__dirname, '../../logs/error.log'), 
       level: 'error',
-      maxsize: 10485760, // 10MB file limit
-      maxFiles: 5,       // Retain up to 5 historical log files
+      maxsize: 10485760,
+      maxFiles: 5,
     }),
-    // Combined transport: captures info, warning, and error logs.
+    // Line 7: Write all logs to combined.log, rotated at 10MB.
     new winston.transports.File({ 
       filename: path.join(__dirname, '../../logs/combined.log'),
       maxsize: 10485760,
@@ -288,7 +369,7 @@ const logger = winston.createLogger({
   ],
 });
 
-// Add readable console transports for development.
+// Line 8: Format console output for readability in development.
 if (process.env.NODE_ENV !== 'production') {
   logger.add(new winston.transports.Console({
     format: winston.format.combine(
@@ -309,25 +390,22 @@ module.exports = logger;
 
 ---
 
-## 5. Middleware Implementations
+### 2.5 File: `backend/src/middleware/auth.js`
 
-### 5.1 JWT Token Verification Middleware (`backend/src/middleware/auth.js`)
+This file handles user session validation and authorization.
 
-Handles request authentication and role-based access checks.
-
-### Complete Annotated Code:
 ```javascript
-// Import jwt helper library.
+// Line 1: Import jwt library.
 const jwt = require('jsonwebtoken');
 
-// Import Winston logger to track unauthorized access attempts.
+// Line 2: Import Winston logger.
 const logger = require('../config/logger');
 
 const authenticate = (req, res, next) => {
-  // Extract headers
+  // Line 3: Retrieve the authorization header.
   const authHeader = req.headers.authorization;
 
-  // Verify authorization header formatting
+  // Line 4: Verify the token is present and formatted as a Bearer token.
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
     logger.warn(`Unauthorized API request from IP ${req.ip}`);
     return res.status(401).json({
@@ -336,20 +414,19 @@ const authenticate = (req, res, next) => {
     });
   }
 
-  // Extract the token
+  // Line 5: Extract the JWT token.
   const token = authHeader.split(' ')[1];
 
   try {
-    // Verify token signature against JWT secret key
+    // Line 6: Verify the token signature against the JWT secret key.
     const decoded = jwt.verify(token, process.env.JWT_ACCESS_SECRET || 'studyquest_access_jwt_secret_key');
-    
-    // Bind payload data (id, username, role) to request context
+    // Line 7: Bind the user payload data to the request context.
     req.user = decoded;
     next();
   } catch (err) {
     logger.warn(`Invalid JWT token verification attempt from IP ${req.ip}`);
     
-    // Handle expired tokens separately
+    // Line 8: Check for expired tokens.
     let message = 'Invalid or expired token.';
     if (err.name === 'TokenExpiredError') {
       message = 'Token has expired. Please refresh.';
@@ -362,10 +439,10 @@ const authenticate = (req, res, next) => {
   }
 };
 
-// Middleware helper to check roles (e.g. admin, user)
+// Line 9: Helper function to restrict access to authorized roles.
 const authorize = (...roles) => {
   return (req, res, next) => {
-    // Block access if the user's role does not match
+    // Line 10: Block access if user role is not authorized.
     if (!req.user || !roles.includes(req.user.role)) {
       logger.warn(`User ${req.user ? req.user.id : 'unknown'} unauthorized for role access`);
       return res.status(403).json({
@@ -385,36 +462,34 @@ module.exports = {
 
 ---
 
-### 5.2 Rate Limiter Middleware (`backend/src/middleware/rateLimiter.js`)
+### 2.6 File: `backend/src/middleware/rateLimiter.js`
 
-Protects API endpoints from DDoS and brute-force attacks.
+This file prevents denial-of-service (DoS) attacks by rate-limiting request rates.
 
-### Complete Annotated Code:
 ```javascript
-// Import Express-Rate-Limit plugin.
+// Line 1: Import rate limiter module.
 const rateLimit = require('express-rate-limit');
 
-// Import Winston logger to record rate limit violations.
+// Line 2: Import Winston logger.
 const logger = require('../config/logger');
 
-// General API rate limiter
+// Line 3: Apply general API rate limiting.
 const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15-minute window
   max: 200, // Limit each IP to 200 requests per window
-  standardHeaders: true, // Return rate limit details in standard response headers
-  legacyHeaders: false, // Disable legacy rate limit headers
+  standardHeaders: true,
+  legacyHeaders: false,
   message: {
     status: 429,
     message: 'Too many requests from this IP, please try again after 15 minutes.'
   },
   handler: (req, res, next, options) => {
-    // Log violation details
     logger.warn(`Rate limit exceeded: IP ${req.ip} requested ${req.originalUrl}`);
     res.status(options.statusCode).send(options.message);
   }
 });
 
-// Authentication rate limiter to prevent brute-force attacks
+// Line 4: Apply strict rate limiting to auth endpoints to prevent brute-force attacks.
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15-minute window
   max: 15, // Limit each IP to 15 login/register attempts per window
@@ -438,36 +513,37 @@ module.exports = {
 
 ---
 
-### 5.3 Global Centralized Error Handler Middleware (`backend/src/middleware/errorHandler.js`)
+### 2.7 File: `backend/src/middleware/errorHandler.js`
 
-Handles runtime errors securely.
+This file catches and processes all application runtime errors.
 
-### Complete Annotated Code:
 ```javascript
-// Import Winston logger.
+// Line 1: Import Winston logger.
 const logger = require('../config/logger');
 
 const errorHandler = (err, req, res, next) => {
-  // Use custom error code or default to 500
+  // Line 2: Set the error code, defaulting to 500.
   const statusCode = err.statusCode || 500;
   
+  // Line 3: Define the standard JSON response format.
   const errorResponse = {
     status: 'error',
     statusCode,
     message: err.message || 'Internal Server Error'
   };
 
-  // Hide stack trace details in production to prevent leakage of system internals
+  // Line 4: Exclude stack traces in production to prevent leakage of system details.
   if (process.env.NODE_ENV !== 'production') {
     errorResponse.stack = err.stack;
   }
 
-  // Log error stacks to Winston
+  // Line 5: Log the error with Winston.
   logger.error(
     `Error on ${req.method} ${req.originalUrl}: Code ${statusCode} - Message: ${err.message}`, 
     { stack: err.stack, ip: req.ip }
   );
 
+  // Line 6: Return the response to the client.
   res.status(statusCode).json(errorResponse);
 };
 
@@ -476,16 +552,15 @@ module.exports = errorHandler;
 
 ---
 
-## 6. Mongoose Models & Database Indexes
+### 2.8 File: `backend/src/models/User.js`
 
-### 6.1 User Schema (`backend/src/models/User.js`)
+This file defines the schema and indexes for user accounts.
 
-Stores user accounts, experience points, daily activity streaks, and linked coding profiles.
-
-### Complete Annotated Code:
 ```javascript
+// Line 1: Import Mongoose.
 const mongoose = require('mongoose');
 
+// Line 2: Define the User database schema.
 const UserSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -500,7 +575,7 @@ const UserSchema = new mongoose.Schema({
     unique: true,
     trim: true,
     lowercase: true,
-    index: true, // Index for email lookups
+    index: true, // Index for email lookup optimization
   },
   password: {
     type: String,
@@ -514,12 +589,12 @@ const UserSchema = new mongoose.Schema({
   xp: {
     type: Number,
     default: 0,
-    index: true, // Index for sorting leaderboards
+    index: true, // Index to optimize sorting leaderboards
   },
   level: {
     type: Number,
     default: 1,
-    index: true, // Index for sorting leaderboards
+    index: true, // Index to optimize sorting leaderboards
   },
   streak: {
     type: Number,
@@ -527,7 +602,7 @@ const UserSchema = new mongoose.Schema({
     index: true,
   },
   lastActiveDate: {
-    type: String, // Date stored in YYYY-MM-DD format
+    type: String, // Store date as YYYY-MM-DD
     default: null,
   },
   targetRole: {
@@ -549,10 +624,11 @@ const UserSchema = new mongoose.Schema({
     default: '',
   },
 }, {
+  // Line 3: Enable automatic creation and updates tracking.
   timestamps: true,
 });
 
-// Compound index for querying user search details
+// Line 4: Define a compound index to optimize search and validation.
 UserSchema.index({ username: 1, email: 1 });
 
 module.exports = mongoose.model('User', UserSchema);
@@ -560,11 +636,10 @@ module.exports = mongoose.model('User', UserSchema);
 
 ---
 
-### 6.2 Quest Schema (`backend/src/models/Quest.js`)
+### 2.9 File: `backend/src/models/Quest.js`
 
-Defines daily and weekly gamified quest checkpoints.
+This file defines the schema for Daily and Weekly quests.
 
-### Complete Annotated Code:
 ```javascript
 const mongoose = require('mongoose');
 
@@ -582,7 +657,7 @@ const QuestSchema = new mongoose.Schema({
     type: String,
     enum: ['daily', 'weekly'],
     required: true,
-    index: true, // Index for listing quests by type (daily vs weekly)
+    index: true, // Index to filter daily vs weekly quests
   },
   xpReward: {
     type: Number,
@@ -597,10 +672,10 @@ const QuestSchema = new mongoose.Schema({
     required: true,
   },
   key: {
-    type: String, // String representation key (e.g. "solve_dsa_problems")
+    type: String, // Unique identifier key (e.g. "solve_dsa_problems")
     required: true,
     unique: true,
-    index: true, // Index for quick identification of claimed targets
+    index: true, // Index for quick identification of completed targets
   },
 }, {
   timestamps: true,
@@ -611,11 +686,10 @@ module.exports = mongoose.model('Quest', QuestSchema);
 
 ---
 
-### 6.3 Activity Schema (`backend/src/models/Activity.js`)
+### 2.10 File: `backend/src/models/Activity.js`
 
-Logs study duration and completed problems to generate heatmaps.
+This file logs study activities and solved problems to generate user heatmaps.
 
-### Complete Annotated Code:
 ```javascript
 const mongoose = require('mongoose');
 
@@ -632,7 +706,7 @@ const ActivitySchema = new mongoose.Schema({
     required: true,
   },
   value: {
-    type: Number, // Duration in minutes for study sessions, or count for completed problems
+    type: Number, // Duration in minutes, or problem count
     required: true,
   },
   xpGained: {
@@ -640,7 +714,7 @@ const ActivitySchema = new mongoose.Schema({
     required: true,
   },
   date: {
-    type: String, // Format: YYYY-MM-DD
+    type: String, // YYYY-MM-DD
     required: true,
     index: true,
   },
@@ -648,7 +722,7 @@ const ActivitySchema = new mongoose.Schema({
   timestamps: true,
 });
 
-// Compound index to speed up daily/weekly range heatmap queries per user
+// Compound index to optimize range queries per user
 ActivitySchema.index({ userId: 1, date: -1 });
 
 module.exports = mongoose.model('Activity', ActivitySchema);
@@ -656,11 +730,10 @@ module.exports = mongoose.model('Activity', ActivitySchema);
 
 ---
 
-### 6.4 SheetProgress Schema (`backend/src/models/SheetProgress.js`)
+### 2.11 File: `backend/src/models/SheetProgress.js`
 
-Tracks completed problems in Striver A-Z, Love Babbar, and Neetcode sheets.
+Tracks checked problems in Striver A-Z, Love Babbar, and Neetcode sheets.
 
-### Complete Annotated Code:
 ```javascript
 const mongoose = require('mongoose');
 
@@ -677,7 +750,7 @@ const SheetProgressSchema = new mongoose.Schema({
     required: true,
   },
   problemId: {
-    type: String, // Problem ID identifier
+    type: String,
     required: true,
   },
   status: {
@@ -693,7 +766,7 @@ const SheetProgressSchema = new mongoose.Schema({
   timestamps: true,
 });
 
-// Unique compound index to prevent duplicate progress logs
+// Unique compound index to prevent duplicate progress checkoffs
 SheetProgressSchema.index({ userId: 1, sheetType: 1, problemId: 1 }, { unique: true });
 
 module.exports = mongoose.model('SheetProgress', SheetProgressSchema);
@@ -701,11 +774,10 @@ module.exports = mongoose.model('SheetProgress', SheetProgressSchema);
 
 ---
 
-### 6.5 Community Schema (`backend/src/models/Community.js`)
+### 2.12 File: `backend/src/models/Community.js`
 
-Manages chatroom channels and groups.
+This file manages community chatrooms and groups.
 
-### Complete Annotated Code:
 ```javascript
 const mongoose = require('mongoose');
 
@@ -725,7 +797,7 @@ const CommunitySchema = new mongoose.Schema({
     type: String,
     enum: ['general', 'leetcode', 'company-prep', 'squads', 'other'],
     default: 'general',
-    index: true, // Index for listing rooms by category
+    index: true, // Index to filter communities by category
   },
   members: [{
     type: mongoose.Schema.Types.ObjectId,
@@ -745,11 +817,10 @@ module.exports = mongoose.model('Community', CommunitySchema);
 
 ---
 
-### 6.6 Message Schema (`backend/src/models/Message.js`)
+### 2.13 File: `backend/src/models/Message.js`
 
-Logs chat messages sent in community channels.
+This file logs messages sent in community chatrooms.
 
-### Complete Annotated Code:
 ```javascript
 const mongoose = require('mongoose');
 
@@ -787,11 +858,10 @@ module.exports = mongoose.model('Message', MessageSchema);
 
 ---
 
-### 6.7 Hackathon Schema (`backend/src/models/Hackathon.js`)
+### 2.14 File: `backend/src/models/Hackathon.js`
 
-Stores lists of active and upcoming hackathons.
+This file stores lists of active and upcoming hackathons.
 
-### Complete Annotated Code:
 ```javascript
 const mongoose = require('mongoose');
 
@@ -835,20 +905,17 @@ module.exports = mongoose.model('Hackathon', HackathonSchema);
 
 ---
 
-## 7. Controllers and Routing Systems
+### 2.15 File: `backend/src/controllers/authController.js`
 
-### 7.1 Authentication & Profile Manager (`authController.js`)
+This controller handles registration, login, profile updates, and leaderboard queries.
 
-Implements user registration, password checks, session handling, and leaderboard sorting.
-
-### Complete Annotated Code:
 ```javascript
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const logger = require('../config/logger');
 
-// Signs token using security key
+// Generate JWT Access Token
 const generateAccessToken = (user) => {
   return jwt.sign(
     { id: user._id, username: user.username, role: user.role },
@@ -861,12 +928,12 @@ exports.register = async (req, res, next) => {
   try {
     const { username, email, password } = req.body;
 
-    // Validate payload inputs
+    // Validate request inputs
     if (!username || !email || !password) {
       return res.status(400).json({ status: 'fail', message: 'Please provide all details.' });
     }
 
-    // Check for duplicates
+    // Check for duplicate users
     const existingUser = await User.findOne({ $or: [{ email }, { username }] });
     if (existingUser) {
       return res.status(400).json({ status: 'fail', message: 'Username or email already exists.' });
@@ -876,7 +943,7 @@ exports.register = async (req, res, next) => {
     const salt = await bcrypt.genSalt(12);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    // Write to database
+    // Save the user in the database
     const newUser = await User.create({
       username,
       email,
@@ -913,13 +980,13 @@ exports.login = async (req, res, next) => {
       return res.status(400).json({ status: 'fail', message: 'Please provide email and password.' });
     }
 
-    // Fetch user details
+    // Fetch the user
     const user = await User.findOne({ email });
     if (!user || !(await bcrypt.compare(password, user.password))) {
       return res.status(401).json({ status: 'fail', message: 'Invalid credentials.' });
     }
 
-    // Update active streak count if login occurs on a new day
+    // Update the daily activity streak
     const today = new Date().toISOString().split('T')[0];
     if (user.lastActiveDate !== today) {
       const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
@@ -1041,11 +1108,10 @@ exports.getLeaderboard = async (req, res, next) => {
 
 ---
 
-### 7.2 AI Resume LaTeX Auditor Controller (`resumeController.js`)
+### 2.16 File: `backend/src/controllers/resumeController.js`
 
 Manages resume parsing, optimization, and template compilation using the **Harshibar LaTeX template**.
 
-### Complete Annotated Code:
 ```javascript
 const logger = require('../config/logger');
 const axios = require('axios');
@@ -1209,7 +1275,7 @@ exports.auditResume = async (req, res, next) => {
   try {
     const { resumeText, targetJobTitle } = req.body;
 
-    // Check payload details
+    // Validate payload parameters
     if (!resumeText || !targetJobTitle) {
       return res.status(400).json({
         status: 'fail',
@@ -1270,7 +1336,7 @@ Return ONLY valid JSON. No markdown codeblock wrapping.`;
       }
     }
 
-    // Dynamic mock compile parsing fallback
+    // Parse candidate name, email, and phone using Regex patterns
     const nameMatch = resumeText.match(/([A-Z][a-z]+ [A-Z][a-z]+)/);
     const candidateName = nameMatch ? nameMatch[1] : 'Candidate Name';
     const emailMatch = resumeText.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/);
@@ -1337,11 +1403,10 @@ Return ONLY valid JSON. No markdown codeblock wrapping.`;
 
 ---
 
-### 7.3 Communities & WS Chatroom Controller (`communityController.js`)
+### 2.17 File: `backend/src/controllers/communityController.js`
 
 Manages chatroom queries, creation, room joins, and database-indexed historical chat feeds.
 
-### Complete Annotated Code:
 ```javascript
 const Community = require('../models/Community');
 const Message = require('../models/Message');
@@ -1455,11 +1520,10 @@ exports.getMessageHistory = async (req, res, next) => {
 
 ---
 
-### 7.4 Coding Platform Statistics Tracker Controller (`trackerController.js`)
+### 2.18 File: `backend/src/controllers/trackerController.js`
 
-Connects with LeetCode API resources to aggregate solved counts.
+Connects with coding platform stats APIs to retrieve solved counts.
 
-### Complete Annotated Code:
 ```javascript
 const User = require('../models/User');
 const logger = require('../config/logger');
@@ -1554,11 +1618,10 @@ exports.getPlatformStats = async (req, res, next) => {
 
 ---
 
-### 7.5 Sheet Progress Manager Controller (`sheetController.js`)
+### 2.19 File: `backend/src/controllers/sheetController.js`
 
 Checks off completed questions in Striver A-Z, Love Babbar, and Neetcode sheets.
 
-### Complete Annotated Code:
 ```javascript
 const SheetProgress = require('../models/SheetProgress');
 const User = require('../models/User');
@@ -1620,11 +1683,10 @@ exports.getSheetProgress = async (req, res, next) => {
 
 ---
 
-### 7.6 Quest Controller (`questController.js`)
+### 2.20 File: `backend/src/controllers/questController.js`
 
-Tracks quests and claims rewards.
+Retrieves quests and processes completions.
 
-### Complete Annotated Code:
 ```javascript
 const Quest = require('../models/Quest');
 const User = require('../models/User');
@@ -1748,11 +1810,10 @@ exports.claimQuestReward = async (req, res, next) => {
 
 ---
 
-### 7.7 Hackathons Controller (`hackathonController.js`)
+### 2.21 File: `backend/src/controllers/hackathonController.js`
 
-Manages hackathon feeds using Apify integrations.
+Manages hackathon listings.
 
-### Complete Annotated Code:
 ```javascript
 const Hackathon = require('../models/Hackathon');
 const User = require('../models/User');
@@ -1837,11 +1898,10 @@ exports.getHackathons = async (req, res, next) => {
 
 ---
 
-## 8. WebSockets Chat Engine (`backend/src/utils/socket.js`)
+### 2.22 File: `backend/src/utils/socket.js`
 
-Manages real-time Socket.IO room connections and broadcasts messages.
+Manages WebSocket room connections and broadcasts messages.
 
-### Complete Annotated Code:
 ```javascript
 const { Server } = require('socket.io');
 const jwt = require('jsonwebtoken');
@@ -1940,150 +2000,4 @@ module.exports = {
   initializeSocket,
   getIO,
 };
-```
-
----
-
-## 9. Infrastructure Configurations
-
-### 9.1 Nginx Reverse Proxy & Load Balancer Config (`backend/nginx.conf`)
-
-### Complete Annotated Code:
-```nginx
-user nginx;
-worker_processes auto;
-error_log /var/log/nginx/error.log warn;
-pid /var/run/nginx.pid;
-
-events {
-    worker_connections 10240; # Optimised for high concurrent socket loads
-}
-
-http {
-    include /etc/nginx/mime.types;
-    default_type application/octet-stream;
-
-    log_format main '$remote_addr - $remote_user [$time_local] "$request" '
-                    '$status $body_bytes_sent "$http_referer" '
-                    '"$http_user_agent" "$http_x_forwarded_for"';
-
-    access_log /var/log/nginx/access.log main;
-
-    sendfile on;
-    keepalive_timeout 65;
-
-    upstream backend_servers {
-        ip_hash; # Sticky sessions are mandatory for WebSocket handshakes
-        server studyquest-backend-1:5000;
-        server studyquest-backend-2:5000;
-        server studyquest-backend-3:5000;
-    }
-
-    server {
-        listen 80;
-        server_name localhost;
-
-        location / {
-            proxy_pass http://backend_servers;
-            proxy_http_version 1.1;
-            proxy_set_header Upgrade $http_upgrade;
-            proxy_set_header Connection "upgrade";
-            proxy_set_header Host $host;
-            proxy_set_header X-Real-IP $remote_addr;
-            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-            proxy_set_header X-Forwarded-Proto $scheme;
-        }
-    }
-}
-```
-
----
-
-### 9.2 Docker Compose Blueprint (`backend/docker-compose.yml`)
-
-### Complete Annotated Code:
-```yaml
-version: '3.8'
-
-services:
-  mongodb:
-    image: mongo:6.0
-    container_name: studyquest-mongodb
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongo-data:/data/db
-    networks:
-      - studyquest-network
-
-  redis:
-    image: redis:7.0-alpine
-    container_name: studyquest-redis
-    ports:
-      - "6379:6379"
-    networks:
-      - studyquest-network
-
-  studyquest-backend-1:
-    build: .
-    container_name: studyquest-backend-1
-    environment:
-      - PORT=5000
-      - MONGODB_URI=mongodb://mongodb:27017/studyquest
-      - REDIS_URL=redis://redis:6379
-      - NODE_ENV=production
-    depends_on:
-      - mongodb
-      - redis
-    networks:
-      - studyquest-network
-
-  studyquest-backend-2:
-    build: .
-    container_name: studyquest-backend-2
-    environment:
-      - PORT=5000
-      - MONGODB_URI=mongodb://mongodb:27017/studyquest
-      - REDIS_URL=redis://redis:6379
-      - NODE_ENV=production
-    depends_on:
-      - mongodb
-      - redis
-    networks:
-      - studyquest-network
-
-  studyquest-backend-3:
-    build: .
-    container_name: studyquest-backend-3
-    environment:
-      - PORT=5000
-      - MONGODB_URI=mongodb://mongodb:27017/studyquest
-      - REDIS_URL=redis://redis:6379
-      - NODE_ENV=production
-    depends_on:
-      - mongodb
-      - redis
-    networks:
-      - studyquest-network
-
-  nginx-lb:
-    image: nginx:alpine
-    container_name: studyquest-nginx-lb
-    ports:
-      - "80:80"
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
-    depends_on:
-      - studyquest-backend-1
-      - studyquest-backend-2
-      - studyquest-backend-3
-    networks:
-      - studyquest-network
-
-volumes:
-  mongo-data:
-
-networks:
-  studyquest-network:
-    driver: bridge
 ```
