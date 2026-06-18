@@ -117,3 +117,50 @@ exports.claimQuestReward = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.logActivity = async (req, res, next) => {
+  try {
+    const { type, value } = req.body;
+    if (!type || !value) {
+      return res.status(400).json({ status: 'fail', message: 'Type and value are required.' });
+    }
+
+    const today = new Date().toISOString().split('T')[0];
+    
+    // Calculate a small direct activity completion reward
+    let xpGained = 0;
+    if (type === 'focus' || type === 'study') {
+      xpGained = Math.floor(value * 2); // 2 XP per minute
+    } else if (type === 'dsa') {
+      xpGained = 15; // 15 XP per solved problem
+    }
+
+    const activity = await Activity.create({
+      userId: req.user.id,
+      type,
+      value: parseInt(value, 10),
+      xpGained,
+      date: today
+    });
+
+    // Award direct XP to the user
+    const user = await User.findById(req.user.id);
+    if (user) {
+      user.xp += xpGained;
+      user.level = Math.floor(user.xp / 1000) + 1;
+      await user.save();
+    }
+
+    logger.info(`Activity logged: ${type} (${value}) by user ${req.user.username}`);
+
+    res.status(201).json({
+      status: 'success',
+      data: activity,
+      userXp: user?.xp,
+      userLevel: user?.level
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
