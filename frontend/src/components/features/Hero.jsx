@@ -54,23 +54,23 @@ export default function Hero() {
       </header>
 
       {/* Hero Content */}
-      <main className="relative z-10 max-w-7xl mx-auto px-8 pt-16 pb-24 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      <main className="relative z-10 max-w-3xl mx-auto px-8 pt-16 pb-24 flex flex-col items-center text-center space-y-12">
         
-        {/* Left column: Minimalist info */}
-        <div className="lg:col-span-6 space-y-6">
+        {/* Centered minimalist info */}
+        <div className="space-y-6 flex flex-col items-center">
           <div className="inline-block border border-white/20 px-3 py-1 text-xs font-mono text-zinc-400">
             SYSTEM COMPONENT: LANDING
           </div>
 
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-none text-white">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-none text-white max-w-2xl">
             Gamified Career & Interview Sandbox.
           </h1>
 
-          <p className="text-zinc-400 leading-relaxed text-sm sm:text-base max-w-lg">
+          <p className="text-zinc-400 leading-relaxed text-sm sm:text-base max-w-xl">
             A minimalist workspace for tracking data structures, auditing resume formats, practicing mock interviews, and syncing levels. Complete daily quests, earn XP, and level up your software engineering credentials.
           </p>
 
-          <div className="flex flex-wrap gap-4 pt-2">
+          <div className="flex flex-wrap justify-center gap-4 pt-2">
             <button
               onClick={() => navigate('/register')}
               className="flex items-center gap-2 bg-white hover:bg-zinc-200 text-black font-semibold px-6 py-3.5 border border-white transition-colors cursor-pointer text-sm"
@@ -86,8 +86,8 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Right column: Interactive code compiler card (Minimalist, strictly dark layout) */}
-        <div className="lg:col-span-6">
+        {/* Centered interactive terminal widget below the content */}
+        <div className="w-full max-w-xl">
           <div className="border border-white/10 bg-[#070b19]/80 rounded-lg overflow-hidden backdrop-blur-sm">
             {/* Terminal Header */}
             <div className="bg-white/5 text-white px-4 py-2 flex items-center justify-between border-b border-white/10">
@@ -98,7 +98,7 @@ export default function Hero() {
             </div>
 
             {/* Terminal Body */}
-            <div className="p-6 space-y-4 font-mono text-xs text-zinc-300">
+            <div className="p-6 space-y-4 font-mono text-xs text-zinc-300 text-left">
               <div className="space-y-1 text-zinc-500">
                 <p>// Run compile to increment code execution state</p>
                 <p>const studyQuest = require("studyquest-core");</p>
