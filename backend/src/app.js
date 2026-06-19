@@ -61,4 +61,22 @@ app.use('/api/hackathons', hackathonRoutes);
 // Global centrally-managed error handler
 app.use(errorHandler);
 
+// Serve frontend statically from production build folder
+const path = require('path');
+const frontendDistPath = path.join(__dirname, '../../frontend/dist');
+app.use(express.static(frontendDistPath));
+
+app.get('*', (req, res, next) => {
+  if (!req.path.startsWith('/api')) {
+    res.sendFile(path.join(frontendDistPath, 'index.html'), (err) => {
+      if (err) {
+        // Continue if the file is missing (e.g. if build is not run yet)
+        next();
+      }
+    });
+  } else {
+    next();
+  }
+});
+
 module.exports = app;
