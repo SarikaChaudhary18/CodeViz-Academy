@@ -22,7 +22,7 @@ export default function Hero() {
       <div
         className="absolute inset-0 z-0 pointer-events-none"
         style={{
-          backgroundImage: `radial-gradient(circle 500px at 50% 200px, #3e3e3e, transparent)`,
+          backgroundImage: `radial-gradient(circle 500px at 50% 100px, rgba(236, 72, 153, 0.4), transparent)`,
         }}
       />
 
