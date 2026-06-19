@@ -62,7 +62,7 @@ export default function Hero() {
             SYSTEM COMPONENT: LANDING
           </div>
 
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-none text-white max-w-2xl">
+          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-none text-white max-w-3xl">
             Gamified Career & Interview Sandbox.
           </h1>
 
