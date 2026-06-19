@@ -6,6 +6,7 @@ import { useStore } from './hooks/useStore';
 import AppLayout from './components/layout/AppLayout';
 
 // Features
+import Hero from './components/features/Hero';
 import Auth from './components/features/auth/Auth';
 import Dashboard from './components/features/dashboard/Dashboard';
 import CompanyPrep from './components/features/company-prep/CompanyPrep';
@@ -55,6 +56,9 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Landing Page */}
+        <Route path="/" element={<Hero />} />
+
         {/* Authentication routes */}
         <Route path="/login" element={<Auth />} />
         <Route path="/register" element={<Auth isRegisterMode />} />
