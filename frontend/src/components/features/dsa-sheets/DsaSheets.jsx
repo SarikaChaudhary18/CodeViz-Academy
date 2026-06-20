@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useStore } from '../../../hooks/useStore';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Code, CheckCircle2, Circle, AlertCircle, RefreshCw, BarChart2 } from 'lucide-react';
-import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
+import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, Legend } from 'recharts';
 
 export default function DsaSheets() {
   const {
@@ -53,18 +53,42 @@ export default function DsaSheets() {
   const completedCount = activeQuestions.filter(q => completedProblems.includes(q.id)).length;
   const progressPercent = Math.round((completedCount / activeQuestions.length) * 100);
 
-  // Generate 7-day timeline progress data leading up to the current progressPercent
+  // Generate 7-day timeline progress data representing a burn-down chart
   const generateChartData = () => {
     const data = [];
-    const steps = 6;
+    const totalQuestions = activeQuestions.length || 1;
+    const steps = 6; // 7 days (index 0 to 6)
+    
+    const completedWithDates = sheetProgress
+      .filter(p => p.sheetType === selectedSheet && p.status === 'completed')
+      .map(p => {
+        const dateStr = p.solvedAt || p.updatedAt || p.createdAt;
+        const d = dateStr ? new Date(dateStr) : new Date();
+        return {
+          problemId: p.problemId,
+          date: d
+        };
+      });
+
     for (let i = 0; i <= steps; i++) {
-      const date = new Date(Date.now() - (steps - i) * 24 * 60 * 60 * 1000);
-      const formattedDate = date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
-      // Calculate progressive steps culminating in the exact current progressPercent
-      const currentVal = Math.round((progressPercent / steps) * i);
+      // Calculate the target day
+      const day = new Date();
+      day.setHours(23, 59, 59, 999); // end of that day
+      day.setDate(day.getDate() - (steps - i));
+      
+      // Count how many questions were completed on or before this day's end
+      const completedBeforeOrOnThisDay = completedWithDates.filter(p => p.date <= day).length;
+      const actualRemaining = Math.max(0, totalQuestions - completedBeforeOrOnThisDay);
+      
+      // Estimated / Ideal Remaining (linear burndown from totalQuestions to 0)
+      const estimatedRemaining = Math.max(0, parseFloat((totalQuestions - (totalQuestions / steps) * i).toFixed(1)));
+      
+      const formattedDate = day.toLocaleDateString(undefined, { month: '2-digit', day: '2-digit' });
+      
       data.push({
         name: formattedDate,
-        Progress: currentVal
+        "Actual Burndown": actualRemaining,
+        "Estimated Burndown": estimatedRemaining
       });
     }
     return data;
@@ -220,26 +244,40 @@ export default function DsaSheets() {
                 </p>
               </div>
 
-              {/* Progress Area Chart */}
+              {/* Progress Burndown Chart */}
               <div className="h-44 w-full bg-white/[0.01] border border-white/5 p-3 rounded-2xl">
                 <ResponsiveContainer width="100%" height="100%">
-                  <AreaChart data={chartData} margin={{ top: 10, right: 10, left: -25, bottom: 0 }}>
-                    <defs>
-                      <linearGradient id="colorPv" x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="5%" stopColor="#06b6d4" stopOpacity={0.2}/>
-                        <stop offset="95%" stopColor="#06b6d4" stopOpacity={0}/>
-                      </linearGradient>
-                    </defs>
+                  <LineChart data={chartData} margin={{ top: 5, right: 10, left: -25, bottom: 0 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.03)" />
                     <XAxis dataKey="name" stroke="#6b7280" fontSize={8} tickLine={false} />
-                    <YAxis stroke="#6b7280" fontSize={8} tickLine={false} domain={[0, 100]} />
+                    <YAxis stroke="#6b7280" fontSize={8} tickLine={false} domain={[0, activeQuestions.length || 5]} />
                     <Tooltip 
                       contentStyle={{ backgroundColor: '#070b19', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px' }}
                       labelStyle={{ color: '#fff', fontSize: '10px', fontFamily: 'monospace' }}
-                      itemStyle={{ color: '#06b6d4', fontSize: '10px', fontFamily: 'monospace' }}
+                      itemStyle={{ fontSize: '10px', fontFamily: 'monospace' }}
                     />
-                    <Area type="monotone" dataKey="Progress" stroke="#06b6d4" strokeWidth={2} fillOpacity={1} fill="url(#colorPv)" />
-                  </AreaChart>
+                    <Legend 
+                      wrapperStyle={{ fontSize: '9px', fontFamily: 'monospace', color: '#fff', marginTop: '-5px' }}
+                      verticalAlign="top"
+                      height={28}
+                    />
+                    <Line 
+                      type="monotone" 
+                      dataKey="Estimated Burndown" 
+                      stroke="#84cc16" 
+                      strokeWidth={2} 
+                      dot={{ r: 3, fill: '#84cc16' }}
+                      activeDot={{ r: 5 }}
+                    />
+                    <Line 
+                      type="monotone" 
+                      dataKey="Actual Burndown" 
+                      stroke="#06b6d4" 
+                      strokeWidth={2} 
+                      dot={{ r: 3, fill: '#06b6d4' }}
+                      activeDot={{ r: 5 }}
+                    />
+                  </LineChart>
                 </ResponsiveContainer>
               </div>
 
