@@ -247,9 +247,10 @@ export const useStore = create((set, get) => ({
     try {
       const response = await api.get('/communities');
       set({ communities: response.data, communitiesLoading: false });
-      if (response.data?.length > 0 && !get().activeCommunity) {
-        get().setActiveCommunity(response.data[0]);
-      }
+      // Keep activeCommunity null initially so user lands on the no-active-channel placeholder
+      // if (response.data?.length > 0 && !get().activeCommunity) {
+      //   get().setActiveCommunity(response.data[0]);
+      // }
     } catch (err) {
       console.error('Failed to fetch communities:', err.message);
       set({ communitiesLoading: false });

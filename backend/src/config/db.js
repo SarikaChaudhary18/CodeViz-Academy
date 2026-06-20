@@ -27,6 +27,35 @@ const seedDefaultUser = async () => {
   }
 };
 
+const seedDefaultCommunities = async (defaultUser) => {
+  try {
+    const Community = require('../models/Community');
+    const defaultSectors = [
+      { name: 'general-lobby', description: 'General announcements and open discussions.', category: 'general' },
+      { name: 'algorithms-dsa', description: 'Solving algorithms and DSA sheet checklist alignment.', category: 'leetcode' },
+      { name: 'system-design', description: 'Architecture patterns and system scalability discussions.', category: 'squads' },
+      { name: 'mock-sandbox', description: 'Mock interview alignment and peer coding practice.', category: 'company-prep' },
+      { name: 'resume-audit', description: 'Resume reviews and CV feedback exchange.', category: 'other' }
+    ];
+
+    for (const sector of defaultSectors) {
+      const existing = await Community.findOne({ name: sector.name });
+      if (!existing) {
+        await Community.create({
+          name: sector.name,
+          description: sector.description,
+          category: sector.category,
+          createdBy: defaultUser._id,
+          members: [defaultUser._id]
+        });
+        logger.info(`Seeded community sector: #${sector.name}`);
+      }
+    }
+  } catch (err) {
+    logger.error('Failed to seed default communities: %s', err.message);
+  }
+};
+
 const connectDB = async () => {
   const mongoURI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/studyquest';
   
@@ -58,6 +87,12 @@ const connectDB = async () => {
     await mongoose.connect(mongoURI, options);
     // Seed default user
     await seedDefaultUser();
+    
+    // Seed default communities
+    const defaultUser = await User.findOne({ email: 'operator@studyquest.io' });
+    if (defaultUser) {
+      await seedDefaultCommunities(defaultUser);
+    }
   } catch (err) {
     logger.error('Initial MongoDB connection failed: %s', err.message);
     process.exit(1);

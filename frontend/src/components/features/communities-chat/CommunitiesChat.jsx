@@ -189,7 +189,19 @@ export default function CommunitiesChat() {
 
             {/* Chat messages stream */}
             <div className="flex-1 overflow-y-auto p-6 space-y-4">
-              {messagesLoading ? (
+              {!activeCommunity ? (
+                <div className="h-full flex flex-col items-center justify-center text-center p-8 space-y-4">
+                  <div className="w-16 h-16 rounded-2xl bg-white/[0.02] border border-white/5 flex items-center justify-center text-gray-400 box-glow-violet animate-pulse">
+                    <MessageSquare size={28} className="text-violet-400" />
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-bold text-white uppercase tracking-wider font-mono">No Active Sector Connected</h4>
+                    <p className="text-xs text-gray-500 max-w-sm mt-1 leading-relaxed">
+                      Select a communication sector from the Sectors List on the left to initialize the WebSocket stream and align with the squad.
+                    </p>
+                  </div>
+                </div>
+              ) : messagesLoading ? (
                 <div className="h-full flex items-center justify-center text-xs text-gray-500 font-mono uppercase tracking-widest animate-pulse">
                   Syncing channel log...
                 </div>
@@ -239,55 +251,61 @@ export default function CommunitiesChat() {
             </div>
 
             {/* Input prompt & code snippets panel */}
-            <form onSubmit={handleSendMessage} className="border-t border-white/5 bg-white/[0.005] flex flex-col p-4 gap-3">
-              {showCodeInput && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="relative"
-                >
-                  <label className="block text-[9px] text-gray-500 font-mono uppercase tracking-widest mb-1.5">Code Snippet Share</label>
-                  <textarea
-                    rows={4}
-                    value={codeSnippet}
-                    onChange={(e) => setCodeSnippet(e.target.value)}
-                    placeholder="// Paste code snippet here..."
-                    className="w-full bg-[#07080a] border border-white/10 rounded-xl p-3 text-[10px] text-cyan-300 focus:outline-none focus:border-violet-500/50 font-mono resize-none leading-relaxed"
+            {activeCommunity ? (
+              <form onSubmit={handleSendMessage} className="border-t border-white/5 bg-white/[0.005] flex flex-col p-4 gap-3">
+                {showCodeInput && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="relative"
+                  >
+                    <label className="block text-[9px] text-gray-500 font-mono uppercase tracking-widest mb-1.5">Code Snippet Share</label>
+                    <textarea
+                      rows={4}
+                      value={codeSnippet}
+                      onChange={(e) => setCodeSnippet(e.target.value)}
+                      placeholder="// Paste code snippet here..."
+                      className="w-full bg-[#07080a] border border-white/10 rounded-xl p-3 text-[10px] text-cyan-300 focus:outline-none focus:border-violet-500/50 font-mono resize-none leading-relaxed"
+                    />
+                  </motion.div>
+                )}
+
+                <div className="flex items-center gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setShowCodeInput(!showCodeInput)}
+                    className={`p-3 rounded-xl transition-all cursor-pointer flex items-center justify-center border ${
+                      showCodeInput 
+                        ? 'bg-violet-600/20 text-violet-300 border-violet-500/30' 
+                        : 'bg-white/[0.02] hover:bg-white/[0.05] border-white/5 text-gray-400'
+                    }`}
+                    title="Share Code Snippet"
+                  >
+                    <Code size={14} />
+                  </button>
+
+                  <input
+                    type="text"
+                    required
+                    value={messageText}
+                    onChange={(e) => setMessageText(e.target.value)}
+                    placeholder="Broadcast message in channel..."
+                    className="flex-1 bg-white/[0.02] border border-white/10 focus:border-cyan-500/50 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:ring-1 focus:ring-cyan-500/30 transition-all font-sans"
                   />
-                </motion.div>
-              )}
 
-              <div className="flex items-center gap-3">
-                <button
-                  type="button"
-                  onClick={() => setShowCodeInput(!showCodeInput)}
-                  className={`p-3 rounded-xl transition-all cursor-pointer flex items-center justify-center border ${
-                    showCodeInput 
-                      ? 'bg-violet-600/20 text-violet-300 border-violet-500/30' 
-                      : 'bg-white/[0.02] hover:bg-white/[0.05] border-white/5 text-gray-400'
-                  }`}
-                  title="Share Code Snippet"
-                >
-                  <Code size={14} />
-                </button>
-
-                <input
-                  type="text"
-                  required
-                  value={messageText}
-                  onChange={(e) => setMessageText(e.target.value)}
-                  placeholder="Broadcast message in channel..."
-                  className="flex-1 bg-white/[0.02] border border-white/10 focus:border-cyan-500/50 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:ring-1 focus:ring-cyan-500/30 transition-all font-sans"
-                />
-
-                <button
-                  type="submit"
-                  className="p-3 bg-cyan-500 hover:bg-cyan-400 text-black rounded-xl transition-all cursor-pointer flex items-center justify-center active:scale-[0.98]"
-                >
-                  <Send size={14} />
-                </button>
+                  <button
+                    type="submit"
+                    className="p-3 bg-cyan-500 hover:bg-cyan-400 text-black rounded-xl transition-all cursor-pointer flex items-center justify-center active:scale-[0.98]"
+                  >
+                    <Send size={14} />
+                  </button>
+                </div>
+              </form>
+            ) : (
+              <div className="border-t border-white/5 bg-white/[0.01] p-4 text-center text-[10px] text-gray-500 font-mono uppercase tracking-widest">
+                TRANSMISSION LOCKED &bull; SELECT SECTOR TO ACCESS BROADCAST
               </div>
-            </form>
+            )}
 
           </div>
         </div>
