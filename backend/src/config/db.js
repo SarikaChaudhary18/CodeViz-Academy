@@ -1,5 +1,31 @@
 const mongoose = require('mongoose');
 const logger = require('./logger');
+const bcrypt = require('bcryptjs');
+const User = require('../models/User');
+
+const seedDefaultUser = async () => {
+  try {
+    const defaultEmail = 'operator@studyquest.io';
+    const existingUser = await User.findOne({ email: defaultEmail });
+    if (!existingUser) {
+      const salt = await bcrypt.genSalt(12);
+      const hashedPassword = await bcrypt.hash('password123', salt);
+      await User.create({
+        username: 'operator',
+        email: defaultEmail,
+        password: hashedPassword,
+        targetRole: 'Fullstack Developer',
+        targetCompany: 'Google',
+        streak: 5,
+        xp: 1500,
+        level: 2
+      });
+      logger.info('Default user seeded successfully (operator@studyquest.io / password123).');
+    }
+  } catch (err) {
+    logger.error('Failed to seed default user: %s', err.message);
+  }
+};
 
 const connectDB = async () => {
   const mongoURI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/studyquest';
@@ -30,6 +56,8 @@ const connectDB = async () => {
     });
 
     await mongoose.connect(mongoURI, options);
+    // Seed default user
+    await seedDefaultUser();
   } catch (err) {
     logger.error('Initial MongoDB connection failed: %s', err.message);
     process.exit(1);

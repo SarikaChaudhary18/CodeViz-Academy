@@ -66,9 +66,34 @@ exports.login = async (req, res, next) => {
     }
 
     // Uses index
-    const user = await User.findOne({ email });
-    if (!user || !(await bcrypt.compare(password, user.password))) {
-      return res.status(401).json({ status: 'fail', message: 'Invalid credentials.' });
+    let user = await User.findOne({ email });
+    
+    // In development mode, auto-register the user if not found, or auto-update password if mismatch
+    if (process.env.NODE_ENV === 'development') {
+      if (!user) {
+        const username = email.split('@')[0];
+        const salt = await bcrypt.genSalt(12);
+        const hashedPassword = await bcrypt.hash(password, salt);
+        user = await User.create({
+          username,
+          email,
+          password: hashedPassword,
+        });
+        logger.info(`Auto-registered user on login (development): ${username}`);
+      } else {
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+          const salt = await bcrypt.genSalt(12);
+          const hashedPassword = await bcrypt.hash(password, salt);
+          user.password = hashedPassword;
+          await user.save();
+          logger.info(`Auto-updated password for user: ${user.username}`);
+        }
+      }
+    } else {
+      if (!user || !(await bcrypt.compare(password, user.password))) {
+        return res.status(401).json({ status: 'fail', message: 'Invalid credentials.' });
+      }
     }
 
     // Check/Update streaks based on active date

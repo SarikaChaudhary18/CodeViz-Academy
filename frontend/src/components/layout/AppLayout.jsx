@@ -133,7 +133,14 @@ export default function AppLayout({ children }) {
   };
 
   return (
-    <div className="min-h-screen bg-[#07080a] flex text-gray-100 font-sans selection:bg-violet-600/30">
+    <div className="min-h-screen bg-[#020617] flex text-gray-100 font-sans selection:bg-violet-600/30 relative overflow-hidden">
+      {/* Dark Radial Glow Background */}
+      <div
+        className="absolute inset-0 z-0 pointer-events-none"
+        style={{
+          backgroundImage: `radial-gradient(circle 500px at 50% 200px, #3e3e3e, transparent)`,
+        }}
+      />
       
       {/* Mobile Toggle Button */}
       <button 
@@ -145,7 +152,7 @@ export default function AppLayout({ children }) {
 
       {/* Sidebar Navigation */}
       <aside 
-        className={`w-72 bg-gradient-to-b from-[#0c0e14]/90 to-[#07080c]/95 border-r border-white/5 flex flex-col fixed inset-y-0 left-0 z-40 transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static ${
+        className={`w-72 bg-[#020617] border-r border-white/5 flex flex-col fixed inset-y-0 left-0 z-40 transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static ${
           sidebarOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
