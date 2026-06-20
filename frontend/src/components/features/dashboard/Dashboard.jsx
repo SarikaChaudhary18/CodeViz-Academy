@@ -233,8 +233,20 @@ export default function Dashboard() {
                       key={quest._id} 
                       className="flex flex-col md:flex-row items-start md:items-center justify-between p-4 bg-white/[0.02] hover:bg-white/[0.04] border border-white/5 rounded-2xl transition-all gap-4"
                     >
-                      <div className="flex gap-3">
-                        <div className="p-2 rounded-xl bg-violet-600/10 border border-violet-500/20 text-violet-400 mt-0.5">
+                      <div className="flex items-center gap-3">
+                        <input
+                          type="checkbox"
+                          checked={status === 'claimed'}
+                          onChange={() => {
+                            if (status !== 'claimed' && status !== 'claiming') {
+                              handleClaim(quest.key);
+                            }
+                          }}
+                          disabled={status === 'claiming' || status === 'claimed'}
+                          className="w-4.5 h-4.5 rounded border border-white/20 text-violet-600 focus:ring-violet-500/20 bg-white/[0.02] cursor-pointer disabled:cursor-not-allowed shrink-0 transition-all accent-violet-600"
+                        />
+                        
+                        <div className="p-2 rounded-xl bg-violet-600/10 border border-violet-500/20 text-violet-400 shrink-0">
                           <BookOpen size={16} />
                         </div>
                         <div>
