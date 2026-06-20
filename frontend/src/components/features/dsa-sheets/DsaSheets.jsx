@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useStore } from '../../../hooks/useStore';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Code, CheckCircle2, Circle, AlertCircle, RefreshCw, BarChart2 } from 'lucide-react';
+import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
 
 export default function DsaSheets() {
   const {
@@ -51,6 +52,24 @@ export default function DsaSheets() {
 
   const completedCount = activeQuestions.filter(q => completedProblems.includes(q.id)).length;
   const progressPercent = Math.round((completedCount / activeQuestions.length) * 100);
+
+  // Generate 7-day timeline progress data leading up to the current progressPercent
+  const generateChartData = () => {
+    const data = [];
+    const steps = 6;
+    for (let i = 0; i <= steps; i++) {
+      const date = new Date(Date.now() - (steps - i) * 24 * 60 * 60 * 1000);
+      const formattedDate = date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+      // Calculate progressive steps culminating in the exact current progressPercent
+      const currentVal = Math.round((progressPercent / steps) * i);
+      data.push({
+        name: formattedDate,
+        Progress: currentVal
+      });
+    }
+    return data;
+  };
+  const chartData = generateChartData();
 
   const handleToggleCheckbox = async (problemId, isCurrentlyCompleted) => {
     setToggleLoading(prev => ({ ...prev, [problemId]: true }));
@@ -201,14 +220,27 @@ export default function DsaSheets() {
                 </p>
               </div>
 
-              {/* Progress bar */}
-              <div className="space-y-2">
-                <div className="w-full bg-white/5 rounded-full h-2.5 overflow-hidden">
-                  <div 
-                    className="bg-gradient-to-r from-violet-500 to-cyan-400 h-full rounded-full transition-all duration-500" 
-                    style={{ width: `${progressPercent}%` }} 
-                  />
-                </div>
+              {/* Progress Area Chart */}
+              <div className="h-44 w-full bg-white/[0.01] border border-white/5 p-3 rounded-2xl">
+                <ResponsiveContainer width="100%" height="100%">
+                  <AreaChart data={chartData} margin={{ top: 10, right: 10, left: -25, bottom: 0 }}>
+                    <defs>
+                      <linearGradient id="colorPv" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="5%" stopColor="#06b6d4" stopOpacity={0.2}/>
+                        <stop offset="95%" stopColor="#06b6d4" stopOpacity={0}/>
+                      </linearGradient>
+                    </defs>
+                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.03)" />
+                    <XAxis dataKey="name" stroke="#6b7280" fontSize={8} tickLine={false} />
+                    <YAxis stroke="#6b7280" fontSize={8} tickLine={false} domain={[0, 100]} />
+                    <Tooltip 
+                      contentStyle={{ backgroundColor: '#070b19', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px' }}
+                      labelStyle={{ color: '#fff', fontSize: '10px', fontFamily: 'monospace' }}
+                      itemStyle={{ color: '#06b6d4', fontSize: '10px', fontFamily: 'monospace' }}
+                    />
+                    <Area type="monotone" dataKey="Progress" stroke="#06b6d4" strokeWidth={2} fillOpacity={1} fill="url(#colorPv)" />
+                  </AreaChart>
+                </ResponsiveContainer>
               </div>
 
               {/* Informative advice */}
