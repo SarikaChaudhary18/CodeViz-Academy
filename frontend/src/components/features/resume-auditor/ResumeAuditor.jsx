@@ -23,12 +23,67 @@ const Input = React.forwardRef(({ className, type, ...props }, ref) => {
 });
 Input.displayName = "Input";
 
+const Toggle = ({ pressed, onPressedChange, children, className }) => {
+  return (
+    <button
+      type="button"
+      onClick={() => onPressedChange(!pressed)}
+      className={cn(
+        "inline-flex items-center justify-center rounded-lg text-[10px] font-bold font-mono px-3 py-1.5 border transition-all cursor-pointer",
+        pressed
+          ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30"
+          : "bg-white/5 text-zinc-400 border-white/10 hover:bg-white/10 hover:text-white",
+        className
+      )}
+    >
+      {children}
+    </button>
+  );
+};
+Toggle.displayName = "Toggle";
+
 export default function ResumeAuditor() {
   const [resumeText, setResumeText] = useState('');
   const [targetJobTitle, setTargetJobTitle] = useState('Software Engineer');
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
   const [copied, setCopied] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
+  const [saving, setSaving] = useState(false);
+
+  React.useEffect(() => {
+    const loadSavedResume = async () => {
+      try {
+        const response = await api.get('/resume/load');
+        if (response.status === 'success' && response.resumeText) {
+          setResumeText(response.resumeText);
+          setIsSaved(true);
+        }
+      } catch (err) {
+        console.error('Failed to load saved resume:', err.message);
+      }
+    };
+    loadSavedResume();
+  }, []);
+
+  const handleSaveToggle = async (nextState) => {
+    if (nextState) {
+      setSaving(true);
+      try {
+        const response = await api.post('/resume/save', { resumeText });
+        if (response.status === 'success') {
+          setIsSaved(true);
+        }
+      } catch (err) {
+        alert(err.message || 'Failed to save resume.');
+        setIsSaved(false);
+      } finally {
+        setSaving(false);
+      }
+    } else {
+      setIsSaved(false);
+    }
+  };
 
   const handleAudit = async (e) => {
     e.preventDefault();
@@ -98,12 +153,35 @@ export default function ResumeAuditor() {
                 />
               </div>
 
-              <div>
-                <label className="block text-[10px] text-gray-500 font-mono uppercase tracking-widest mb-1.5">Raw Resume content</label>
+               <div>
+                <div className="flex justify-between items-center mb-1.5">
+                  <label className="block text-[10px] text-gray-500 font-mono uppercase tracking-widest">Raw Resume content</label>
+                  <Toggle
+                    pressed={isSaved}
+                    onPressedChange={handleSaveToggle}
+                  >
+                    {saving ? (
+                      <span className="flex items-center gap-1">
+                        <span className="w-2.5 h-2.5 border border-white/20 border-t-white rounded-full animate-spin" /> Saving...
+                      </span>
+                    ) : isSaved ? (
+                      <span className="flex items-center gap-1 text-emerald-400">
+                        <ClipboardCheck size={10} /> Saved
+                      </span>
+                    ) : (
+                      <span className="flex items-center gap-1 text-zinc-400">
+                        <Copy size={10} /> Save to Platform
+                      </span>
+                    )}
+                  </Toggle>
+                </div>
                 <textarea
                   rows={12}
                   value={resumeText}
-                  onChange={(e) => setResumeText(e.target.value)}
+                  onChange={(e) => {
+                    setResumeText(e.target.value);
+                    setIsSaved(false);
+                  }}
                   placeholder="Paste your existing resume content here. (Name, Contact, experience bullet points, skills checklist...)"
                   className="w-full bg-white/[0.02] border border-white/10 focus:border-violet-500/50 rounded-xl p-4 text-xs text-white focus:outline-none focus:ring-1 focus:ring-violet-500/30 transition-all font-mono leading-relaxed"
                 />

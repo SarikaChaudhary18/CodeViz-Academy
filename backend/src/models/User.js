@@ -62,6 +62,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     default: '',
   },
+  savedResumeText: {
+    type: String,
+    default: '',
+  },
 }, {
   timestamps: true,
 });

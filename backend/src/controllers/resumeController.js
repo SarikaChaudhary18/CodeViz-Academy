@@ -1,5 +1,6 @@
 const logger = require('../config/logger');
 const axios = require('axios');
+const User = require('../models/User');
 
 const HARSHIBAR_LATEX_TEMPLATE = `%-------------------------
 % Resume in Latex
@@ -278,6 +279,39 @@ Return ONLY valid JSON. No markdown codeblock wrapping.`;
     res.status(200).json({
       status: 'success',
       data: mockResponse
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.loadResume = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(404).json({ status: 'fail', message: 'User not found.' });
+    }
+    res.status(200).json({
+      status: 'success',
+      resumeText: user.savedResumeText || ''
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.saveResume = async (req, res, next) => {
+  try {
+    const { resumeText } = req.body;
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(404).json({ status: 'fail', message: 'User not found.' });
+    }
+    user.savedResumeText = resumeText || '';
+    await user.save();
+    res.status(200).json({
+      status: 'success',
+      message: 'Resume saved to platform successfully.'
     });
   } catch (err) {
     next(err);
