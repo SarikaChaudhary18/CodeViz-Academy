@@ -15,6 +15,9 @@
   --color-neon-rose: #f43f5e;
   --color-neon-green: #10b981;
   --color-neon-yellow: #f59e0b;
+
+  --color-popover: rgba(13, 15, 20, 0.95);
+  --color-popover-foreground: #ffffff;
 }
 
 /* Custom base styles and scrollbars */

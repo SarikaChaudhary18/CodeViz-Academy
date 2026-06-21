@@ -1,12 +1,98 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, memo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useStore } from '../../../hooks/useStore';
 import { Terminal, Send, Play, RefreshCw, Award, User, Bot, AlertCircle } from 'lucide-react';
+import * as PopoverPrimitive from "@radix-ui/react-popover";
+import { cn } from '../../../lib/utils';
+
+// ==================== Popover Components ====================
+
+const Popover = PopoverPrimitive.Root;
+const PopoverTrigger = PopoverPrimitive.Trigger;
+
+const PopoverContent = React.forwardRef(function PopoverContent(
+  { className, align = "center", sideOffset = 4, ...props },
+  ref
+) {
+  return (
+    <PopoverPrimitive.Portal>
+      <PopoverPrimitive.Content
+        ref={ref}
+        align={align}
+        sideOffset={sideOffset}
+        className={cn(
+          "z-50 w-72 rounded-md border border-white/10 bg-popover p-4 text-popover-foreground shadow-md outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+          className
+        )}
+        {...props}
+      />
+    </PopoverPrimitive.Portal>
+  );
+});
+PopoverContent.displayName = PopoverPrimitive.Content.displayName;
+
+const keywordMatrix = {
+  'Frontend Developer': [
+    ['memo', 'usememo', 'usecallback', 'virtual', 'window', 're-render', 'colocating state', 'debounce'],
+    ['clamp', 'fluid', 'rem', 'em', 'media query', 'calc', 'tailwind', 'font-size'],
+    ['useeffect', 'ref', 'websocket', 'backoff', 'reconnect', 'settimeout', 'cleanup', 'ws'],
+    ['align', 'compromise', 'discuss', 'meeting', 'consensus', 'agreement', 'standard']
+  ],
+  'Backend Developer': [
+    ['poolsize', 'connection pooling', 'indexing', 'compound index', 'explain', 'readpreference', 'replica set'],
+    ['sticky session', 'load balancer', 'websocket', 'handshake', 'redis', 'pub/sub', 'ip hash', 'socket.io'],
+    ['token bucket', 'sliding window', 'leaky bucket', 'redis', 'rate limit', 'middleware', 'timestamp'],
+    ['profile', 'heap dump', 'index', 'explain', 'log', 'bottleneck', 'query optimization']
+  ],
+  'Full Stack Developer': [
+    ['server component', 'client component', 'rsc', 'ssr', 'dynamic', 'static', 'boundary', 'use client'],
+    ['broadcast channel', 'localstorage', 'websocket', 'transaction', 'isolation level', 'optimistic locking', 'synchronization'],
+    ['cache', 'redis', 'index', 'query', 'preload', 'lazy', 'ttfb', 'cdn', 'server-side rendering'],
+    ['csrf', 'xss', 'helmet', 'cors', 'cookie', 'httponly', 'samesite', 'sanitize', 'jwt']
+  ],
+  'DevOps Engineer': [
+    ['sysctl', 'nofile', 'ulimit', 'tcp_tw_reuse', 'tcp_fin_timeout', 'socket', 'descriptor'],
+    ['secret', 'vault', 'env', 'rotation', 'kms', 'gitguardian', 'variables', 'github secrets'],
+    ['multi-stage', 'alpine', 'distroless', 'size', 'layer', 'cache', 'scan', 'security'],
+    ['volume', 'backup', 'restore', 'recovery', 'state', 'persistence', 'replica']
+  ],
+  'AI Engineer': [
+    ['embedding', 'chunk', 'cosine', 'distance', 'similarity', 'vector', 'dot product', 'overlap'],
+    ['injection', 'json', 'schema', 'system prompt', 'parser', 'validation', 'pydantic', 'guardrails'],
+    ['rag', 'fine-tune', 'context', 'knowledge', 'parameter', 'hallucination', 'cost', 'retrieval'],
+    ['learning rate', 'batch size', 'gpu', 'deepspeed', 'lora', 'quantization', 'optimization']
+  ],
+  'ML Engineer': [
+    ['transformer', 'rnn', 'parallel', 'attention', 'attention mechanism', 'sequence', 'recurrent', 'long-range'],
+    ['gradient clipping', 'resnet', 'residual', 'batch normalization', 'weight initialization', 'relu'],
+    ['drift', 'concept drift', 'data drift', 'ks test', 'psi', 'monitor', 'retrain', 'baseline'],
+    ['quantization', 'pruning', 'weight', 'float16', 'int8', 'edge', 'latency', 'size']
+  ],
+  'AI/ML Engineer': [
+    ['redis', 'feature store', 'latency', 'feast', 'online', 'offline', 'cache', 'pipeline'],
+    ['concept drift', 'monitor', 'retrain', 'pipeline', 'scheduler', 'drift detection', 'airflow'],
+    ['bias', 'fairness', 'evaluation', 'toxicity', 'prompting', 'benchmark', 'red teaming'],
+    ['debug', 'degradation', 'performance', 'drift', 'pipeline', 'monitoring', 'metrics']
+  ],
+  'Cybersecurity': [
+    ['stride', 'threat modeling', 'microservices', 'cloud', 'attack surface', 'trust boundary', 'iam'],
+    ['symmetric', 'asymmetric', 'public key', 'private key', 'tls', 'handshake', 'session key', 'certificate'],
+    ['sql injection', 'idor', 'parameterized', 'prepared statement', 'authorization', 'uuid', 'owasp'],
+    ['incident response', 'contain', 'mitigate', 'log', 'isolation', 'forensics', 'backup']
+  ],
+  'Cybersecurcity': [
+    ['stride', 'threat modeling', 'microservices', 'cloud', 'attack surface', 'trust boundary', 'iam'],
+    ['symmetric', 'asymmetric', 'public key', 'private key', 'tls', 'handshake', 'session key', 'certificate'],
+    ['sql injection', 'idor', 'parameterized', 'prepared statement', 'authorization', 'uuid', 'owasp'],
+    ['incident response', 'contain', 'mitigate', 'log', 'isolation', 'forensics', 'backup']
+  ]
+};
 
 export default function MockInterview() {
   const { user, logActivity } = useStore();
   
   const [role, setRole] = useState('Frontend Developer');
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const [isSessionActive, setIsSessionActive] = useState(false);
   const [chatLog, setChatLog] = useState([]);
   const [userInput, setUserInput] = useState('');
@@ -28,6 +114,12 @@ export default function MockInterview() {
       'Let us review rate limiting. If you had to build an IP rate limiter from scratch, what algorithm (e.g. Token Bucket, Sliding Window) would you implement and why?',
       'Finally, describe a scenario where you had to debug a production memory leak or query bottleneck. What steps did you take?'
     ],
+    'Full Stack Developer': [
+      'Welcome! Let us start with system architecture. How do you structure a high-performance web app using Next.js, and where do you draw the boundary between client and server components?',
+      'Excellent. How do you manage global state synchronization between multiple client tabs and database transactions?',
+      'Let us talk about performance. What techniques do you use to optimize database queries and decrease Time to First Byte (TTFB) for complex layouts?',
+      'Finally, describe how you secure your API endpoints against CSRF and cross-site scripting vulnerabilities.'
+    ],
     'DevOps Engineer': [
       'Welcome! Let us begin: what system network parameters do you configure in Linux kernels to scale socket descriptors for high-load TCP connections?',
       'Good. When designing CI/CD pipelines, how do you handle secrets rotation and avoid storing build credentials inside Git logs?',
@@ -39,6 +131,30 @@ export default function MockInterview() {
       'Understood. How do you handle LLM prompt injections and ensure that output APIs consistently return parsed JSON structures?',
       'Let us talk about fine-tuning. When would you choose fine-tuning a model over context-based Retrieval-Augmented Generation (RAG)?',
       'Finally, tell me about a time you optimized training parameters or resource usage to scale training models efficiently.'
+    ],
+    'ML Engineer': [
+      'Welcome! Let us start by discussing model architectures. When do you prefer transformer-based architectures over traditional recurrent models?',
+      'Understood. How do you handle vanishing or exploding gradients during training of deep neural networks?',
+      'Let us talk about datasets. How do you detect and address dataset drift in production ML pipelines?',
+      'Finally, describe your approach to model quantization and pruning for edge device deployment.'
+    ],
+    'AI/ML Engineer': [
+      'Welcome! How do you design feature store pipelines to serve features with sub-millisecond latency to online ML models?',
+      'Makes sense. How do you monitor production ML models for concept drift and perform automated retraining?',
+      'Let us talk about evaluation. How do you evaluate the bias and fairness of a generative language model?',
+      'Finally, tell me about a time you had to debug an model performance degradation in production.'
+    ],
+    'Cybersecurity': [
+      'Welcome to the cybersecurity screening. How do you conduct threat modeling for a cloud-native microservices architecture?',
+      'Excellent. Explain the difference between symmetric and asymmetric encryption, and how TLS uses both to establish a secure connection.',
+      'Let us review web security. How do you protect API endpoints against SQL injection and insecure direct object references (IDOR)?',
+      'Finally, describe how you would respond to and mitigate an active security incident in your production environment.'
+    ],
+    'Cybersecurcity': [
+      'Welcome to the cybersecurity screening. How do you conduct threat modeling for a cloud-native microservices architecture?',
+      'Excellent. Explain the difference between symmetric and asymmetric encryption, and how TLS uses both to establish a secure connection.',
+      'Let us review web security. How do you protect API endpoints against SQL injection and insecure direct object references (IDOR)?',
+      'Finally, describe how you would respond to and mitigate an active security incident in your production environment.'
     ]
   };
 
@@ -83,18 +199,32 @@ export default function MockInterview() {
     const nextIdx = currentQuestionIndex + 1;
     const questionsList = interviewQuestions[role];
 
+    // Compute contextual acknowledgement based on keyword matching
+    const currentKeywords = (keywordMatrix[role] && keywordMatrix[role][currentQuestionIndex]) || [];
+    const lowerAnswer = savedInput.toLowerCase();
+    const matchedCount = currentKeywords.filter(word => lowerAnswer.includes(word)).length;
+
+    let acknowledgement = "Got it. ";
+    if (matchedCount >= 2) {
+      acknowledgement = "Excellent explanation. ";
+    } else if (matchedCount === 1) {
+      acknowledgement = "Understood, good point. ";
+    } else if (savedInput.split(/\s+/).length < 5) {
+      acknowledgement = "Acknowledged. ";
+    }
+
     setTimeout(() => {
       if (nextIdx < questionsList.length) {
         setChatLog(prev => [
           ...prev,
-          { sender: 'bot', text: questionsList[nextIdx] }
+          { sender: 'bot', text: `${acknowledgement}${questionsList[nextIdx]}` }
         ]);
         setCurrentQuestionIndex(nextIdx);
       } else {
         // Complete interview
         setChatLog(prev => [
           ...prev,
-          { sender: 'bot', text: 'Thank you for your responses. I will compile the grading matrices. Click "Compile Assessment" to see your score!' }
+          { sender: 'bot', text: `${acknowledgement}Thank you for your responses. I have compiled the grading matrices. Click "Compile Assessment & XP" to see your score!` }
         ]);
         setInterviewFinished(true);
       }
@@ -105,36 +235,53 @@ export default function MockInterview() {
     // Generate evaluations based on user answers
     const userAnswers = chatLog.filter(log => log.sender === 'user').map(log => log.text);
     
-    // Quick heuristic calculations for rating score (word count, action words etc.)
-    let score = 65;
+    let totalScore = 0;
     let comments = [];
+    const categoryKeywords = keywordMatrix[role] || [];
 
-    const totalWords = userAnswers.join(' ').split(' ').length;
-    if (totalWords > 80) {
-      score += 15;
-      comments.push('Strong communication depth: provided detailed, contextual explanations.');
-    } else {
-      score += 5;
-      comments.push('Technical answers are slightly concise; consider elaborating on specific edge conditions.');
+    for (let i = 0; i < 4; i++) {
+      const answer = userAnswers[i] || '';
+      const keywords = categoryKeywords[i] || [];
+      const lowerAnswer = answer.toLowerCase();
+
+      // Check how many keywords were matched
+      const matched = keywords.filter(word => lowerAnswer.includes(word));
+      
+      // Basic scoring for this answer
+      let answerScore = 0;
+      if (answer.trim().length > 0) {
+        // Base score for writing something
+        answerScore = 45;
+        // Word count bonus
+        const words = answer.trim().split(/\s+/).length;
+        answerScore += Math.min(20, Math.floor(words / 2)); // up to +20 points for word count
+
+        // Keyword matches bonus
+        if (matched.length > 0) {
+          answerScore += Math.min(35, matched.length * 12); // +12 per keyword, cap at +35
+        }
+      }
+
+      answerScore = Math.min(100, answerScore);
+      totalScore += answerScore;
+
+      // Question specific feedback
+      const questionNum = i + 1;
+      if (matched.length > 0) {
+        comments.push(`Q${questionNum} Feedback: Strong answer alignment. Successfully covered key concepts: ${matched.slice(0, 3).join(', ')}.`);
+      } else if (answer.trim().length > 10) {
+        comments.push(`Q${questionNum} Feedback: Answer was received but missed critical technical references such as: ${keywords.slice(0, 2).join(', ')}.`);
+      } else {
+        comments.push(`Q${questionNum} Feedback: Answer was missing or too brief to grade.`);
+      }
     }
 
-    const answersText = userAnswers.join(' ').toLowerCase();
-    const actionWords = ['optimize', 'index', 'scale', 'cache', 'queue', 'design', 'test', 'profile', 'react'];
-    const matchingWords = actionWords.filter(w => answersText.includes(w));
-    
-    if (matchingWords.length > 3) {
-      score += 15;
-      comments.push(`Strong vocabulary match: utilized industry standard verbs (${matchingWords.slice(0, 3).join(', ')}).`);
-    } else {
-      comments.push('Consider incorporating stronger action verbs (e.g. optimize, scale, decouple) to convey impact.');
-    }
-
-    score = Math.min(98, score);
+    const averageScore = Math.round(totalScore / 4);
 
     setScoreFeedback({
-      score,
+      score: averageScore,
       comments,
-      rating: score >= 85 ? 'Highly Recommended' : score >= 70 ? 'Recommended with feedback' : 'Needs practice'
+      rating: averageScore >= 85 ? 'Highly Recommended' : averageScore >= 70 ? 'Recommended with feedback' : 'Needs practice'
     });
 
     // Log Activity to Backend and Award XP
@@ -183,17 +330,50 @@ export default function MockInterview() {
                     </p>
 
                     <div>
-                      <label className="block text-[10px] text-gray-500 font-mono uppercase tracking-widest mb-1.5">Target Discipline</label>
-                      <select
-                        value={role}
-                        onChange={(e) => setRole(e.target.value)}
-                        className="w-full bg-white/[0.02] border border-white/10 rounded-xl px-3 py-3 text-xs text-gray-300 focus:outline-none focus:border-violet-500/50 font-mono"
-                      >
-                        <option value="Frontend Developer">Frontend Developer</option>
-                        <option value="Backend Developer">Backend Developer</option>
-                        <option value="DevOps Engineer">DevOps Engineer</option>
-                        <option value="AI Engineer">AI Engineer</option>
-                      </select>
+                      <label className="block text-[10px] text-gray-500 font-mono uppercase tracking-widest mb-1.5 font-bold">Target Discipline</label>
+                      <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
+                        <PopoverTrigger asChild>
+                          <button
+                            type="button"
+                            className="w-full flex items-center justify-between bg-white/[0.02] border border-white/10 rounded-xl px-4 py-3 text-xs text-gray-300 focus:outline-none focus:border-violet-500/50 font-mono hover:bg-white/[0.04] transition-colors cursor-pointer text-left"
+                          >
+                            <span>{role}</span>
+                            <span className="text-[10px] text-gray-500">&bull;&bull;&bull;</span>
+                          </button>
+                        </PopoverTrigger>
+                        <PopoverContent align="start" className="w-full min-w-[200px]">
+                          <div className="space-y-1">
+                            <p className="text-[9px] text-cyan-400 font-mono uppercase tracking-widest pb-1 border-b border-white/5 mb-1.5">Select Skills Path</p>
+                            {[
+                              'AI Engineer',
+                              'ML Engineer',
+                              'AI/ML Engineer',
+                              'Full Stack Developer',
+                              'Frontend Developer',
+                              'Backend Developer',
+                              'Cybersecurcity',
+                              'DevOps Engineer'
+                            ].map((skill) => (
+                              <button
+                                key={skill}
+                                type="button"
+                                onClick={() => {
+                                  setRole(skill);
+                                  setIsPopoverOpen(false);
+                                }}
+                                className={cn(
+                                  "w-full text-left px-3 py-2 rounded-lg text-xs font-mono transition-all hover:bg-violet-600/30 hover:text-white cursor-pointer",
+                                  role === skill 
+                                    ? "bg-violet-600/20 text-violet-300 border border-violet-500/20" 
+                                    : "text-gray-400"
+                                )}
+                              >
+                                {skill}
+                              </button>
+                            ))}
+                          </div>
+                        </PopoverContent>
+                      </Popover>
                     </div>
 
                     <button
@@ -297,32 +477,44 @@ export default function MockInterview() {
               ) : (
                 chatLog.map((log, index) => {
                   const isBot = log.sender === 'bot';
+                  const senderName = isBot ? 'Aria (Google Recruiter)' : (user?.username || 'You');
                   return (
                     <motion.div
                       key={index}
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      className={`flex gap-3.5 ${isBot ? 'justify-start' : 'justify-end'}`}
+                      className={`flex flex-col ${isBot ? 'items-start' : 'items-end'} mb-2`}
                     >
-                      {isBot && (
-                        <div className="w-8 h-8 rounded-lg bg-violet-600/20 border border-violet-500/30 flex items-center justify-center shrink-0">
-                          <Bot size={14} className="text-violet-400" />
-                        </div>
-                      )}
-                      
-                      <div className={`p-4 rounded-2xl max-w-md text-xs leading-relaxed ${
-                        isBot 
-                          ? 'bg-white/[0.02] border border-white/5 text-gray-200' 
-                          : 'bg-gradient-to-r from-violet-600/30 to-cyan-500/10 border border-violet-500/25 text-white'
-                      }`}>
-                        {log.text}
+                      <div className="flex items-center gap-1.5 mb-1.5 text-[9px] font-mono text-gray-500">
+                        <span className="font-semibold text-gray-400">{senderName}</span>
+                        {isBot ? (
+                          <span className="px-1.5 bg-violet-600/10 border border-violet-500/20 text-violet-400 rounded">AI AGENT</span>
+                        ) : (
+                          <span className="px-1.5 bg-cyan-500/10 border border-cyan-400/20 text-cyan-400 rounded">CANDIDATE</span>
+                        )}
                       </div>
-
-                      {!isBot && (
-                        <div className="w-8 h-8 rounded-lg bg-cyan-500/20 border border-cyan-400/30 flex items-center justify-center shrink-0">
-                          <User size={14} className="text-cyan-400" />
+                      
+                      <div className={`flex gap-3.5 ${isBot ? 'justify-start' : 'justify-end'}`}>
+                        {isBot && (
+                          <div className="w-8 h-8 rounded-lg bg-violet-600/20 border border-violet-500/30 flex items-center justify-center shrink-0">
+                            <Bot size={14} className="text-violet-400" />
+                          </div>
+                        )}
+                        
+                        <div className={`p-4 rounded-2xl max-w-md text-xs leading-relaxed ${
+                          isBot 
+                            ? 'bg-white/[0.02] border border-white/5 text-gray-200' 
+                            : 'bg-gradient-to-r from-violet-600/30 to-cyan-500/10 border border-violet-500/25 text-white'
+                        }`}>
+                          {log.text}
                         </div>
-                      )}
+
+                        {!isBot && (
+                          <div className="w-8 h-8 rounded-lg bg-cyan-500/20 border border-cyan-400/30 flex items-center justify-center shrink-0">
+                            <User size={14} className="text-cyan-400" />
+                          </div>
+                        )}
+                      </div>
                     </motion.div>
                   );
                 })
