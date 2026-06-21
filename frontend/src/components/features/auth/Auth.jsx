@@ -164,36 +164,31 @@ const BoxReveal = memo(function BoxReveal({
 
 const Ripple = memo(function Ripple({
   mainCircleSize = 210,
-  mainCircleOpacity = 0.24,
-  numCircles = 11,
+  mainCircleOpacity = 0.12,
+  numCircles = 8,
   className = '',
 }) {
   return (
     <section
-      className={`max-w-[50%] absolute inset-0 flex items-center justify-center
-        dark:bg-white/5 bg-neutral-50
-        [mask-image:linear-gradient(to_bottom,black,transparent)]
-        dark:[mask-image:linear-gradient(to_bottom,white,transparent)] ${className}`}
+      className={`absolute inset-0 flex items-center justify-center pointer-events-none ${className}`}
     >
       {Array.from({ length: numCircles }, (_, i) => {
-        const size = mainCircleSize + i * 70;
-        const opacity = mainCircleOpacity - i * 0.03;
+        const size = mainCircleSize + i * 60;
+        const opacity = mainCircleOpacity - i * 0.015;
         const animationDelay = `${i * 0.06}s`;
         const borderStyle = i === numCircles - 1 ? 'dashed' : 'solid';
-        const borderOpacity = 5 + i * 5;
 
         return (
           <span
             key={i}
-            className='absolute animate-ripple rounded-full bg-foreground/15 border'
+            className='absolute animate-ripple rounded-full border border-violet-500/10'
             style={{
               width: `${size}px`,
               height: `${size}px`,
-              opacity: opacity,
+              opacity: Math.max(0.01, opacity),
               animationDelay: animationDelay,
               borderStyle: borderStyle,
               borderWidth: '1px',
-              borderColor: `rgba(255, 255, 255, ${borderOpacity / 100})`,
               top: '50%',
               left: '50%',
               transform: 'translate(-50%, -50%)',
@@ -225,7 +220,7 @@ const OrbitingCircles = memo(function OrbitingCircles({
           className='pointer-events-none absolute inset-0 size-full'
         >
           <circle
-            className='stroke-black/10 stroke-1 dark:stroke-white/10'
+            className='stroke-violet-500/10 stroke-1'
             cx='50%'
             cy='50%'
             r={radius}
@@ -242,12 +237,14 @@ const OrbitingCircles = memo(function OrbitingCircles({
           }
         }
         className={cn(
-          'absolute flex size-full transform-gpu animate-orbit items-center justify-center rounded-full border bg-black/10 [animation-delay:calc(var(--delay)*1000ms)] dark:bg-white/10',
+          'absolute flex size-full transform-gpu animate-orbit items-center justify-center pointer-events-none',
           { '[animation-direction:reverse]': reverse },
           className
         )}
       >
-        {children}
+        <div className="pointer-events-auto">
+          {children}
+        </div>
       </section>
     </>
   );
