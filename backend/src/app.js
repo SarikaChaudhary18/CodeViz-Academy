@@ -13,8 +13,11 @@ const resumeRoutes = require('./routes/resumeRoutes');
 const communityRoutes = require('./routes/communityRoutes');
 const trackerRoutes = require('./routes/trackerRoutes');
 const sheetRoutes = require('./routes/sheetRoutes');
+const roadmapRoutes = require('./routes/roadmapRoutes');
 const questRoutes = require('./routes/questRoutes');
 const hackathonRoutes = require('./routes/hackathonRoutes');
+const copilotRoutes = require('./routes/copilotRoutes');
+const companyPrepRoutes = require('./routes/companyPrepRoutes');
 
 const app = express();
 
@@ -55,8 +58,11 @@ app.use('/api/resume', resumeRoutes);
 app.use('/api/communities', communityRoutes);
 app.use('/api/trackers', trackerRoutes);
 app.use('/api/sheets', sheetRoutes);
+app.use('/api/roadmaps', roadmapRoutes);
 app.use('/api/quests', questRoutes);
 app.use('/api/hackathons', hackathonRoutes);
+app.use('/api/copilot', copilotRoutes);
+app.use('/api/company-prep', companyPrepRoutes);
 
 // Global centrally-managed error handler
 app.use(errorHandler);

@@ -1,300 +1,515 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useStore } from '../../../hooks/useStore';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Code, CheckCircle2, Circle, AlertCircle, RefreshCw, BarChart2 } from 'lucide-react';
-import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, Legend } from 'recharts';
+import {
+  Code, CheckCircle2, Circle, AlertCircle, RefreshCw, BarChart2,
+  ChevronDown, ChevronRight, Play, ExternalLink, Loader2, Search,
+  Filter, Zap, Target, Trophy, Youtube, BookOpen, Hash
+} from 'lucide-react';
+import {
+  ResponsiveContainer, LineChart, Line, XAxis, YAxis,
+  Tooltip, CartesianGrid, Legend
+} from 'recharts';
+
+const SHEETS = [
+  { key: 'striver',  label: "Striver A2Z",     badge: "450+",  color: "from-violet-600 to-violet-400"  },
+  { key: 'babbar',   label: "Love Babbar",      badge: "450",   color: "from-cyan-600   to-cyan-400"    },
+  { key: 'neetcode', label: "NeetCode 150",     badge: "150",   color: "from-emerald-600 to-emerald-400"},
+];
+
+const DIFFICULTY_COLORS = {
+  Easy:   { text: 'text-emerald-400', bg: 'bg-emerald-400/10 border-emerald-400/20' },
+  Medium: { text: 'text-amber-400',   bg: 'bg-amber-400/10  border-amber-400/20'   },
+  Hard:   { text: 'text-red-400',     bg: 'bg-red-400/10    border-red-400/20'     },
+};
+
+function groupByCategory(problems) {
+  const grouped = {};
+  for (const p of problems) {
+    const cat = p.category || 'Uncategorized';
+    const sub = p.subCategory || 'General';
+    if (!grouped[cat]) grouped[cat] = {};
+    if (!grouped[cat][sub]) grouped[cat][sub] = [];
+    grouped[cat][sub].push(p);
+  }
+  return grouped;
+}
 
 export default function DsaSheets() {
+  const navigate = useNavigate();
   const {
     sheetProgress,
     sheetsLoading,
     fetchSheetProgress,
-    toggleProblemStatus
+    toggleProblemStatus,
+    dsaProblems,
+    dsaProblemsLoading,
+    fetchDsaProblems,
   } = useStore();
 
   const [selectedSheet, setSelectedSheet] = useState('striver');
   const [toggleLoading, setToggleLoading] = useState({});
+  const [openCategories, setOpenCategories] = useState({});
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filterDifficulty, setFilterDifficulty] = useState('All');
+  const [filterStatus, setFilterStatus] = useState('All');
 
+  // Fetch both progress and problems when sheet changes
   useEffect(() => {
     fetchSheetProgress(selectedSheet);
-  }, [selectedSheet, fetchSheetProgress]);
+    fetchDsaProblems(selectedSheet);
+    setOpenCategories({});
+    setSearchQuery('');
+  }, [selectedSheet, fetchSheetProgress, fetchDsaProblems]);
 
-  const sheetsQuestions = {
-    striver: [
-      { id: 's1', title: 'Two Sum', topic: 'Arrays & Hashing', difficulty: 'Easy', link: 'https://leetcode.com/problems/two-sum' },
-      { id: 's2', title: 'Reverse Linked List', topic: 'Linked List', difficulty: 'Easy', link: 'https://leetcode.com/problems/reverse-linked-list' },
-      { id: 's3', title: 'Merge Intervals', topic: 'Intervals', difficulty: 'Medium', link: 'https://leetcode.com/problems/merge-intervals' },
-      { id: 's4', title: 'Top K Frequent Elements', topic: 'Heaps / Priority Queues', difficulty: 'Medium', link: 'https://leetcode.com/problems/top-k-frequent-elements' },
-      { id: 's5', title: 'Longest Palindromic Substring', topic: 'Dynamic Programming', difficulty: 'Medium', link: 'https://leetcode.com/problems/longest-palindromic-substring' }
-    ],
-    babbar: [
-      { id: 'b1', title: 'Reverse the Array', topic: 'Arrays', difficulty: 'Easy', link: 'https://leetcode.com/problems/reverse-string' },
-      { id: 'b2', title: 'Find Min and Max in Array', topic: 'Arrays', difficulty: 'Easy', link: 'https://leetcode.com/problems/find-minimum-in-rotated-sorted-array' },
-      { id: 'b3', title: 'Kth Smallest Element', topic: 'Heaps', difficulty: 'Medium', link: 'https://leetcode.com/problems/kth-largest-element-in-an-array' },
-      { id: 'b4', title: 'Sort an Array of 0s, 1s, 2s', topic: 'Arrays', difficulty: 'Medium', link: 'https://leetcode.com/problems/sort-colors' },
-      { id: 'b5', title: 'Cyclically Rotate an Array by One', topic: 'Arrays', difficulty: 'Easy', link: 'https://leetcode.com/problems/rotate-array' }
-    ],
-    neetcode: [
-      { id: 'n1', title: 'Contains Duplicate', topic: 'Arrays & Hashing', difficulty: 'Easy', link: 'https://leetcode.com/problems/contains-duplicate' },
-      { id: 'n2', title: 'Valid Anagram', topic: 'Arrays & Hashing', difficulty: 'Easy', link: 'https://leetcode.com/problems/valid-anagram' },
-      { id: 'n3', title: 'Group Anagrams', topic: 'Arrays & Hashing', difficulty: 'Medium', link: 'https://leetcode.com/problems/group-anagrams' },
-      { id: 'n4', title: 'Product of Array Except Self', topic: 'Arrays & Hashing', difficulty: 'Medium', link: 'https://leetcode.com/problems/product-of-array-except-self' },
-      { id: 'n5', title: 'Longest Consecutive Sequence', topic: 'Arrays & Hashing', difficulty: 'Medium', link: 'https://leetcode.com/problems/longest-consecutive-sequence' }
-    ]
+  const completedIds = useMemo(
+    () => new Set(sheetProgress.filter(p => p.sheetType === selectedSheet && p.status === 'completed').map(p => p.problemId)),
+    [sheetProgress, selectedSheet]
+  );
+
+  const filteredProblems = useMemo(() => {
+    return dsaProblems.filter(p => {
+      const matchesSheet = p.sheetType === selectedSheet;
+      const matchesSearch = !searchQuery || p.title.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesDiff = filterDifficulty === 'All' || p.difficulty === filterDifficulty;
+      const matchesStatus =
+        filterStatus === 'All' ? true :
+        filterStatus === 'Done' ? completedIds.has(p.problemId) :
+        !completedIds.has(p.problemId);
+      return matchesSheet && matchesSearch && matchesDiff && matchesStatus;
+    });
+  }, [dsaProblems, selectedSheet, searchQuery, filterDifficulty, filterStatus, completedIds]);
+
+  const grouped = useMemo(() => groupByCategory(filteredProblems), [filteredProblems]);
+  const totalProblems = dsaProblems.filter(p => p.sheetType === selectedSheet).length;
+  const completedCount = dsaProblems.filter(p => p.sheetType === selectedSheet && completedIds.has(p.problemId)).length;
+  const progressPercent = totalProblems ? Math.round((completedCount / totalProblems) * 100) : 0;
+
+  // Auto-open first category
+  useEffect(() => {
+    const keys = Object.keys(grouped);
+    if (keys.length > 0) {
+      setOpenCategories(prev => {
+        if (Object.keys(prev).length === 0) {
+          return { [keys[0]]: true };
+        }
+        return prev;
+      });
+    }
+  }, [grouped]);
+
+  const toggleCategory = (cat) => {
+    setOpenCategories(prev => ({ ...prev, [cat]: !prev[cat] }));
   };
 
-  const activeQuestions = sheetsQuestions[selectedSheet] || [];
-  
-  // Calculate completed count
-  const completedProblems = sheetProgress
-    .filter(p => p.sheetType === selectedSheet && p.status === 'completed')
-    .map(p => p.problemId);
+  const handleToggleCheckbox = async (problem, isCompleted) => {
+    const pid = problem.problemId;
+    setToggleLoading(prev => ({ ...prev, [pid]: true }));
+    try {
+      await toggleProblemStatus(selectedSheet, pid, !isCompleted);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setToggleLoading(prev => ({ ...prev, [pid]: false }));
+    }
+  };
 
-  const completedCount = activeQuestions.filter(q => completedProblems.includes(q.id)).length;
-  const progressPercent = Math.round((completedCount / activeQuestions.length) * 100);
-
-  // Generate 7-day timeline progress data representing a burn-down chart
-  const generateChartData = () => {
-    const data = [];
-    const totalQuestions = activeQuestions.length || 1;
-    const steps = 6; // 7 days (index 0 to 6)
-    
+  // 7-day burndown chart
+  const chartData = useMemo(() => {
+    const steps = 6;
     const completedWithDates = sheetProgress
       .filter(p => p.sheetType === selectedSheet && p.status === 'completed')
-      .map(p => {
-        const dateStr = p.solvedAt || p.updatedAt || p.createdAt;
-        const d = dateStr ? new Date(dateStr) : new Date();
-        return {
-          problemId: p.problemId,
-          date: d
-        };
-      });
+      .map(p => ({ date: new Date(p.solvedAt || p.updatedAt || p.createdAt || Date.now()) }));
 
-    for (let i = 0; i <= steps; i++) {
-      // Calculate the target day
+    return Array.from({ length: steps + 1 }, (_, i) => {
       const day = new Date();
-      day.setHours(23, 59, 59, 999); // end of that day
+      day.setHours(23, 59, 59, 999);
       day.setDate(day.getDate() - (steps - i));
-      
-      // Count how many questions were completed on or before this day's end
-      const completedBeforeOrOnThisDay = completedWithDates.filter(p => p.date <= day).length;
-      const actualRemaining = Math.max(0, totalQuestions - completedBeforeOrOnThisDay);
-      
-      // Estimated / Ideal Remaining (linear burndown from totalQuestions to 0)
-      const estimatedRemaining = Math.max(0, parseFloat((totalQuestions - (totalQuestions / steps) * i).toFixed(1)));
-      
-      const formattedDate = day.toLocaleDateString(undefined, { month: '2-digit', day: '2-digit' });
-      
-      data.push({
-        name: formattedDate,
-        "Actual Burndown": actualRemaining,
-        "Estimated Burndown": estimatedRemaining
-      });
-    }
-    return data;
-  };
-  const chartData = generateChartData();
+      const doneCount = completedWithDates.filter(p => p.date <= day).length;
+      const remaining = Math.max(0, totalProblems - doneCount);
+      const estimated = Math.max(0, parseFloat((totalProblems - (totalProblems / steps) * i).toFixed(1)));
+      return {
+        name: day.toLocaleDateString(undefined, { month: '2-digit', day: '2-digit' }),
+        "Actual": remaining,
+        "Ideal": estimated,
+      };
+    });
+  }, [sheetProgress, selectedSheet, totalProblems]);
 
-  const handleToggleCheckbox = async (problemId, isCurrentlyCompleted) => {
-    setToggleLoading(prev => ({ ...prev, [problemId]: true }));
-    try {
-      await toggleProblemStatus(selectedSheet, problemId, !isCurrentlyCompleted);
-    } catch (err) {
-      alert(err.message || 'Failed to update problem status.');
-    } finally {
-      setToggleLoading(prev => ({ ...prev, [problemId]: false }));
-    }
-  };
+  const isLoading = sheetsLoading || dsaProblemsLoading;
+  const categories = Object.keys(grouped);
 
   return (
-    <div className="space-y-8">
-      
-      {/* Header HUD */}
-      <div>
-        <h2 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400 font-sans tracking-wide">
-          INTERACTIVE DSA SHEETS
-        </h2>
-        <p className="text-xs text-cyan-400 font-mono tracking-widest uppercase mt-0.5">
-          TABBED PROBLEM CHECKLISTS WITH PERSISTED PROGRESS INTEGRATION & EXPERIENCE FEEDBACK
-        </p>
+    <div className="space-y-6">
+
+      {/* Header */}
+      <div className="flex items-start justify-between">
+        <div>
+          <h2 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400 tracking-wide">
+            DSA SHEET TRACKER
+          </h2>
+          <p className="text-xs text-cyan-400 font-mono tracking-widest uppercase mt-0.5">
+            CURATED PROBLEM SETS WITH INTEGRATED CODING SANDBOX
+          </p>
+        </div>
+        <div className="text-right">
+          <div className="text-2xl font-extrabold text-cyan-400 font-mono text-glow-cyan">{progressPercent}%</div>
+          <div className="text-[10px] text-gray-500 font-mono uppercase">{completedCount}/{totalProblems} Solved</div>
+        </div>
       </div>
 
-      {/* Sheet Selection tabs */}
-      <div className="flex flex-wrap gap-3 border-b border-white/5 pb-4">
-        {[
-          { key: 'striver', label: 'Striver A-Z Sheet' },
-          { key: 'babbar', label: 'Love Babbar 450' },
-          { key: 'neetcode', label: 'NeetCode 150' }
-        ].map((sheet) => (
+      {/* Sheet Tabs */}
+      <div className="flex flex-wrap gap-3">
+        {SHEETS.map(sheet => (
           <button
             key={sheet.key}
             onClick={() => setSelectedSheet(sheet.key)}
-            className={`px-5 py-2.5 rounded-xl font-mono text-xs font-bold uppercase tracking-wider transition-all border ${
+            className={`relative px-5 py-3 rounded-2xl font-mono text-xs font-bold uppercase tracking-wider transition-all border overflow-hidden group ${
               selectedSheet === sheet.key
-                ? 'bg-gradient-to-r from-violet-600/35 to-cyan-500/20 text-white border-violet-500/40 text-glow-cyan'
-                : 'bg-white/[0.01] hover:bg-white/[0.03] border-transparent text-gray-500'
+                ? 'bg-gradient-to-r from-violet-600/25 to-cyan-500/15 text-white border-violet-500/40 text-glow-cyan'
+                : 'bg-white/[0.01] hover:bg-white/[0.04] border-white/5 text-gray-500 hover:text-gray-300'
             }`}
           >
             {sheet.label}
+            <span className={`ml-2 text-[9px] px-1.5 py-0.5 rounded-md font-bold ${
+              selectedSheet === sheet.key
+                ? 'bg-violet-500/30 text-violet-300'
+                : 'bg-white/5 text-gray-600'
+            }`}>
+              {sheet.badge}
+            </span>
           </button>
         ))}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        
-        {/* Left Side: Checklist panel */}
-        <div className="lg:col-span-2 space-y-6">
-          <div className="glassmorphism rounded-3xl p-8 border-white/10 box-glow-violet relative overflow-hidden">
-            
-            <div className="flex justify-between items-center mb-6">
-              <h3 className="text-lg font-bold text-white tracking-wide uppercase flex items-center gap-2">
-                <Code size={18} className="text-violet-400" />
-                Problem Checklist Matrix
-              </h3>
-              <span className="text-[10px] text-cyan-400 font-mono tracking-widest uppercase bg-white/[0.02] border border-white/5 px-2.5 py-1 rounded-lg">
-                SECTOR SYNCED
-              </span>
-            </div>
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
 
-            {sheetsLoading ? (
-              <div className="text-center py-12 text-xs font-mono text-gray-500 uppercase animate-pulse flex items-center justify-center gap-2">
-                <RefreshCw size={14} className="animate-spin" />
-                Synchronizing checklist states...
+        {/* ── LEFT: Checklist Panel ── */}
+        <div className="xl:col-span-2 space-y-4">
+
+          {/* Search + Filter Row */}
+          <div className="flex gap-3 flex-wrap">
+            <div className="relative flex-1 min-w-[180px]">
+              <Search size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-600" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={e => setSearchQuery(e.target.value)}
+                placeholder="Search problems..."
+                className="w-full bg-white/[0.02] border border-white/5 rounded-xl pl-8 pr-4 py-2.5 text-xs font-mono text-white placeholder-gray-600 focus:outline-none focus:border-violet-500/40 transition-colors"
+              />
+            </div>
+            {['All', 'Easy', 'Medium', 'Hard'].map(d => (
+              <button
+                key={d}
+                onClick={() => setFilterDifficulty(d)}
+                className={`px-3 py-2 rounded-xl text-[10px] font-mono font-bold uppercase border transition-all ${
+                  filterDifficulty === d
+                    ? d === 'Easy'   ? 'bg-emerald-500/15 border-emerald-500/30 text-emerald-400'
+                    : d === 'Medium' ? 'bg-amber-500/15   border-amber-500/30   text-amber-400'
+                    : d === 'Hard'   ? 'bg-red-500/15     border-red-500/30     text-red-400'
+                    : 'bg-violet-500/15 border-violet-500/30 text-violet-400'
+                    : 'border-white/5 text-gray-600 hover:text-gray-400'
+                }`}
+              >
+                {d}
+              </button>
+            ))}
+            {['All', 'Done', 'Todo'].map(s => (
+              <button
+                key={s}
+                onClick={() => setFilterStatus(s)}
+                className={`px-3 py-2 rounded-xl text-[10px] font-mono font-bold uppercase border transition-all ${
+                  filterStatus === s
+                    ? 'bg-cyan-500/15 border-cyan-500/30 text-cyan-400'
+                    : 'border-white/5 text-gray-600 hover:text-gray-400'
+                }`}
+              >
+                {s}
+              </button>
+            ))}
+          </div>
+
+          {/* Problem List */}
+          <div className="glassmorphism rounded-3xl border-white/10 box-glow-violet overflow-hidden">
+            {isLoading ? (
+              <div className="flex items-center justify-center gap-2 py-16 text-xs font-mono text-gray-500 uppercase animate-pulse">
+                <Loader2 size={14} className="animate-spin" />
+                Fetching {totalProblems > 0 ? `${totalProblems}` : ''} problems...
+              </div>
+            ) : categories.length === 0 ? (
+              <div className="py-16 text-center text-gray-600 font-mono text-xs">
+                No problems match your filters.
               </div>
             ) : (
-              <div className="space-y-3">
-                {activeQuestions.map((q) => {
-                  const isCompleted = completedProblems.includes(q.id);
-                  const isL = toggleLoading[q.id];
+              <div>
+                {categories.map((cat, ci) => {
+                  const subCategories = grouped[cat];
+                  const allProblemsInCat = Object.values(subCategories).flat();
+                  const doneInCat = allProblemsInCat.filter(p => completedIds.has(p.problemId)).length;
+                  const isOpen = !!openCategories[cat];
 
                   return (
-                    <div 
-                      key={q.id}
-                      className={`flex items-center justify-between p-4 border rounded-2xl transition-all ${
-                        isCompleted 
-                          ? 'bg-emerald-950/5 border-emerald-500/20 hover:border-emerald-500/40' 
-                          : 'bg-white/[0.01] border-white/5 hover:border-white/10'
-                      }`}
-                    >
-                      <div className="flex items-center gap-4">
-                        <button
-                          onClick={() => handleToggleCheckbox(q.id, isCompleted)}
-                          disabled={isL}
-                          className={`shrink-0 transition-transform active:scale-95 ${
-                            isCompleted ? 'text-emerald-400' : 'text-gray-600 hover:text-white'
-                          }`}
-                        >
-                          {isL ? (
-                            <span className="w-5 h-5 border-2 border-white/10 border-t-cyan-400 rounded-full animate-spin block" />
-                          ) : isCompleted ? (
-                            <CheckCircle2 size={20} className="text-glow-cyan" />
-                          ) : (
-                            <Circle size={20} />
-                          )}
-                        </button>
-                        
-                        <div>
-                          <a
-                            href={q.link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className={`text-sm font-semibold hover:text-cyan-400 transition-colors leading-snug ${
-                              isCompleted ? 'text-gray-400 line-through' : 'text-white'
-                            }`}
-                          >
-                            {q.title}
-                          </a>
-                          <div className="flex gap-2 items-center mt-1 text-[9px] font-mono text-gray-500 uppercase">
-                            <span>{q.topic}</span>
-                            <span>&bull;</span>
-                            <span className={`font-bold ${
-                              q.difficulty === 'Hard' ? 'text-red-400' : q.difficulty === 'Medium' ? 'text-amber-400' : 'text-emerald-400'
-                            }`}>{q.difficulty}</span>
+                    <div key={cat} className={ci > 0 ? 'border-t border-white/5' : ''}>
+                      {/* Category Header */}
+                      <button
+                        onClick={() => toggleCategory(cat)}
+                        className="w-full flex items-center justify-between px-6 py-4 hover:bg-white/[0.02] transition-colors group"
+                      >
+                        <div className="flex items-center gap-3">
+                          <div className={`transition-transform duration-200 ${isOpen ? 'rotate-90' : ''}`}>
+                            <ChevronRight size={14} className="text-gray-500 group-hover:text-gray-300" />
+                          </div>
+                          <span className="text-sm font-bold text-white tracking-wide">{cat}</span>
+                          <span className="text-[9px] font-mono text-gray-600 bg-white/[0.03] border border-white/5 px-2 py-0.5 rounded-lg uppercase">
+                            {allProblemsInCat.length} problems
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-[9px] font-mono text-emerald-400">{doneInCat}/{allProblemsInCat.length}</span>
+                          <div className="w-20 h-1 bg-white/5 rounded-full overflow-hidden">
+                            <div
+                              className="h-full bg-gradient-to-r from-violet-500 to-cyan-400 rounded-full transition-all"
+                              style={{ width: `${allProblemsInCat.length ? (doneInCat / allProblemsInCat.length) * 100 : 0}%` }}
+                            />
                           </div>
                         </div>
-                      </div>
+                      </button>
 
-                      <span className="font-mono text-[10px] text-gray-500 tracking-wider">
-                        {isCompleted ? '+15 XP Gained' : '+15 XP Reward'}
-                      </span>
+                      {/* Subcategory + Problems */}
+                      <AnimatePresence initial={false}>
+                        {isOpen && (
+                          <motion.div
+                            key={cat}
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.22, ease: 'easeInOut' }}
+                            className="overflow-hidden"
+                          >
+                            {Object.entries(subCategories).map(([sub, problems]) => (
+                              <div key={sub}>
+                                <div className="px-8 py-2 text-[9px] font-mono font-bold text-gray-600 uppercase tracking-widest bg-white/[0.01] border-y border-white/[0.03] flex items-center gap-2">
+                                  <Hash size={8} />
+                                  {sub}
+                                </div>
+                                <div>
+                                  {problems.map((p, pi) => {
+                                    const isCompleted = completedIds.has(p.problemId);
+                                    const isL = toggleLoading[p.problemId];
+                                    const diffInfo = DIFFICULTY_COLORS[p.difficulty] || DIFFICULTY_COLORS.Medium;
+
+                                    return (
+                                      <div
+                                        key={p.problemId}
+                                        className={`flex items-center justify-between px-8 py-3 border-b border-white/[0.03] transition-all group hover:bg-white/[0.02] ${
+                                          isCompleted ? 'bg-emerald-950/10' : ''
+                                        } ${pi === problems.length - 1 ? 'border-b-0' : ''}`}
+                                      >
+                                        <div className="flex items-center gap-4 flex-1 min-w-0">
+                                          {/* Checkbox */}
+                                          <button
+                                            onClick={() => handleToggleCheckbox(p, isCompleted)}
+                                            disabled={isL}
+                                            className={`shrink-0 transition-all active:scale-90 ${
+                                              isCompleted ? 'text-emerald-400' : 'text-gray-700 hover:text-white'
+                                            }`}
+                                          >
+                                            {isL ? (
+                                              <span className="w-4 h-4 border-2 border-white/10 border-t-cyan-400 rounded-full animate-spin block" />
+                                            ) : isCompleted ? (
+                                              <CheckCircle2 size={16} className="text-glow-cyan" />
+                                            ) : (
+                                              <Circle size={16} />
+                                            )}
+                                          </button>
+
+                                          {/* Title */}
+                                          <div className="flex-1 min-w-0">
+                                            <div className={`text-xs font-semibold truncate leading-snug ${
+                                              isCompleted ? 'text-gray-500 line-through' : 'text-white'
+                                            }`}>
+                                              {p.title}
+                                            </div>
+                                          </div>
+
+                                          {/* Difficulty badge */}
+                                          <span className={`shrink-0 text-[9px] font-mono font-bold px-2 py-0.5 rounded-md border uppercase ${diffInfo.bg} ${diffInfo.text}`}>
+                                            {p.difficulty}
+                                          </span>
+                                        </div>
+
+                                        {/* Action buttons */}
+                                        <div className="flex items-center gap-1.5 ml-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                                          {p.youtube && (
+                                            <a
+                                              href={p.youtube}
+                                              target="_blank"
+                                              rel="noopener noreferrer"
+                                              onClick={e => e.stopPropagation()}
+                                              className="p-1.5 rounded-lg text-gray-600 hover:text-red-400 hover:bg-red-400/10 transition-all"
+                                              title="Watch Solution"
+                                            >
+                                              <Youtube size={12} />
+                                            </a>
+                                          )}
+                                          {p.link && (
+                                            <a
+                                              href={p.link}
+                                              target="_blank"
+                                              rel="noopener noreferrer"
+                                              onClick={e => e.stopPropagation()}
+                                              className="p-1.5 rounded-lg text-gray-600 hover:text-violet-400 hover:bg-violet-400/10 transition-all"
+                                              title="Open on LeetCode"
+                                            >
+                                              <ExternalLink size={12} />
+                                            </a>
+                                          )}
+                                          {/* Solve in Sandbox */}
+                                          <button
+                                            onClick={() => navigate(`/dsa-sheets/solve/${p.problemId}`)}
+                                            className="flex items-center gap-1 px-2.5 py-1 rounded-lg text-[9px] font-mono font-bold uppercase bg-violet-600/20 border border-violet-500/30 text-violet-300 hover:bg-violet-600/35 transition-all"
+                                            title="Open in Sandbox"
+                                          >
+                                            <Play size={9} className="fill-current" /> Solve
+                                          </button>
+                                        </div>
+
+                                        {/* XP tag */}
+                                        <span className={`ml-3 font-mono text-[9px] shrink-0 ${isCompleted ? 'text-emerald-500' : 'text-gray-600'}`}>
+                                          {isCompleted ? '+15 XP' : '15 XP'}
+                                        </span>
+                                      </div>
+                                    );
+                                  })}
+                                </div>
+                              </div>
+                            ))}
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
                     </div>
                   );
                 })}
               </div>
             )}
-
           </div>
         </div>
 
-        {/* Right Side: Progress Radar & stats */}
-        <div>
-          <div className="glassmorphism rounded-3xl p-8 border-white/10 box-glow-cyan relative overflow-hidden h-full flex flex-col justify-between">
-            <div className="space-y-6">
-              
-              <h3 className="text-lg font-bold text-white tracking-wide uppercase flex items-center gap-2">
-                <BarChart2 size={18} className="text-cyan-400" />
-                SHEETS PROGRESS
-              </h3>
+        {/* ── RIGHT: Stats Panel ── */}
+        <div className="space-y-4">
 
-              <div className="text-center py-6 bg-white/[0.02] border border-white/5 rounded-2xl space-y-2">
-                <h4 className="text-[10px] text-gray-500 font-mono uppercase tracking-widest">Completion rate</h4>
-                <div className="text-5xl font-extrabold text-glow-cyan text-cyan-400 font-mono">{progressPercent}%</div>
-                <p className="text-[10px] text-gray-400 font-mono">
-                  {completedCount} OF {activeQuestions.length} CHALLENGES MET
-                </p>
+          {/* Progress Ring Card */}
+          <div className="glassmorphism rounded-3xl p-6 border-white/10 box-glow-cyan">
+            <h3 className="text-xs font-bold font-mono text-white uppercase tracking-wider flex items-center gap-2 mb-5">
+              <BarChart2 size={14} className="text-cyan-400" /> Progress Overview
+            </h3>
+
+            {/* Big % ring */}
+            <div className="relative w-28 h-28 mx-auto mb-4">
+              <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="8" />
+                <circle
+                  cx="50" cy="50" r="42" fill="none"
+                  stroke="url(#progressGrad)" strokeWidth="8"
+                  strokeDasharray={`${2 * Math.PI * 42}`}
+                  strokeDashoffset={`${2 * Math.PI * 42 * (1 - progressPercent / 100)}`}
+                  strokeLinecap="round"
+                  style={{ transition: 'stroke-dashoffset 0.8s ease' }}
+                />
+                <defs>
+                  <linearGradient id="progressGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#7c3aed" />
+                    <stop offset="100%" stopColor="#06b6d4" />
+                  </linearGradient>
+                </defs>
+              </svg>
+              <div className="absolute inset-0 flex flex-col items-center justify-center">
+                <span className="text-2xl font-extrabold text-white font-mono">{progressPercent}%</span>
+                <span className="text-[9px] text-gray-500 font-mono">DONE</span>
               </div>
-
-              {/* Progress Burndown Chart */}
-              <div className="h-44 w-full bg-white/[0.01] border border-white/5 p-3 rounded-2xl">
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={chartData} margin={{ top: 5, right: 10, left: -25, bottom: 0 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.03)" />
-                    <XAxis dataKey="name" stroke="#6b7280" fontSize={8} tickLine={false} />
-                    <YAxis stroke="#6b7280" fontSize={8} tickLine={false} domain={[0, activeQuestions.length || 5]} />
-                    <Tooltip 
-                      contentStyle={{ backgroundColor: '#070b19', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px' }}
-                      labelStyle={{ color: '#fff', fontSize: '10px', fontFamily: 'monospace' }}
-                      itemStyle={{ fontSize: '10px', fontFamily: 'monospace' }}
-                    />
-                    <Legend 
-                      wrapperStyle={{ fontSize: '9px', fontFamily: 'monospace', color: '#fff', marginTop: '-5px' }}
-                      verticalAlign="top"
-                      height={28}
-                    />
-                    <Line 
-                      type="monotone" 
-                      dataKey="Estimated Burndown" 
-                      stroke="#84cc16" 
-                      strokeWidth={2} 
-                      dot={{ r: 3, fill: '#84cc16' }}
-                      activeDot={{ r: 5 }}
-                    />
-                    <Line 
-                      type="monotone" 
-                      dataKey="Actual Burndown" 
-                      stroke="#06b6d4" 
-                      strokeWidth={2} 
-                      dot={{ r: 3, fill: '#06b6d4' }}
-                      activeDot={{ r: 5 }}
-                    />
-                  </LineChart>
-                </ResponsiveContainer>
-              </div>
-
-              {/* Informative advice */}
-              <div className="p-4 bg-white/[0.02] border border-white/5 rounded-2xl flex gap-3 text-xs text-gray-400 leading-relaxed font-sans">
-                <AlertCircle size={16} className="shrink-0 mt-0.5 text-cyan-400" />
-                <span>
-                  Solving DSA sheet problems syncs directly with user database entries. Complete daily algorithms quests by checking off items.
-                </span>
-              </div>
-
             </div>
 
-            <p className="text-[9px] text-gray-500 text-center font-mono mt-6">ALIGNED WITH INTERVIEW DSA METRICS</p>
+            <div className="grid grid-cols-3 gap-2 text-center">
+              <div className="bg-white/[0.02] border border-white/5 rounded-xl p-2">
+                <div className="text-lg font-bold text-emerald-400 font-mono">{completedCount}</div>
+                <div className="text-[9px] text-gray-600 font-mono uppercase">Done</div>
+              </div>
+              <div className="bg-white/[0.02] border border-white/5 rounded-xl p-2">
+                <div className="text-lg font-bold text-gray-300 font-mono">{totalProblems - completedCount}</div>
+                <div className="text-[9px] text-gray-600 font-mono uppercase">Left</div>
+              </div>
+              <div className="bg-white/[0.02] border border-white/5 rounded-xl p-2">
+                <div className="text-lg font-bold text-violet-400 font-mono">{completedCount * 15}</div>
+                <div className="text-[9px] text-gray-600 font-mono uppercase">XP</div>
+              </div>
+            </div>
           </div>
-        </div>
 
+          {/* Burndown Chart */}
+          <div className="glassmorphism rounded-3xl p-5 border-white/10">
+            <h3 className="text-xs font-bold font-mono text-white uppercase tracking-wider flex items-center gap-2 mb-4">
+              <Target size={13} className="text-violet-400" /> 7-Day Burndown
+            </h3>
+            <div className="h-40">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={chartData} margin={{ top: 4, right: 8, left: -24, bottom: 0 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.03)" />
+                  <XAxis dataKey="name" stroke="#374151" fontSize={8} tickLine={false} />
+                  <YAxis stroke="#374151" fontSize={8} tickLine={false} />
+                  <Tooltip
+                    contentStyle={{ backgroundColor: '#070b19', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '10px', fontSize: '10px' }}
+                    labelStyle={{ color: '#fff', fontFamily: 'monospace' }}
+                    itemStyle={{ fontFamily: 'monospace' }}
+                  />
+                  <Line type="monotone" dataKey="Ideal" stroke="#4b5563" strokeWidth={1.5} strokeDasharray="4 4" dot={false} />
+                  <Line type="monotone" dataKey="Actual" stroke="#06b6d4" strokeWidth={2} dot={{ r: 3, fill: '#06b6d4' }} activeDot={{ r: 5 }} />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+
+          {/* Difficulty Breakdown */}
+          <div className="glassmorphism rounded-3xl p-5 border-white/10">
+            <h3 className="text-xs font-bold font-mono text-white uppercase tracking-wider flex items-center gap-2 mb-4">
+              <Trophy size={13} className="text-amber-400" /> Difficulty Breakdown
+            </h3>
+            <div className="space-y-2.5">
+              {['Easy', 'Medium', 'Hard'].map(diff => {
+                const total = dsaProblems.filter(p => p.sheetType === selectedSheet && p.difficulty === diff).length;
+                const done  = dsaProblems.filter(p => p.sheetType === selectedSheet && p.difficulty === diff && completedIds.has(p.problemId)).length;
+                const pct = total ? Math.round((done / total) * 100) : 0;
+                const colors = DIFFICULTY_COLORS[diff];
+                return (
+                  <div key={diff}>
+                    <div className="flex justify-between items-center mb-1">
+                      <span className={`text-[10px] font-mono font-bold uppercase ${colors.text}`}>{diff}</span>
+                      <span className="text-[10px] font-mono text-gray-500">{done}/{total}</span>
+                    </div>
+                    <div className="h-1 bg-white/5 rounded-full overflow-hidden">
+                      <motion.div
+                        className={`h-full rounded-full ${
+                          diff === 'Easy' ? 'bg-emerald-400' : diff === 'Medium' ? 'bg-amber-400' : 'bg-red-400'
+                        }`}
+                        initial={{ width: 0 }}
+                        animate={{ width: `${pct}%` }}
+                        transition={{ duration: 0.8 }}
+                      />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Info tip */}
+          <div className="p-4 bg-white/[0.02] border border-white/5 rounded-2xl flex gap-3 text-xs text-gray-400 leading-relaxed">
+            <AlertCircle size={15} className="shrink-0 mt-0.5 text-cyan-400" />
+            <span>Click <strong className="text-white">Solve</strong> next to any problem to open it in the AI-powered coding sandbox with Monaco Editor.</span>
+          </div>
+
+        </div>
       </div>
     </div>
   );

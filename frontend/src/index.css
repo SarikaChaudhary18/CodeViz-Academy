@@ -2,7 +2,7 @@
 
 @theme {
   --font-sans: 'Outfit', sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
+  --font-mono: 'Outfit', sans-serif;
   
   --color-cyber-bg: #07080a;
   --color-cyber-card: rgba(13, 15, 20, 0.7);
@@ -18,6 +18,8 @@
 
   --color-popover: rgba(13, 15, 20, 0.95);
   --color-popover-foreground: #ffffff;
+  
+  --animate-spin-slow: spin 5s linear infinite;
 }
 
 /* Custom base styles and scrollbars */
@@ -69,7 +71,7 @@
 }
 
 .text-glow-violet {
-  text-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
+  text-shadow: none;
 }
 
 .text-glow-cyan {
@@ -77,7 +79,7 @@
 }
 
 .box-glow-violet {
-  box-shadow: 0 0 20px rgba(139, 92, 246, 0.15);
+  box-shadow: none;
 }
 
 .box-glow-cyan {
@@ -88,11 +90,11 @@
 @keyframes pulse-glow {
   0%, 100% {
     opacity: 0.2;
-    box-shadow: 0 0 15px rgba(139, 92, 246, 0.1);
+    box-shadow: none;
   }
   50% {
     opacity: 0.5;
-    box-shadow: 0 0 25px rgba(139, 92, 246, 0.3);
+    box-shadow: none;
   }
 }
 
@@ -139,3 +141,294 @@
 .animate-ripple {
   animation: ripple 8s infinite ease-in-out;
 }
+
+@keyframes infinite-loading {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-infinite-loading {
+  animation: infinite-loading 1.5s infinite linear;
+}
+
+/* ==================== GLOBAL LIGHT MODE (WHITE & BLACK) OVERRIDES ==================== */
+
+html.light {
+  --color-cyber-bg: #ffffff;
+  --color-cyber-card: rgba(255, 255, 255, 0.95);
+  --color-cyber-panel: rgba(245, 245, 245, 0.95);
+  --color-cyber-border: rgba(0, 0, 0, 0.1);
+  --color-cyber-border-glow: rgba(0, 0, 0, 0.05);
+  
+  --color-neon-violet: #000000;
+  --color-neon-cyan: #000000;
+  --color-neon-rose: #222222;
+  --color-neon-green: #111111;
+  --color-neon-yellow: #333333;
+
+  --color-popover: rgba(255, 255, 255, 0.98);
+  --color-popover-foreground: #000000;
+}
+
+html.light body {
+  background-color: #ffffff !important;
+  background-image: none !important;
+  color: #000000 !important;
+}
+
+/* Hide all dark radial glows and smudges */
+html.light div[style*="radial-gradient"],
+html.light div[className*="blur-"],
+html.light .absolute[class*="bg-violet-600/"],
+html.light .absolute[class*="bg-cyan-400/"] {
+  background-image: none !important;
+  background-color: transparent !important;
+  display: none !important;
+}
+
+/* Force container backgrounds to pure white */
+html.light .bg-\[\#020617\],
+html.light .bg-\[\#07080a\],
+html.light .bg-\[\#07080c\]\/50,
+html.light .bg-\[\#0c0e14\]\/50,
+html.light .bg-\[\#070b19\]\/80,
+html.light .bg-\[\#070b19\]\/25,
+html.light .bg-zinc-950,
+html.light .bg-zinc-950\/40,
+html.light .bg-zinc-900,
+html.light .bg-slate-950,
+html.light .bg-slate-900,
+html.light .bg-slate-900\/50,
+html.light .bg-black,
+html.light .bg-slate-950\/95,
+html.light .bg-zinc-950\/70,
+html.light .bg-zinc-900\/30,
+html.light .bg-slate-900\/20,
+html.light .bg-slate-900\/40,
+html.light .bg-slate-900\/60,
+html.light .bg-slate-900\/80,
+html.light .bg-slate-900\/90 {
+  background-color: #ffffff !important;
+  background-image: none !important;
+  color: #000000 !important;
+}
+
+/* AppLayout Overrides */
+html.light aside {
+  background-color: #ffffff !important;
+  background-image: none !important;
+  border-right: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+
+html.light header {
+  background-color: #ffffff !important;
+  background-image: none !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+
+html.light main {
+  background-color: #ffffff !important;
+}
+
+/* Glassmorphism maps to clean white boxes with shadow */
+html.light .glassmorphism {
+  background: #ffffff !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03) !important;
+  color: #000000 !important;
+}
+
+html.light .glassmorphism-light {
+  background: rgba(0, 0, 0, 0.015) !important;
+  border: 1px solid rgba(0, 0, 0, 0.05) !important;
+  color: #000000 !important;
+}
+
+/* Disable neon glows */
+html.light .text-glow-violet,
+html.light .text-glow-cyan {
+  text-shadow: none !important;
+}
+
+html.light .box-glow-violet,
+html.light .box-glow-cyan {
+  box-shadow: none !important;
+}
+
+/* Text Overrides - Dark text for high readability */
+html.light .text-white,
+html.light .text-gray-100,
+html.light .text-gray-200,
+html.light .text-slate-100,
+html.light .text-slate-200,
+html.light .text-zinc-100,
+html.light .text-zinc-200 {
+  color: #000000 !important;
+}
+
+html.light .text-transparent {
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+  background-clip: border-box !important;
+  -webkit-background-clip: border-box !important;
+  background-image: none !important;
+}
+
+html.light .text-gray-300,
+html.light .text-gray-400,
+html.light .text-gray-500,
+html.light .text-slate-300,
+html.light .text-slate-400,
+html.light .text-slate-500,
+html.light .text-zinc-300,
+html.light .text-zinc-400,
+html.light .text-zinc-500,
+html.light .text-slate-400\/70,
+html.light .text-slate-400\/80 {
+  color: #3f3f46 !important;
+}
+
+/* Map neon text colors to solid black */
+html.light .text-cyan-400,
+html.light .text-cyan-300,
+html.light .text-violet-400,
+html.light .text-violet-300,
+html.light .text-neon-cyan,
+html.light .text-neon-violet,
+html.light .text-indigo-400,
+html.light .text-indigo-500,
+html.light .text-emerald-400,
+html.light .text-emerald-500,
+html.light .text-rose-400,
+html.light .text-rose-500,
+html.light .text-amber-500,
+html.light .text-amber-400 {
+  color: #000000 !important;
+}
+
+/* Invert transparent white backgrounds to light gray tints */
+html.light .bg-white\/5,
+html.light .bg-white\/\[0\.02\],
+html.light .bg-white\/\[0\.01\],
+html.light .bg-white\/\[0\.03\],
+html.light .bg-white\/\[0\.04\],
+html.light .bg-white\/\[0\.05\],
+html.light .bg-white\/\[0\.06\] {
+  background-color: rgba(0, 0, 0, 0.02) !important;
+}
+
+html.light .bg-white\/10,
+html.light .bg-white\/\[0\.08\],
+html.light .bg-white\/\[0\.1\] {
+  background-color: rgba(0, 0, 0, 0.05) !important;
+}
+
+html.light .bg-white\/20,
+html.light .bg-white\/30 {
+  background-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Invert borders */
+html.light .border-white\/5,
+html.light .border-white\/10,
+html.light .border-white\/20,
+html.light .border-slate-800,
+html.light .border-zinc-800,
+html.light .border-zinc-700,
+html.light .border-slate-700 {
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+html.light .border-violet-500,
+html.light .border-cyan-500,
+html.light .border-emerald-500,
+html.light .border-violet-500\/10,
+html.light .border-violet-500\/20,
+html.light .border-cyan-500\/20,
+html.light .border-cyan-500\/10 {
+  border-color: rgba(0, 0, 0, 0.12) !important;
+}
+
+/* Invert solid white and black */
+html.light .bg-white {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+html.light .bg-black {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+html.light svg {
+  stroke: currentColor;
+}
+
+/* Input elements styling */
+html.light input, 
+html.light select, 
+html.light textarea {
+  color: #000000 !important;
+  background-color: rgba(0, 0, 0, 0.015) !important;
+  border-color: rgba(0, 0, 0, 0.12) !important;
+}
+
+html.light input::placeholder {
+  color: rgba(0, 0, 0, 0.4) !important;
+}
+
+html.light .border-violet-500\/25,
+html.light .bg-violet-900\/10 {
+  border-color: rgba(0, 0, 0, 0.12) !important;
+  background-color: rgba(0, 0, 0, 0.015) !important;
+}
+
+/* Custom scrollbars in light mode */
+html.light ::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+
+html.light ::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.12);
+  border: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+html.light ::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+/* Commits Grid Animations */
+@keyframes highlight {
+  0%, 100% {
+    background-color: rgba(255, 255, 255, 0.02);
+    box-shadow: none;
+    border-color: rgba(255, 255, 255, 0.05);
+  }
+  50% {
+    background-color: var(--highlight);
+    box-shadow: 0 0 10px var(--highlight);
+    border-color: var(--highlight);
+  }
+}
+
+@keyframes flash {
+  0%, 100% {
+    background-color: rgba(255, 255, 255, 0.01);
+  }
+  50% {
+    background-color: rgba(72, 213, 93, 0.1);
+  }
+}
+
+.animate-highlight {
+  animation: highlight 3s infinite ease-in-out;
+}
+
+.animate-flash {
+  animation: flash 4.5s infinite ease-in-out;
+}
+

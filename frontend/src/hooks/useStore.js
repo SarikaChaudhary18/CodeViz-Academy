@@ -44,6 +44,40 @@ export const useStore = create((set, get) => ({
     }
   },
 
+  loginWithGoogle: async (email, username, credential) => {
+    set({ authLoading: true, authError: null });
+    try {
+      const response = await api.post('/auth/google', { email, username, credential });
+      const { token, user } = response;
+      localStorage.setItem('studyquest_token', token);
+      set({ token, user, isAuthenticated: true, authLoading: false });
+      
+      // Connect WebSocket
+      socketService.connect(token);
+      return user;
+    } catch (err) {
+      set({ authError: err.message, authLoading: false });
+      throw err;
+    }
+  },
+
+  loginPasswordless: async (email) => {
+    set({ authLoading: true, authError: null });
+    try {
+      const response = await api.post('/auth/passwordless', { email });
+      const { token, user } = response;
+      localStorage.setItem('studyquest_token', token);
+      set({ token, user, isAuthenticated: true, authLoading: false });
+      
+      // Connect WebSocket
+      socketService.connect(token);
+      return user;
+    } catch (err) {
+      set({ authError: err.message, authLoading: false });
+      throw err;
+    }
+  },
+
   logout: () => {
     localStorage.removeItem('studyquest_token');
     socketService.disconnect();
@@ -231,6 +265,125 @@ export const useStore = create((set, get) => ({
       }
     } catch (err) {
       console.error('Failed to toggle problem status:', err.message);
+      throw err;
+    }
+  },
+
+  // --- DSA PROBLEMS (SANDBOX) ---
+  dsaProblems: [],
+  dsaProblemsLoading: false,
+  activeProblem: null,
+  activeProblemLoading: false,
+
+  fetchDsaProblems: async (sheetType) => {
+    set({ dsaProblemsLoading: true });
+    try {
+      const url = sheetType ? `/sheets/problems?sheetType=${sheetType}` : '/sheets/problems';
+      const response = await api.get(url);
+      set({ dsaProblems: response.data, dsaProblemsLoading: false });
+    } catch (err) {
+      console.error('Failed to fetch DSA problems:', err.message);
+      set({ dsaProblemsLoading: false });
+    }
+  },
+
+  fetchProblemDetails: async (problemId) => {
+    set({ activeProblemLoading: true, activeProblem: null });
+    try {
+      const response = await api.get(`/sheets/problems/${problemId}`);
+      set({ activeProblem: response.data, activeProblemLoading: false });
+      return response.data;
+    } catch (err) {
+      console.error('Failed to fetch problem details:', err.message);
+      set({ activeProblemLoading: false });
+      throw err;
+    }
+  },
+
+  runSandboxCode: async (problemId, language, code, customInput) => {
+    try {
+      const response = await api.post('/sheets/problems/run', { problemId, language, code, customInput });
+      return response.data;
+    } catch (err) {
+      console.error('Failed to run code:', err.message);
+      throw err;
+    }
+  },
+
+  submitSandboxCode: async (problemId, language, code) => {
+    try {
+      const response = await api.post('/sheets/problems/submit', { problemId, language, code });
+      // Update XP if submission succeeded
+      if (response.data?.xpGained && response.data?.newXp) {
+        set((state) => ({
+          user: state.user ? {
+            ...state.user,
+            xp: response.data.newXp,
+            level: response.data.newLevel,
+          } : null
+        }));
+      }
+      return response.data;
+    } catch (err) {
+      console.error('Failed to submit code:', err.message);
+      throw err;
+    }
+  },
+
+  // --- ROADMAP STATE ---
+  roadmaps: [],
+  roadmapsLoading: false,
+  activeRoadmap: null,
+  activeRoadmapLoading: false,
+  roadmapProgress: [],
+
+  fetchRoadmaps: async () => {
+    set({ roadmapsLoading: true });
+    try {
+      const response = await api.get('/roadmaps');
+      set({ roadmaps: response.data, roadmapsLoading: false });
+    } catch (err) {
+      console.error('Failed to fetch roadmaps:', err.message);
+      set({ roadmapsLoading: false });
+    }
+  },
+
+  fetchRoadmapDetails: async (roadmapId) => {
+    set({ activeRoadmapLoading: true, activeRoadmap: null });
+    try {
+      const response = await api.get(`/roadmaps/${roadmapId}`);
+      set({ activeRoadmap: response.data, activeRoadmapLoading: false });
+      return response.data;
+    } catch (err) {
+      console.error('Failed to fetch roadmap details:', err.message);
+      set({ activeRoadmapLoading: false });
+      throw err;
+    }
+  },
+
+  fetchRoadmapProgress: async (roadmapId) => {
+    try {
+      const response = await api.get(`/roadmaps/progress?roadmapId=${roadmapId}`);
+      set({ roadmapProgress: response.data });
+    } catch (err) {
+      console.error('Failed to fetch roadmap progress:', err.message);
+    }
+  },
+
+  submitRoadmapCapstone: async (roadmapId, nodeIndex, projectUrl) => {
+    try {
+      const response = await api.post('/roadmaps/submit-capstone', { roadmapId, nodeIndex, projectUrl });
+      // Update user XP
+      if (response.newXp) {
+        set((state) => ({
+          user: state.user ? { ...state.user, xp: response.newXp, level: response.newLevel } : null
+        }));
+      }
+      // Update local roadmap progress
+      set({ roadmapProgress: response.data?.completedNodes ? response.data : [] });
+      return response;
+    } catch (err) {
+      console.error('Failed to submit capstone:', err.message);
       throw err;
     }
   },

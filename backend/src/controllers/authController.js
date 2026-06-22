@@ -1,6 +1,7 @@
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const axios = require('axios');
 const logger = require('../config/logger');
 
 // Generate JWT Access Token
@@ -66,34 +67,10 @@ exports.login = async (req, res, next) => {
     }
 
     // Uses index
-    let user = await User.findOne({ email });
+    const user = await User.findOne({ email });
     
-    // In development mode, auto-register the user if not found, or auto-update password if mismatch
-    if (process.env.NODE_ENV === 'development') {
-      if (!user) {
-        const username = email.split('@')[0];
-        const salt = await bcrypt.genSalt(12);
-        const hashedPassword = await bcrypt.hash(password, salt);
-        user = await User.create({
-          username,
-          email,
-          password: hashedPassword,
-        });
-        logger.info(`Auto-registered user on login (development): ${username}`);
-      } else {
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) {
-          const salt = await bcrypt.genSalt(12);
-          const hashedPassword = await bcrypt.hash(password, salt);
-          user.password = hashedPassword;
-          await user.save();
-          logger.info(`Auto-updated password for user: ${user.username}`);
-        }
-      }
-    } else {
-      if (!user || !(await bcrypt.compare(password, user.password))) {
-        return res.status(401).json({ status: 'fail', message: 'Invalid credentials.' });
-      }
+    if (!user || !(await bcrypt.compare(password, user.password))) {
+      return res.status(401).json({ status: 'fail', message: 'Invalid credentials.' });
     }
 
     // Check/Update streaks based on active date
@@ -110,6 +87,157 @@ exports.login = async (req, res, next) => {
     }
 
     logger.info(`User logged in successfully: ${user.username}`);
+
+    const token = generateAccessToken(user);
+
+    res.status(200).json({
+      status: 'success',
+      token,
+      user: {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+        role: user.role,
+        xp: user.xp,
+        level: user.level,
+        streak: user.streak,
+        targetCompany: user.targetCompany,
+        targetRole: user.targetRole,
+        codingProfiles: user.codingProfiles,
+      }
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.googleAuth = async (req, res, next) => {
+  try {
+    const { email, username, credential } = req.body;
+    let emailAddress = email;
+    let nameVal = username;
+
+    // Real Google OAuth verification if credential is passed
+    if (credential) {
+      logger.info('Google Auth: Verifying ID token with Google APIs...');
+      try {
+        const verifyRes = await axios.get(`https://oauth2.googleapis.com/tokeninfo?id_token=${credential}`);
+        if (verifyRes.data && verifyRes.data.email) {
+          emailAddress = verifyRes.data.email;
+          nameVal = verifyRes.data.name || verifyRes.data.given_name || emailAddress.split('@')[0];
+          logger.info(`Google token verified successfully for email: ${emailAddress}`);
+        } else {
+          return res.status(401).json({ status: 'fail', message: 'Google authentication failed: Invalid token payload.' });
+        }
+      } catch (err) {
+        const errMsg = err.response && err.response.data && err.response.data.error_description
+          ? err.response.data.error_description
+          : err.message;
+        logger.error(`Google token verification failed: ${errMsg}`);
+        return res.status(401).json({ status: 'fail', message: `Google token verification failed: ${errMsg}` });
+      }
+    }
+
+    if (!emailAddress) {
+      return res.status(400).json({ status: 'fail', message: 'Please provide email address or Google credential.' });
+    }
+
+    let user = await User.findOne({ email: emailAddress });
+
+    if (!user) {
+      // User doesn't exist, create a new profile (Google Signup)
+      const generatedUsername = nameVal || emailAddress.split('@')[0] + Math.floor(Math.random() * 1000);
+      const randomPassword = Math.random().toString(36).slice(-12);
+      const salt = await bcrypt.genSalt(12);
+      const hashedPassword = await bcrypt.hash(randomPassword, salt);
+
+      user = await User.create({
+        username: generatedUsername,
+        email: emailAddress,
+        password: hashedPassword,
+      });
+
+      logger.info(`User registered via Google Sign-up: ${user.username}`);
+    } else {
+      logger.info(`User logged in via Google Sign-in: ${user.username}`);
+    }
+
+    // Check/Update streaks based on active date
+    const today = new Date().toISOString().split('T')[0];
+    if (user.lastActiveDate !== today) {
+      const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+      if (user.lastActiveDate === yesterday) {
+        user.streak += 1;
+      } else {
+        user.streak = 1;
+      }
+      user.lastActiveDate = today;
+      await user.save();
+    }
+
+    const token = generateAccessToken(user);
+
+    res.status(200).json({
+      status: 'success',
+      token,
+      user: {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+        role: user.role,
+        xp: user.xp,
+        level: user.level,
+        streak: user.streak,
+        targetCompany: user.targetCompany,
+        targetRole: user.targetRole,
+        codingProfiles: user.codingProfiles,
+      }
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.passwordlessAuth = async (req, res, next) => {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      return res.status(400).json({ status: 'fail', message: 'Please provide email.' });
+    }
+
+    let user = await User.findOne({ email });
+
+    if (!user) {
+      // User doesn't exist, create a new profile (Auto-registration on first login)
+      const generatedUsername = email.split('@')[0] + Math.floor(Math.random() * 1000);
+      const randomPassword = Math.random().toString(36).slice(-12);
+      const salt = await bcrypt.genSalt(12);
+      const hashedPassword = await bcrypt.hash(randomPassword, salt);
+
+      user = await User.create({
+        username: generatedUsername,
+        email,
+        password: hashedPassword,
+      });
+
+      logger.info(`User registered via Passwordless Sign-up: ${user.username}`);
+    } else {
+      logger.info(`User logged in via Passwordless Sign-in: ${user.username}`);
+    }
+
+    // Check/Update streaks based on active date
+    const today = new Date().toISOString().split('T')[0];
+    if (user.lastActiveDate !== today) {
+      const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+      if (user.lastActiveDate === yesterday) {
+        user.streak += 1;
+      } else {
+        user.streak = 1;
+      }
+      user.lastActiveDate = today;
+      await user.save();
+    }
 
     const token = generateAccessToken(user);
 

@@ -1,742 +1,737 @@
-import React, { memo, useState, useEffect, useRef, forwardRef } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useStore } from '../../../hooks/useStore';
-import { motion, useAnimation, useInView, useMotionTemplate, useMotionValue } from 'framer-motion';
-import { Eye, EyeOff, Shield, Sparkles, Code, Terminal, Users, Hash, AlertTriangle } from 'lucide-react';
-import { cn } from '../../../lib/utils';
+import React, { useState, useEffect, useRef } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { Eye, EyeOff, Mail, Sparkles, User, Lock, Briefcase, Building } from "lucide-react";
+import { cn } from "../../../lib/utils";
+import { useStore } from "../../../hooks/useStore";
+import logo from '../../../assets/logo.png';
 
-// ==================== Skill Icons ====================
-
-const JavaScriptIcon = () => (
-  <svg className="w-5.5 h-5.5 drop-shadow-[0_0_8px_rgba(247,223,30,0.4)]" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-    <rect width="24" height="24" rx="4" fill="#F7DF1E"/>
-    <path fill="#000000" d="M1.5 0h21a1.5 1.5 0 0 1 1.5 1.5v21a1.5 1.5 0 0 1-1.5 1.5h-21A1.5 1.5 0 0 1 0 22.5v-21A1.5 1.5 0 0 1 1.5 0zm19.285 19.31c-.025-1.075-.713-1.88-1.957-1.88-1.132 0-1.81.62-2.015 1.72-.04.267-.02.81.02 1.14.128.724.535 1.132 1.28 1.132.87 0 1.357-.426 1.528-1.236H21c-.213 1.45-1.15 2.24-2.643 2.24-1.79 0-2.707-1.13-2.707-2.96 0-1.94 1.108-3.09 2.856-3.09 1.833 0 2.622 1.13 2.622 2.94v.015c0 1.11-.02 1.98-.02 1.98h-1.15v-2zm-6.8-6.95v9.98h-1.136v-5.63c-.02-.81-.04-1.62-.04-2.43h-.02l-.853 1.32-2.388 3.65H8.07V12.36H9.2v5.63c.02.81.04 1.62.04 2.43h.02l.853-1.32 2.388-3.65h1.15z" transform="scale(0.8) translate(3, 3)"/>
-  </svg>
-);
-
-const ReactIcon = () => (
-  <svg className="w-7 h-7 animate-slow-rotate drop-shadow-[0_0_8px_rgba(97,218,251,0.5)]" viewBox="-11.5 -10.23 23 20.46" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="0" cy="0" r="2.05" fill="#61DAFB"/>
-    <g stroke="#61DAFB" strokeWidth="1.2" fill="none">
-      <ellipse rx="11" ry="4.2"/>
-      <ellipse rx="11" ry="4.2" transform="rotate(60)"/>
-      <ellipse rx="11" ry="4.2" transform="rotate(120)"/>
-    </g>
-  </svg>
-);
-
-const NodejsIcon = () => (
-  <svg className="w-6 h-6 drop-shadow-[0_0_8px_rgba(51,153,51,0.4)]" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-    <path fill="#339933" d="M12 24c-6.627 0-12-5.373-12-12s5.373-12 12-12 12 5.373 12 12-5.373 12-12 12zm-1.25-17.518c-.287 0-.528.21-.528.513v7.35l-2.073-1.19c-.29-.164-.67.042-.67.38v2.42c0 .2.103.385.277.485l4.24 2.45c.29.167.674-.04.674-.38v-7.316l2.07 1.19c.287.165.67-.04.67-.378v-2.42c0-.2-.102-.387-.277-.487l-4.245-2.452a.557.557 0 0 0-.15-.065z"/>
-  </svg>
-);
-
-const MongoDBIcon = () => (
-  <svg className="w-6 h-6 drop-shadow-[0_0_8px_rgba(71,162,72,0.4)]" viewBox="0 0 24 24" fill="#47A248" xmlns="http://www.w3.org/2000/svg">
-    <path d="M12 0c-3.192 6.07-5.307 11.233-5.307 14.774 0 3.866 2.376 7.226 5.307 9.226 2.931-2 5.307-5.36 5.307-9.226C17.307 11.233 15.192 6.07 12 0zm-1.637 14.542c0-.529.161-.926.483-1.19.322-.264.832-.429 1.53-.497v-4.66c.264.444.471.956.621 1.536.15.58.225 1.194.225 1.843v2.778c-.7.069-1.21.234-1.532.497-.322.264-.482.66-.482 1.19 0 .529.16.925.482 1.189.322.264.831.429 1.53.498v1.141c-.266-.184-.509-.434-.73-.75-.221-.316-.388-.696-.5-.139a3.864 3.864 0 0 1-.161-1.129 3.01 3.01 0 0 1-.496-1.141z"/>
-  </svg>
-);
-
-const TailwindIcon = () => (
-  <svg className="w-6 h-6 drop-shadow-[0_0_8px_rgba(56,189,248,0.4)]" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-    <path fill="#38BDF8" d="M12.001 4.8c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624C13.666 10.618 15.027 12 18.001 12c3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C16.337 6.182 14.976 4.8 12.001 4.8zm-6 7.2c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624 1.177 1.194 2.538 2.576 5.512 2.576 3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C10.337 13.382 8.976 12 6.001 12z"/>
-  </svg>
-);
-
-// ==================== Input Component ====================
-
-const Input = memo(
-  forwardRef(function Input(
-    { className, type, ...props },
-    ref
-  ) {
-    const radius = 100; // change this to increase the radius of the hover effect
-    const [visible, setVisible] = useState(false);
-
-    const mouseX = useMotionValue(0);
-    const mouseY = useMotionValue(0);
-
-    function handleMouseMove({
-      currentTarget,
-      clientX,
-      clientY,
-    }) {
-      const { left, top } = currentTarget.getBoundingClientRect();
-
-      mouseX.set(clientX - left);
-      mouseY.set(clientY - top);
-    }
-
-    return (
-      <motion.div
-        style={{
-          background: useMotionTemplate`
-        radial-gradient(
-          ${visible ? radius + 'px' : '0px'} circle at ${mouseX}px ${mouseY}px,
-          #3b82f6,
-          transparent 80%
-        )
-      `,
-        }}
-        onMouseMove={handleMouseMove}
-        onMouseEnter={() => setVisible(true)}
-        onMouseLeave={() => setVisible(false)}
-        className='group/input rounded-lg p-[2px] transition duration-300'
-      >
-        <input
-          type={type}
-          className={cn(
-            `shadow-input dark:placeholder-text-neutral-600 flex h-10 w-full rounded-md border-none bg-gray-50 px-3 py-2 text-sm text-black transition duration-400 group-hover/input:shadow-none file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-neutral-400 focus-visible:ring-[2px] focus-visible:ring-neutral-400 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 dark:bg-zinc-800 dark:text-white dark:shadow-[0px_0px_1px_1px_#404040] dark:focus-visible:ring-neutral-600`,
-            className
-          )}
-          ref={ref}
-          {...props}
-        />
-      </motion.div>
-    );
-  })
-);
-
-Input.displayName = 'Input';
-
-// ==================== BoxReveal Component ====================
-
-const BoxReveal = memo(function BoxReveal({
-  children,
-  width = 'fit-content',
-  boxColor,
-  duration,
-  overflow = 'hidden',
-  position = 'relative',
-  className,
-}) {
-  const mainControls = useAnimation();
-  const slideControls = useAnimation();
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true });
+// ==================== Pupil Component ====================
+const Pupil = ({ 
+  size = 12, 
+  maxDistance = 5,
+  pupilColor = "black",
+  forceLookX,
+  forceLookY
+}) => {
+  const [mouseX, setMouseX] = useState(0);
+  const [mouseY, setMouseY] = useState(0);
+  const pupilRef = useRef(null);
 
   useEffect(() => {
-    if (isInView) {
-      slideControls.start('visible');
-      mainControls.start('visible');
-    } else {
-      slideControls.start('hidden');
-      mainControls.start('hidden');
+    const handleMouseMove = (e) => {
+      setMouseX(e.clientX);
+      setMouseY(e.clientY);
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, []);
+
+  const calculatePupilPosition = () => {
+    if (!pupilRef.current) return { x: 0, y: 0 };
+
+    if (forceLookX !== undefined && forceLookY !== undefined) {
+      return { x: forceLookX, y: forceLookY };
     }
-  }, [isInView, mainControls, slideControls]);
+
+    const pupil = pupilRef.current.getBoundingClientRect();
+    const pupilCenterX = pupil.left + pupil.width / 2;
+    const pupilCenterY = pupil.top + pupil.height / 2;
+
+    const deltaX = mouseX - pupilCenterX;
+    const deltaY = mouseY - pupilCenterY;
+    const distance = Math.min(Math.sqrt(deltaX ** 2 + deltaY ** 2), maxDistance);
+
+    const angle = Math.atan2(deltaY, deltaX);
+    const x = Math.cos(angle) * distance;
+    const y = Math.sin(angle) * distance;
+
+    return { x, y };
+  };
+
+  const pupilPosition = calculatePupilPosition();
 
   return (
-    <section
-      ref={ref}
+    <div
+      ref={pupilRef}
+      className="rounded-full"
       style={{
-        position,
-        width,
-        overflow,
+        width: `${size}px`,
+        height: `${size}px`,
+        backgroundColor: pupilColor,
+        transform: `translate(${pupilPosition.x}px, ${pupilPosition.y}px)`,
+        transition: 'transform 0.1s ease-out',
       }}
-      className={className}
-    >
-      <motion.div
-        variants={{
-          hidden: { opacity: 0, y: 75 },
-          visible: { opacity: 1, y: 0 },
-        }}
-        initial='hidden'
-        animate={mainControls}
-        transition={{ duration: duration ?? 0.5, delay: 0.25 }}
-      >
-        {children}
-      </motion.div>
-      <motion.div
-        variants={{ hidden: { left: 0 }, visible: { left: '100%' } }}
-        initial='hidden'
-        animate={slideControls}
-        transition={{ duration: duration ?? 0.5, ease: 'easeIn' }}
-        style={{
-          position: 'absolute',
-          top: 4,
-          bottom: 4,
-          left: 0,
-          right: 0,
-          zIndex: 20,
-          background: boxColor ?? '#5046e6',
-          borderRadius: 4,
-        }}
-      />
-    </section>
-  );
-});
-
-// ==================== Ripple Component ====================
-
-const Ripple = memo(function Ripple({
-  mainCircleSize = 210,
-  mainCircleOpacity = 0.12,
-  numCircles = 8,
-  className = '',
-}) {
-  return (
-    <section
-      className={`absolute inset-0 flex items-center justify-center pointer-events-none ${className}`}
-    >
-      {Array.from({ length: numCircles }, (_, i) => {
-        const size = mainCircleSize + i * 60;
-        const opacity = mainCircleOpacity - i * 0.015;
-        const animationDelay = `${i * 0.06}s`;
-        const borderStyle = i === numCircles - 1 ? 'dashed' : 'solid';
-
-        return (
-          <span
-            key={i}
-            className='absolute animate-ripple rounded-full border border-violet-500/10'
-            style={{
-              width: `${size}px`,
-              height: `${size}px`,
-              opacity: Math.max(0.01, opacity),
-              animationDelay: animationDelay,
-              borderStyle: borderStyle,
-              borderWidth: '1px',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-            }}
-          />
-        );
-      })}
-    </section>
-  );
-});
-
-// ==================== OrbitingCircles Component ====================
-
-const OrbitingCircles = memo(function OrbitingCircles({
-  className,
-  children,
-  reverse = false,
-  duration = 20,
-  delay = 10,
-  radius = 50,
-  path = true,
-}) {
-  return (
-    <>
-      {path && (
-        <svg
-          xmlns='http://www.w3.org/2000/svg'
-          version='1.1'
-          className='pointer-events-none absolute inset-0 size-full'
-        >
-          <circle
-            className='stroke-violet-500/10 stroke-1'
-            cx='50%'
-            cy='50%'
-            r={radius}
-            fill='none'
-          />
-        </svg>
-      )}
-      <section
-        style={
-          {
-            '--duration': duration,
-            '--radius': radius,
-            '--delay': -delay,
-          }
-        }
-        className={cn(
-          'absolute flex size-full transform-gpu animate-orbit items-center justify-center pointer-events-none',
-          { '[animation-direction:reverse]': reverse },
-          className
-        )}
-      >
-        <div className="pointer-events-auto">
-          {children}
-        </div>
-      </section>
-    </>
-  );
-});
-
-// ==================== TechOrbitDisplay Component ====================
-
-const TechOrbitDisplay = memo(function TechOrbitDisplay({
-  iconsArray,
-  text = 'CodeViz Academy',
-}) {
-  return (
-    <section className='relative flex h-full w-full flex-col items-center justify-center overflow-hidden rounded-lg'>
-      <span className='pointer-events-none whitespace-pre-wrap bg-gradient-to-r from-violet-400 via-fuchsia-500 to-cyan-400 bg-clip-text text-center text-6xl font-extrabold leading-none text-transparent tracking-wide text-glow-violet drop-shadow-[0_0_15px_rgba(139,92,246,0.3)]'>
-        {text}
-      </span>
-
-      {iconsArray.map((icon, index) => (
-        <OrbitingCircles
-          key={index}
-          className={icon.className}
-          duration={icon.duration}
-          delay={icon.delay}
-          radius={icon.radius}
-          path={icon.path}
-          reverse={icon.reverse}
-        >
-          {icon.component()}
-        </OrbitingCircles>
-      ))}
-    </section>
-  );
-});
-
-// ==================== AnimatedForm Component ====================
-
-const AnimatedForm = memo(function AnimatedForm({
-  header,
-  subHeader,
-  fields,
-  submitButton,
-  textVariantButton,
-  errorField,
-  fieldPerRow = 1,
-  onSubmit,
-  googleLogin,
-  goTo,
-}) {
-  const [visible, setVisible] = useState(false);
-  const [errors, setErrors] = useState({});
-
-  const toggleVisibility = () => setVisible(!visible);
-
-  const validateForm = (event) => {
-    const currentErrors = {};
-    fields.forEach((field) => {
-      const value = event.target[field.label]?.value;
-
-      if (field.required && !value) {
-        currentErrors[field.label] = `${field.label} is required`;
-      }
-
-      if (field.type === 'email' && value && !/\S+@\S+\.\S+/.test(value)) {
-        currentErrors[field.label] = 'Invalid email address';
-      }
-
-      if (field.type === 'password' && value && value.length < 6) {
-        currentErrors[field.label] = 'Password must be at least 6 characters long';
-      }
-    });
-    return currentErrors;
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const formErrors = validateForm(event);
-
-    if (Object.keys(formErrors).length === 0) {
-      onSubmit(event);
-    } else {
-      setErrors(formErrors);
-    }
-  };
-
-  return (
-    <section className='max-md:w-full flex flex-col gap-4 w-full max-w-sm mx-auto'>
-      <BoxReveal boxColor='rgba(139,92,246,0.2)' duration={0.3}>
-        <h2 className='font-extrabold text-2xl tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400 font-sans'>
-          {header}
-        </h2>
-      </BoxReveal>
-
-      {subHeader && (
-        <BoxReveal boxColor='rgba(139,92,246,0.2)' duration={0.3} className='pb-2'>
-          <p className='text-xs text-cyan-400 font-mono tracking-widest uppercase mt-0.5'>
-            {subHeader}
-          </p>
-        </BoxReveal>
-      )}
-
-      {googleLogin && (
-        <>
-          <BoxReveal
-            boxColor='rgba(139,92,246,0.2)'
-            duration={0.3}
-            overflow='visible'
-            width='100%'
-          >
-            <button
-              className='g-button group/btn bg-white/[0.01] hover:bg-white/[0.04] border border-white/10 w-full rounded-xl h-11 font-mono text-xs font-semibold outline-hidden hover:cursor-pointer transition-colors relative'
-              type='button'
-              onClick={() => console.log('Google login clicked')}
-            >
-              <span className='flex items-center justify-center w-full h-full gap-3 text-gray-300'>
-                {/* Premium Inline SVG Google Icon */}
-                <svg className="w-4.5 h-4.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    fill="#4285F4"
-                    d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-                  />
-                  <path
-                    fill="#34A853"
-                    d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-                  />
-                  <path
-                    fill="#FBBC05"
-                    d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"
-                  />
-                  <path
-                    fill="#EA4335"
-                    d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
-                  />
-                </svg>
-                {googleLogin}
-              </span>
-              <BottomGradient />
-            </button>
-          </BoxReveal>
-
-          <BoxReveal boxColor='rgba(139,92,246,0.2)' duration={0.3} width='100%'>
-            <section className='flex items-center gap-4 py-1'>
-              <hr className='flex-1 border-1 border-dashed border-white/5' />
-              <p className='text-gray-500 text-[10px] font-mono uppercase'>
-                or
-              </p>
-              <hr className='flex-1 border-1 border-dashed border-white/5' />
-            </section>
-          </BoxReveal>
-        </>
-      )}
-
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <section className={`grid grid-cols-1 md:grid-cols-${fieldPerRow} gap-4`}>
-          {fields.map((field) => (
-            <section key={field.label} className='flex flex-col gap-1.5'>
-              <BoxReveal boxColor='rgba(139,92,246,0.2)' duration={0.3}>
-                <Label htmlFor={field.label}>
-                  {field.label} {field.required && <span className='text-rose-500'>*</span>}
-                </Label>
-              </BoxReveal>
-
-              <BoxReveal
-                width='100%'
-                boxColor='rgba(139,92,246,0.2)'
-                duration={0.3}
-                className='flex flex-col space-y-1 w-full'
-              >
-                <section className='relative'>
-                  <Input
-                    type={
-                      field.type === 'password'
-                        ? visible
-                          ? 'text'
-                          : 'password'
-                        : field.type
-                    }
-                    id={field.label}
-                    name={field.label}
-                    placeholder={field.placeholder}
-                    onChange={field.onChange}
-                  />
-
-                  {field.type === 'password' && (
-                    <button
-                      type='button'
-                      onClick={toggleVisibility}
-                      className='absolute inset-y-0 right-0 pr-3.5 flex items-center text-gray-500 hover:text-white transition-colors cursor-pointer'
-                    >
-                      {visible ? (
-                        <Eye className='h-4.5 w-4.5' />
-                      ) : (
-                        <EyeOff className='h-4.5 w-4.5' />
-                      )}
-                    </button>
-                  )}
-                </section>
-
-                <section className='h-4 min-h-[1rem]'>
-                  {errors[field.label] && (
-                    <p className='text-rose-400 text-[10px] font-mono'>
-                      [CRITICAL]: {errors[field.label]}
-                    </p>
-                  )}
-                </section>
-              </BoxReveal>
-            </section>
-          ))}
-        </section>
-
-        <BoxReveal width='100%' boxColor='rgba(139,92,246,0.2)' duration={0.3}>
-          {errorField && (
-            <div className="p-3.5 rounded-xl bg-red-950/20 border border-red-500/20 text-red-400 text-[10px] font-mono mb-2">
-              <span className="font-bold uppercase mr-1">[CRITICAL ERROR]:</span> {errorField}
-            </div>
-          )}
-        </BoxReveal>
-
-        <BoxReveal
-          width='100%'
-          boxColor='rgba(139,92,246,0.2)'
-          duration={0.3}
-          overflow='visible'
-        >
-          <button
-            className='bg-gradient-to-r from-violet-600 to-cyan-500 hover:from-violet-500 hover:to-cyan-400 relative block w-full text-white rounded-xl h-11 font-mono text-xs font-semibold shadow-md active:scale-[0.98] outline-hidden hover:cursor-pointer transition-all border border-violet-500/20'
-            type='submit'
-          >
-            {submitButton} &rarr;
-            <BottomGradient />
-          </button>
-        </BoxReveal>
-
-        {textVariantButton && goTo && (
-          <BoxReveal boxColor='rgba(139,92,246,0.2)' duration={0.3}>
-            <section className='mt-5 text-center'>
-              <button
-                type='button'
-                className='text-[11px] font-mono font-bold text-cyan-400 hover:text-cyan-300 transition-colors uppercase tracking-wider flex items-center justify-center gap-1.5 mx-auto outline-hidden cursor-pointer'
-                onClick={goTo}
-              >
-                <Sparkles size={11} />
-                {textVariantButton}
-              </button>
-            </section>
-          </BoxReveal>
-        )}
-      </form>
-    </section>
-  );
-});
-
-const BottomGradient = () => {
-  return (
-    <>
-      <span className='group-hover/btn:opacity-100 block transition duration-500 opacity-0 absolute h-px w-full -bottom-px inset-x-0 bg-gradient-to-r from-transparent via-cyan-500 to-transparent' />
-      <span className='group-hover/btn:opacity-100 blur-sm block transition duration-500 opacity-0 absolute h-px w-1/2 mx-auto -bottom-px inset-x-10 bg-gradient-to-r from-transparent via-indigo-500 to-transparent' />
-    </>
+    />
   );
 };
 
-// ==================== AuthTabs Component ====================
+// ==================== EyeBall Component ====================
+const EyeBall = ({ 
+  size = 48, 
+  pupilSize = 16, 
+  maxDistance = 10,
+  eyeColor = "white",
+  pupilColor = "black",
+  isBlinking = false,
+  forceLookX,
+  forceLookY
+}) => {
+  const [mouseX, setMouseX] = useState(0);
+  const [mouseY, setMouseY] = useState(0);
+  const eyeRef = useRef(null);
 
-const AuthTabs = memo(function AuthTabs({
-  formFields,
-  goTo,
-  handleSubmit,
-}) {
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      setMouseX(e.clientX);
+      setMouseY(e.clientY);
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, []);
+
+  const calculatePupilPosition = () => {
+    if (!eyeRef.current) return { x: 0, y: 0 };
+
+    if (forceLookX !== undefined && forceLookY !== undefined) {
+      return { x: forceLookX, y: forceLookY };
+    }
+
+    const eye = eyeRef.current.getBoundingClientRect();
+    const eyeCenterX = eye.left + eye.width / 2;
+    const eyeCenterY = eye.top + eye.height / 2;
+
+    const deltaX = mouseX - eyeCenterX;
+    const deltaY = mouseY - eyeCenterY;
+    const distance = Math.min(Math.sqrt(deltaX ** 2 + deltaY ** 2), maxDistance);
+
+    const angle = Math.atan2(deltaY, deltaX);
+    const x = Math.cos(angle) * distance;
+    const y = Math.sin(angle) * distance;
+
+    return { x, y };
+  };
+
+  const pupilPosition = calculatePupilPosition();
+
   return (
-    <div className='flex max-lg:justify-center w-full md:w-auto'>
-      {/* Right Side */}
-      <div className='w-full lg:w-1/2 h-[100dvh] flex flex-col justify-center items-center max-lg:px-[10%]'>
-        <AnimatedForm
-          {...formFields}
-          fieldPerRow={1}
-          onSubmit={handleSubmit}
-          goTo={goTo}
-          googleLogin='Login with Google'
+    <div
+      ref={eyeRef}
+      className="rounded-full flex items-center justify-center transition-all duration-150"
+      style={{
+        width: `${size}px`,
+        height: isBlinking ? '2px' : `${size}px`,
+        backgroundColor: eyeColor,
+        overflow: 'hidden',
+      }}
+    >
+      {!isBlinking && (
+        <div
+          className="rounded-full"
+          style={{
+            width: `${pupilSize}px`,
+            height: `${pupilSize}px`,
+            backgroundColor: pupilColor,
+            transform: `translate(${pupilPosition.x}px, ${pupilPosition.y}px)`,
+            transition: 'transform 0.1s ease-out',
+          }}
         />
-      </div>
+      )}
     </div>
   );
-});
-
-// ==================== Label Component ====================
-
-const Label = memo(function Label({ className, ...props }) {
-  return (
-    <label
-      className={cn(
-        'text-[10px] text-gray-500 font-mono uppercase tracking-widest',
-        className
-      )}
-      {...props}
-    />
-  );
-});
-
-export {
-  Input,
-  BoxReveal,
-  Ripple,
-  OrbitingCircles,
-  TechOrbitDisplay,
-  AnimatedForm,
-  AuthTabs,
-  Label,
-  BottomGradient,
 };
 
 // ==================== Main Auth Component ====================
-
 export default function Auth({ isRegisterMode = false }) {
   const navigate = useNavigate();
   const { login, register, updateProfile, authLoading, authError } = useStore();
 
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [targetRole, setTargetRole] = useState('Frontend Developer');
-  const [targetCompany, setTargetCompany] = useState('Google');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [targetRole, setTargetRole] = useState("Frontend Developer");
+  const [targetCompany, setTargetCompany] = useState("Google");
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const handleSubmit = async (event) => {
-    setErrorMessage('');
-    
-    // Extract input values from form state or targets
-    const form = event.target;
-    const emailValue = form['Email Address']?.value || email;
-    const passwordValue = form['Password']?.value || password;
-    const usernameValue = form['Username']?.value || username;
-    const targetRoleValue = form['Target Role']?.value || targetRole;
-    const targetCompanyValue = form['Target Company']?.value || targetCompany;
+  const [showPassword, setShowPassword] = useState(false);
+  const [mouseX, setMouseX] = useState(0);
+  const [mouseY, setMouseY] = useState(0);
+  const [isPurpleBlinking, setIsPurpleBlinking] = useState(false);
+  const [isBlackBlinking, setIsBlackBlinking] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
+  const [isLookingAtEachOther, setIsLookingAtEachOther] = useState(false);
+  const [isPurplePeeking, setIsPurplePeeking] = useState(false);
 
+  const purpleRef = useRef(null);
+  const blackRef = useRef(null);
+  const yellowRef = useRef(null);
+  const orangeRef = useRef(null);
+
+  // Sync state if mode toggles
+  useEffect(() => {
+    setUsername("");
+    setEmail("");
+    setPassword("");
+    setErrorMessage("");
+    setIsTyping(false);
+  }, [isRegisterMode]);
+
+  // Tracks global mouse position
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      setMouseX(e.clientX);
+      setMouseY(e.clientY);
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
+  // Blinking effect for purple character
+  useEffect(() => {
+    const getRandomBlinkInterval = () => Math.random() * 4000 + 3000;
+
+    const scheduleBlink = () => {
+      const blinkTimeout = setTimeout(() => {
+        setIsPurpleBlinking(true);
+        setTimeout(() => {
+          setIsPurpleBlinking(false);
+          scheduleBlink();
+        }, 150);
+      }, getRandomBlinkInterval());
+
+      return blinkTimeout;
+    };
+
+    const timeout = scheduleBlink();
+    return () => clearTimeout(timeout);
+  }, []);
+
+  // Blinking effect for black character
+  useEffect(() => {
+    const getRandomBlinkInterval = () => Math.random() * 4000 + 3000;
+
+    const scheduleBlink = () => {
+      const blinkTimeout = setTimeout(() => {
+        setIsBlackBlinking(true);
+        setTimeout(() => {
+          setIsBlackBlinking(false);
+          scheduleBlink();
+        }, 150);
+      }, getRandomBlinkInterval());
+
+      return blinkTimeout;
+    };
+
+    const timeout = scheduleBlink();
+    return () => clearTimeout(timeout);
+  }, []);
+
+  // Looking at each other animation when typing starts
+  useEffect(() => {
+    if (isTyping) {
+      setIsLookingAtEachOther(true);
+      const timer = setTimeout(() => {
+        setIsLookingAtEachOther(false);
+      }, 800);
+      return () => clearTimeout(timer);
+    } else {
+      setIsLookingAtEachOther(false);
+    }
+  }, [isTyping]);
+
+  // Purple sneaky peeking animation when typing password and it's visible
+  useEffect(() => {
+    if (password.length > 0 && showPassword) {
+      const schedulePeek = () => {
+        const peekInterval = setTimeout(() => {
+          setIsPurplePeeking(true);
+          setTimeout(() => {
+            setIsPurplePeeking(false);
+          }, 800);
+        }, Math.random() * 3000 + 2000);
+        return peekInterval;
+      };
+
+      const firstPeek = schedulePeek();
+      return () => clearTimeout(firstPeek);
+    } else {
+      setIsPurplePeeking(false);
+    }
+  }, [password, showPassword]);
+
+  const calculatePosition = (ref) => {
+    if (!ref.current) return { faceX: 0, faceY: 0, bodySkew: 0 };
+
+    const rect = ref.current.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 3;
+
+    const deltaX = mouseX - centerX;
+    const deltaY = mouseY - centerY;
+
+    const faceX = Math.max(-15, Math.min(15, deltaX / 20));
+    const faceY = Math.max(-10, Math.min(10, deltaY / 30));
+    const bodySkew = Math.max(-6, Math.min(6, -deltaX / 120));
+
+    return { faceX, faceY, bodySkew };
+  };
+
+  const purplePos = calculatePosition(purpleRef);
+  const blackPos = calculatePosition(blackRef);
+  const yellowPos = calculatePosition(yellowRef);
+  const orangePos = calculatePosition(orangeRef);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setErrorMessage("");
     try {
       if (isRegisterMode) {
-        if (!usernameValue || !emailValue || !passwordValue) {
-          setErrorMessage('Please fill in all registration fields.');
+        if (!username || !email || !password) {
+          setErrorMessage("Please fill in all required fields.");
           return;
         }
-        await register(usernameValue, emailValue, passwordValue);
-        await updateProfile({ targetRole: targetRoleValue, targetCompany: targetCompanyValue });
+        await register(username, email, password);
+        await updateProfile({ targetRole, targetCompany });
       } else {
-        if (!emailValue || !passwordValue) {
-          setErrorMessage('Please provide both email and password.');
+        if (!email || !password) {
+          setErrorMessage("Please provide both email and password.");
           return;
         }
-        await login(emailValue, passwordValue);
+        await login(email, password);
       }
       navigate('/dashboard');
     } catch (err) {
-      setErrorMessage(err.message || 'Authentication request failed.');
+      setErrorMessage(err.message || 'Authentication failed. Check credentials.');
     }
   };
 
-  const toggleMode = () => {
-    setErrorMessage('');
-    if (isRegisterMode) {
-      navigate('/login');
-    } else {
-      navigate('/register');
-    }
-  };
+  // Local storage theme option
+  const theme = "dark";
+  const isDark = true;
 
-  const iconsArray = [
-    {
-      radius: 50,
-      duration: 15,
-      delay: 5,
-      path: true,
-      component: () => <JavaScriptIcon />
-    },
-    {
-      radius: 95,
-      duration: 20,
-      delay: 10,
-      path: true,
-      reverse: true,
-      component: () => <ReactIcon />
-    },
-    {
-      radius: 140,
-      duration: 25,
-      delay: 15,
-      path: true,
-      component: () => <NodejsIcon />
-    },
-    {
-      radius: 185,
-      duration: 30,
-      delay: 20,
-      path: true,
-      reverse: true,
-      component: () => <MongoDBIcon />
-    },
-    {
-      radius: 230,
-      duration: 35,
-      delay: 25,
-      path: true,
-      component: () => <TailwindIcon />
-    }
-  ];
-
-  const fields = isRegisterMode ? [
-    {
-      label: 'Username',
-      required: true,
-      type: 'text',
-      placeholder: 'e.g. NeoCoder',
-      onChange: (e) => setUsername(e.target.value)
-    },
-    {
-      label: 'Email Address',
-      required: true,
-      type: 'email',
-      placeholder: 'operator@codeviz.io',
-      onChange: (e) => setEmail(e.target.value)
-    },
-    {
-      label: 'Password',
-      required: true,
-      type: 'password',
-      placeholder: '••••••••••••',
-      onChange: (e) => setPassword(e.target.value)
-    },
-    {
-      label: 'Target Role',
-      required: false,
-      type: 'text',
-      placeholder: 'e.g. Frontend Developer',
-      onChange: (e) => setTargetRole(e.target.value)
-    },
-    {
-      label: 'Target Company',
-      required: false,
-      type: 'text',
-      placeholder: 'e.g. Google',
-      onChange: (e) => setTargetCompany(e.target.value)
-    }
-  ] : [
-    {
-      label: 'Email Address',
-      required: true,
-      type: 'email',
-      placeholder: 'operator@codeviz.io',
-      onChange: (e) => setEmail(e.target.value)
-    },
-    {
-      label: 'Password',
-      required: true,
-      type: 'password',
-      placeholder: '••••••••••••',
-      onChange: (e) => setPassword(e.target.value)
-    }
-  ];
+  const toggleTheme = () => {};
 
   return (
-    <div className="min-h-screen bg-[#07080a] flex items-center justify-center p-6 relative overflow-hidden">
-      
-      {/* Decorative Cyber Grid Background Glows */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-violet-600/5 rounded-full filter blur-[100px] animate-pulse-glow" />
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-400/5 rounded-full filter blur-[100px] animate-pulse-glow" style={{ animationDelay: '1.5s' }} />
+    <div className={cn(
+      "min-h-screen grid lg:grid-cols-2 font-sans select-none overflow-hidden transition-colors duration-500",
+      "bg-[#000000] text-white"
+    )}>
 
-      <div className="w-full max-w-4xl grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
-        
-        {/* Left Side: Orbiting Tech Display with Ripple */}
-        <div className="hidden lg:flex relative h-[450px] w-full items-center justify-center overflow-hidden">
-          <Ripple />
-          <TechOrbitDisplay iconsArray={iconsArray} text="CodeViz Academy" />
+      {/* Left Content Section: Cartoon Characters (desktop only) */}
+      <div className={cn(
+        "relative hidden lg:flex flex-col justify-between p-12 transition-all duration-500 overflow-hidden",
+        "bg-[#050505] text-white"
+      )}>
+        <div className="relative z-20">
+          <div className="flex items-center gap-2 text-lg font-semibold">
+            <img src={logo} alt="StudyQuest Logo" className="w-8 h-8 object-contain rounded-lg" />
+            <span className="font-mono tracking-wider font-bold">STUDYQUEST</span>
+          </div>
         </div>
 
-        {/* Right Side: Animated Glassmorphic Form */}
-        <div className="glassmorphism rounded-3xl p-8 relative z-10 box-glow-violet border-white/10 backdrop-blur-md bg-zinc-950/40 max-w-md mx-auto w-full">
-          <AnimatedForm
-            header={isRegisterMode ? 'CREATE ACADEMY PROFILE' : 'ACCESS CODEVIZ ACADEMY'}
-            subHeader={isRegisterMode ? 'INITIALIZE LEARNER PROFILE' : 'VERIFY LEARNER CREDENTIALS'}
-            fields={fields}
-            submitButton={isRegisterMode ? 'Seed Profile' : 'Initialize Interface'}
-            textVariantButton={isRegisterMode ? 'Switch to Connection Access' : 'Switch to Registration Module'}
-            errorField={errorMessage || authError}
-            onSubmit={handleSubmit}
-            goTo={toggleMode}
-            googleLogin="Access via Google Secure"
-          />
+        {/* Character Container */}
+        <div className="relative z-20 flex items-end justify-center h-[460px] select-none">
+          <div className="relative" style={{ width: '500px', height: '400px' }}>
+            
+            {/* Purple Tall Character - Back Layer */}
+            <div 
+              ref={purpleRef}
+              className="absolute bottom-0 transition-all duration-700 ease-in-out"
+              style={{
+                left: '60px',
+                width: '160px',
+                height: (isTyping || (password.length > 0 && !showPassword)) ? '420px' : '380px',
+                backgroundColor: '#6C3FF5',
+                borderRadius: '10px 10px 0 0',
+                zIndex: 1,
+                transform: (password.length > 0 && showPassword)
+                  ? `skewX(0deg)`
+                  : (isTyping || (password.length > 0 && !showPassword))
+                    ? `skewX(${(purplePos.bodySkew || 0) - 10}deg) translateX(30px)` 
+                    : `skewX(${purplePos.bodySkew || 0}deg)`,
+                transformOrigin: 'bottom center',
+              }}
+            >
+              {/* Eyes */}
+              <div 
+                className="absolute flex gap-6 transition-all duration-700 ease-in-out"
+                style={{
+                  left: (password.length > 0 && showPassword) ? `18px` : isLookingAtEachOther ? `48px` : `${40 + purplePos.faceX}px`,
+                  top: (password.length > 0 && showPassword) ? `32px` : isLookingAtEachOther ? `60px` : `${35 + purplePos.faceY}px`,
+                }}
+              >
+                <EyeBall 
+                  size={18} 
+                  pupilSize={7} 
+                  maxDistance={5} 
+                  eyeColor="white" 
+                  pupilColor="#2D2D2D" 
+                  isBlinking={isPurpleBlinking}
+                  forceLookX={(password.length > 0 && showPassword) ? (isPurplePeeking ? 4 : -4) : isLookingAtEachOther ? 3 : undefined}
+                  forceLookY={(password.length > 0 && showPassword) ? (isPurplePeeking ? 5 : -4) : isLookingAtEachOther ? 4 : undefined}
+                />
+                <EyeBall 
+                  size={18} 
+                  pupilSize={7} 
+                  maxDistance={5} 
+                  eyeColor="white" 
+                  pupilColor="#2D2D2D" 
+                  isBlinking={isPurpleBlinking}
+                  forceLookX={(password.length > 0 && showPassword) ? (isPurplePeeking ? 4 : -4) : isLookingAtEachOther ? 3 : undefined}
+                  forceLookY={(password.length > 0 && showPassword) ? (isPurplePeeking ? 5 : -4) : isLookingAtEachOther ? 4 : undefined}
+                />
+              </div>
+            </div>
+
+            {/* Black Tall Character - Middle Layer */}
+            <div 
+              ref={blackRef}
+              className="absolute bottom-0 transition-all duration-700 ease-in-out"
+              style={{
+                left: '210px',
+                width: '110px',
+                height: '300px',
+                backgroundColor: '#2D2D2D',
+                borderRadius: '8px 8px 0 0',
+                zIndex: 2,
+                transform: (password.length > 0 && showPassword)
+                  ? `skewX(0deg)`
+                  : isLookingAtEachOther
+                    ? `skewX(${(blackPos.bodySkew || 0) * 1.5 + 8}deg) translateX(15px)`
+                    : (isTyping || (password.length > 0 && !showPassword))
+                      ? `skewX(${(blackPos.bodySkew || 0) * 1.5}deg)` 
+                      : `skewX(${blackPos.bodySkew || 0}deg)`,
+                transformOrigin: 'bottom center',
+              }}
+            >
+              {/* Eyes */}
+              <div 
+                className="absolute flex gap-5 transition-all duration-700 ease-in-out"
+                style={{
+                  left: (password.length > 0 && showPassword) ? `10px` : isLookingAtEachOther ? `30px` : `${24 + blackPos.faceX}px`,
+                  top: (password.length > 0 && showPassword) ? `25px` : isLookingAtEachOther ? `10px` : `${28 + blackPos.faceY}px`,
+                }}
+              >
+                <EyeBall 
+                  size={16} 
+                  pupilSize={6} 
+                  maxDistance={4} 
+                  eyeColor="white" 
+                  pupilColor="#2D2D2D" 
+                  isBlinking={isBlackBlinking}
+                  forceLookX={(password.length > 0 && showPassword) ? -4 : isLookingAtEachOther ? 0 : undefined}
+                  forceLookY={(password.length > 0 && showPassword) ? -4 : isLookingAtEachOther ? -4 : undefined}
+                />
+                <EyeBall 
+                  size={16} 
+                  pupilSize={6} 
+                  maxDistance={4} 
+                  eyeColor="white" 
+                  pupilColor="#2D2D2D" 
+                  isBlinking={isBlackBlinking}
+                  forceLookX={(password.length > 0 && showPassword) ? -4 : isLookingAtEachOther ? 0 : undefined}
+                  forceLookY={(password.length > 0 && showPassword) ? -4 : isLookingAtEachOther ? -4 : undefined}
+                />
+              </div>
+            </div>
+
+            {/* Orange Semi-Circle Character - Front Left */}
+            <div 
+              ref={orangeRef}
+              className="absolute bottom-0 transition-all duration-700 ease-in-out"
+              style={{
+                left: '0px',
+                width: '210px',
+                height: '180px',
+                zIndex: 3,
+                backgroundColor: '#FF9B6B',
+                borderRadius: '110px 110px 0 0',
+                transform: (password.length > 0 && showPassword) ? `skewX(0deg)` : `skewX(${orangePos.bodySkew || 0}deg)`,
+                transformOrigin: 'bottom center',
+              }}
+            >
+              {/* Eyes */}
+              <div 
+                className="absolute flex gap-7 transition-all duration-200 ease-out"
+                style={{
+                  left: (password.length > 0 && showPassword) ? `45px` : `${72 + orangePos.faceX}px`,
+                  top: (password.length > 0 && showPassword) ? `80px` : `${82 + orangePos.faceY}px`,
+                }}
+              >
+                <Pupil size={11} maxDistance={5} pupilColor="#2D2D2D" forceLookX={(password.length > 0 && showPassword) ? -5 : undefined} forceLookY={(password.length > 0 && showPassword) ? -4 : undefined} />
+                <Pupil size={11} maxDistance={5} pupilColor="#2D2D2D" forceLookX={(password.length > 0 && showPassword) ? -5 : undefined} forceLookY={(password.length > 0 && showPassword) ? -4 : undefined} />
+              </div>
+            </div>
+
+            {/* Yellow Rounded Tall Character - Front Right */}
+            <div 
+              ref={yellowRef}
+              className="absolute bottom-0 transition-all duration-700 ease-in-out"
+              style={{
+                left: '280px',
+                width: '130px',
+                height: '220px',
+                backgroundColor: '#E8D754',
+                borderRadius: '65px 65px 0 0',
+                zIndex: 4,
+                transform: (password.length > 0 && showPassword) ? `skewX(0deg)` : `skewX(${yellowPos.bodySkew || 0}deg)`,
+                transformOrigin: 'bottom center',
+              }}
+            >
+              {/* Eyes */}
+              <div 
+                className="absolute flex gap-5 transition-all duration-200 ease-out"
+                style={{
+                  left: (password.length > 0 && showPassword) ? `18px` : `${48 + yellowPos.faceX}px`,
+                  top: (password.length > 0 && showPassword) ? `30px` : `${35 + yellowPos.faceY}px`,
+                }}
+              >
+                <Pupil size={11} maxDistance={5} pupilColor="#2D2D2D" forceLookX={(password.length > 0 && showPassword) ? -5 : undefined} forceLookY={(password.length > 0 && showPassword) ? -4 : undefined} />
+                <Pupil size={11} maxDistance={5} pupilColor="#2D2D2D" forceLookX={(password.length > 0 && showPassword) ? -5 : undefined} forceLookY={(password.length > 0 && showPassword) ? -4 : undefined} />
+              </div>
+              {/* Mouth */}
+              <div 
+                className="absolute w-16 h-[3px] bg-[#2D2D2D] rounded-full transition-all duration-200 ease-out"
+                style={{
+                  left: (password.length > 0 && showPassword) ? `8px` : `${36 + yellowPos.faceX}px`,
+                  top: (password.length > 0 && showPassword) ? `82px` : `${82 + yellowPos.faceY}px`,
+                }}
+              />
+            </div>
+          </div>
         </div>
 
+
+
+        {/* Decorative Grid */}
+        <div className={cn(
+          "absolute inset-0 transition-opacity duration-500",
+          isDark 
+            ? "bg-grid-white/[0.03] bg-[size:16px_16px]" 
+            : "bg-grid-black/[0.03] bg-[size:16px_16px]"
+        )} />
+      </div>
+
+      {/* Right Section: Form */}
+      <div className="flex items-center justify-center p-8 lg:p-12 relative">
+        <div className="w-full max-w-[390px] space-y-8">
+          
+          {/* Header */}
+          <div className="text-center lg:text-left space-y-2">
+            <h1 className="text-3xl font-black tracking-tight leading-tight">
+              {isRegisterMode ? "SEED SYSTEM DNA" : "WELCOME DEVELOPER"}
+            </h1>
+            <p className={cn(
+              "text-xs font-mono uppercase tracking-widest",
+              isDark ? "text-cyan-400" : "text-zinc-600 font-bold"
+            )}>
+              {isRegisterMode ? "Initialize System Modules" : "Verify Learner Identity"}
+            </p>
+          </div>
+
+          {/* Form */}
+          <form onSubmit={handleSubmit} className="space-y-4">
+            
+            {/* Username (Register Mode Only) */}
+            {isRegisterMode && (
+              <div className="space-y-1.5">
+                <label className={cn("text-[10px] font-mono uppercase tracking-widest block font-bold", isDark ? "text-zinc-400" : "text-zinc-600")}>
+                  Username
+                </label>
+                <div className="relative">
+                  <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-500">
+                    <User size={15} />
+                  </span>
+                  <input
+                    type="text"
+                    placeholder="e.g. NeoCoder"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    onFocus={() => setIsTyping(true)}
+                    onBlur={() => setIsTyping(false)}
+                    required
+                    className={cn(
+                      "w-full h-11 pl-10 pr-4 rounded-xl text-xs font-mono transition-all duration-300 focus:outline-none border",
+                      isDark 
+                        ? "bg-white/[0.02] text-white border-white/10 focus:border-violet-500 focus:ring-1 focus:ring-violet-500/20 placeholder-white/30" 
+                        : "bg-zinc-50 text-black border-zinc-200 focus:border-black focus:ring-1 focus:ring-black/10 placeholder-zinc-400"
+                    )}
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* Email (Both Modes) */}
+            <div className="space-y-1.5">
+              <label className={cn("text-[10px] font-mono uppercase tracking-widest block font-bold", isDark ? "text-zinc-400" : "text-zinc-600")}>
+                Email Address
+              </label>
+              <div className="relative">
+                <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-500">
+                  <Mail size={15} />
+                </span>
+                <input
+                  type="email"
+                  placeholder="operator@studyquest.io"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  onFocus={() => setIsTyping(true)}
+                  onBlur={() => setIsTyping(false)}
+                  required
+                  className={cn(
+                    "w-full h-11 pl-10 pr-4 rounded-xl text-xs font-mono transition-all duration-300 focus:outline-none border",
+                    isDark 
+                      ? "bg-white/[0.02] text-white border-white/10 focus:border-violet-500 focus:ring-1 focus:ring-violet-500/20 placeholder-white/30" 
+                      : "bg-zinc-50 text-black border-zinc-200 focus:border-black focus:ring-1 focus:ring-black/10 placeholder-zinc-400"
+                  )}
+                />
+              </div>
+            </div>
+
+            {/* Password (Both Modes) */}
+            <div className="space-y-1.5">
+              <label className={cn("text-[10px] font-mono uppercase tracking-widest block font-bold", isDark ? "text-zinc-400" : "text-zinc-600")}>
+                Password
+              </label>
+              <div className="relative">
+                <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-500">
+                  <Lock size={15} />
+                </span>
+                <input
+                  type={showPassword ? "text" : "password"}
+                  placeholder="••••••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  onFocus={() => setIsTyping(true)}
+                  onBlur={() => setIsTyping(false)}
+                  required
+                  className={cn(
+                    "w-full h-11 pl-10 pr-10 rounded-xl text-xs font-mono transition-all duration-300 focus:outline-none border",
+                    isDark 
+                      ? "bg-white/[0.02] text-white border-white/10 focus:border-violet-500 focus:ring-1 focus:ring-violet-500/20 placeholder-white/30" 
+                      : "bg-zinc-50 text-black border-zinc-200 focus:border-black focus:ring-1 focus:ring-black/10 placeholder-zinc-400"
+                  )}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-200 transition-colors"
+                >
+                  {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                </button>
+              </div>
+            </div>
+
+            {/* Target Role & Company (Register Mode Only) */}
+            {isRegisterMode && (
+              <>
+                <div className="space-y-1.5">
+                  <label className={cn("text-[10px] font-mono uppercase tracking-widest block font-bold", isDark ? "text-zinc-400" : "text-zinc-600")}>
+                    Target Role
+                  </label>
+                  <div className="relative">
+                    <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-500">
+                      <Briefcase size={15} />
+                    </span>
+                    <input
+                      type="text"
+                      placeholder="e.g. Frontend Developer"
+                      value={targetRole}
+                      onChange={(e) => setTargetRole(e.target.value)}
+                      onFocus={() => setIsTyping(true)}
+                      onBlur={() => setIsTyping(false)}
+                      className={cn(
+                        "w-full h-11 pl-10 pr-4 rounded-xl text-xs font-mono transition-all duration-300 focus:outline-none border",
+                        isDark 
+                          ? "bg-white/[0.02] text-white border-white/10 focus:border-violet-500 focus:ring-1 focus:ring-violet-500/20 placeholder-white/30" 
+                          : "bg-zinc-50 text-black border-zinc-200 focus:border-black focus:ring-1 focus:ring-black/10 placeholder-zinc-400"
+                      )}
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-1.5">
+                  <label className={cn("text-[10px] font-mono uppercase tracking-widest block font-bold", isDark ? "text-zinc-400" : "text-zinc-600")}>
+                    Target Company
+                  </label>
+                  <div className="relative">
+                    <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-500">
+                      <Building size={15} />
+                    </span>
+                    <input
+                      type="text"
+                      placeholder="e.g. Google"
+                      value={targetCompany}
+                      onChange={(e) => setTargetCompany(e.target.value)}
+                      onFocus={() => setIsTyping(true)}
+                      onBlur={() => setIsTyping(false)}
+                      className={cn(
+                        "w-full h-11 pl-10 pr-4 rounded-xl text-xs font-mono transition-all duration-300 focus:outline-none border",
+                        isDark 
+                          ? "bg-white/[0.02] text-white border-white/10 focus:border-violet-500 focus:ring-1 focus:ring-violet-500/20 placeholder-white/30" 
+                          : "bg-zinc-50 text-black border-zinc-200 focus:border-black focus:ring-1 focus:ring-black/10 placeholder-zinc-400"
+                      )}
+                    />
+                  </div>
+                </div>
+              </>
+            )}
+
+            {/* Error Message Display */}
+            {(errorMessage || authError) && (
+              <div className={cn(
+                "p-3.5 rounded-xl text-[10px] font-mono text-left border leading-normal",
+                isDark 
+                  ? "bg-red-950/20 border-red-500/20 text-red-400" 
+                  : "bg-red-50 border-red-200 text-red-700"
+              )}>
+                <span className="font-bold uppercase mr-1">[CRITICAL ERROR]:</span> 
+                {errorMessage || authError}
+              </div>
+            )}
+
+            {/* Submit Button */}
+            <button
+              type="submit"
+              disabled={authLoading}
+              className={cn(
+                "w-full h-11 rounded-xl font-mono text-xs font-bold transition-all duration-300 cursor-pointer shadow-md select-none",
+                "bg-violet-600 text-white hover:bg-violet-500 hover:shadow-[0_0_15px_rgba(139,92,246,0.3)]"
+              )}
+            >
+              {authLoading ? "Initializing..." : isRegisterMode ? "Seed Profile" : "Initialize Interface"} &rarr;
+            </button>
+
+          </form>
+
+          {/* Switch Mode Link */}
+          <div className="text-center pt-2">
+            <button
+              type="button"
+              onClick={() => navigate(isRegisterMode ? '/login' : '/register')}
+              className={cn(
+                "text-[10px] font-mono tracking-wider uppercase transition-all duration-200 cursor-pointer underline decoration-dotted underline-offset-4 font-bold",
+                isDark ? "text-cyan-400 hover:text-white" : "text-black hover:text-black/60"
+              )}
+            >
+              {isRegisterMode ? "Switch to Access Module (LogIn)" : "Switch to Seed Profile (Signup)"}
+            </button>
+          </div>
+
+          <p className={cn(
+            "text-[9px] leading-relaxed font-mono text-center",
+            isDark ? "text-white/30" : "text-black/40"
+          )}>
+            System validation implies consent to security guidelines, operational parameters, and standard kernel privacy codes.
+          </p>
+
+        </div>
       </div>
     </div>
   );

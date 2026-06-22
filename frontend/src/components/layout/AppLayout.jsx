@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useStore } from '../../hooks/useStore';
 import { motion, AnimatePresence } from 'framer-motion';
+import logo from '../../assets/logo.png';
 import {
   LayoutDashboard,
   Briefcase,
@@ -25,8 +26,11 @@ import {
   X,
   Award,
   Terminal,
-  Users
+  Users,
+  ChevronDown
 } from 'lucide-react';
+import { cn } from "../../lib/utils";
+import Copilot from '../ui/Copilot';
 
 export default function AppLayout({ children }) {
   const {
@@ -46,21 +50,32 @@ export default function AppLayout({ children }) {
 
   const location = useLocation();
   const navigate = useNavigate();
-  const [sidebarOpen, setSidebarOpen] = useState(true);
   const [showTimerDetails, setShowTimerDetails] = useState(false);
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
   const [audioVolume, setAudioVolume] = useState(0.5);
   const [audioElement, setAudioElement] = useState(null);
 
+  // Mobile drawer state
+  const [showMoreMenu, setShowMoreMenu] = useState(false);
+
+  // Desktop "More" dropdown state
+  const [showDesktopMore, setShowDesktopMore] = useState(false);
+
+  // Theme support
+  const theme = "dark";
+  const isDark = true;
+
+  const toggleTheme = () => {};
+
   // Focus Audio streams
   const audioTracks = {
-    lofi: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', // Synth placeholder
+    lofi: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
     synthwave: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
     ambient: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3',
     nature: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3',
   };
 
-  // Tick timer every second if running
+  // Tick timer
   useEffect(() => {
     let interval = null;
     if (timerStatus === 'running') {
@@ -95,7 +110,7 @@ export default function AppLayout({ children }) {
     }
   }, [audioVolume, audioElement]);
 
-  // Cleanup audio on unmount
+  // Cleanup audio
   useEffect(() => {
     return () => {
       if (audioElement) {
@@ -109,20 +124,7 @@ export default function AppLayout({ children }) {
     navigate('/login');
   };
 
-  const navItems = [
-    { name: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
-    { name: 'Company Prep', path: '/company-prep', icon: Briefcase },
-    { name: 'Roadmaps', path: '/roadmaps', icon: Map },
-    { name: 'Resume Auditor', path: '/resume-auditor', icon: FileText },
-    { name: 'Mock Interview', path: '/mock-interview', icon: Terminal },
-    { name: 'Communities', path: '/communities', icon: MessageSquare },
-    { name: 'Hackathons', path: '/hackathons', icon: Compass },
-    { name: 'DSA Sheets', path: '/dsa-sheets', icon: Code },
-    { name: 'Profile Tracker', path: '/trackers', icon: Award },
-    { name: 'Leaderboard', path: '/leaderboard', icon: Trophy }
-  ];
-
-  // XP calculations for level bar
+  // XP Progress Calculation
   const xpInCurrentLevel = user?.xp ? user.xp % 1000 : 0;
   const xpProgressPercent = (xpInCurrentLevel / 1000) * 100;
 
@@ -132,295 +134,446 @@ export default function AppLayout({ children }) {
     return `${m}:${s}`;
   };
 
-  return (
-    <div className="min-h-screen bg-[#020617] flex text-gray-100 font-sans selection:bg-violet-600/30 relative overflow-hidden">
-      {/* Dark Radial Glow Background */}
-      <div
-        className="absolute inset-0 z-0 pointer-events-none"
-        style={{
-          backgroundImage: `radial-gradient(circle 500px at 50% 200px, #3e3e3e, transparent)`,
-        }}
-      />
-      
-      {/* Mobile Toggle Button */}
-      <button 
-        onClick={() => setSidebarOpen(!sidebarOpen)}
-        className="lg:hidden fixed bottom-6 right-6 z-50 p-4 bg-violet-600 hover:bg-violet-500 rounded-full shadow-lg box-glow-violet transition-all duration-300"
-      >
-        {sidebarOpen ? <X size={20} /> : <Menu size={20} />}
-      </button>
+  // Horizontal Desktop Navigation Tabs
+  const desktopTabs = [
+    { name: 'Dashboard', path: '/dashboard' },
+    { name: 'Company Prep', path: '/company-prep' },
+    { name: 'Roadmaps', path: '/roadmaps' },
+    { name: 'DSA Sheets', path: '/dsa-sheets' },
+    { name: 'Mock Interview', path: '/mock-interview' },
+    { name: 'Resume Auditor', path: '/resume-auditor' },
+    { name: 'Leaderboard', path: '/leaderboard' },
+    { name: 'More', path: 'more' }
+  ];
 
-      {/* Sidebar Navigation */}
-      <aside 
-        className={`w-72 bg-[#020617] border-r border-white/5 flex flex-col fixed inset-y-0 left-0 z-40 transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static ${
-          sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-        }`}
-      >
-        {/* Brand Logo */}
-        <div className="h-20 flex items-center px-6 border-b border-white/5 gap-3">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-violet-600 to-cyan-400 flex items-center justify-center font-bold text-lg shadow-md tracking-wider text-glow-violet select-none">
-            SQ
-          </div>
-          <div>
-            <h1 className="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400 tracking-wide font-sans text-lg">
-              STUDYQUEST OS
+  const desktopMoreLinks = [
+    { name: 'Communities', path: '/communities', icon: MessageSquare },
+    { name: 'Hackathons', path: '/hackathons', icon: Compass },
+    { name: 'Profile Tracker', path: '/trackers', icon: Award }
+  ];
+
+  // Mobile Bottom dock layout items
+  const mobileNavItems = [
+    { label: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
+    { label: 'Prep', path: '/company-prep', icon: Briefcase },
+    { label: 'Roadmaps', path: '/roadmaps', icon: Map },
+    { label: 'DSA', path: '/dsa-sheets', icon: Code },
+    { label: 'More', path: 'more', icon: Menu }
+  ];
+
+  // Items shown inside the mobile More Drawer
+  const remainingMobileLinks = [
+    { name: 'Resume Auditor', path: '/resume-auditor', icon: FileText },
+    { name: 'Mock Interview', path: '/mock-interview', icon: Terminal },
+    { name: 'Communities', path: '/communities', icon: MessageSquare },
+    { name: 'Hackathons', path: '/hackathons', icon: Compass },
+    { name: 'Profile Tracker', path: '/trackers', icon: Award },
+    { name: 'Leaderboard', path: '/leaderboard', icon: Trophy }
+  ];
+
+  // Sliding Cursor Pill calculation
+  const [position, setPosition] = useState({
+    left: 0,
+    width: 0,
+    opacity: 0,
+  });
+
+  const tabRefs = useRef([]);
+
+  const syncActivePosition = () => {
+    let activeIndex = desktopTabs.findIndex(tab => tab.path === location.pathname);
+    if (activeIndex === -1) {
+      // Highlight "More" tab if current sub-page is in the "More" dropdown
+      activeIndex = desktopTabs.findIndex(tab => tab.path === 'more');
+    }
+    if (activeIndex !== -1 && tabRefs.current[activeIndex]) {
+      const activeEl = tabRefs.current[activeIndex];
+      setPosition({
+        width: activeEl.offsetWidth,
+        opacity: 1,
+        left: activeEl.offsetLeft,
+      });
+    } else {
+      setPosition(pv => ({ ...pv, opacity: 0 }));
+    }
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(syncActivePosition, 50);
+    return () => clearTimeout(timer);
+  }, [location.pathname]);
+
+  // Recalculate on window resize
+  useEffect(() => {
+    window.addEventListener('resize', syncActivePosition);
+    return () => window.removeEventListener('resize', syncActivePosition);
+  }, [location.pathname]);
+
+  return (
+    <div className={cn(
+      "min-h-screen flex flex-col font-sans selection:bg-violet-600/30 relative overflow-hidden transition-colors duration-500",
+      isDark ? "bg-[#000000] text-gray-100" : "bg-white text-black"
+    )}>
+      {/* Dark Radial Glow Background (Dark theme only) */}
+      {isDark && (
+        <div
+          className="absolute inset-0 z-0 pointer-events-none"
+          style={{
+            backgroundImage: `radial-gradient(circle 600px at 50% 150px, rgba(255, 255, 255, 0.03), transparent)`,
+          }}
+        />
+      )}
+
+      {/* Global Desktop & Mobile Navigation Header */}
+      <header className={cn(
+        "h-20 border-b flex items-center justify-between px-6 lg:px-8 z-30 sticky top-0 backdrop-blur-md transition-colors duration-500",
+        isDark 
+          ? "bg-black/85 border-white/5" 
+          : "bg-white/85 border-zinc-200"
+      )}>
+        {/* Brand Logo & Title */}
+        <div className="flex items-center gap-3 select-none">
+          <img src={logo} alt="StudyQuest Logo" className="w-10 h-10 object-contain rounded-lg" />
+          <div className="hidden sm:block">
+            <h1 className="font-extrabold text-sm tracking-wide">
+              STUDYQUEST
             </h1>
-            <span className="text-[10px] text-cyan-400 tracking-widest font-mono">CAREER STACK</span>
+            <span className={cn("text-[9px] tracking-widest font-mono", isDark ? "text-cyan-400" : "text-zinc-500")}>
+              CAREER PLATFORM
+            </span>
           </div>
         </div>
 
-        {/* User XP & Level HUD */}
-        {user && (
-          <div className="p-6 border-b border-white/5 bg-white/[0.01]">
-            <div className="flex items-center gap-4 mb-3">
-              <div className="relative flex items-center justify-center">
-                <svg className="w-14 h-14 transform -rotate-90">
-                  <circle cx="28" cy="28" r="24" stroke="rgba(255,255,255,0.03)" strokeWidth="4" fill="transparent" />
-                  <circle 
-                    cx="28" 
-                    cy="28" 
-                    r="24" 
-                    stroke="url(#grad)" 
-                    strokeWidth="4" 
-                    fill="transparent" 
-                    strokeDasharray={150.7} 
-                    strokeDashoffset={150.7 - (150.7 * xpProgressPercent) / 100}
-                    strokeLinecap="round"
-                  />
-                  <defs>
-                    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#8b5cf6" />
-                      <stop offset="100%" stopColor="#06b6d4" />
-                    </linearGradient>
-                  </defs>
-                </svg>
-                <span className="absolute font-mono font-bold text-base text-cyan-400 text-glow-cyan">{user.level}</span>
-              </div>
+        {/* Desktop Sliding Hover Menu (center) */}
+        <nav className="hidden lg:block relative">
+          <ul
+            className={cn(
+              "relative flex w-fit rounded-full border p-1 transition-all duration-300",
+              isDark ? "border-white/5 bg-white/[0.02]" : "border-zinc-200 bg-zinc-50"
+            )}
+            onMouseLeave={syncActivePosition}
+          >
+            {/* Sliding Pill Cursor */}
+            <motion.li
+              animate={position}
+              className={cn(
+                "absolute z-0 h-8 rounded-full pointer-events-none",
+                isDark ? "bg-white/[0.08]" : "bg-black/[0.06]"
+              )}
+              transition={{ type: 'spring', damping: 20, stiffness: 220 }}
+            />
 
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center justify-between mb-1">
-                  <p className="text-sm font-semibold truncate text-white">{user.username}</p>
-                  <span className="text-[10px] text-gray-500 font-mono">{user.xp % 1000}/1000 XP</span>
-                </div>
-                <div className="w-full bg-white/5 rounded-full h-1.5 overflow-hidden">
-                  <div 
-                    className="bg-gradient-to-r from-violet-500 to-cyan-400 h-full rounded-full transition-all duration-500" 
-                    style={{ width: `${xpProgressPercent}%` }} 
-                  />
-                </div>
-              </div>
-            </div>
+            {desktopTabs.map((tab, index) => {
+              const isMore = tab.path === 'more';
+              
+              if (isMore) {
+                return (
+                  <li
+                    key={tab.name}
+                    ref={(el) => (tabRefs.current[index] = el)}
+                    onMouseEnter={() => {
+                      setShowDesktopMore(true);
+                      const el = tabRefs.current[index];
+                      if (el) {
+                        setPosition({
+                          width: el.offsetWidth,
+                          opacity: 1,
+                          left: el.offsetLeft,
+                        });
+                      }
+                    }}
+                    onMouseLeave={() => {
+                      setShowDesktopMore(false);
+                      syncActivePosition();
+                    }}
+                    className={cn(
+                      "relative z-10 block cursor-pointer px-4 py-2 text-[10px] font-mono font-bold uppercase transition-colors select-none",
+                      location.pathname.startsWith('/communities') || 
+                      location.pathname.startsWith('/hackathons') || 
+                      location.pathname.startsWith('/trackers')
+                        ? (isDark ? "text-cyan-400" : "text-black")
+                        : (isDark ? "text-gray-400 hover:text-white" : "text-zinc-500 hover:text-black")
+                    )}
+                  >
+                    <span className="flex items-center gap-1">
+                      {tab.name} <ChevronDown size={10} />
+                    </span>
 
-            {/* Streak and Profile Summary */}
-            <div className="flex justify-between items-center bg-white/[0.02] border border-white/5 rounded-xl p-3 mt-4">
-              <div className="flex items-center gap-1.5">
-                <Flame className={`w-5 h-5 ${user.streak > 0 ? 'text-amber-500 animate-pulse' : 'text-gray-500'}`} />
-                <span className="font-mono text-sm font-bold text-glow-cyan text-white">{user.streak} DAY STREAK</span>
-              </div>
-              <div className="flex items-center gap-1">
-                <Award className="w-4 h-4 text-cyan-400" />
-                <span className="text-[10px] text-cyan-300 uppercase font-mono tracking-wider">{user.targetCompany}</span>
-              </div>
-            </div>
-          </div>
-        )}
+                    {/* Desktop "More" Dropdown Menu */}
+                    <AnimatePresence>
+                      {showDesktopMore && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: 10 }}
+                          className={cn(
+                            "absolute top-full right-0 mt-2.5 w-44 rounded-xl border p-1.5 shadow-xl z-50 text-left transition-colors duration-500",
+                            isDark ? "bg-[#07080a] border-white/10 text-white" : "bg-white border-zinc-200 text-black"
+                          )}
+                        >
+                          {desktopMoreLinks.map((link) => {
+                            const Icon = link.icon;
+                            const isLinkActive = location.pathname === link.path;
+                            return (
+                              <Link
+                                key={link.name}
+                                to={link.path}
+                                className={cn(
+                                  "flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs transition-colors font-sans",
+                                  isLinkActive
+                                    ? (isDark ? "bg-white/10 text-cyan-400" : "bg-zinc-100 text-black font-semibold")
+                                    : (isDark ? "hover:bg-white/5 text-gray-400 hover:text-white" : "hover:bg-zinc-50 text-zinc-600 hover:text-black")
+                                )}
+                              >
+                                <Icon size={14} className="text-violet-500" />
+                                <span>{link.name}</span>
+                              </Link>
+                            );
+                          })}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </li>
+                );
+              }
 
-        {/* Navigation List */}
-        <nav className="flex-1 overflow-y-auto px-4 py-6 space-y-1">
-          {navItems.map((item) => {
-            const isActive = location.pathname === item.path;
-            const Icon = item.icon;
-            return (
-              <Link
-                key={item.name}
-                to={item.path}
-                className={`flex items-center gap-3.5 px-4 py-3 rounded-xl transition-all duration-200 group text-sm font-medium ${
-                  isActive
-                    ? 'bg-gradient-to-r from-violet-600/20 to-cyan-500/5 text-white border-l-2 border-violet-500 shadow-sm shadow-violet-500/5'
-                    : 'text-gray-400 hover:text-white hover:bg-white/[0.02]'
-                }`}
-              >
-                <Icon className={`w-5 h-5 transition-transform duration-200 group-hover:scale-110 ${
-                  isActive ? 'text-violet-400' : 'text-gray-400 group-hover:text-violet-400'
-                }`} />
-                {item.name}
-              </Link>
-            );
-          })}
+              const isLinkActive = location.pathname === tab.path;
+
+              return (
+                <li
+                  key={tab.name}
+                  ref={(el) => (tabRefs.current[index] = el)}
+                  onMouseEnter={() => {
+                    const el = tabRefs.current[index];
+                    if (el) {
+                      setPosition({
+                        width: el.offsetWidth,
+                        opacity: 1,
+                        left: el.offsetLeft,
+                      });
+                    }
+                  }}
+                  onMouseLeave={syncActivePosition}
+                  onClick={() => navigate(tab.path)}
+                  className={cn(
+                    "relative z-10 block cursor-pointer px-4 py-2 text-[10px] font-mono font-bold uppercase transition-colors select-none",
+                    isLinkActive
+                      ? (isDark ? "text-cyan-400" : "text-black")
+                      : (isDark ? "text-gray-400 hover:text-white" : "text-zinc-500 hover:text-black")
+                  )}
+                >
+                  {tab.name}
+                </li>
+              );
+            })}
+          </ul>
         </nav>
 
-        {/* Footer actions */}
-        <div className="p-4 border-t border-white/5">
-          <button
-            onClick={handleLogout}
-            className="w-full flex items-center gap-3.5 px-4 py-3 rounded-xl text-gray-400 hover:text-red-400 hover:bg-red-500/5 transition-all text-sm font-semibold"
-          >
-            <LogOut className="w-5 h-5" />
-            Sign Out
-          </button>
-        </div>
-      </aside>
+        {/* User HUD, Pomodoro, and Theme Controls (right side) */}
+        <div className="flex items-center gap-4 lg:gap-5">
+          
+          {/* User Streak HUD (Desktop only) */}
+          {user && (
+            <div className={cn(
+              "hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-full border transition-all text-xs font-semibold",
+              isDark ? "bg-white/[0.02] border-white/5 text-white" : "bg-zinc-50 border-zinc-200 text-black"
+            )}>
+              <Flame className={cn("w-4 h-4", user.streak > 0 ? "text-amber-500 animate-pulse" : "text-gray-500")} />
+              <span className="font-mono text-[10px]">{user.streak} DAYS</span>
+            </div>
+          )}
 
-      {/* Main Content Pane */}
-      <div className="flex-1 flex flex-col min-w-0">
-        
-        {/* Header Panel */}
-        <header className="h-20 bg-gradient-to-r from-[#0c0e14]/50 to-[#07080c]/50 border-b border-white/5 flex items-center justify-between px-8 z-30 sticky top-0 backdrop-blur-md">
-          <div className="flex items-center gap-4">
-            <span className="text-xs font-mono text-cyan-400 tracking-wider">STATUS: ONLINE</span>
-            <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+          {/* User Level HUD (Desktop only) */}
+          {user && (
+            <div className="hidden xl:flex items-center gap-2 text-[10px] font-mono">
+              <span className="font-bold">LVL {user.level}</span>
+              <div className="w-16 bg-zinc-200 dark:bg-white/10 rounded-full h-1 overflow-hidden">
+                <div className="bg-violet-600 h-full" style={{ width: `${xpProgressPercent}%` }} />
+              </div>
+            </div>
+          )}
+
+          {/* Pomodoro Timer widget */}
+          <div className="relative">
+            <button 
+              onClick={() => setShowTimerDetails(!showTimerDetails)}
+              className={cn(
+                "flex items-center gap-2 px-3 py-1.5 rounded-full border transition-all text-xs font-semibold select-none",
+                isDark ? "bg-white/[0.03] hover:bg-white/[0.06] border-white/5" : "bg-zinc-50 hover:bg-zinc-100 border-zinc-200"
+              )}
+            >
+              <Clock className={cn("w-3.5 h-3.5 text-violet-500", timerStatus === 'running' ? 'animate-spin' : '')} style={{ animationDuration: '10s' }} />
+              <span className="font-mono text-[10px]">{formatTime(timeLeft)}</span>
+            </button>
+
+            {/* Float Timer Panel Details */}
+            <AnimatePresence>
+              {showTimerDetails && (
+                <motion.div 
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 10 }}
+                  className={cn(
+                    "absolute right-0 mt-3 w-72 rounded-2xl p-5 shadow-2xl z-50 border transition-all duration-300",
+                    isDark ? "bg-[#07080a] border-white/10 text-white" : "bg-white border-zinc-200 text-black"
+                  )}
+                >
+                  <h3 className="text-xs font-bold mb-1.5 flex items-center justify-between">
+                    <span>POMODORO STATION</span>
+                    <span className="text-[9px] text-cyan-400 uppercase tracking-widest font-mono">{timerType}</span>
+                  </h3>
+                  <p className="text-[10px] text-gray-500 mb-4">Focus session completes quest and logs XP.</p>
+                  
+                  <div className={cn(
+                    "text-center py-4 rounded-xl mb-4 border",
+                    isDark ? "bg-white/[0.01] border-white/5" : "bg-zinc-50 border-zinc-100"
+                  )}>
+                    <span className="text-3xl font-extrabold font-mono tracking-wider">{formatTime(timeLeft)}</span>
+                  </div>
+
+                  {/* Timer controls */}
+                  <div className="flex justify-center gap-2 mb-4">
+                    {timerStatus === 'running' ? (
+                      <button 
+                        onClick={pauseTimer}
+                        className="flex items-center gap-1.5 px-3 py-1.5 bg-amber-600/20 border border-amber-500/20 hover:bg-amber-600/30 rounded-xl text-[10px] font-semibold transition-all"
+                      >
+                        <Pause size={12} /> Pause
+                      </button>
+                    ) : (
+                      <button 
+                        onClick={startTimer}
+                        className="flex items-center gap-1.5 px-3 py-1.5 bg-violet-600 hover:bg-violet-500 rounded-xl text-[10px] font-semibold text-white transition-all shadow-md"
+                      >
+                        <Play size={12} /> Start Focus
+                      </button>
+                    )}
+                    <button 
+                      onClick={resetTimer}
+                      className={cn(
+                        "flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-[10px] font-semibold transition-all border",
+                        isDark ? "bg-white/[0.03] border-white/5 text-gray-300 hover:bg-white/10" : "bg-zinc-100 border-zinc-200 text-zinc-700 hover:bg-zinc-200"
+                      )}
+                    >
+                      <RotateCcw size={12} />
+                    </button>
+                  </div>
+
+                  {/* Preset session lengths */}
+                  <div className={cn(
+                    "grid grid-cols-3 gap-1.5 mb-4 border-t pt-4",
+                    isDark ? "border-white/5" : "border-zinc-100"
+                  )}>
+                    <button 
+                      onClick={() => setTimerType('focus')}
+                      className={`py-1 text-[9px] rounded-lg font-mono font-semibold transition-all ${
+                        timerType === 'focus' ? 'bg-violet-500/20 text-violet-400 border border-violet-500/20' : 'bg-transparent text-gray-500'
+                      }`}
+                    >
+                      Focus
+                    </button>
+                    <button 
+                      onClick={() => setTimerType('shortBreak')}
+                      className={`py-1 text-[9px] rounded-lg font-mono font-semibold transition-all ${
+                        timerType === 'shortBreak' ? 'bg-violet-500/20 text-violet-400 border border-violet-500/20' : 'bg-transparent text-gray-500'
+                      }`}
+                    >
+                      Short
+                    </button>
+                    <button 
+                      onClick={() => setTimerType('longBreak')}
+                      className={`py-1 text-[9px] rounded-lg font-mono font-semibold transition-all ${
+                        timerType === 'longBreak' ? 'bg-violet-500/20 text-violet-400 border border-violet-500/20' : 'bg-transparent text-gray-500'
+                      }`}
+                    >
+                      Long
+                    </button>
+                  </div>
+
+                  {/* Ambient Audio Widget inside Pomodoro Panel */}
+                  <div className={cn("border-t pt-4 space-y-2", isDark ? "border-white/5" : "border-zinc-100")}>
+                    <h4 className="text-[9px] text-gray-500 font-mono tracking-widest uppercase flex items-center gap-1.5">
+                      <Music size={10} /> Focus Ambient Station
+                    </h4>
+                    <div className="grid grid-cols-4 gap-1">
+                      {['lofi', 'synthwave', 'ambient', 'nature'].map((track) => (
+                        <button
+                          key={track}
+                          onClick={() => {
+                            setActiveAudio(track);
+                            setIsAudioPlaying(true);
+                          }}
+                          className={`py-1 text-[8px] rounded-md font-mono capitalize transition-all ${
+                            activeAudio === track && isAudioPlaying 
+                              ? 'bg-cyan-500/25 text-cyan-500 border border-cyan-500/20' 
+                              : 'bg-transparent text-gray-400 hover:text-gray-200'
+                          }`}
+                        >
+                          {track}
+                        </button>
+                      ))}
+                    </div>
+
+                    {activeAudio && (
+                      <div className="flex items-center gap-2 mt-2">
+                        <button
+                          onClick={() => setIsAudioPlaying(!isAudioPlaying)}
+                          className="p-1 rounded-md bg-zinc-200 dark:bg-white/5 hover:bg-zinc-300 dark:hover:bg-white/10 text-cyan-500"
+                        >
+                          {isAudioPlaying ? <Pause size={10} /> : <Play size={10} />}
+                        </button>
+                        <Volume2 size={10} className="text-gray-500" />
+                        <input 
+                          type="range" 
+                          min="0" 
+                          max="1" 
+                          step="0.05"
+                          value={audioVolume}
+                          onChange={(e) => setAudioVolume(parseFloat(e.target.value))}
+                          className="flex-1 h-1 bg-zinc-200 dark:bg-white/5 rounded-lg appearance-none cursor-pointer accent-cyan-500"
+                        />
+                      </div>
+                    )}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
 
-          {/* Quick HUD Elements (Pomodoro Quick Status & Focus Audio Widget) */}
-          <div className="flex items-center gap-6">
-            
-            {/* Quick Pomodoro Widget */}
-            <div className="relative">
-              <button 
-                onClick={() => setShowTimerDetails(!showTimerDetails)}
-                className="flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-white/[0.03] hover:bg-white/[0.06] border border-white/5 transition-all text-xs font-semibold"
-              >
-                <Clock className={`w-4 h-4 text-violet-400 ${timerStatus === 'running' ? 'animate-spin' : ''}`} style={{ animationDuration: '10s' }} />
-                <span className="font-mono text-glow-cyan text-white">{formatTime(timeLeft)}</span>
-                <span className={`w-1.5 h-1.5 rounded-full ${timerStatus === 'running' ? 'bg-rose-500' : 'bg-gray-500'}`} />
-              </button>
 
-              {/* Float Timer Panel Details */}
-              <AnimatePresence>
-                {showTimerDetails && (
-                  <motion.div 
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 10 }}
-                    className="absolute right-0 mt-3 w-72 glassmorphism rounded-2xl p-5 shadow-2xl z-50 border border-white/10"
-                  >
-                    <h3 className="text-sm font-bold text-white mb-1.5 flex items-center justify-between">
-                      <span>POMODORO STATION</span>
-                      <span className="text-[10px] text-cyan-400 uppercase tracking-widest font-mono">{timerType}</span>
-                    </h3>
-                    <p className="text-[11px] text-gray-400 mb-4">Focus session completes quest and logs XP.</p>
-                    
-                    <div className="text-center py-4 bg-white/[0.02] border border-white/5 rounded-xl mb-4">
-                      <span className="text-4xl font-extrabold font-mono text-white text-glow-cyan tracking-wider">{formatTime(timeLeft)}</span>
-                    </div>
 
-                    {/* Timer controls */}
-                    <div className="flex justify-center gap-3 mb-4">
-                      {timerStatus === 'running' ? (
-                        <button 
-                          onClick={pauseTimer}
-                          className="flex items-center gap-1.5 px-4 py-2 bg-amber-600/30 border border-amber-500/20 hover:bg-amber-600/50 rounded-xl text-xs font-semibold transition-all"
-                        >
-                          <Pause size={14} /> Pause
-                        </button>
-                      ) : (
-                        <button 
-                          onClick={startTimer}
-                          className="flex items-center gap-1.5 px-4 py-2 bg-violet-600 hover:bg-violet-500 rounded-xl text-xs font-semibold box-glow-violet text-white transition-all"
-                        >
-                          <Play size={14} /> Start Focus
-                        </button>
-                      )}
-                      <button 
-                        onClick={resetTimer}
-                        className="flex items-center gap-1.5 px-3 py-2 bg-white/[0.03] hover:bg-white/[0.08] border border-white/5 rounded-xl text-xs font-semibold text-gray-300 transition-all"
-                      >
-                        <RotateCcw size={14} />
-                      </button>
-                    </div>
-
-                    {/* Preset session lengths */}
-                    <div className="grid grid-cols-3 gap-1.5 mb-4 border-t border-white/5 pt-4">
-                      <button 
-                        onClick={() => setTimerType('focus')}
-                        className={`py-1 text-[10px] rounded-lg font-mono font-semibold transition-all ${
-                          timerType === 'focus' ? 'bg-violet-600/20 text-violet-300 border border-violet-500/20' : 'bg-white/[0.01] hover:bg-white/5 border border-transparent text-gray-500'
-                        }`}
-                      >
-                        Focus
-                      </button>
-                      <button 
-                        onClick={() => setTimerType('shortBreak')}
-                        className={`py-1 text-[10px] rounded-lg font-mono font-semibold transition-all ${
-                          timerType === 'shortBreak' ? 'bg-violet-600/20 text-violet-300 border border-violet-500/20' : 'bg-white/[0.01] hover:bg-white/5 border border-transparent text-gray-500'
-                        }`}
-                      >
-                        Short
-                      </button>
-                      <button 
-                        onClick={() => setTimerType('longBreak')}
-                        className={`py-1 text-[10px] rounded-lg font-mono font-semibold transition-all ${
-                          timerType === 'longBreak' ? 'bg-violet-600/20 text-violet-300 border border-violet-500/20' : 'bg-white/[0.01] hover:bg-white/5 border border-transparent text-gray-500'
-                        }`}
-                      >
-                        Long
-                      </button>
-                    </div>
-
-                    {/* Focus Ambient Audio streams */}
-                    <div className="border-t border-white/5 pt-4 space-y-2">
-                      <h4 className="text-[10px] text-gray-500 font-mono tracking-widest uppercase flex items-center gap-1.5">
-                        <Music size={10} /> Focus Ambient Station
-                      </h4>
-                      <div className="grid grid-cols-4 gap-1">
-                        {['lofi', 'synthwave', 'ambient', 'nature'].map((track) => (
-                          <button
-                            key={track}
-                            onClick={() => {
-                              setActiveAudio(track);
-                              setIsAudioPlaying(true);
-                            }}
-                            className={`py-1 text-[9px] rounded-md font-mono capitalize transition-all ${
-                              activeAudio === track && isAudioPlaying 
-                                ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/20' 
-                                : 'bg-white/[0.01] hover:bg-white/5 text-gray-400'
-                            }`}
-                          >
-                            {track}
-                          </button>
-                        ))}
-                      </div>
-
-                      {activeAudio && (
-                        <div className="flex items-center gap-2 mt-2">
-                          <button
-                            onClick={() => setIsAudioPlaying(!isAudioPlaying)}
-                            className="p-1 rounded-md bg-white/5 hover:bg-white/10 text-cyan-400"
-                          >
-                            {isAudioPlaying ? <Pause size={10} /> : <Play size={10} />}
-                          </button>
-                          <Volume2 size={10} className="text-gray-500" />
-                          <input 
-                            type="range" 
-                            min="0" 
-                            max="1" 
-                            step="0.05"
-                            value={audioVolume}
-                            onChange={(e) => setAudioVolume(parseFloat(e.target.value))}
-                            className="flex-1 h-1 bg-white/5 rounded-lg appearance-none cursor-pointer accent-cyan-400"
-                          />
-                        </div>
-                      )}
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-
-            {/* Profile configuration Link */}
+          {/* Profile configuration Avatar and Sign Out Link */}
+          <div className="flex items-center gap-3">
             <Link 
               to="/dashboard" 
               className="flex items-center gap-3 text-sm text-gray-400 hover:text-white transition-colors group"
             >
-              <div className="w-9 h-9 rounded-full bg-white/[0.04] border border-white/10 flex items-center justify-center group-hover:border-violet-500/30 transition-all">
-                <UserIcon size={16} className="text-violet-400" />
+              <div className={cn(
+                "w-8 h-8 rounded-full border flex items-center justify-center transition-all",
+                isDark ? "bg-white/[0.04] border-white/10 hover:border-violet-500/30" : "bg-zinc-100 border-zinc-200 hover:border-black/20"
+              )}>
+                <UserIcon size={14} className="text-violet-500" />
               </div>
             </Link>
-          </div>
-        </header>
 
-        {/* Scrollable Layout Content */}
-        <main className="flex-1 overflow-y-auto p-8 relative">
+            {/* Logout on Desktop */}
+            <button
+              onClick={handleLogout}
+              className={cn(
+                "hidden md:flex items-center justify-center p-2 rounded-full transition-colors cursor-pointer",
+                isDark ? "hover:bg-red-500/10 text-gray-400 hover:text-red-400" : "hover:bg-red-50 text-zinc-500 hover:text-red-500"
+              )}
+              title="Sign Out"
+            >
+              <LogOut className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* Main App Layout Content */}
+      <div className="flex-1 flex flex-col min-w-0">
+        <main className="flex-1 overflow-y-auto p-5 lg:p-8 pb-24 lg:pb-8 relative">
           <AnimatePresence mode="wait">
             <motion.div
               key={location.pathname}
@@ -431,10 +584,161 @@ export default function AppLayout({ children }) {
               className="h-full"
             >
               {children}
+              <Copilot />
             </motion.div>
           </AnimatePresence>
         </main>
       </div>
+
+      {/* Mobile Bottom Navigation Dock Menu */}
+      <div className={cn(
+        "lg:hidden fixed bottom-0 left-0 right-0 z-40 border-t flex justify-around items-center px-2 py-2.5 backdrop-blur-md transition-all duration-300",
+        isDark ? "bg-black/90 border-white/5" : "bg-white/95 border-zinc-200"
+      )}>
+        {mobileNavItems.map((item) => {
+          const Icon = item.icon;
+          const isActive = item.path === 'more' 
+            ? showMoreMenu 
+            : location.pathname === item.path;
+
+          return (
+            <button
+              key={item.label}
+              onClick={() => {
+                if (item.path === 'more') {
+                  setShowMoreMenu(!showMoreMenu);
+                } else {
+                  setShowMoreMenu(false);
+                  navigate(item.path);
+                }
+              }}
+              className="flex flex-col items-center gap-1.5 py-1 px-3.5 rounded-xl transition-all relative cursor-pointer"
+            >
+              <Icon size={18} className={cn(
+                "transition-colors",
+                isActive 
+                  ? (isDark ? "text-cyan-400" : "text-black") 
+                  : (isDark ? "text-gray-500" : "text-zinc-400")
+              )} />
+              <span className={cn(
+                "text-[8px] font-mono font-bold transition-colors uppercase tracking-wider",
+                isActive 
+                  ? (isDark ? "text-cyan-400" : "text-black") 
+                  : (isDark ? "text-gray-500" : "text-zinc-500")
+              )}>
+                {item.label}
+              </span>
+              
+              {isActive && (
+                <motion.div 
+                  layoutId="mobileActiveDot"
+                  className={cn(
+                    "absolute -bottom-1.5 w-1 h-1 rounded-full",
+                    isDark ? "bg-cyan-400" : "bg-black"
+                  )} 
+                />
+              )}
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Mobile Bottom Drawer Menu (More Menu) */}
+      <AnimatePresence>
+        {showMoreMenu && (
+          <>
+            {/* Drawer Backdrop */}
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setShowMoreMenu(false)}
+              className="fixed inset-0 bg-black/60 backdrop-blur-xs z-40 lg:hidden"
+            />
+            {/* Bottom Drawer Sheet */}
+            <motion.div 
+              initial={{ y: '100%' }}
+              animate={{ y: 0 }}
+              exit={{ y: '100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 250 }}
+              className={cn(
+                "fixed bottom-0 left-0 right-0 z-50 rounded-t-3xl border-t p-6 max-h-[80vh] overflow-y-auto lg:hidden transition-colors duration-500",
+                isDark ? "bg-[#07080a] border-white/10 text-white" : "bg-white border-zinc-200 text-black"
+              )}
+            >
+              {/* Drawer Header */}
+              <div className="flex justify-between items-center mb-6">
+                <h3 className="font-bold text-xs uppercase tracking-wider font-mono">Operations Module</h3>
+                <button onClick={() => setShowMoreMenu(false)} className="p-1 rounded-full hover:bg-white/10 cursor-pointer">
+                  <X size={16} />
+                </button>
+              </div>
+
+              {/* User Profile summary inside mobile drawer */}
+              {user && (
+                <div className={cn(
+                  "p-4 rounded-2xl border mb-6",
+                  isDark ? "bg-white/[0.02] border-white/5" : "bg-zinc-50 border-zinc-200"
+                )}>
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-10 h-10 rounded-full flex items-center justify-center bg-violet-600 font-bold text-white text-sm shadow-md">
+                      {user.level}
+                    </div>
+                    <div className="flex-1 min-w-0 text-left">
+                      <p className="text-xs font-bold truncate">{user.username}</p>
+                      <p className="text-[10px] text-gray-500 font-mono">{user.xp % 1000}/1000 XP</p>
+                    </div>
+                  </div>
+                  <div className="w-full bg-zinc-200 dark:bg-white/10 rounded-full h-1 mb-3 overflow-hidden">
+                    <div className="bg-violet-600 h-full rounded-full" style={{ width: `${xpProgressPercent}%` }} />
+                  </div>
+                  <div className="flex justify-between items-center text-[10px] font-mono">
+                    <span className="flex items-center gap-1"><Flame size={12} className="text-amber-500" /> {user.streak} DAYS</span>
+                    <span>{user.targetCompany}</span>
+                  </div>
+                </div>
+              )}
+
+              {/* Mobile Drawer menu options */}
+              <div className="grid grid-cols-2 gap-3 mb-6">
+                {remainingMobileLinks.map((link) => {
+                  const Icon = link.icon;
+                  return (
+                    <button
+                      key={link.name}
+                      onClick={() => {
+                        setShowMoreMenu(false);
+                        navigate(link.path);
+                      }}
+                      className={cn(
+                        "flex items-center gap-3 p-3.5 rounded-xl border text-xs font-bold tracking-wide transition-all cursor-pointer text-left",
+                        isDark 
+                          ? "bg-white/[0.01] border-white/5 text-gray-300 hover:bg-white/10" 
+                          : "bg-zinc-50 border-zinc-200 text-zinc-800 hover:bg-zinc-100"
+                      )}
+                    >
+                      <Icon size={16} className="text-violet-500" />
+                      <span>{link.name}</span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Drawer Logout action */}
+              <button
+                onClick={() => {
+                  setShowMoreMenu(false);
+                  handleLogout();
+                }}
+                className="w-full py-3.5 rounded-xl text-xs font-bold bg-red-500/10 border border-red-500/20 text-red-500 hover:bg-red-500/20 transition-all flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <LogOut size={14} /> Sign Out
+              </button>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
     </div>
   );
 }

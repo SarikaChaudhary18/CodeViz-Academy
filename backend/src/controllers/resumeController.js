@@ -1,6 +1,7 @@
 const logger = require('../config/logger');
 const axios = require('axios');
 const User = require('../models/User');
+const aiService = require('../utils/aiService');
 
 const HARSHIBAR_LATEX_TEMPLATE = `%-------------------------
 % Resume in Latex
@@ -170,8 +171,9 @@ exports.auditResume = async (req, res, next) => {
 
     logger.info(`Auditing resume for target role: ${targetJobTitle}`);
 
-    // If a Gemini API Key is configured, we run the LLM request
-    if (process.env.GEMINI_API_KEY) {
+    // Check if any AI API Key is configured
+    const hasAIKeys = process.env.GEMINI_API_KEY || process.env.GROQ_API_KEY || process.env.NVIDIA_API_KEY;
+    if (hasAIKeys) {
       const prompt = `You are a world-class ATS Resume Auditor and LaTeX expert.
 Analyze the following resume text and optimize it for the target job title "${targetJobTitle}".
 Your objective is to help the candidate achieve a 90+ ATS Score on modern recruiters (like Greenhouse, Workday).
@@ -200,24 +202,13 @@ ${resumeText}
 Return ONLY valid JSON. No markdown codeblock wrapping.`;
 
       try {
-        const response = await axios.post(
-          `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
-          {
-            contents: [{ parts: [{ text: prompt }] }],
-            generationConfig: {
-              responseMimeType: "application/json"
-            }
-          }
-        );
-
-        const resultText = response.data.candidates[0].content.parts[0].text;
-        const resultJson = JSON.parse(resultText);
+        const resultJson = await aiService.generateContentJSON(prompt);
         return res.status(200).json({
           status: 'success',
           data: resultJson
         });
       } catch (err) {
-        logger.error(`Gemini API call failed, falling back to mock compiler: ${err.message}`);
+        logger.error(`Multi-model AI API calls failed, falling back to mock compiler: ${err.message}`);
       }
     }
 

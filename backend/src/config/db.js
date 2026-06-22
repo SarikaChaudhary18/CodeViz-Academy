@@ -57,19 +57,24 @@ const seedDefaultCommunities = async (defaultUser) => {
 };
 
 const connectDB = async () => {
-  const mongoURI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/studyquest';
+  const primaryURI = process.env.MONGODB_URI;
+  const localFallbackURI = 'mongodb://127.0.0.1:27017/studyquest';
+  const mongoURI = primaryURI || localFallbackURI;
   
   const options = {
-    maxPoolSize: parseInt(process.env.MONGO_MAX_POOL_SIZE, 10) || 100,
-    minPoolSize: parseInt(process.env.MONGO_MIN_POOL_SIZE, 10) || 10,
+    maxPoolSize: parseInt(process.env.MONGO_MAX_POOL_SIZE, 10) || 15,
+    minPoolSize: parseInt(process.env.MONGO_MIN_POOL_SIZE, 10) || 2,
     socketTimeoutMS: 45000,
     serverSelectionTimeoutMS: 5000,
     heartbeatFrequencyMS: 10000,
   };
 
-  try {
+  const setupEventsAndConnect = async (uri) => {
+    // Clear previous listeners to avoid duplicates
+    mongoose.connection.removeAllListeners();
+
     mongoose.connection.on('connecting', () => {
-      logger.info('Connecting to MongoDB...');
+      logger.info(`Connecting to MongoDB at ${uri.includes('@') ? 'Remote Cluster' : uri}...`);
     });
 
     mongoose.connection.on('connected', () => {
@@ -84,18 +89,38 @@ const connectDB = async () => {
       logger.warn('MongoDB disconnected. Attempting reconnection...');
     });
 
-    await mongoose.connect(mongoURI, options);
-    // Seed default user
+    await mongoose.connect(uri, options);
+  };
+
+  try {
+    await setupEventsAndConnect(mongoURI);
     await seedDefaultUser();
     
-    // Seed default communities
     const defaultUser = await User.findOne({ email: 'operator@studyquest.io' });
     if (defaultUser) {
       await seedDefaultCommunities(defaultUser);
     }
   } catch (err) {
-    logger.error('Initial MongoDB connection failed: %s', err.message);
-    process.exit(1);
+    logger.error('Primary MongoDB connection failed: %s', err.message);
+    
+    // Attempt local fallback if primary URI was remote
+    if (primaryURI && primaryURI !== localFallbackURI) {
+      try {
+        logger.info('Attempting fallback to local MongoDB...');
+        await setupEventsAndConnect(localFallbackURI);
+        await seedDefaultUser();
+        
+        const defaultUser = await User.findOne({ email: 'operator@studyquest.io' });
+        if (defaultUser) {
+          await seedDefaultCommunities(defaultUser);
+        }
+        return;
+      } catch (fallbackErr) {
+        logger.error('Fallback local MongoDB connection also failed: %s', fallbackErr.message);
+      }
+    }
+    
+    logger.error('CRITICAL: Could not connect to any MongoDB instance. Running server in OFFLINE/DEMO mode (database features will fail).');
   }
 };
 

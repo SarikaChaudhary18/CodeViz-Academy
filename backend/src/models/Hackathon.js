@@ -31,6 +31,26 @@ const HackathonSchema = new mongoose.Schema({
     default: null,
   },
   tags: [String],
+  prizePool: {
+    type: String,
+    default: '',
+  },
+  bannerSrc: {
+    type: String,
+    default: '',
+  },
+  avatarSrc: {
+    type: String,
+    default: '',
+  },
+  platform: {
+    type: String,
+    default: '',
+  },
+  location: {
+    type: String,
+    default: 'Online',
+  },
 }, {
   timestamps: true,
 });

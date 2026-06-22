@@ -4,6 +4,9 @@ const numCPUs = require('os').cpus().length;
 const app = require('./app');
 const connectDB = require('./config/db');
 const { initializeSocket } = require('./utils/socket');
+const { startHackathonScraper } = require('./utils/hackathonScraper');
+const { triggerDsaSeeding } = require('./utils/dsaScraper');
+const { triggerRoadmapSeeding } = require('./utils/roadmapScraper');
 const logger = require('./config/logger');
 require('dotenv').config();
 
@@ -11,10 +14,15 @@ const PORT = process.env.PORT || 5000;
 
 if (cluster.isPrimary && process.env.NODE_ENV === 'production') {
   logger.info(`Primary process ${process.pid} is running.`);
-  logger.info(`Forking server workers for ${numCPUs} CPU cores...`);
 
-  // Fork workers matching CPU count
-  for (let i = 0; i < numCPUs; i++) {
+  // Guard against excessive worker spawning on shared container hosts (Render free tier limit is 512MB RAM)
+  const maxWorkers = parseInt(process.env.MAX_WORKERS, 10) || 2;
+  const numWorkers = Math.min(numCPUs, maxWorkers);
+
+  logger.info(`Forking ${numWorkers} server workers (capped by MAX_WORKERS of ${maxWorkers} from raw CPU count ${numCPUs})...`);
+
+  // Fork workers
+  for (let i = 0; i < numWorkers; i++) {
     cluster.fork();
   }
 
@@ -31,6 +39,13 @@ if (cluster.isPrimary && process.env.NODE_ENV === 'production') {
     try {
       // Connect to MongoDB connection pool
       await connectDB();
+
+      // Start background scraper scheduler & seeders
+      if (process.env.NODE_ENV !== 'production' || (cluster.worker && cluster.worker.id === 1)) {
+        startHackathonScraper();
+        triggerDsaSeeding().catch(err => logger.error('DSA Seeding failed: ' + err.message));
+        triggerRoadmapSeeding().catch(err => logger.error('Roadmap Seeding failed: ' + err.message));
+      }
 
       const server = http.createServer(app);
 

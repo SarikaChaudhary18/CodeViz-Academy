@@ -66,6 +66,14 @@ const UserSchema = new mongoose.Schema({
     type: String,
     default: '',
   },
+  aiUsageToday: {
+    type: Number,
+    default: 0,
+  },
+  lastAiRequestDate: {
+    type: String, // YYYY-MM-DD
+    default: null,
+  },
 }, {
   timestamps: true,
 });

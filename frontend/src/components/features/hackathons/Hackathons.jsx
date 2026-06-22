@@ -83,7 +83,7 @@ export default function Hackathons() {
           HACKATHON BULLETINS
         </h2>
         <p className="text-xs text-cyan-400 font-mono tracking-widest uppercase mt-0.5">
-          LIVE EVENT NOTIFICATIONS PARSED VIA APIFY ACTORS AND SQUAD FINDER LOBBIES
+          LIVE EVENT NOTIFICATIONS AGGREGATED FROM DEVFOLIO, DEVPOST, UNSTOP, AND INTERNSHALA
         </p>
       </div>
 
@@ -127,7 +127,7 @@ export default function Hackathons() {
 
             {/* Bulletins cards stack */}
             {hackathonsLoading ? (
-              <div className="text-center py-12 text-xs font-mono text-gray-500 uppercase animate-pulse">Running Apify Actor...</div>
+              <div className="text-center py-12 text-xs font-mono text-gray-500 uppercase animate-pulse">Updating Hackathon Bulletins...</div>
             ) : filteredHackathons.length === 0 ? (
               <div className="text-center py-12 text-xs font-mono text-gray-500 uppercase">No upcoming hackathons match filters.</div>
             ) : (
@@ -143,14 +143,21 @@ export default function Hackathons() {
                     <div>
                       <div className="flex justify-between items-start mb-2">
                         <span className="text-[10px] text-cyan-400 font-mono tracking-wider">{h.host}</span>
-                        <a
-                          href={h.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-gray-500 hover:text-white transition-colors"
-                        >
-                          <ExternalLink size={14} />
-                        </a>
+                        <div className="flex items-center gap-2">
+                          {h.prizePool && (
+                            <span className="px-2 py-0.5 rounded bg-amber-500/10 border border-amber-500/20 text-[9px] font-mono font-bold text-amber-300 flex items-center gap-1">
+                              🏆 {h.prizePool}
+                            </span>
+                          )}
+                          <a
+                            href={h.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-gray-500 hover:text-white transition-colors"
+                          >
+                            <ExternalLink size={14} />
+                          </a>
+                        </div>
                       </div>
                       <h4 className="text-sm font-bold text-white mb-2 leading-snug">{h.title}</h4>
                       
