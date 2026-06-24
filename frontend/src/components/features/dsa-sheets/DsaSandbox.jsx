@@ -140,6 +140,32 @@ function ConfettiCelebration() {
   );
 }
 
+// ── Text to Speech Celebration Voice ──────────────────────────────────────
+const speakCelebration = () => {
+  if ('speechSynthesis' in window) {
+    // Cancel any current speaking
+    window.speechSynthesis.cancel();
+
+    const phrases = [
+      "Wah bete! Kar dikhaya!",
+      "Wah bete! Shabaash!"
+    ];
+    const randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
+    const utterance = new SpeechSynthesisUtterance(randomPhrase);
+
+    // Try to load Hindi or Indian English voice for accurate accent
+    const voices = window.speechSynthesis.getVoices();
+    const targetedVoice = voices.find(v => v.lang.includes('hi-IN') || v.lang.includes('en-IN') || v.lang.startsWith('hi'));
+    if (targetedVoice) {
+      utterance.voice = targetedVoice;
+    }
+
+    utterance.rate = 0.92;
+    utterance.pitch = 1.05;
+    window.speechSynthesis.speak(utterance);
+  }
+};
+
 export default function DsaSandbox() {
   const { problemId } = useParams();
   const navigate = useNavigate();
@@ -283,6 +309,7 @@ export default function DsaSandbox() {
       setSubmitResult(result);
       if (result?.success) {
         setShowConfetti(true);
+        speakCelebration();
         setTimeout(() => setShowConfetti(false), 5000);
         if (result?.xpGained > 0) {
           setXpToast(`+${result.xpGained} XP`);
