@@ -115,27 +115,42 @@ export default function DsaSheets() {
     }
   };
 
-  // 7-day burndown chart
+  // 7-day progress chart (cumulative solved)
   const chartData = useMemo(() => {
     const steps = 6;
+    const now = new Date();
+    
+    // Start of the 7-day period (6 days ago at 00:00:00)
+    const startDate = new Date();
+    startDate.setDate(now.getDate() - steps);
+    startDate.setHours(0, 0, 0, 0);
+
     const completedWithDates = sheetProgress
       .filter(p => p.sheetType === selectedSheet && p.status === 'completed')
       .map(p => ({ date: new Date(p.solvedAt || p.updatedAt || p.createdAt || Date.now()) }));
 
+    // Count how many were solved during this 7-day window
+    const solvedThisWeek = completedWithDates.filter(p => p.date >= startDate).length;
+    
+    // Define a realistic weekly goal (e.g. 7 problems)
+    const weeklyGoal = Math.max(7, solvedThisWeek);
+
     return Array.from({ length: steps + 1 }, (_, i) => {
-      const day = new Date();
+      const day = new Date(startDate);
+      day.setDate(startDate.getDate() + i);
       day.setHours(23, 59, 59, 999);
-      day.setDate(day.getDate() - (steps - i));
-      const doneCount = completedWithDates.filter(p => p.date <= day).length;
-      const remaining = Math.max(0, totalProblems - doneCount);
-      const estimated = Math.max(0, parseFloat((totalProblems - (totalProblems / steps) * i).toFixed(1)));
+
+      // Solved since the start of the week up to this day
+      const solvedUpToDay = completedWithDates.filter(p => p.date >= startDate && p.date <= day).length;
+      const target = parseFloat(((weeklyGoal / steps) * i).toFixed(1));
+      
       return {
         name: day.toLocaleDateString(undefined, { month: '2-digit', day: '2-digit' }),
-        "Actual": remaining,
-        "Ideal": estimated,
+        "Solved": solvedUpToDay,
+        "Target": target,
       };
     });
-  }, [sheetProgress, selectedSheet, totalProblems]);
+  }, [sheetProgress, selectedSheet]);
 
   const isLoading = sheetsLoading || dsaProblemsLoading;
   const categories = Object.keys(grouped);
@@ -447,10 +462,10 @@ export default function DsaSheets() {
             </div>
           </div>
 
-          {/* Burndown Chart */}
+          {/* Progress Chart */}
           <div className="glassmorphism rounded-3xl p-5 border-white/10">
             <h3 className="text-xs font-bold font-mono text-white uppercase tracking-wider flex items-center gap-2 mb-4">
-              <Target size={13} className="text-violet-400" /> 7-Day Burndown
+              <Target size={13} className="text-cyan-400" /> 7-Day Progress
             </h3>
             <div className="h-40">
               <ResponsiveContainer width="100%" height="100%">
@@ -463,8 +478,8 @@ export default function DsaSheets() {
                     labelStyle={{ color: '#fff', fontFamily: 'monospace' }}
                     itemStyle={{ fontFamily: 'monospace' }}
                   />
-                  <Line type="monotone" dataKey="Ideal" stroke="#4b5563" strokeWidth={1.5} strokeDasharray="4 4" dot={false} />
-                  <Line type="monotone" dataKey="Actual" stroke="#06b6d4" strokeWidth={2} dot={{ r: 3, fill: '#06b6d4' }} activeDot={{ r: 5 }} />
+                  <Line type="monotone" dataKey="Target" stroke="#4b5563" strokeWidth={1.5} strokeDasharray="4 4" dot={false} />
+                  <Line type="monotone" dataKey="Solved" stroke="#06b6d4" strokeWidth={2} dot={{ r: 3, fill: '#06b6d4' }} activeDot={{ r: 5 }} />
                 </LineChart>
               </ResponsiveContainer>
             </div>

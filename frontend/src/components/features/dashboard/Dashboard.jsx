@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import GithubCalendar from './GithubCalendar';
 import { useStore } from '../../../hooks/useStore';
 import { motion } from 'framer-motion';
+import { api } from '../../../lib/api';
 import {
   ResponsiveContainer,
   RadarChart,
@@ -43,6 +45,29 @@ export default function Dashboard() {
   } = useStore();
 
   const [claimStatus, setClaimStatus] = useState({});
+  const [newTaskDesc, setNewTaskDesc] = useState('');
+  const [addingTask, setAddingTask] = useState(false);
+
+  const handleAddTask = async (e) => {
+    e.preventDefault();
+    if (!newTaskDesc.trim()) return;
+
+    setAddingTask(true);
+    try {
+      const res = await api.post('/quests', { taskDescription: newTaskDesc });
+      if (res.status === 'success') {
+        setNewTaskDesc('');
+        alert(`Target Created! AI analyzed task as ${res.data.xpReward} XP (${res.data.xpReward === 200 ? 'Hard' : res.data.xpReward === 100 ? 'Medium' : 'Easy'}).`);
+        fetchQuests(); // reload
+      } else {
+        alert(res.message || 'Failed to create target.');
+      }
+    } catch (err) {
+      alert(err.message || 'Failed to create target.');
+    } finally {
+      setAddingTask(false);
+    }
+  };
 
   useEffect(() => {
     fetchQuests();
@@ -77,25 +102,9 @@ export default function Dashboard() {
     { subject: 'Behavioral', A: 75, fullMark: 100 },
   ];
 
-  // Activity heatmap configuration (16 columns, 7 rows representing weeks)
-  const daysInHeatmap = 7 * 16;
-  const generateHeatmap = () => {
-    const grid = [];
-    for (let i = 0; i < daysInHeatmap; i++) {
-      // Seed some mock levels based on user level/XP to make it look active
-      let level = 0;
-      if (i % 3 === 0) level = 1;
-      if (i % 7 === 0) level = 2;
-      if (i % 11 === 0) level = 3;
-      if (i % 17 === 0) level = 4;
-      grid.push(level);
-    }
-    return grid;
-  };
-  const heatmapData = generateHeatmap();
 
   return (
-    <div className="space-y-8">
+    <div className="relative space-y-8 z-10">
       
       {/* HUD Page Title Header */}
       <div className="flex justify-between items-center">
@@ -109,7 +118,7 @@ export default function Dashboard() {
         </div>
         
         {user && (
-          <div className="flex items-center gap-2 px-4 py-2 bg-violet-900/10 border border-violet-500/25 rounded-2xl">
+          <div className="flex items-center gap-2 px-4 py-2 bg-cyan-950/20 border border-cyan-500/25 rounded-2xl">
             <Flame className="w-5 h-5 text-amber-500 animate-pulse" />
             <span className="font-mono text-sm font-bold text-white uppercase tracking-wider">{user.streak} Day Consistency Streak</span>
           </div>
@@ -122,8 +131,8 @@ export default function Dashboard() {
         {/* LEFT COLUMN: Pomodoro & Focus Station */}
         <div className="lg:col-span-2 space-y-8">
           
-          <div className="glassmorphism rounded-3xl p-8 border-white/10 relative overflow-hidden box-glow-violet">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-violet-600/5 rounded-full filter blur-[40px] pointer-events-none" />
+          <div className="glassmorphism rounded-3xl p-8 border-white/10 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-600/5 rounded-full filter blur-[40px] pointer-events-none" />
             
             <div className="flex justify-between items-center mb-6">
               <div>
@@ -149,19 +158,18 @@ export default function Dashboard() {
                     cx="112" 
                     cy="112" 
                     r="96" 
-                    stroke="#8b5cf6" 
+                    stroke="#00ffff" 
                     strokeWidth="8" 
                     fill="transparent" 
                     strokeDasharray={603.1} 
                     strokeDashoffset={603.1 - (603.1 * timeLeft) / (timerType === 'focus' ? 50 * 60 : timerType === 'shortBreak' ? 10 * 60 : 15 * 60)}
                     strokeLinecap="round"
                     className="transition-all duration-1000"
-                    style={{ filter: 'drop-shadow(0 0 10px rgba(139, 92, 246, 0.4))' }}
                   />
                 </svg>
                 
                 <div className="absolute text-center flex flex-col items-center">
-                  <span className="text-5xl font-extrabold font-mono text-white text-glow-cyan tracking-wider">{formatTime(timeLeft)}</span>
+                  <span className="text-5xl font-extrabold font-mono text-white tracking-wider">{formatTime(timeLeft)}</span>
                   <span className="text-[10px] text-cyan-400 font-mono tracking-widest uppercase mt-1.5">{timerType}</span>
                 </div>
               </div>
@@ -172,7 +180,7 @@ export default function Dashboard() {
                   <button 
                     onClick={() => setTimerType('focus')}
                     className={`flex-1 py-2 text-xs font-mono font-bold rounded-xl transition-all border ${
-                      timerType === 'focus' ? 'bg-violet-600/20 text-violet-300 border-violet-500/20' : 'bg-white/[0.01] hover:bg-white/[0.04] border-transparent text-gray-500'
+                      timerType === 'focus' ? 'bg-cyan-950/40 text-cyan-300 border-cyan-500/20' : 'bg-white/[0.01] hover:bg-white/[0.04] border-transparent text-gray-500'
                     }`}
                   >
                     Focus (50m)
@@ -180,7 +188,7 @@ export default function Dashboard() {
                   <button 
                     onClick={() => setTimerType('shortBreak')}
                     className={`flex-1 py-2 text-xs font-mono font-bold rounded-xl transition-all border ${
-                      timerType === 'shortBreak' ? 'bg-violet-600/20 text-violet-300 border-violet-500/20' : 'bg-white/[0.01] hover:bg-white/[0.04] border-transparent text-gray-500'
+                      timerType === 'shortBreak' ? 'bg-cyan-950/40 text-cyan-300 border-cyan-500/20' : 'bg-white/[0.01] hover:bg-white/[0.04] border-transparent text-gray-500'
                     }`}
                   >
                     Short (10m)
@@ -198,7 +206,7 @@ export default function Dashboard() {
                   ) : (
                     <button 
                       onClick={startTimer}
-                      className="p-3 bg-violet-600 hover:bg-violet-500 text-white rounded-xl shadow-lg box-glow-violet transition-all"
+                      className="p-3 bg-cyan-500 hover:bg-cyan-400 text-black rounded-xl shadow-lg transition-all"
                     >
                       <Play size={18} />
                     </button>
@@ -218,9 +226,32 @@ export default function Dashboard() {
           </div>
 
           {/* Daily Quests checklists */}
-          <div className="glassmorphism rounded-3xl p-8 border-white/10 relative overflow-hidden box-glow-cyan">
-            <h3 className="text-lg font-bold text-white mb-1.5 tracking-wide">DAILY QUESTS CHECKLIST</h3>
-            <p className="text-[11px] text-gray-500 font-mono mb-6">COMPLETED TASKS TRIGGER EXPERIENCE MULTIPLIERS</p>
+          <div className="glassmorphism rounded-3xl p-8 border-white/10 relative overflow-hidden">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+              <div>
+                <h3 className="text-lg font-bold text-white tracking-wide">DAILY QUESTS CHECKLIST</h3>
+                <p className="text-[11px] text-gray-500 font-mono">COMPLETED TASKS TRIGGER EXPERIENCE MULTIPLIERS</p>
+              </div>
+              
+              {/* Task Creation Form */}
+              <form onSubmit={handleAddTask} className="flex gap-2 w-full md:w-auto max-w-md">
+                <input 
+                  type="text" 
+                  value={newTaskDesc}
+                  onChange={(e) => setNewTaskDesc(e.target.value)}
+                  placeholder="Set custom daily target (e.g. Learn Docker)..."
+                  className="flex-1 min-w-[200px] bg-white/[0.02] border border-white/5 rounded-xl px-4 py-2 text-xs font-mono text-white placeholder-gray-600 focus:outline-none focus:border-cyan-500/40 transition-colors"
+                  disabled={addingTask}
+                />
+                <button
+                  type="submit"
+                  disabled={addingTask || !newTaskDesc.trim()}
+                  className="px-4 py-2 bg-cyan-500 hover:bg-cyan-400 disabled:opacity-50 text-black text-xs font-mono font-bold rounded-xl transition-all cursor-pointer flex items-center gap-1.5 shrink-0"
+                >
+                  {addingTask ? 'Analyzing...' : 'Add Target'}
+                </button>
+              </form>
+            </div>
 
             {questsLoading ? (
               <div className="text-center py-6 text-xs font-mono text-gray-500 uppercase animate-pulse">Syncing quest matrices...</div>
@@ -243,10 +274,10 @@ export default function Dashboard() {
                             }
                           }}
                           disabled={status === 'claiming' || status === 'claimed'}
-                          className="w-4.5 h-4.5 rounded border border-white/20 text-violet-600 focus:ring-violet-500/20 bg-white/[0.02] cursor-pointer disabled:cursor-not-allowed shrink-0 transition-all accent-violet-600"
+                          className="w-4.5 h-4.5 rounded border border-white/20 text-cyan-500 focus:ring-cyan-500/20 bg-white/[0.02] cursor-pointer disabled:cursor-not-allowed shrink-0 transition-all accent-cyan-500"
                         />
                         
-                        <div className="p-2 rounded-xl bg-violet-600/10 border border-violet-500/20 text-violet-400 shrink-0">
+                        <div className="p-2 rounded-xl bg-cyan-950/30 border border-cyan-500/20 text-cyan-400 shrink-0">
                           <BookOpen size={16} />
                         </div>
                         <div>
@@ -257,7 +288,7 @@ export default function Dashboard() {
                       </div>
 
                       <div className="flex items-center gap-4 w-full md:w-auto justify-between md:justify-end">
-                        <span className="font-mono text-xs font-bold text-glow-cyan text-emerald-400">+{quest.xpReward} XP</span>
+                        <span className="font-mono text-xs font-bold text-emerald-400">+{quest.xpReward} XP</span>
                         
                         <button
                           onClick={() => handleClaim(quest.key)}
@@ -267,7 +298,7 @@ export default function Dashboard() {
                               ? 'bg-emerald-600/20 text-emerald-400 border border-emerald-500/20'
                               : status === 'claiming'
                               ? 'bg-white/5 text-gray-400 cursor-not-allowed'
-                              : 'bg-violet-600 hover:bg-violet-500 text-white shadow-md'
+                              : 'bg-cyan-500 hover:bg-cyan-400 text-black font-bold shadow-md'
                           }`}
                         >
                           {status === 'claimed' ? <CheckCircle2 size={12} /> : null}
@@ -287,7 +318,7 @@ export default function Dashboard() {
         <div className="space-y-8">
           
           {/* Skill DNA Radar Chart */}
-          <div className="glassmorphism rounded-3xl p-8 border-white/10 relative overflow-hidden box-glow-violet">
+          <div className="glassmorphism rounded-3xl p-8 border-white/10 relative overflow-hidden">
             <h3 className="text-lg font-bold text-white mb-1.5 tracking-wide">CHARACTER SKILL DNA</h3>
             <p className="text-[11px] text-gray-500 font-mono mb-6">COMPREHENSIVE RADAR GRID OF TARGET PROFICIENCIES</p>
 
@@ -300,8 +331,8 @@ export default function Dashboard() {
                   <Radar
                     name="Skill"
                     dataKey="A"
-                    stroke="#8b5cf6"
-                    fill="#8b5cf6"
+                    stroke="#06b6d4"
+                    fill="#06b6d4"
                     fillOpacity={0.25}
                   />
                 </RadarChart>
@@ -310,50 +341,7 @@ export default function Dashboard() {
           </div>
 
           {/* Activity Grid Heatmap */}
-          <div className="glassmorphism rounded-3xl p-8 border-white/10 relative overflow-hidden box-glow-cyan">
-            <div className="flex justify-between items-center mb-1.5">
-              <h3 className="text-lg font-bold text-white tracking-wide">CONSISTENCY GRID</h3>
-              <span className="text-[10px] text-cyan-400 font-mono tracking-widest uppercase">16 WEEKS LOG</span>
-            </div>
-            <p className="text-[11px] text-gray-500 font-mono mb-6">GITHUB-STYLE ACTIVITY FREQUENCY CALENDAR</p>
-
-            {/* Heatmap Grid container */}
-            <div className="flex justify-center bg-white/[0.01] border border-white/5 p-4 rounded-2xl">
-              <div 
-                className="grid grid-flow-col gap-1.5" 
-                style={{ gridTemplateRows: 'repeat(7, minmax(0, 1fr))' }}
-              >
-                {heatmapData.map((val, idx) => {
-                  const colors = [
-                    'bg-white/5 hover:bg-white/10', // level 0
-                    'bg-violet-900/30 hover:bg-violet-900/50 border border-violet-500/10', // level 1
-                    'bg-violet-800/40 hover:bg-violet-800/60 border border-violet-500/20', // level 2
-                    'bg-violet-600/50 hover:bg-violet-600/70 border border-violet-400/20', // level 3
-                    'bg-cyan-500/70 hover:bg-cyan-500/90 border border-cyan-400/30 box-glow-cyan' // level 4
-                  ];
-                  return (
-                    <div
-                      key={idx}
-                      className={`w-2.5 h-2.5 rounded-sm transition-all duration-300 ${colors[val]}`}
-                      title={`Activity index: ${val}`}
-                    />
-                  );
-                })}
-              </div>
-            </div>
-
-            <div className="flex items-center justify-between text-[9px] text-gray-500 font-mono mt-4">
-              <span>LESS</span>
-              <div className="flex gap-1.5">
-                <div className="w-2.5 h-2.5 bg-white/5 rounded-sm" />
-                <div className="w-2.5 h-2.5 bg-violet-900/30 rounded-sm border border-violet-500/10" />
-                <div className="w-2.5 h-2.5 bg-violet-800/40 rounded-sm border border-violet-500/20" />
-                <div className="w-2.5 h-2.5 bg-violet-600/50 rounded-sm border border-violet-400/20" />
-                <div className="w-2.5 h-2.5 bg-cyan-500/70 rounded-sm border border-cyan-400/30" />
-              </div>
-              <span>MORE</span>
-            </div>
-          </div>
+          <GithubCalendar username={user?.username || 'User'} />
 
         </div>
 

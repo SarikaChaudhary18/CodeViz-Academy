@@ -1,6 +1,12 @@
 const mongoose = require('mongoose');
 
 const QuestSchema = new mongoose.Schema({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    index: true,
+    default: null,
+  },
   title: {
     type: String,
     required: true,
@@ -31,7 +37,6 @@ const QuestSchema = new mongoose.Schema({
   key: {
     type: String, // e.g. "solve_dsa_problems", "study_pomodoro"
     required: true,
-    unique: true,
     index: true,
   },
 }, {

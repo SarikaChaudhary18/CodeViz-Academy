@@ -2,10 +2,11 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Briefcase, Search, Star, CheckCircle, ChevronDown, ChevronUp, 
-  HelpCircle, Shield, Award, Sparkles, Filter, Check, StarOff, Loader2 
+  HelpCircle, Shield, Award, Sparkles, Filter, Check, StarOff, Loader2, Code2 
 } from 'lucide-react';
 import { api } from '../../../lib/api';
 import { useStore } from '../../../hooks/useStore';
+import CompanyPrepSandbox from './CompanyPrepSandbox';
 
 export default function CompanyPrep() {
   const { user, setUser } = useStore();
@@ -29,6 +30,21 @@ export default function CompanyPrep() {
 
   // XP animation state
   const [xpAnimation, setXpAnimation] = useState(null); // { questionId, x, y }
+
+  // Coding Sandbox active question
+  const [sandboxQuestion, setSandboxQuestion] = useState(null);
+
+  // Sync completion progress from sandbox submission
+  const handleSandboxComplete = (questionId, progressData, newXp, newLevel) => {
+    setProgress(progressData || { completedQuestions: [], starredQuestions: [] });
+    if (newXp && useStore.getState().setUser) {
+      useStore.getState().setUser({
+        ...user,
+        xp: newXp,
+        level: newLevel
+      });
+    }
+  };
 
   // Load questions and categories
   useEffect(() => {
@@ -373,6 +389,15 @@ export default function CompanyPrep() {
                               <p className="font-sans text-zinc-300">
                                 {q.answer}
                               </p>
+
+                              <div className="mt-4 flex flex-wrap gap-3">
+                                <button
+                                  onClick={() => setSandboxQuestion(q)}
+                                  className="flex items-center gap-2 px-4 py-2 bg-cyan-500 hover:bg-cyan-400 text-black font-extrabold font-mono text-[10px] uppercase rounded-xl transition-all shadow-[0_0_15px_rgba(6,182,212,0.35)] cursor-pointer"
+                                >
+                                  <Code2 size={13} /> Practice in Sandbox
+                                </button>
+                              </div>
                             </div>
                           </motion.div>
                         )}
@@ -387,6 +412,17 @@ export default function CompanyPrep() {
         </div>
 
       </div>
+
+      {/* Sandbox Overlay Code editor workspace */}
+      <AnimatePresence>
+        {sandboxQuestion && (
+          <CompanyPrepSandbox
+            question={sandboxQuestion}
+            onClose={() => setSandboxQuestion(null)}
+            onComplete={handleSandboxComplete}
+          />
+        )}
+      </AnimatePresence>
 
     </div>
   );

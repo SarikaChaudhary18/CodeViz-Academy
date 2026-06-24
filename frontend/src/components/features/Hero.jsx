@@ -14,132 +14,138 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-// ==================== Aurora Background WebGL Shader ====================
+// ==================== Premium Background (Floating Beams & Grain Noise) ====================
+function createBeam(width, height, layer) {
+  const angle = -35 + Math.random() * 10;
+  const baseSpeed = 0.2 + layer * 0.2;
+  const baseOpacity = 0.08 + layer * 0.05;
+  const baseWidth = 10 + layer * 5;
+  return {
+    x: Math.random() * width,
+    y: Math.random() * height,
+    width: baseWidth,
+    length: height * 2.5,
+    angle,
+    speed: baseSpeed + Math.random() * 0.2,
+    opacity: baseOpacity + Math.random() * 0.1,
+    pulse: Math.random() * Math.PI * 2,
+    pulseSpeed: 0.01 + Math.random() * 0.015,
+    layer,
+  };
+}
+
 const AuroraBackground = ({ isDark }) => {
-  const containerRef = useRef(null);
+  const canvasRef = useRef(null);
+  const noiseRef = useRef(null);
+  const beamsRef = useRef([]);
+  const animationFrameRef = useRef(0);
+
+  const LAYERS = 3;
+  const BEAMS_PER_LAYER = 8;
 
   useEffect(() => {
-    // Only spin up Three.js in dark mode to preserve user resources
     if (!isDark) return;
 
-    const container = containerRef.current;
-    if (!container) return;
+    const canvas = canvasRef.current;
+    const noiseCanvas = noiseRef.current;
+    if (!canvas || !noiseCanvas) return;
+    const ctx = canvas.getContext("2d");
+    const nCtx = noiseCanvas.getContext("2d");
+    if (!ctx || !nCtx) return;
 
-    const scene = new THREE.Scene();
-    const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    container.appendChild(renderer.domElement);
+    const resizeCanvas = () => {
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = window.innerWidth * dpr;
+      canvas.height = window.innerHeight * dpr;
+      canvas.style.width = `${window.innerWidth}px`;
+      canvas.style.height = `${window.innerHeight}px`;
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.scale(dpr, dpr);
 
-    const material = new THREE.ShaderMaterial({
-      uniforms: {
-        iTime: { value: 0 },
-        iResolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) }
-      },
-      vertexShader: `
-        void main() {
-          gl_Position = vec4(position, 1.0);
+      noiseCanvas.width = window.innerWidth * dpr;
+      noiseCanvas.height = window.innerHeight * dpr;
+      noiseCanvas.style.width = `${window.innerWidth}px`;
+      noiseCanvas.style.height = `${window.innerHeight}px`;
+      nCtx.setTransform(1, 0, 0, 1, 0, 0);
+      nCtx.scale(dpr, dpr);
+
+      beamsRef.current = [];
+      for (let layer = 1; layer <= LAYERS; layer++) {
+        for (let i = 0; i < BEAMS_PER_LAYER; i++) {
+          beamsRef.current.push(createBeam(window.innerWidth, window.innerHeight, layer));
         }
-      `,
-      fragmentShader: `
-        uniform float iTime;
-        uniform vec2 iResolution;
+      }
+    };
 
-        #define NUM_OCTAVES 3
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
 
-        float rand(vec2 n) {
-          return fract(sin(dot(n, vec2(12.9898, 4.1414))) * 43758.5453);
-        }
+    const generateNoise = () => {
+      const imgData = nCtx.createImageData(noiseCanvas.width, noiseCanvas.height);
+      for (let i = 0; i < imgData.data.length; i += 4) {
+        const v = Math.random() * 255;
+        imgData.data[i] = v;
+        imgData.data[i + 1] = v;
+        imgData.data[i + 2] = v;
+        imgData.data[i + 3] = 12;
+      }
+      nCtx.putImageData(imgData, 0, 0);
+    };
 
-        float noise(vec2 p) {
-          vec2 ip = floor(p);
-          vec2 u = fract(p);
-          u = u*u*(3.0-2.0*u);
+    const drawBeam = (beam) => {
+      ctx.save();
+      ctx.translate(beam.x, beam.y);
+      ctx.rotate((beam.angle * Math.PI) / 180);
 
-          float res = mix(
-            mix(rand(ip), rand(ip + vec2(1.0, 0.0)), u.x),
-            mix(rand(ip + vec2(0.0, 1.0)), rand(ip + vec2(1.0, 1.0)), u.x), u.y);
-          return res * res;
-        }
+      const pulsingOpacity = Math.min(1, beam.opacity * (0.8 + Math.sin(beam.pulse) * 0.4));
+      const gradient = ctx.createLinearGradient(0, 0, 0, beam.length);
+      gradient.addColorStop(0, `rgba(0,255,255,0)`);
+      gradient.addColorStop(0.2, `rgba(0,255,255,${pulsingOpacity * 0.5})`);
+      gradient.addColorStop(0.5, `rgba(0,255,255,${pulsingOpacity})`);
+      gradient.addColorStop(0.8, `rgba(0,255,255,${pulsingOpacity * 0.5})`);
+      gradient.addColorStop(1, `rgba(0,255,255,0)`);
 
-        float fbm(vec2 x) {
-          float v = 0.0;
-          float a = 0.3;
-          vec2 shift = vec2(100);
-          mat2 rot = mat2(cos(0.5), sin(0.5), -sin(0.5), cos(0.5));
-          for (int i = 0; i < NUM_OCTAVES; ++i) {
-            v += a * noise(x);
-            x = rot * x * 2.0 + shift;
-            a *= 0.4;
-          }
-          return v;
-        }
+      ctx.fillStyle = gradient;
+      ctx.filter = `blur(${2 + beam.layer * 2}px)`;
+      ctx.fillRect(-beam.width / 2, 0, beam.width, beam.length);
+      ctx.restore();
+    };
 
-        void main() {
-          vec2 shake = vec2(sin(iTime * 1.2) * 0.005, cos(iTime * 2.1) * 0.005);
-          vec2 p = ((gl_FragCoord.xy + shake * iResolution.xy) - iResolution.xy * 0.5) / iResolution.y * mat2(6.0, -4.0, 4.0, 6.0);
-          vec2 v;
-          vec4 o = vec4(0.0);
-
-          float f = 2.0 + fbm(p + vec2(iTime * 5.0, 0.0)) * 0.5;
-
-          for (float i = 0.0; i < 35.0; i++) {
-            v = p + cos(i * i + (iTime + p.x * 0.08) * 0.025 + i * vec2(13.0, 11.0)) * 3.5 + vec2(sin(iTime * 3.0 + i) * 0.003, cos(iTime * 3.5 - i) * 0.003);
-            float tailNoise = fbm(v + vec2(iTime * 0.5, i)) * 0.3 * (1.0 - (i / 35.0));
-            vec4 auroraColors = vec4(
-              0.1 + 0.3 * sin(i * 0.2 + iTime * 0.4),
-              0.3 + 0.5 * cos(i * 0.3 + iTime * 0.5),
-              0.7 + 0.3 * sin(i * 0.4 + iTime * 0.3),
-              1.0
-            );
-            vec4 currentContribution = auroraColors * exp(sin(i * i + iTime * 0.8)) / length(max(v, vec2(v.x * f * 0.015, v.y * 1.5)));
-            float thinnessFactor = smoothstep(0.0, 1.0, i / 35.0) * 0.6;
-            o += currentContribution * (1.0 + tailNoise * 0.8) * thinnessFactor;
-          }
-
-          o = tanh(pow(o / 100.0, vec4(1.6)));
-          gl_FragColor = o * 1.5;
-        }
-      `
-    });
-
-    const geometry = new THREE.PlaneGeometry(2, 2);
-    const mesh = new THREE.Mesh(geometry, material);
-    scene.add(mesh);
-
-    let frameId;
     const animate = () => {
-      material.uniforms.iTime.value += 0.016;
-      renderer.render(scene, camera);
-      frameId = requestAnimationFrame(animate);
+      if (!canvas || !ctx) return;
+
+      const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+      gradient.addColorStop(0, "#050505");
+      gradient.addColorStop(1, "#111111");
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      beamsRef.current.forEach((beam) => {
+        beam.y -= beam.speed * (beam.layer / LAYERS + 0.5);
+        beam.pulse += beam.pulseSpeed;
+        if (beam.y + beam.length < -50) {
+          beam.y = window.innerHeight + 50;
+          beam.x = Math.random() * window.innerWidth;
+        }
+        drawBeam(beam);
+      });
+
+      generateNoise();
+      animationFrameRef.current = requestAnimationFrame(animate);
     };
     animate();
 
-    const handleResize = () => {
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      material.uniforms.iResolution.value.set(window.innerWidth, window.innerHeight);
-    };
-    window.addEventListener('resize', handleResize);
-
     return () => {
-      cancelAnimationFrame(frameId);
-      window.removeEventListener('resize', handleResize);
-      if (container && renderer.domElement.parentNode === container) {
-        container.removeChild(renderer.domElement);
-      }
-      geometry.dispose();
-      material.dispose();
-      renderer.dispose();
+      window.removeEventListener("resize", resizeCanvas);
+      cancelAnimationFrame(animationFrameRef.current);
     };
   }, [isDark]);
 
   return (
-    <div 
-      ref={containerRef} 
-      className="absolute inset-0 z-0 pointer-events-none w-full h-full overflow-hidden transition-opacity duration-1000"
-      style={{ opacity: isDark ? 0.85 : 0 }}
-    />
+    <div className="absolute inset-0 z-0 pointer-events-none w-full h-full overflow-hidden transition-opacity duration-1000" style={{ opacity: isDark ? 0.85 : 0 }}>
+      <canvas ref={noiseRef} className="absolute inset-0 z-0 pointer-events-none" />
+      <canvas ref={canvasRef} className="absolute inset-0 z-10" />
+    </div>
   );
 };
 
@@ -502,7 +508,7 @@ const CinematicFooter = ({ navigate, isDark }) => {
             
             {/* Copyright */}
             <div className="text-zinc-500 text-[10px] md:text-xs font-semibold tracking-widest uppercase order-2 md:order-1 font-mono">
-              © 2026 StudyQuest OS. All rights reserved.
+              © 2026 StudyQuest. All rights reserved.
             </div>
 
             {/* "Made with Love" Badge */}
@@ -510,7 +516,7 @@ const CinematicFooter = ({ navigate, isDark }) => {
               <span className="text-zinc-500 text-[9px] md:text-xs font-bold uppercase tracking-widest font-mono">Crafted with</span>
               <span className="animate-footer-heartbeat text-sm md:text-base text-red-500">❤</span>
               <span className="text-zinc-500 text-[9px] md:text-xs font-bold uppercase tracking-widest font-mono">by</span>
-              <span className="font-black text-xs md:text-sm tracking-normal font-sans ml-1 text-violet-500">StudyQuest Team</span>
+              <span className="font-black text-xs md:text-sm tracking-normal font-sans ml-1 text-cyan-400">StudyQuest Team</span>
             </div>
 
             {/* Back to top */}
@@ -535,6 +541,16 @@ export default function Hero() {
   const navigate = useNavigate();
   const [count, setCount] = useState(0);
   const [isCompiling, setIsCompiling] = useState(false);
+  const [isHeaderHovered, setIsHeaderHovered] = useState(false);
+  const [titleNumber, setTitleNumber] = useState(0);
+  const aiTitles = ["intelligent", "gamified", "adaptive", "collaborative", "comprehensive"];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTitleNumber((prev) => (prev + 1) % aiTitles.length);
+    }, 2500);
+    return () => clearInterval(interval);
+  }, []);
 
   const theme = "dark";
   const isDark = true;
@@ -615,44 +631,49 @@ export default function Hero() {
       <main className="relative z-10 max-w-3xl mx-auto px-8 pt-24 pb-20 flex flex-col items-center text-center space-y-10">
         
         {/* Centered info */}
-        <div className="space-y-8 flex flex-col items-center">
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-none max-w-3xl pt-6">
-            <TextReveal 
-              text="Gamified Career & Interview Sandbox."
-              as="span"
-              fontSize="inherit"
-              hoverColor="#22d3ee"
-              color="#ffffff"
-            />
+        <div className="space-y-8 flex flex-col items-center w-full">
+          
+          <button className="flex items-center space-x-2 px-4 py-2 bg-white/5 hover:bg-white/10 backdrop-blur-sm rounded-full text-xs transition-all duration-300 group cursor-pointer border border-white/5">
+            <span className="text-zinc-400">Support for AI Models</span>
+            <ArrowRight size={12} className="text-zinc-500 transform group-hover:translate-x-1 transition-transform duration-300" />
+          </button>
+
+          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-none max-w-3xl pt-4 flex flex-col items-center text-center w-full">
+            <span className="text-white">This is Career Prep</span>
+            <span className="relative flex w-full h-[1.3em] justify-center overflow-hidden pt-2">
+              &nbsp;
+              {aiTitles.map((title, index) => (
+                <motion.span
+                  key={index}
+                  className="absolute font-black tracking-widest text-cyan-400 text-glow-cyan uppercase"
+                  initial={{ opacity: 0, y: -50 }}
+                  transition={{ type: "spring", stiffness: 100, damping: 15 }}
+                  animate={
+                    titleNumber === index
+                      ? { y: 0, opacity: 1 }
+                      : { y: titleNumber > index ? -100 : 100, opacity: 0 }
+                  }
+                >
+                  {title}
+                </motion.span>
+              ))}
+            </span>
           </h1>
 
-          <p className={cn(
-            "leading-relaxed text-sm sm:text-base max-w-xl transition-colors",
-            isDark ? "text-zinc-400" : "text-zinc-600 font-medium"
-          )}>
+          <p className="leading-relaxed text-sm sm:text-base max-w-xl text-zinc-400">
             A minimalist workspace for tracking data structures, auditing resume formats, practicing mock interviews, and syncing levels. Complete daily quests, earn XP, and level up your software engineering credentials.
           </p>
 
-          <div className="flex flex-wrap justify-center gap-4 pt-4">
+          <div className="flex flex-row gap-4 flex-wrap justify-center pt-2">
             <button
               onClick={() => navigate('/register')}
-              className={cn(
-                "flex items-center gap-2 font-semibold px-8 py-3.5 border transition-colors cursor-pointer text-sm rounded-full",
-                isDark 
-                  ? "bg-white border-white hover:bg-zinc-200 text-black" 
-                  : "bg-black border-black hover:bg-zinc-800 text-white"
-              )}
+              className="flex items-center gap-2 font-bold px-8 py-3.5 bg-cyan-600 hover:bg-cyan-500 text-white rounded-full transition-all cursor-pointer shadow-lg shadow-cyan-500/20 active:scale-[0.98] text-sm"
             >
               Get Started <ArrowRight size={16} />
             </button>
             <button
               onClick={() => navigate('/login')}
-              className={cn(
-                "flex items-center gap-2 bg-transparent font-semibold px-8 py-3.5 border transition-colors cursor-pointer text-sm rounded-full",
-                isDark 
-                  ? "border-white/20 text-white hover:bg-white/5" 
-                  : "border-zinc-300 text-black hover:bg-zinc-100"
-              )}
+              className="flex items-center gap-2 bg-white/5 font-semibold px-8 py-3.5 border border-white/10 hover:bg-white/10 text-white rounded-full transition-all cursor-pointer text-sm"
             >
               Sign In
             </button>
@@ -669,12 +690,12 @@ export default function Hero() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Module 1 */}
           <div className={cn(
-            "border p-6 space-y-3 transition-colors",
-            isDark ? "border-zinc-800 bg-[#09090b]" : "border-zinc-200 bg-zinc-50/50"
+            "border p-6 space-y-3 transition-colors rounded-2xl backdrop-blur-sm",
+            isDark ? "border-zinc-800 bg-[#09090b]/40" : "border-zinc-200 bg-zinc-50/50"
           )}>
             <div className={cn(
-              "w-8 h-8 flex items-center justify-center rounded",
-              isDark ? "bg-white text-black" : "bg-black text-white"
+              "w-8 h-8 flex items-center justify-center rounded-lg",
+              isDark ? "bg-cyan-500/10 text-cyan-400 border border-cyan-500/20" : "bg-cyan-50 text-cyan-600 border border-cyan-100"
             )}>
               <Target size={16} />
             </div>
@@ -684,12 +705,12 @@ export default function Hero() {
 
           {/* Module 2 */}
           <div className={cn(
-            "border p-6 space-y-3 transition-colors",
-            isDark ? "border-zinc-800 bg-[#09090b]" : "border-zinc-200 bg-zinc-50/50"
+            "border p-6 space-y-3 transition-colors rounded-2xl backdrop-blur-sm",
+            isDark ? "border-zinc-800 bg-[#09090b]/40" : "border-zinc-200 bg-zinc-50/50"
           )}>
             <div className={cn(
-              "w-8 h-8 flex items-center justify-center rounded",
-              isDark ? "bg-white text-black" : "bg-black text-white"
+              "w-8 h-8 flex items-center justify-center rounded-lg",
+              isDark ? "bg-cyan-500/10 text-cyan-400 border border-cyan-500/20" : "bg-cyan-50 text-cyan-600 border border-cyan-100"
             )}>
               <BookOpen size={16} />
             </div>
@@ -699,12 +720,12 @@ export default function Hero() {
 
           {/* Module 3 */}
           <div className={cn(
-            "border p-6 space-y-3 transition-colors",
-            isDark ? "border-zinc-800 bg-[#09090b]" : "border-zinc-200 bg-zinc-50/50"
+            "border p-6 space-y-3 transition-colors rounded-2xl backdrop-blur-sm",
+            isDark ? "border-zinc-800 bg-[#09090b]/40" : "border-zinc-200 bg-zinc-50/50"
           )}>
             <div className={cn(
-              "w-8 h-8 flex items-center justify-center rounded",
-              isDark ? "bg-white text-black" : "bg-black text-white"
+              "w-8 h-8 flex items-center justify-center rounded-lg",
+              isDark ? "bg-cyan-500/10 text-cyan-400 border border-cyan-500/20" : "bg-cyan-50 text-cyan-600 border border-cyan-100"
             )}>
               <Terminal size={16} />
             </div>
@@ -714,12 +735,12 @@ export default function Hero() {
 
           {/* Module 4 */}
           <div className={cn(
-            "border p-6 space-y-3 transition-colors",
-            isDark ? "border-zinc-800 bg-[#09090b]" : "border-zinc-200 bg-zinc-50/50"
+            "border p-6 space-y-3 transition-colors rounded-2xl backdrop-blur-sm",
+            isDark ? "border-zinc-800 bg-[#09090b]/40" : "border-zinc-200 bg-zinc-50/50"
           )}>
             <div className={cn(
-              "w-8 h-8 flex items-center justify-center rounded",
-              isDark ? "bg-white text-black" : "bg-black text-white"
+              "w-8 h-8 flex items-center justify-center rounded-lg",
+              isDark ? "bg-cyan-500/10 text-cyan-400 border border-cyan-500/20" : "bg-cyan-50 text-cyan-600 border border-cyan-100"
             )}>
               <Users size={16} />
             </div>
@@ -743,8 +764,8 @@ export default function Hero() {
             )}>
               <span className="font-mono text-xs font-bold">interactive_terminal.js</span>
               <span className={cn(
-                "text-[10px] font-mono px-2 py-0.5 transition-colors",
-                isDark ? "bg-white/10 text-zinc-300" : "bg-black/5 text-zinc-600"
+                "text-[10px] font-mono px-2 py-0.5 border rounded transition-colors",
+                isDark ? "bg-cyan-500/10 text-cyan-400 border-cyan-500/20" : "bg-cyan-50 text-cyan-600 border-cyan-100"
               )}>
                 ACTIVE
               </span>
@@ -760,15 +781,14 @@ export default function Hero() {
 
               {/* Status Output */}
               <div className={cn(
-                "border p-4 transition-colors",
-                isDark ? "border-white/10 bg-white/[0.02]" : "border-zinc-200 bg-zinc-100/50"
+                "border p-4 transition-colors rounded-xl",
+                isDark ? "border-white/5 bg-white/[0.01]" : "border-zinc-200 bg-zinc-100/50"
               )}>
                 <p className="text-[10px] text-zinc-500 uppercase tracking-widest mb-1 font-bold">Execution Feed</p>
                 <div className="flex items-center justify-between">
                   <span className={isDark ? "text-zinc-400" : "text-zinc-700"}>Successful executions:</span>
                   <span className={cn(
-                    "font-bold px-2 py-0.5 text-xs transition-colors",
-                    isDark ? "text-black bg-white" : "text-white bg-black"
+                    "font-bold text-xs transition-colors font-mono text-cyan-400"
                   )}>
                     {count}
                   </span>
@@ -788,13 +808,13 @@ export default function Hero() {
                   onClick={runCode}
                   disabled={isCompiling}
                   className={cn(
-                    "flex items-center gap-2 font-bold text-xs px-4 py-2 border transition-colors cursor-pointer disabled:opacity-50",
+                    "flex items-center gap-2 font-bold text-xs px-4 py-2 border transition-all cursor-pointer disabled:opacity-50 rounded-lg",
                     isDark 
-                      ? "bg-white border-white hover:bg-zinc-200 text-black" 
-                      : "bg-black border-black hover:bg-zinc-800 text-white"
+                      ? "bg-cyan-600 border-cyan-600 hover:bg-cyan-500 text-white shadow-lg shadow-cyan-500/20 active:scale-[0.98]" 
+                      : "bg-cyan-600 border-cyan-600 hover:bg-cyan-700 text-white active:scale-[0.98]"
                   )}
                 >
-                  <Play size={12} fill={isDark ? "black" : "white"} className={isDark ? "text-black" : "text-white"} /> RUN COMPILE
+                  <Play size={12} fill="white" className="text-white" /> RUN COMPILE
                 </button>
               </div>
             </div>

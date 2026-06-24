@@ -17,8 +17,10 @@ const TextReveal = React.memo(function TextReveal({
   hoverColor = "#b2c73a",
   direction = "up",
   onClick,
+  isHovered,
 }) {
-  const [hovered, setHovered] = useState(false);
+  const [internalHovered, setInternalHovered] = useState(false);
+  const hovered = isHovered !== undefined ? isHovered : internalHovered;
 
   const chars = useMemo(() => {
     if (typeof Intl !== "undefined" && Intl.Segmenter) {
@@ -40,8 +42,8 @@ const TextReveal = React.memo(function TextReveal({
       lineHeight: 1,
       ...style,
     },
-    onMouseEnter: () => setHovered(true),
-    onMouseLeave: () => setHovered(false),
+    onMouseEnter: () => setInternalHovered(true),
+    onMouseLeave: () => setInternalHovered(false),
     onClick,
     "aria-label": text,
   };

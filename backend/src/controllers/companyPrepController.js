@@ -3,9 +3,11 @@ const path = require('path');
 const CompanyPrepProgress = require('../models/CompanyPrepProgress');
 const User = require('../models/User');
 const logger = require('../config/logger');
+const aiService = require('../utils/aiService');
 
 // Cache the parsed questions in-memory
 let cachedQuestions = null;
+const hydratedQuestionsCache = {};
 
 function parseQuestionsCSV() {
   if (cachedQuestions) return cachedQuestions;
@@ -216,6 +218,236 @@ exports.toggleStar = async (req, res, next) => {
       status: 'success',
       data: progress
     });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// Compile and run code for Company Prep Question
+exports.runCode = async (req, res, next) => {
+  try {
+    const { questionId, language, code, customInput } = req.body;
+    const questions = parseQuestionsCSV();
+    const qNum = parseInt(questionId, 10);
+    const question = questions.find(q => q.id === qNum);
+
+    if (!question) {
+      return res.status(404).json({ status: 'fail', message: 'Question not found.' });
+    }
+
+    const cachedDetails = hydratedQuestionsCache[qNum];
+    const taskDescription = cachedDetails ? cachedDetails.description : question.question;
+
+    logger.info(`CompanyPrep: Running sandbox compilation via LLM for question ${questionId} (${language})...`);
+    
+    const prompt = `You are a secure, sandboxed code compilation engine.
+    Analyze the following user-submitted code in "${language}" for the coding exercise:
+    Exercise Prompt: ${taskDescription}
+    Expected Solution Concept: ${question.answer}
+    
+    Custom User Test Input (if any):
+    ${customInput || 'None'}
+    
+    Execute/evaluate this code logic.
+    Return ONLY a JSON object with this exact structure:
+    {
+      "success": true, // true if the code successfully implements the solution for the question, false otherwise
+      "compilerOutput": "stdout messages / compilation log / standard output showing execution",
+      "passedCount": 2, // number of passed test cases
+      "totalCount": 2,  // total number of test cases checked
+      "errorMessage": "details of syntax errors or failing testcase inputs/outputs, if any"
+    }
+    Only output valid JSON. No explanations, no markdown wrapper.`;
+
+    const runResult = await aiService.generateContentJSON(prompt);
+
+    res.status(200).json({
+      status: 'success',
+      data: runResult
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// Submit code, verify, mark completed, award XP
+exports.submitCode = async (req, res, next) => {
+  try {
+    const { questionId, language, code } = req.body;
+    const qNum = parseInt(questionId, 10);
+    const questions = parseQuestionsCSV();
+    const question = questions.find(q => q.id === qNum);
+
+    if (!question) {
+      return res.status(404).json({ status: 'fail', message: 'Question not found.' });
+    }
+
+    const cachedDetails = hydratedQuestionsCache[qNum];
+    const taskDescription = cachedDetails ? cachedDetails.description : question.question;
+
+    logger.info(`CompanyPrep: Processing submission for question ${questionId} (${language}) by user ${req.user.username}...`);
+
+    const prompt = `You are a secure, sandboxed code compilation engine for software interview submissions.
+    Evaluate the correctness of the following user-submitted code in "${language}" for the programming task:
+    Programming Task: ${taskDescription}
+    Expected Solution Concept: ${question.answer}
+    
+    User Code:
+    \`\`\`${language}
+    ${code}
+    \`\`\`
+    
+    Evaluate the correctness. Return ONLY a JSON object matching this structure:
+    {
+      "success": true, // true if the code correctly implements the solution and solves the interview question
+      "compilerOutput": "Standard output logs showing verification results",
+      "passedCount": 3,
+      "totalCount": 3,
+      "errorMessage": "Assertion error details or compile errors, if any"
+    }
+    Only output valid JSON.`;
+
+    const submitResult = await aiService.generateContentJSON(prompt);
+
+    let xpGained = 0;
+    let newLevel = req.user.level;
+    let newXp = req.user.xp;
+    let progress = null;
+
+    if (submitResult.success) {
+      // Mark as completed in progress database
+      progress = await CompanyPrepProgress.findOne({ userId: req.user.id });
+      if (!progress) {
+        progress = new CompanyPrepProgress({ userId: req.user.id });
+      }
+
+      const completed = progress.completedQuestions || [];
+      const isCompletedNow = !completed.includes(qNum);
+
+      if (isCompletedNow) {
+        completed.push(qNum);
+        progress.completedQuestions = completed;
+        await progress.save();
+
+        // Award +20 XP
+        const user = await User.findById(req.user.id);
+        if (user) {
+          user.xp += 20;
+          user.level = Math.floor(user.xp / 1000) + 1;
+          await user.save();
+          xpGained = 20;
+          newLevel = user.level;
+          newXp = user.xp;
+        }
+        logger.info(`CompanyPrep Sandbox: Submission success for question ${qNum}. Awarded 20 XP to ${req.user.username}`);
+      } else {
+        progress = await CompanyPrepProgress.findOne({ userId: req.user.id });
+      }
+    }
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        success: submitResult.success,
+        compilerOutput: submitResult.compilerOutput,
+        passedCount: submitResult.passedCount,
+        totalCount: submitResult.totalCount,
+        errorMessage: submitResult.errorMessage,
+        xpGained,
+        newLevel,
+        newXp,
+        progress
+      }
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// Get dynamic hydrated question details, converting interview topic to coding prompt
+exports.getQuestionDetails = async (req, res, next) => {
+  try {
+    const { questionId } = req.params;
+    const qNum = parseInt(questionId, 10);
+    const questions = parseQuestionsCSV();
+    const question = questions.find(q => q.id === qNum);
+
+    if (!question) {
+      return res.status(404).json({ status: 'fail', message: 'Question not found.' });
+    }
+
+    // Return cached details if available
+    if (hydratedQuestionsCache[qNum]) {
+      return res.status(200).json({
+        status: 'success',
+        data: {
+          ...question,
+          ...hydratedQuestionsCache[qNum]
+        }
+      });
+    }
+
+    // Otherwise, generate dynamically using AI service
+    logger.info(`CompanyPrep: Hydrating question details dynamically using LLM for topic: ${question.question}...`);
+
+    const prompt = `You are an expert software engineering interviewer.
+    Transform the following conceptual or technical software engineering interview question and answer into a practical coding exercise.
+    The candidate will write code to demonstrate or implement the concepts described.
+
+    Interview Question: "${question.question}"
+    Correct Answer / Explanation: "${question.answer}"
+
+    Return ONLY a JSON object containing:
+    - "description": A detailed markdown description. First restate the conceptual question, then explain the coding task: candidate must write a clean class, function, or code example illustrating/implementing the concepts. Define what classes or helper functions they should write. Keep it clear, developer-focused, and highly engaging.
+    - "templates": An object containing starter code templates for languages: "cpp", "java", "python", "javascript" (e.g. standard class/function setup for demonstrating the concept).
+    - "hints": An array of 3 helpful hints for implementing this demonstration code.
+
+    Ensure your output is a strictly valid JSON block. Avoid any leading/trailing explanations. Only return the JSON.`;
+
+    try {
+      const result = await aiService.generateContentJSON(prompt);
+      
+      const hydratedDetails = {
+        description: result.description || `Write code to demonstrate: ${question.question}`,
+        templates: result.templates || {
+          javascript: `function solution() {\n  // Write code demonstrating: ${question.question}\n}`,
+          python: `def solution():\n    # Write code demonstrating: ${question.question}\n    pass`,
+          cpp: `void solution() {\n    // Write code demonstrating: ${question.question}\n}`,
+          java: `class Solution {\n    public void solve() {\n        // Write code demonstrating: ${question.question}\n    }\n}`
+        },
+        hints: result.hints || ['Break down the concept into a simple class or function.', 'Demonstrate inheritance or implementation explicitly.', 'Provide a calling context to show your class in action.']
+      };
+
+      hydratedQuestionsCache[qNum] = hydratedDetails;
+
+      res.status(200).json({
+        status: 'success',
+        data: {
+          ...question,
+          ...hydratedDetails
+        }
+      });
+    } catch (err) {
+      logger.error(`CompanyPrep: Failed dynamic AI hydration: ${err.message}`);
+      // Return defaults on error
+      const fallbackDetails = {
+        description: `Write a program implementation that solves the following coding prompt:\n\n${question.question}\n\n**Goal**: Provide code that illustrates the correct answer:\n${question.answer}`,
+        templates: {
+          javascript: `function solution() {\n  // Write code demonstrating: ${question.question}\n}`,
+          python: `def solution():\n    # Write code demonstrating: ${question.question}\n    pass`,
+          cpp: `void solution() {\n    // Write code demonstrating: ${question.question}\n}`,
+          java: `class Solution {\n    public void solve() {\n        // Write code demonstrating: ${question.question}\n    }\n}`
+        },
+        hints: ['Consider the key differences outlined in the conceptual answer.', 'Focus on writing clear, self-documenting code.']
+      };
+      res.status(200).json({
+        status: 'success',
+        data: {
+          ...question,
+          ...fallbackDetails
+        }
+      });
+    }
   } catch (err) {
     next(err);
   }

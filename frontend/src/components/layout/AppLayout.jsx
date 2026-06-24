@@ -31,6 +31,7 @@ import {
 } from 'lucide-react';
 import { cn } from "../../lib/utils";
 import Copilot from '../ui/Copilot';
+import Lightning from '../ui/Lightning';
 
 export default function AppLayout({ children }) {
   const {
@@ -211,9 +212,10 @@ export default function AppLayout({ children }) {
 
   return (
     <div className={cn(
-      "min-h-screen flex flex-col font-sans selection:bg-violet-600/30 relative overflow-hidden transition-colors duration-500",
+      "min-h-screen flex flex-col font-sans selection:bg-violet-600/30 relative overflow-hidden transition-colors duration-500 z-10",
       isDark ? "bg-[#000000] text-gray-100" : "bg-white text-black"
     )}>
+      <Lightning hue={190} xOffset={0} speed={1.0} intensity={0.25} size={1.5} />
       {/* Dark Radial Glow Background (Dark theme only) */}
       {isDark && (
         <div
