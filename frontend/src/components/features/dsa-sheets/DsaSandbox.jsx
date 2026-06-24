@@ -224,8 +224,8 @@ export default function DsaSandbox() {
       const defaults = {
         javascript: `/**\n * ${activeProblem.title}\n */\nfunction solution() {\n  // Your code here\n}\n`,
         python:     `# ${activeProblem.title}\nclass Solution:\n    def solve(self):\n        pass\n`,
-        cpp:        `// ${activeProblem.title}\n#include <bits/stdc++.h>\nusing namespace std;\n\nclass Solution {\npublic:\n    void solve() {\n        \n    }\n};\n`,
-        java:       `// ${activeProblem.title}\nclass Solution {\n    public void solve() {\n        \n    }\n}\n`,
+        cpp:        `class Solution {\npublic:\n    void solve() {\n        // Write your C++ code here\n    }\n};\n`,
+        java:       `class Solution {\n    public void solve() {\n        // Write your Java code here\n    }\n}\n`,
       };
       setCode(defaults[selectedLang] || '// Start coding...');
     }

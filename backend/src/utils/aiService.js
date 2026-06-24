@@ -148,15 +148,15 @@ async function generateContentJSON(prompt) {
   // Group candidates to try: { provider, key, callFn }
   const candidates = [];
 
-  geminiKeys.forEach(key => {
-    if (!isKeyOnCooldown(key)) {
-      candidates.push({ provider: 'Gemini', key, callFn: callGemini });
-    }
-  });
-
   groqKeys.forEach(key => {
     if (!isKeyOnCooldown(key)) {
       candidates.push({ provider: 'Groq', key, callFn: callGroq });
+    }
+  });
+
+  geminiKeys.forEach(key => {
+    if (!isKeyOnCooldown(key)) {
+      candidates.push({ provider: 'Gemini', key, callFn: callGemini });
     }
   });
 
@@ -248,6 +248,14 @@ async function generateCopilotResponse(prompt, imageBase64 = null, mimeType = nu
 
   const candidates = [];
 
+  if (!imageBase64) {
+    groqKeys.forEach(key => {
+      if (!isKeyOnCooldown(key)) {
+        candidates.push({ provider: 'Groq', key, callFn: callGroq });
+      }
+    });
+  }
+
   geminiKeys.forEach(key => {
     if (!isKeyOnCooldown(key)) {
       if (imageBase64) {
@@ -261,14 +269,6 @@ async function generateCopilotResponse(prompt, imageBase64 = null, mimeType = nu
       }
     }
   });
-
-  if (!imageBase64) {
-    groqKeys.forEach(key => {
-      if (!isKeyOnCooldown(key)) {
-        candidates.push({ provider: 'Groq', key, callFn: callGroq });
-      }
-    });
-  }
 
   if (candidates.length === 0) {
     throw new Error('AI Service: No active API keys are available (all are missing or on cooldown).');

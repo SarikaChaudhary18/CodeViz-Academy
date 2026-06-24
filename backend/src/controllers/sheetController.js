@@ -86,9 +86,17 @@ exports.getProblemDetails = async (req, res, next) => {
       return res.status(404).json({ status: 'fail', message: 'Problem not found in database.' });
     }
 
-    // Dynamic AI Hydration if description is missing
-    if (!problem.description || !problem.templates || !problem.templates.javascript) {
-      logger.info(`Sheet Controller: Hydrating problem details dynamically using LLM for ${problem.title}...`);
+    // Dynamic AI Hydration if description is missing or if templates contain driver code / main functions / loops
+    const hasDriverCode = problem.templates && (
+      JSON.stringify(problem.templates).includes("main(") || 
+      JSON.stringify(problem.templates).includes("while (") ||
+      JSON.stringify(problem.templates).includes("while(cin") ||
+      JSON.stringify(problem.templates).includes("while(true") ||
+      JSON.stringify(problem.templates).includes("std::cin")
+    );
+
+    if (!problem.description || !problem.templates || !problem.templates.javascript || hasDriverCode) {
+      logger.info(`Sheet Controller: Hydrating problem details dynamically using LLM for ${problem.title} (Reason: ${hasDriverCode ? 'Polled/Driver templates detected' : 'Missing metadata'})...`);
       
       const prompt = `You are an expert algorithms educator and problem setter. Generate details for the coding problem titled "${problem.title}" (External resource: ${problem.link || 'N/A'}).
       
@@ -96,7 +104,7 @@ exports.getProblemDetails = async (req, res, next) => {
       - "description": A high-fidelity markdown description of the problem statement, inputs, outputs, and explanations. Keep it clear, engaging and modern.
       - "examples": An array of examples. Each example must have: "input", "output", "explanation". Give 2 realistic examples.
       - "constraints": Markdown text describing the computational constraints (e.g. O(N) time complexity, array lengths, values ranges).
-      - "templates": An object containing starter code function templates for languages: "cpp", "java", "python", "javascript". Match LeetCode style function declarations (e.g., in JavaScript: "function solution(args) { ... }" or "class Solution { ... }").
+      - "templates": An object containing empty starter code templates for languages: "cpp", "java", "python", "javascript". Match LeetCode style function declarations exactly (e.g., in C++: "class Solution {\npublic:\n    int solve(vector<int>& nums) {\n        \n    }\n};"). Do NOT include any main function, driver code, while loops to read inputs, solved code logic, comments containing the solution, or large library imports. The templates must be completely empty shell templates with just function names, signatures, and empty bodies.
       - "testCases": An array of at least 3 test cases. Each test case must have: "input" (raw string parameter value), "expectedOutput" (raw string output).
       - "editorial": A brief markdown overview of the optimal approach (e.g. sliding window, hashmap) and time/space complexity.
       

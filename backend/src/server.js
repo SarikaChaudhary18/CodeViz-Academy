@@ -1,3 +1,4 @@
+// Entry point for clustered server
 const http = require('http');
 const cluster = require('cluster');
 const numCPUs = require('os').cpus().length;
