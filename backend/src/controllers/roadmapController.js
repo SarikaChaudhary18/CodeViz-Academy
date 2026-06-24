@@ -277,3 +277,104 @@ Do not wrap with markdown or HTML. No comment blocks. Return valid JSON only.`;
     next(err);
   }
 };
+
+// Translate between Android XML layouts and Jetpack Compose code
+exports.translateLayout = async (req, res, next) => {
+  try {
+    const { code, direction } = req.body;
+    if (!code || !code.trim()) {
+      return res.status(400).json({ status: 'fail', message: 'Code is required for translation.' });
+    }
+
+    logger.info(`Roadmap Controller: Translating layout via LLM (direction: ${direction})...`);
+
+    const prompt = `You are an expert mobile development AI specialized in Android UI layouts.
+    Translate the following source layout code according to the direction: "${direction === 'xml-to-compose' ? 'Android XML to Jetpack Compose Kotlin' : 'Jetpack Compose Kotlin to Android XML'}".
+
+    Source Code:
+    ${code}
+
+    Return ONLY the translated target code. Do not wrap it in markdown backticks or include headers (like \`\`\`kotlin or \`\`\`xml). Output the raw converted layout code directly.`;
+
+    const resultText = await aiService.generateCopilotResponse(prompt);
+
+    res.status(200).json({
+      status: 'success',
+      data: resultText
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// AI Mentor query agent
+exports.mentorQuery = async (req, res, next) => {
+  try {
+    const { roadmapId, nodeTitle, query, chatHistory } = req.body;
+    if (!query || !query.trim()) {
+      return res.status(400).json({ status: 'fail', message: 'Query is required.' });
+    }
+
+    logger.info(`Roadmap Controller: AI Mentor query for topic: ${nodeTitle || 'General'}`);
+
+    const prompt = `You are the StudyQuest AI Career & Technology Mentor, an elite senior software engineer and curriculum designer.
+    The user is currently studying the milestone topic: "${nodeTitle || 'General'}" in the "${roadmapId || 'General'}" track.
+    
+    User Question: "${query}"
+    
+    Provide a highly informative, production-ready, clear explanation. Include code fragments, design patterns, or troubleshooting recommendations where relevant. Keep it clean and direct.
+    
+    Chat Context History:
+    ${JSON.stringify(chatHistory || [])}`;
+
+    const reply = await aiService.generateCopilotResponse(prompt);
+
+    res.status(200).json({
+      status: 'success',
+      data: reply
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// AI Career Plan Generator
+exports.generateCareerPlan = async (req, res, next) => {
+  try {
+    const { targetRole, currentSkills, dailyHours, timelineMonths } = req.body;
+    if (!targetRole) {
+      return res.status(400).json({ status: 'fail', message: 'Target role is required.' });
+    }
+
+    logger.info(`Roadmap Controller: Generating Career Plan for target role: ${targetRole}`);
+
+    const prompt = `You are the StudyQuest AI Career Planner. Build a high-fidelity learning plan based on:
+    - Target Career Role: ${targetRole}
+    - Current Developer Skills: ${currentSkills || 'None (Beginner)'}
+    - Commitment: ${dailyHours || 2} Hours/Day
+    - Study Duration: ${timelineMonths || 3} Months
+    
+    Generate detailed schedule guidelines.
+    Return ONLY a JSON object formatted exactly as:
+    {
+      "dailyPlan": "Daily study roadmap, routines, and XP goals...",
+      "weeklyPlan": "Weekly sprints and milestone check-ins...",
+      "monthlyPlan": "Monthly roadmap chapters and scaling builds...",
+      "projectRecommendations": "Specific resume-building project layouts, database schemas, and FAANG metrics...",
+      "interviewTimeline": "Logical timeline for DSA, system design, and behavior preparation.",
+      "resumeTimeline": "Guidelines for when and how to build ATS-compatible portfolio pages."
+    }
+    
+    Ensure strict valid JSON format. Do not wrap in markdown tags or include comments.`;
+
+    const result = await aiService.generateContentJSON(prompt);
+
+    res.status(200).json({
+      status: 'success',
+      data: result
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+

@@ -9,5 +9,8 @@ router.get('/playlist-metadata', authenticate, roadmapController.getPlaylistMeta
 router.get('/:roadmapId/node/:nodeIndex/quiz', authenticate, roadmapController.getNodeQuiz);
 router.get('/:roadmapId', authenticate, roadmapController.getRoadmapDetails);
 router.post('/submit-capstone', authenticate, roadmapController.submitCapstone);
+router.post('/translate-layout', authenticate, roadmapController.translateLayout);
+router.post('/mentor-query', authenticate, roadmapController.mentorQuery);
+router.post('/generate-career-plan', authenticate, roadmapController.generateCareerPlan);
 
 module.exports = router;

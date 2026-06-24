@@ -421,7 +421,7 @@ const CinematicFooter = ({ navigate, isDark }) => {
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: FOOTER_STYLES }} />
-      
+
       {/* Curtain reveal viewport box */}
       <div
         ref={wrapperRef}
@@ -433,7 +433,7 @@ const CinematicFooter = ({ navigate, isDark }) => {
           "fixed bottom-0 left-0 flex h-screen w-full flex-col justify-between overflow-hidden transition-colors duration-500 cinematic-footer-wrapper",
           isDark ? "bg-[#020617] text-white" : "bg-white text-black"
         )}>
-          
+
           {/* Ambient Aurora glow */}
           {isDark && (
             <div className="footer-aurora absolute left-1/2 top-1/2 h-[60vh] w-[80vw] -translate-x-1/2 -translate-y-1/2 animate-footer-breathe rounded-[50%] blur-[80px] pointer-events-none z-0" />
@@ -471,15 +471,15 @@ const CinematicFooter = ({ navigate, isDark }) => {
             {/* Interactive Magnetic Pills */}
             <div ref={linksRef} className="flex flex-col items-center gap-6 w-full">
               <div className="flex flex-wrap justify-center gap-4 w-full">
-                <MagneticButton 
+                <MagneticButton
                   onClick={() => navigate('/register')}
                   className="footer-glass-pill px-8 py-4.5 rounded-full font-bold text-sm md:text-base flex items-center gap-2.5 group"
                 >
                   <Sparkles size={18} className="text-violet-500 group-hover:animate-pulse" />
                   Seed Profile
                 </MagneticButton>
-                
-                <MagneticButton 
+
+                <MagneticButton
                   onClick={() => navigate('/login')}
                   className="footer-glass-pill px-8 py-4.5 rounded-full font-bold text-sm md:text-base flex items-center gap-2.5 group"
                 >
@@ -505,7 +505,7 @@ const CinematicFooter = ({ navigate, isDark }) => {
 
           {/* 3. Bottom Bar / Credits */}
           <div className="relative z-20 w-full pb-8 px-6 md:px-12 flex flex-col md:flex-row items-center justify-between gap-6">
-            
+
             {/* Copyright */}
             <div className="text-zinc-500 text-[10px] md:text-xs font-semibold tracking-widest uppercase order-2 md:order-1 font-mono">
               © 2026 StudyQuest. All rights reserved.
@@ -513,8 +513,8 @@ const CinematicFooter = ({ navigate, isDark }) => {
 
             {/* "Made with Love" Badge */}
             <div className="footer-glass-pill px-6 py-2.5 rounded-full flex items-center gap-2 order-1 md:order-2 cursor-default border-border/50">
-              <span className="text-zinc-500 text-[9px] md:text-xs font-bold uppercase tracking-widest font-mono">Crafted with</span>
-              <span className="animate-footer-heartbeat text-sm md:text-base text-red-500">❤</span>
+              <span className="text-zinc-500 text-[9px] md:text-xs font-bold uppercase tracking-widest font-mono">Crafted</span>
+
               <span className="text-zinc-500 text-[9px] md:text-xs font-bold uppercase tracking-widest font-mono">by</span>
               <span className="font-black text-xs md:text-sm tracking-normal font-sans ml-1 text-cyan-400">StudyQuest Team</span>
             </div>
@@ -555,7 +555,7 @@ export default function Hero() {
   const theme = "dark";
   const isDark = true;
 
-  const toggleTheme = () => {};
+  const toggleTheme = () => { };
 
   const runCode = () => {
     setIsCompiling(true);
@@ -604,7 +604,7 @@ export default function Hero() {
         <div className="flex items-center gap-6">
 
 
-          <button 
+          <button
             onClick={() => navigate('/login')}
             className={cn(
               "text-xs font-mono font-bold uppercase tracking-wider transition-colors cursor-pointer",
@@ -613,12 +613,12 @@ export default function Hero() {
           >
             Login
           </button>
-          <button 
+          <button
             onClick={() => navigate('/register')}
             className={cn(
               "text-xs font-mono font-bold px-4 py-2 transition-colors cursor-pointer border",
-              isDark 
-                ? "bg-white border-white hover:bg-zinc-200 text-black" 
+              isDark
+                ? "bg-white border-white hover:bg-zinc-200 text-black"
                 : "bg-black border-black hover:bg-zinc-800 text-white"
             )}
           >
@@ -629,10 +629,10 @@ export default function Hero() {
 
       {/* Hero Content */}
       <main className="relative z-10 max-w-3xl mx-auto px-8 pt-24 pb-20 flex flex-col items-center text-center space-y-10">
-        
+
         {/* Centered info */}
         <div className="space-y-8 flex flex-col items-center w-full">
-          
+
           <button className="flex items-center space-x-2 px-4 py-2 bg-white/5 hover:bg-white/10 backdrop-blur-sm rounded-full text-xs transition-all duration-300 group cursor-pointer border border-white/5">
             <span className="text-zinc-400">Support for AI Models</span>
             <ArrowRight size={12} className="text-zinc-500 transform group-hover:translate-x-1 transition-transform duration-300" />
@@ -809,8 +809,8 @@ export default function Hero() {
                   disabled={isCompiling}
                   className={cn(
                     "flex items-center gap-2 font-bold text-xs px-4 py-2 border transition-all cursor-pointer disabled:opacity-50 rounded-lg",
-                    isDark 
-                      ? "bg-cyan-600 border-cyan-600 hover:bg-cyan-500 text-white shadow-lg shadow-cyan-500/20 active:scale-[0.98]" 
+                    isDark
+                      ? "bg-cyan-600 border-cyan-600 hover:bg-cyan-500 text-white shadow-lg shadow-cyan-500/20 active:scale-[0.98]"
                       : "bg-cyan-600 border-cyan-600 hover:bg-cyan-700 text-white active:scale-[0.98]"
                   )}
                 >
