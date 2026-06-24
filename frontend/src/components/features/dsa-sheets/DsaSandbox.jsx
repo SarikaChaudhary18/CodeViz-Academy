@@ -4,7 +4,7 @@ import { useStore } from '../../../hooks/useStore';
 import Editor from '@monaco-editor/react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  ArrowLeft, Play, Send, ChevronDown, ChevronUp, BookOpen,
+  ArrowLeft, Play, Send, ChevronDown, ChevronUp, ChevronLeft, ChevronRight, BookOpen,
   Terminal, Lightbulb, CheckCircle2, XCircle, AlertTriangle,
   Loader2, Copy, RotateCcw, Clock, Zap, Code2, FileText,
   Hash, RefreshCw, ExternalLink, Youtube, Brain
@@ -40,6 +40,106 @@ const MONACO_OPTIONS = {
   automaticLayout: true,
 };
 
+// ── Lightweight Markdown → HTML renderer ──────────────────────────────────
+function renderMarkdown(md = '') {
+  // Fenced code blocks ```lang\n...\n```
+  let html = md.replace(
+    /```(\w*)\n?([\s\S]*?)```/g,
+    (_, lang, code) =>
+      `<pre class="bg-[#0d1117] border border-white/8 rounded-xl p-4 my-3 overflow-x-auto text-xs font-mono text-emerald-300 leading-relaxed whitespace-pre">${code.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</pre>`
+  );
+
+  // Headings
+  html = html.replace(/^### (.+)$/gm, '<h3 class="text-sm font-semibold text-slate-200 mt-5 mb-2">$1</h3>');
+  html = html.replace(/^## (.+)$/gm,  '<h2 class="text-base font-bold text-white mt-6 mb-2 pb-1.5 border-b border-white/10">$1</h2>');
+  html = html.replace(/^# (.+)$/gm,   '<h1 class="text-lg font-bold text-white mt-4 mb-2">$1</h1>');
+
+  // Bold & Italic
+  html = html.replace(/\*\*\*(.*?)\*\*\*/g, '<strong class="text-white italic">$1</strong>');
+  html = html.replace(/\*\*(.*?)\*\*/g,     '<strong class="text-white font-semibold">$1</strong>');
+  html = html.replace(/\*(.*?)\*/g,         '<em class="italic text-slate-300">$1</em>');
+
+  // Inline code
+  html = html.replace(/`([^`]+)`/g, '<code class="bg-white/8 text-cyan-300 px-1.5 py-0.5 rounded text-xs font-mono">$1</code>');
+
+  // Bullet lists — convert consecutive lines starting with * or -
+  html = html.replace(/(^[\*\-] .+$\n?)+/gm, (block) => {
+    const items = block
+      .trim()
+      .split('\n')
+      .map(line => `<li class="flex gap-2 text-slate-300"><span class="text-violet-400 mt-1 flex-shrink-0">›</span><span>${line.replace(/^[\*\-] /, '')}</span></li>`)
+      .join('');
+    return `<ul class="space-y-1.5 my-3 pl-1">${items}</ul>`;
+  });
+
+  // Numbered lists
+  html = html.replace(/(^\d+\. .+$\n?)+/gm, (block) => {
+    const items = block
+      .trim()
+      .split('\n')
+      .map(line => `<li class="text-slate-300 ml-4 list-decimal">${line.replace(/^\d+\. /, '')}</li>`)
+      .join('');
+    return `<ol class="space-y-1.5 my-3 list-decimal pl-5">${items}</ol>`;
+  });
+
+  // Paragraphs — blank-line separated blocks that aren't already HTML
+  html = html
+    .split(/\n{2,}/)
+    .map(block => {
+      block = block.trim();
+      if (!block) return '';
+      if (/^<[hupol]/.test(block) || /^<pre/.test(block)) return block;
+      return `<p class="text-slate-300 leading-relaxed mb-3 text-sm">${block.replace(/\n/g, '<br/>')}</p>`;
+    })
+    .join('\n');
+
+  return html;
+}
+
+// ── Confetti Celebration Component (Party Popper Effect) ──────────────────
+function ConfettiCelebration() {
+  const [pieces, setPieces] = useState([]);
+
+  useEffect(() => {
+    const colors = ['#f43f5e', '#3b82f6', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899', '#06b6d4'];
+    const newPieces = Array.from({ length: 120 }).map((_, i) => ({
+      id: i,
+      left: `${Math.random() * 100}%`,
+      delay: `${Math.random() * 2.5}s`,
+      duration: `${1.8 + Math.random() * 2.5}s`,
+      size: `${8 + Math.random() * 8}px`,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      tilt: `${Math.random() * 360}deg`
+    }));
+    setPieces(newPieces);
+  }, []);
+
+  return (
+    <div className="fixed inset-0 pointer-events-none z-[9999] overflow-hidden">
+      <style>{`
+        @keyframes confetti-fall {
+          0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+          100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
+        }
+      `}</style>
+      {pieces.map(p => (
+        <div
+          key={p.id}
+          className="absolute top-0 rounded-sm"
+          style={{
+            left: p.left,
+            width: p.size,
+            height: p.size,
+            backgroundColor: p.color,
+            animation: `confetti-fall ${p.duration} linear ${p.delay} forwards`,
+            transform: `rotate(${p.tilt})`,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
 export default function DsaSandbox() {
   const { problemId } = useParams();
   const navigate = useNavigate();
@@ -52,10 +152,13 @@ export default function DsaSandbox() {
     submitSandboxCode,
     sheetProgress,
     fetchSheetProgress,
+    dsaProblems,
+    fetchDsaProblems,
     user,
   } = useStore();
 
-  const [selectedLang, setSelectedLang] = useState('javascript');
+  const [selectedLang, setSelectedLang] = useState('cpp');
+  const [showConfetti, setShowConfetti] = useState(false);
   const [code, setCode] = useState('');
   const [customInput, setCustomInput] = useState('');
   const [outputPanel, setOutputPanel] = useState('hidden'); // 'hidden' | 'output' | 'testcases' | 'editorial'
@@ -69,6 +172,8 @@ export default function DsaSandbox() {
   const [xpToast, setXpToast] = useState(null);
   const [copied, setCopied] = useState(false);
   const timerRef = useRef(null);
+  const fetchedSheetTypeRef = useRef(null);
+  const fetchedProgressSheetTypeRef = useRef(null);
 
   // Load problem on mount
   useEffect(() => {
@@ -77,10 +182,37 @@ export default function DsaSandbox() {
     }
   }, [problemId, fetchProblemDetails]);
 
+  // Reset results and timer on problem change
+  useEffect(() => {
+    setRunResult(null);
+    setSubmitResult(null);
+    setElapsedTime(0);
+    setOutputPanel('hidden');
+    setShowConfetti(false);
+  }, [problemId]);
+
+  // Load sheet problems list for next/prev navigation
+  useEffect(() => {
+    if (activeProblem?.sheetType) {
+      if (fetchedSheetTypeRef.current !== activeProblem.sheetType) {
+        fetchDsaProblems(activeProblem.sheetType);
+        fetchedSheetTypeRef.current = activeProblem.sheetType;
+      }
+    }
+  }, [activeProblem?.sheetType, fetchDsaProblems]);
+
+  // Find previous and next problems for navigation
+  const currentIndex = dsaProblems.findIndex(p => p.problemId === problemId);
+  const prevProblem = currentIndex > 0 ? dsaProblems[currentIndex - 1] : null;
+  const nextProblem = currentIndex >= 0 && currentIndex < dsaProblems.length - 1 ? dsaProblems[currentIndex + 1] : null;
+
   // Fetch sheet progress for completed check
   useEffect(() => {
     if (activeProblem?.sheetType) {
-      fetchSheetProgress(activeProblem.sheetType);
+      if (fetchedProgressSheetTypeRef.current !== activeProblem.sheetType) {
+        fetchSheetProgress(activeProblem.sheetType);
+        fetchedProgressSheetTypeRef.current = activeProblem.sheetType;
+      }
     }
   }, [activeProblem?.sheetType, fetchSheetProgress]);
 
@@ -130,6 +262,10 @@ export default function DsaSandbox() {
     try {
       const result = await runSandboxCode(activeProblem.problemId, selectedLang, code, customInput);
       setRunResult(result);
+      if (result?.success) {
+        setShowConfetti(true);
+        setTimeout(() => setShowConfetti(false), 5000);
+      }
     } catch (err) {
       setRunResult({ success: false, compilerOutput: err.message || 'Execution failed.', passedCount: 0, totalCount: 0 });
     } finally {
@@ -145,9 +281,13 @@ export default function DsaSandbox() {
     try {
       const result = await submitSandboxCode(activeProblem.problemId, selectedLang, code);
       setSubmitResult(result);
-      if (result?.success && result?.xpGained > 0) {
-        setXpToast(`+${result.xpGained} XP`);
-        setTimeout(() => setXpToast(null), 3000);
+      if (result?.success) {
+        setShowConfetti(true);
+        setTimeout(() => setShowConfetti(false), 5000);
+        if (result?.xpGained > 0) {
+          setXpToast(`+${result.xpGained} XP`);
+          setTimeout(() => setXpToast(null), 3000);
+        }
       }
     } catch (err) {
       setSubmitResult({ success: false, compilerOutput: err.message || 'Submission failed.', passedCount: 0, totalCount: 0 });
@@ -206,6 +346,9 @@ export default function DsaSandbox() {
   return (
     <div className="h-screen bg-[#07080a] flex flex-col overflow-hidden text-white">
 
+      {/* ── Party Popper Confetti Celebration ── */}
+      {showConfetti && <ConfettiCelebration />}
+
       {/* ── XP Toast ── */}
       <AnimatePresence>
         {xpToast && (
@@ -229,6 +372,25 @@ export default function DsaSandbox() {
           >
             <ArrowLeft size={14} /> Sheets
           </button>
+          <div className="w-px h-4 bg-white/10" />
+          <div className="flex items-center gap-1">
+            <button
+              onClick={() => prevProblem && navigate(`/dsa-sheets/solve/${prevProblem.problemId}`)}
+              disabled={!prevProblem}
+              className="p-1 rounded-md border border-white/5 bg-white/[0.02] text-gray-400 hover:text-white disabled:opacity-20 disabled:hover:text-gray-400 disabled:cursor-not-allowed transition-all"
+              title="Previous Problem"
+            >
+              <ChevronLeft size={14} />
+            </button>
+            <button
+              onClick={() => nextProblem && navigate(`/dsa-sheets/solve/${nextProblem.problemId}`)}
+              disabled={!nextProblem}
+              className="p-1 rounded-md border border-white/5 bg-white/[0.02] text-gray-400 hover:text-white disabled:opacity-20 disabled:hover:text-gray-400 disabled:cursor-not-allowed transition-all"
+              title="Next Problem"
+            >
+              <ChevronRight size={14} />
+            </button>
+          </div>
           <div className="w-px h-4 bg-white/10" />
           <div className="flex items-center gap-2">
             <span className="text-white font-semibold text-sm truncate max-w-[240px]">{activeProblem.title}</span>
@@ -341,13 +503,10 @@ export default function DsaSandbox() {
                 {/* Problem Statement */}
                 <div className="prose prose-invert prose-sm max-w-none">
                   <div
-                    className="text-gray-300 text-sm leading-relaxed whitespace-pre-wrap"
+                    className="text-gray-300 text-sm leading-relaxed"
                     dangerouslySetInnerHTML={{
                       __html: activeProblem.description
-                        ? activeProblem.description
-                            .replace(/\*\*(.*?)\*\*/g, '<strong class="text-white">$1</strong>')
-                            .replace(/`(.*?)`/g, '<code class="bg-white/5 text-cyan-300 px-1.5 py-0.5 rounded text-xs font-mono">$1</code>')
-                            .replace(/\n/g, '<br/>')
+                        ? renderMarkdown(activeProblem.description)
                         : `<em class="text-gray-500">Loading problem description...</em>`
                     }}
                   />
@@ -595,13 +754,13 @@ export default function DsaSandbox() {
                               </pre>
                             )}
 
-                            {/* Error details */}
-                            {currentResult.errorMessage && (
-                              <div className="flex gap-2 text-xs font-mono text-red-400 bg-red-500/5 border border-red-500/15 rounded-xl p-3">
-                                <AlertTriangle size={12} className="shrink-0 mt-0.5" />
-                                <span className="whitespace-pre-wrap">{currentResult.errorMessage}</span>
-                              </div>
-                            )}
+                             {/* Error details */}
+                             {currentResult.errorMessage && !currentResult.success && !/^(none|no errors|no error|no errors found|null|undefined)$/i.test(currentResult.errorMessage.trim()) && (
+                               <div className="flex gap-2 text-xs font-mono text-red-400 bg-red-500/5 border border-red-500/15 rounded-xl p-3">
+                                 <AlertTriangle size={12} className="shrink-0 mt-0.5" />
+                                 <span className="whitespace-pre-wrap">{currentResult.errorMessage}</span>
+                               </div>
+                             )}
                           </>
                         )}
 
