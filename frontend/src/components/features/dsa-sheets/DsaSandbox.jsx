@@ -4,6 +4,7 @@ import { useStore } from '../../../hooks/useStore';
 import fahSound from '../../../assets/fahhhhh.mp3';
 import Editor from '@monaco-editor/react';
 import { motion, AnimatePresence } from 'framer-motion';
+import AITutorSidebar from '../../ui/AITutorSidebar';
 import {
   ArrowLeft, Play, Send, ChevronDown, ChevronUp, ChevronLeft, ChevronRight, BookOpen,
   Terminal, Lightbulb, CheckCircle2, XCircle, AlertTriangle,
@@ -167,9 +168,11 @@ export default function DsaSandbox() {
     dsaProblems,
     fetchDsaProblems,
     user,
+    checkAuth,
   } = useStore();
 
   const [selectedLang, setSelectedLang] = useState('cpp');
+  const [showTutor, setShowTutor] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
   const [code, setCode] = useState('');
   const [customInput, setCustomInput] = useState('');
@@ -449,6 +452,19 @@ export default function DsaSandbox() {
               <Youtube size={11} /> Video
             </a>
           )}
+
+          {/* AI Tutor Toggle */}
+          <button
+            onClick={() => setShowTutor(!showTutor)}
+            className={`flex items-center gap-1.5 px-4 py-1.5 rounded-lg border text-xs font-mono font-bold transition-all cursor-pointer ${
+              showTutor
+                ? 'bg-cyan-500/10 border-cyan-500/30 text-cyan-400 font-extrabold shadow-[0_0_15px_rgba(6,182,212,0.15)]'
+                : 'bg-white/5 border-white/10 hover:border-white/20 text-white'
+            }`}
+          >
+            <Brain size={13} className={showTutor ? 'animate-pulse' : ''} />
+            AI Tutor
+          </button>
 
           {/* Run & Submit */}
           <button
@@ -864,6 +880,15 @@ export default function DsaSandbox() {
             </AnimatePresence>
           </div>
         </div>
+
+        {/* ── RIGHT PANEL: AI Tutor Chat Sidebar ── */}
+        <AITutorSidebar
+          isOpen={showTutor}
+          onClose={() => setShowTutor(false)}
+          problemContext={activeProblem}
+          userCode={code}
+          selectedLang={selectedLang}
+        />
       </div>
     </div>
   );
