@@ -53,6 +53,18 @@ if (cluster.isPrimary && process.env.NODE_ENV === 'production') {
       // Initialize Socket.io WebSockets
       initializeSocket(server);
 
+      // Forward WebSocket upgrade requests to the dev proxy in development
+      if (process.env.NODE_ENV === 'development') {
+        const devProxy = app.get('devProxy');
+        if (devProxy) {
+          server.on('upgrade', (req, socket, head) => {
+            if (!req.url.startsWith('/socket.io')) {
+              devProxy.upgrade(req, socket, head);
+            }
+          });
+        }
+      }
+
       server.listen(PORT, () => {
         logger.info(`Worker process ${process.pid} started. Server running on port ${PORT}`);
       });

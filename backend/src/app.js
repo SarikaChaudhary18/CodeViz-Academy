@@ -67,22 +67,53 @@ app.use('/api/company-prep', companyPrepRoutes);
 // Global centrally-managed error handler
 app.use(errorHandler);
 
-// Serve frontend statically from production build folder
+// Serve frontend (statically in production, via proxy in development)
 const path = require('path');
-const frontendDistPath = path.join(__dirname, '../../frontend/dist');
-app.use(express.static(frontendDistPath));
 
-app.get('*', (req, res, next) => {
-  if (!req.path.startsWith('/api')) {
-    res.sendFile(path.join(frontendDistPath, 'index.html'), (err) => {
-      if (err) {
-        // Continue if the file is missing (e.g. if build is not run yet)
-        next();
+if (process.env.NODE_ENV === 'development') {
+  // In development, proxy non-API requests to the Vite dev server (port 3000)
+  const { createProxyMiddleware } = require('http-proxy-middleware');
+  const devProxy = createProxyMiddleware({
+    target: 'http://localhost:3000',
+    changeOrigin: true,
+    ws: true,
+    logLevel: 'error',
+    onProxyReq: (proxyReq, req, res) => {
+      const targetHost = 'localhost:3000';
+      if (req.headers.referer) {
+        proxyReq.setHeader('referer', req.headers.referer.replace(req.headers.host, targetHost));
       }
-    });
-  } else {
-    next();
-  }
-});
+      if (req.headers.origin) {
+        proxyReq.setHeader('origin', req.headers.origin.replace(req.headers.host, targetHost));
+      }
+    }
+  });
+
+  app.set('devProxy', devProxy);
+
+  app.use((req, res, next) => {
+    if (!req.path.startsWith('/api') && !req.path.startsWith('/socket.io')) {
+      devProxy(req, res, next);
+    } else {
+      next();
+    }
+  });
+} else {
+  // Serve frontend statically from production build folder
+  const frontendDistPath = path.join(__dirname, '../../frontend/dist');
+  app.use(express.static(frontendDistPath));
+
+  app.get('*', (req, res, next) => {
+    if (!req.path.startsWith('/api')) {
+      res.sendFile(path.join(frontendDistPath, 'index.html'), (err) => {
+        if (err) {
+          next();
+        }
+      });
+    } else {
+      next();
+    }
+  });
+}
 
 module.exports = app;

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Sparkles, Calendar, BookOpen, Clock, Code, ShieldAlert, Loader2, ArrowRight } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Sparkles, Calendar, BookOpen, Clock, Code, ShieldAlert, Loader2, ArrowRight, Briefcase, Award } from 'lucide-react';
 import { api } from '../../../../lib/api';
 
 export default function AICareerEngine() {
@@ -40,156 +40,217 @@ export default function AICareerEngine() {
     }
   };
 
+  // Helper to split long text into clean bullet points or paragraphs
+  const formatSections = (text) => {
+    if (!text) return [];
+    return text.split('\n').map(line => line.trim().replace(/^-\s*/, '')).filter(Boolean);
+  };
+
   return (
-    <div className="glassmorphism rounded-3xl p-6 border-white/5 space-y-6 flex flex-col flex-1">
-      <div>
-        <h4 className="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-1.5">
-          <Sparkles size={16} className="text-amber-400" />
+    <div className="bg-slate-900/40 backdrop-blur-xl rounded-3xl p-6 border border-white/5 space-y-6 flex flex-col flex-1 relative overflow-hidden group/ai">
+      {/* Aurora light effects */}
+      <div className="absolute top-0 left-0 w-80 h-80 bg-amber-500/5 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-80 h-80 bg-orange-600/5 rounded-full blur-[100px] pointer-events-none" />
+
+      {/* Header */}
+      <div className="border-b border-white/5 pb-4 z-10">
+        <h4 className="text-base font-bold text-white tracking-wide flex items-center gap-2">
+          <Sparkles size={18} className="text-amber-400 fill-amber-400/20" />
           AI Career Roadmap Engine
         </h4>
-        <p className="text-[10px] text-zinc-500 font-mono mt-0.5 uppercase tracking-widest">
-          Personalized sprint blueprints based on commitment constraints
+        <p className="text-xs text-slate-400 mt-0.5 font-sans">
+          Construct an automated, time-boxed study planner and job placement strategy based on your target role.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start z-10 flex-1">
         
-        {/* Form panel */}
-        <form onSubmit={handleGenerate} className="bg-zinc-950/40 border border-white/5 rounded-2xl p-5 space-y-4 text-[10px] font-mono">
+        {/* Left Side: Form Panel */}
+        <form onSubmit={handleGenerate} className="bg-slate-950/70 border border-white/5 rounded-2xl p-5 space-y-4 shadow-xl">
           <div className="space-y-1">
-            <label className="text-zinc-500 uppercase tracking-wider">Target Job Role</label>
+            <label className="text-[10px] font-mono text-slate-500 uppercase tracking-widest font-black">Target Job Role</label>
             <input
               type="text"
               value={form.targetRole}
               onChange={(e) => setForm({ ...form, targetRole: e.target.value })}
               placeholder="e.g. AI Research Engineer"
-              className="w-full bg-zinc-950 border border-white/10 rounded-xl px-3 py-2 text-white placeholder-zinc-700 focus:outline-none focus:border-amber-500"
+              className="w-full bg-slate-900/50 border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-amber-500 transition-colors"
             />
           </div>
 
           <div className="space-y-1">
-            <label className="text-zinc-500 uppercase tracking-wider">Current Skills</label>
+            <label className="text-[10px] font-mono text-slate-500 uppercase tracking-widest font-black">Current Skillset</label>
             <textarea
               value={form.currentSkills}
               onChange={(e) => setForm({ ...form, currentSkills: e.target.value })}
               placeholder="React, C++ syntax, databases..."
-              className="w-full bg-zinc-950 border border-white/10 rounded-xl px-3 py-2 text-white placeholder-zinc-700 focus:outline-none focus:border-amber-500 resize-none h-16"
+              className="w-full bg-slate-900/50 border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-amber-500 resize-none h-20 transition-colors"
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 gap-4">
             <div className="space-y-1">
-              <label className="text-zinc-500 uppercase tracking-wider">Hours / Day</label>
+              <label className="text-[10px] font-mono text-slate-500 uppercase tracking-widest font-black">Hours / Day</label>
               <input
                 type="number"
                 value={form.dailyHours}
                 onChange={(e) => setForm({ ...form, dailyHours: e.target.value })}
-                className="w-full bg-zinc-950 border border-white/10 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-amber-500"
+                className="w-full bg-slate-900/50 border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-amber-500 transition-colors"
               />
             </div>
             <div className="space-y-1">
-              <label className="text-zinc-500 uppercase tracking-wider">Timeline (Months)</label>
+              <label className="text-[10px] font-mono text-slate-500 uppercase tracking-widest font-black">Timeline (M)</label>
               <input
                 type="number"
                 value={form.timelineMonths}
                 onChange={(e) => setForm({ ...form, timelineMonths: e.target.value })}
-                className="w-full bg-zinc-950 border border-white/10 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-amber-500"
+                className="w-full bg-slate-900/50 border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-amber-500 transition-colors"
               />
             </div>
           </div>
 
           {error && (
-            <p className="text-red-400 flex items-center gap-1 font-sans">
-              <ShieldAlert size={12} /> {error}
+            <p className="text-rose-400 text-xs flex items-center gap-1 font-sans">
+              <ShieldAlert size={14} /> {error}
             </p>
           )}
 
           <button
             type="submit"
             disabled={loading || !form.targetRole.trim()}
-            className="w-full py-2.5 bg-gradient-to-r from-amber-500 to-orange-600 hover:brightness-110 disabled:opacity-50 text-zinc-950 font-bold uppercase rounded-xl tracking-wider transition-all flex items-center justify-center gap-1.5 shadow-md shadow-amber-500/10 cursor-pointer"
+            className="w-full py-3 bg-gradient-to-r from-amber-500 to-orange-600 hover:brightness-110 disabled:opacity-50 text-slate-950 font-bold uppercase rounded-xl tracking-wider transition-all flex items-center justify-center gap-2 shadow-md shadow-amber-500/10 cursor-pointer text-xs"
           >
             {loading ? (
               <>
-                <Loader2 size={12} className="animate-spin" /> Synthesizing...
+                <Loader2 size={14} className="animate-spin" /> Analyzing Target...
               </>
             ) : (
               <>
-                Generate Career Schedule <ArrowRight size={11} />
+                Generate Plan <ArrowRight size={13} />
               </>
             )}
           </button>
         </form>
 
-        {/* Results display */}
-        <div className="lg:col-span-2 min-h-[300px] flex flex-col">
-          {loading ? (
-            <div className="flex-1 flex flex-col items-center justify-center space-y-3 bg-zinc-950/20 border border-white/5 rounded-2xl py-12">
-              <Loader2 size={32} className="animate-spin text-amber-500" />
-              <div className="text-center">
-                <p className="text-xs font-mono text-zinc-300 uppercase tracking-widest animate-pulse font-bold">Assembling Custom Sprints</p>
-                <p className="text-[9px] font-mono text-zinc-600 mt-1 uppercase">Parsing matrix targets & project schema models...</p>
-              </div>
-            </div>
-          ) : plan ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-[10px] leading-relaxed max-h-[360px] overflow-y-auto pr-1 scrollbar-thin">
-              
-              <div className="bg-zinc-950/60 border border-white/5 rounded-xl p-4 space-y-1.5">
-                <span className="font-mono text-amber-400 uppercase tracking-widest block font-bold flex items-center gap-1">
-                  <Clock size={11} /> Daily Action Rituals
-                </span>
-                <p className="text-zinc-400 text-[9px]">{plan.dailyPlan}</p>
-              </div>
+        {/* Right Side: Visual Animated Timeline */}
+        <div className="lg:col-span-2 min-h-[340px] flex flex-col relative">
+          <AnimatePresence mode="wait">
+            {loading ? (
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="flex-1 flex flex-col items-center justify-center space-y-4 bg-slate-950/40 border border-white/5 rounded-2xl py-16"
+              >
+                <Loader2 size={36} className="animate-spin text-amber-500" />
+                <div className="text-center space-y-1.5">
+                  <p className="text-xs font-mono text-slate-300 uppercase tracking-widest animate-pulse font-black">Assembling Career Blueprint</p>
+                  <p className="text-[10px] text-slate-500 leading-none">PARSING SYLLABUS NODES & SEEDING PROJECTS...</p>
+                </div>
+              </motion.div>
+            ) : plan ? (
+              <motion.div 
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                className="space-y-6 max-h-[380px] overflow-y-auto pr-2 scrollbar-thin relative pl-6"
+              >
+                {/* Visual connecting timeline line */}
+                <div className="absolute left-[9px] top-4 bottom-4 w-0.5 bg-gradient-to-b from-amber-500 via-cyan-500 to-violet-500 opacity-30" />
 
-              <div className="bg-zinc-950/60 border border-white/5 rounded-xl p-4 space-y-1.5">
-                <span className="font-mono text-amber-400 uppercase tracking-widest block font-bold flex items-center gap-1">
-                  <Calendar size={11} /> Weekly Milestone Sprints
-                </span>
-                <p className="text-zinc-400 text-[9px]">{plan.weeklyPlan}</p>
-              </div>
-
-              <div className="bg-zinc-950/60 border border-white/5 rounded-xl p-4 space-y-1.5">
-                <span className="font-mono text-cyan-400 uppercase tracking-widest block font-bold flex items-center gap-1">
-                  <BookOpen size={11} /> Monthly Roadmap Chapters
-                </span>
-                <p className="text-zinc-400 text-[9px]">{plan.monthlyPlan}</p>
-              </div>
-
-              <div className="bg-zinc-950/60 border border-white/5 rounded-xl p-4 space-y-1.5">
-                <span className="font-mono text-emerald-400 uppercase tracking-widest block font-bold flex items-center gap-1">
-                  <Code size={11} /> Portfolio Projects Setup
-                </span>
-                <p className="text-zinc-400 text-[9px]">{plan.projectRecommendations}</p>
-              </div>
-
-              <div className="bg-zinc-950/60 border border-white/5 rounded-xl p-4 space-y-1.5 md:col-span-2">
-                <span className="font-mono text-purple-400 uppercase tracking-widest block font-bold">
-                  💼 FAANG Interview Prep & Resume Timeline
-                </span>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
-                  <div>
-                    <span className="text-zinc-500 uppercase tracking-widest block text-[8px] font-bold">Interview Benchmarks</span>
-                    <p className="text-zinc-400 text-[9px] mt-1">{plan.interviewTimeline}</p>
-                  </div>
-                  <div>
-                    <span className="text-zinc-500 uppercase tracking-widest block text-[8px] font-bold">ATS Portfolio Audit</span>
-                    <p className="text-zinc-400 text-[9px] mt-1">{plan.resumeTimeline}</p>
+                {/* Week 1-2 Block */}
+                <div className="relative group/timeline">
+                  {/* Glowing Node Point */}
+                  <div className="absolute left-[-22px] top-1.5 w-3.5 h-3.5 rounded-full bg-amber-500 border-4 border-slate-950 group-hover/timeline:scale-125 transition-transform" />
+                  <div className="bg-slate-950/60 border border-white/5 hover:border-amber-500/30 p-4 rounded-2xl space-y-2 transition-all">
+                    <span className="font-mono text-amber-400 text-[10px] uppercase tracking-wider block font-black flex items-center gap-1.5">
+                      <Clock size={12} className="text-amber-500" /> Week 1-3: foundations and setup
+                    </span>
+                    <div className="text-slate-300 text-xs space-y-1 pl-1 font-sans leading-relaxed">
+                      {formatSections(plan.weeklyPlan).map((pt, i) => (
+                        <p key={i}>• {pt}</p>
+                      ))}
+                    </div>
                   </div>
                 </div>
-              </div>
 
-            </div>
-          ) : (
-            <div className="flex-1 flex flex-col items-center justify-center text-center space-y-2 bg-zinc-950/10 border border-dashed border-white/5 rounded-2xl py-12 text-zinc-500">
-              <Calendar size={28} className="text-zinc-700 animate-pulse" />
-              <div className="max-w-[280px]">
-                <p className="font-mono uppercase tracking-wider text-[9px] font-bold text-zinc-400">Generate Custom Study Sprints</p>
-                <p className="font-sans text-zinc-600 text-[9px] mt-1">
-                  Fill in your target career title and study limits to generate automated timelines, weekly reviews, and capstones.
-                </p>
-              </div>
-            </div>
-          )}
+                {/* Month 1-2 Block */}
+                <div className="relative group/timeline">
+                  <div className="absolute left-[-22px] top-1.5 w-3.5 h-3.5 rounded-full bg-cyan-500 border-4 border-slate-950 group-hover/timeline:scale-125 transition-transform" />
+                  <div className="bg-slate-950/60 border border-white/5 hover:border-cyan-500/30 p-4 rounded-2xl space-y-2 transition-all">
+                    <span className="font-mono text-cyan-400 text-[10px] uppercase tracking-wider block font-black flex items-center gap-1.5">
+                      <Calendar size={12} className="text-cyan-500" /> Month 2: advanced topics & frameworks
+                    </span>
+                    <div className="text-slate-300 text-xs space-y-1 pl-1 font-sans leading-relaxed">
+                      {formatSections(plan.monthlyPlan).map((pt, i) => (
+                        <p key={i}>• {pt}</p>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Project Recs Block */}
+                <div className="relative group/timeline">
+                  <div className="absolute left-[-22px] top-1.5 w-3.5 h-3.5 rounded-full bg-emerald-500 border-4 border-slate-950 group-hover/timeline:scale-125 transition-transform" />
+                  <div className="bg-slate-950/60 border border-white/5 hover:border-emerald-500/30 p-4 rounded-2xl space-y-2 transition-all">
+                    <span className="font-mono text-emerald-400 text-[10px] uppercase tracking-wider block font-black flex items-center gap-1.5">
+                      <Code size={12} className="text-emerald-500" /> Capstone Portfolio Recommendations
+                    </span>
+                    <div className="text-slate-300 text-xs space-y-1 pl-1 font-sans leading-relaxed">
+                      {formatSections(plan.projectRecommendations).map((pt, i) => (
+                        <p key={i}>• {pt}</p>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Daily Rituals */}
+                <div className="relative group/timeline">
+                  <div className="absolute left-[-22px] top-1.5 w-3.5 h-3.5 rounded-full bg-violet-500 border-4 border-slate-950 group-hover/timeline:scale-125 transition-transform" />
+                  <div className="bg-slate-950/60 border border-white/5 hover:border-violet-500/30 p-4 rounded-2xl space-y-2 transition-all">
+                    <span className="font-mono text-violet-400 text-[10px] uppercase tracking-wider block font-black flex items-center gap-1.5">
+                      <Award size={12} className="text-violet-500" /> Daily Action Checklist
+                    </span>
+                    <p className="text-slate-300 text-xs font-sans leading-relaxed pl-1">{plan.dailyPlan}</p>
+                  </div>
+                </div>
+
+                {/* Placement Timeline */}
+                <div className="relative group/timeline">
+                  <div className="absolute left-[-22px] top-1.5 w-3.5 h-3.5 rounded-full bg-rose-500 border-4 border-slate-950 group-hover/timeline:scale-125 transition-transform" />
+                  <div className="bg-slate-950/60 border border-white/5 hover:border-rose-500/30 p-4 rounded-2xl space-y-3 transition-all">
+                    <span className="font-mono text-rose-400 text-[10px] uppercase tracking-wider block font-black flex items-center gap-1.5">
+                      <Briefcase size={12} className="text-rose-500" /> Job Placement & Interview Prep Strategy
+                    </span>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-sans">
+                      <div className="bg-slate-900/50 p-2.5 rounded-xl border border-white/5">
+                        <span className="text-slate-500 text-[9px] uppercase tracking-widest font-black block">Technical Interview Benchmarks</span>
+                        <p className="text-slate-300 mt-1 leading-relaxed">{plan.interviewTimeline}</p>
+                      </div>
+                      <div className="bg-slate-900/50 p-2.5 rounded-xl border border-white/5">
+                        <span className="text-slate-500 text-[9px] uppercase tracking-widest font-black block">ATS Portfolio & Resume Strategy</span>
+                        <p className="text-slate-300 mt-1 leading-relaxed">{plan.resumeTimeline}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </motion.div>
+            ) : (
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="flex-1 flex flex-col items-center justify-center text-center space-y-3 bg-slate-950/10 border border-dashed border-white/5 rounded-2xl py-16 text-slate-500"
+              >
+                <Calendar size={32} className="text-slate-700 animate-pulse" />
+                <div className="max-w-xs space-y-1">
+                  <p className="font-semibold text-slate-400 text-xs">Generate Custom Study Blueprint</p>
+                  <p className="text-slate-600 text-[11px] leading-relaxed">
+                    Fill in your target career title, current skillset, and daily study budget to assemble customized timelines, milestones, and portfolio project specifications.
+                  </p>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
       </div>
