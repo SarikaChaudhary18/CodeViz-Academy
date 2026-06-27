@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useStore } from '../../../hooks/useStore';
+import fahSound from '../../../assets/fahhhhh.mp3';
 import Editor from '@monaco-editor/react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -12,15 +13,15 @@ import {
 
 const LANGUAGES = [
   { key: 'javascript', label: 'JavaScript', monaco: 'javascript' },
-  { key: 'python',     label: 'Python',     monaco: 'python'     },
-  { key: 'cpp',        label: 'C++',         monaco: 'cpp'        },
-  { key: 'java',       label: 'Java',        monaco: 'java'       },
+  { key: 'python', label: 'Python', monaco: 'python' },
+  { key: 'cpp', label: 'C++', monaco: 'cpp' },
+  { key: 'java', label: 'Java', monaco: 'java' },
 ];
 
 const DIFFICULTY_COLOR = {
-  Easy:   'text-emerald-400 bg-emerald-400/10 border-emerald-400/20',
+  Easy: 'text-emerald-400 bg-emerald-400/10 border-emerald-400/20',
   Medium: 'text-amber-400  bg-amber-400/10  border-amber-400/20',
-  Hard:   'text-red-400    bg-red-400/10    border-red-400/20',
+  Hard: 'text-red-400    bg-red-400/10    border-red-400/20',
 };
 
 const MONACO_OPTIONS = {
@@ -51,13 +52,13 @@ function renderMarkdown(md = '') {
 
   // Headings
   html = html.replace(/^### (.+)$/gm, '<h3 class="text-sm font-semibold text-slate-200 mt-5 mb-2">$1</h3>');
-  html = html.replace(/^## (.+)$/gm,  '<h2 class="text-base font-bold text-white mt-6 mb-2 pb-1.5 border-b border-white/10">$1</h2>');
-  html = html.replace(/^# (.+)$/gm,   '<h1 class="text-lg font-bold text-white mt-4 mb-2">$1</h1>');
+  html = html.replace(/^## (.+)$/gm, '<h2 class="text-base font-bold text-white mt-6 mb-2 pb-1.5 border-b border-white/10">$1</h2>');
+  html = html.replace(/^# (.+)$/gm, '<h1 class="text-lg font-bold text-white mt-4 mb-2">$1</h1>');
 
   // Bold & Italic
   html = html.replace(/\*\*\*(.*?)\*\*\*/g, '<strong class="text-white italic">$1</strong>');
-  html = html.replace(/\*\*(.*?)\*\*/g,     '<strong class="text-white font-semibold">$1</strong>');
-  html = html.replace(/\*(.*?)\*/g,         '<em class="italic text-slate-300">$1</em>');
+  html = html.replace(/\*\*(.*?)\*\*/g, '<strong class="text-white font-semibold">$1</strong>');
+  html = html.replace(/\*(.*?)\*/g, '<em class="italic text-slate-300">$1</em>');
 
   // Inline code
   html = html.replace(/`([^`]+)`/g, '<code class="bg-white/8 text-cyan-300 px-1.5 py-0.5 rounded text-xs font-mono">$1</code>');
@@ -140,29 +141,14 @@ function ConfettiCelebration() {
   );
 }
 
-// ── Text to Speech Celebration Voice ──────────────────────────────────────
-const speakCelebration = () => {
-  if ('speechSynthesis' in window) {
-    // Cancel any current speaking
-    window.speechSynthesis.cancel();
-
-    const phrases = [
-      "Wah bete! Kar dikhaya!",
-      "Wah bete! Shabaash!"
-    ];
-    const randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
-    const utterance = new SpeechSynthesisUtterance(randomPhrase);
-
-    // Try to load Hindi or Indian English voice for accurate accent
-    const voices = window.speechSynthesis.getVoices();
-    const targetedVoice = voices.find(v => v.lang.includes('hi-IN') || v.lang.includes('en-IN') || v.lang.startsWith('hi'));
-    if (targetedVoice) {
-      utterance.voice = targetedVoice;
-    }
-
-    utterance.rate = 0.92;
-    utterance.pitch = 1.05;
-    window.speechSynthesis.speak(utterance);
+// ── Play Celebration Sound ──────────────────────────────────────
+const playCelebrationSound = () => {
+  try {
+    const audio = new Audio(fahSound);
+    audio.volume = 0.6;
+    audio.play().catch(e => console.log('Audio playback blocked or failed:', e));
+  } catch (e) {
+    console.log('Audio error:', e);
   }
 };
 
@@ -249,9 +235,9 @@ export default function DsaSandbox() {
     } else if (activeProblem) {
       const defaults = {
         javascript: `/**\n * ${activeProblem.title}\n */\nfunction solution() {\n  // Your code here\n}\n`,
-        python:     `# ${activeProblem.title}\nclass Solution:\n    def solve(self):\n        pass\n`,
-        cpp:        `class Solution {\npublic:\n    void solve() {\n        // Write your C++ code here\n    }\n};\n`,
-        java:       `class Solution {\n    public void solve() {\n        // Write your Java code here\n    }\n}\n`,
+        python: `# ${activeProblem.title}\nclass Solution:\n    def solve(self):\n        pass\n`,
+        cpp: `class Solution {\npublic:\n    void solve() {\n        // Write your C++ code here\n    }\n};\n`,
+        java: `class Solution {\n    public void solve() {\n        // Write your Java code here\n    }\n}\n`,
       };
       setCode(defaults[selectedLang] || '// Start coding...');
     }
@@ -288,6 +274,7 @@ export default function DsaSandbox() {
     try {
       const result = await runSandboxCode(activeProblem.problemId, selectedLang, code, customInput);
       setRunResult(result);
+      setOutputPanel('testcases');
       if (result?.success) {
         setShowConfetti(true);
         setTimeout(() => setShowConfetti(false), 5000);
@@ -307,9 +294,10 @@ export default function DsaSandbox() {
     try {
       const result = await submitSandboxCode(activeProblem.problemId, selectedLang, code);
       setSubmitResult(result);
+      setOutputPanel('testcases');
       if (result?.success) {
         setShowConfetti(true);
-        speakCelebration();
+        playCelebrationSound();
         setTimeout(() => setShowConfetti(false), 5000);
         if (result?.xpGained > 0) {
           setXpToast(`+${result.xpGained} XP`);
@@ -491,18 +479,17 @@ export default function DsaSandbox() {
           {/* Description Tabs */}
           <div className="flex gap-0 border-b border-white/5 shrink-0 bg-[#09090e]">
             {[
-              { key: 'problem',   icon: FileText, label: 'Problem'  },
-              { key: 'editorial', icon: Brain,    label: 'Editorial' },
-              { key: 'hints',     icon: Lightbulb, label: 'Hints'   },
+              { key: 'problem', icon: FileText, label: 'Problem' },
+              { key: 'editorial', icon: Brain, label: 'Editorial' },
+              { key: 'hints', icon: Lightbulb, label: 'Hints' },
             ].map(tab => (
               <button
                 key={tab.key}
                 onClick={() => setActiveDescTab(tab.key)}
-                className={`flex items-center gap-1.5 px-5 py-3 text-xs font-mono font-bold uppercase tracking-wider transition-all border-b-2 ${
-                  activeDescTab === tab.key
+                className={`flex items-center gap-1.5 px-5 py-3 text-xs font-mono font-bold uppercase tracking-wider transition-all border-b-2 ${activeDescTab === tab.key
                     ? 'text-white border-violet-500'
                     : 'text-gray-600 border-transparent hover:text-gray-400'
-                }`}
+                  }`}
               >
                 <tab.icon size={12} />
                 {tab.label}
@@ -635,11 +622,10 @@ export default function DsaSandbox() {
                 <button
                   key={lang.key}
                   onClick={() => setSelectedLang(lang.key)}
-                  className={`px-3 py-1 rounded-lg text-[10px] font-mono font-bold uppercase tracking-wider transition-all border ${
-                    selectedLang === lang.key
+                  className={`px-3 py-1 rounded-lg text-[10px] font-mono font-bold uppercase tracking-wider transition-all border ${selectedLang === lang.key
                       ? 'bg-violet-600/25 border-violet-500/40 text-violet-300'
                       : 'border-transparent text-gray-600 hover:text-gray-400'
-                  }`}
+                    }`}
                 >
                   {lang.label}
                 </button>
@@ -707,18 +693,17 @@ export default function DsaSandbox() {
             <div className="flex items-center justify-between px-4 bg-[#09090e]">
               <div className="flex">
                 {[
-                  { key: 'output',    icon: Terminal,     label: 'Output'      },
-                  { key: 'testcases', icon: Code2,        label: 'Test Cases'  },
-                  { key: 'custom',    icon: FileText,     label: 'Custom Input'},
+                  { key: 'output', icon: Terminal, label: 'Output' },
+                  { key: 'testcases', icon: Code2, label: 'Test Cases' },
+                  { key: 'custom', icon: FileText, label: 'Custom Input' },
                 ].map(tab => (
                   <button
                     key={tab.key}
                     onClick={() => setOutputPanel(p => p === tab.key ? 'hidden' : tab.key)}
-                    className={`flex items-center gap-1.5 px-4 py-2.5 text-[10px] font-mono font-bold uppercase tracking-wider transition-all border-b-2 ${
-                      outputPanel === tab.key
+                    className={`flex items-center gap-1.5 px-4 py-2.5 text-[10px] font-mono font-bold uppercase tracking-wider transition-all border-b-2 ${outputPanel === tab.key
                         ? 'text-white border-cyan-500'
                         : 'text-gray-600 border-transparent hover:text-gray-400'
-                    }`}
+                      }`}
                   >
                     <tab.icon size={11} />
                     {tab.label}
@@ -758,11 +743,10 @@ export default function DsaSandbox() {
                         {currentResult && !isRunning && !isSubmitting && (
                           <>
                             {/* Status Banner */}
-                            <div className={`flex items-center gap-2 p-3 rounded-xl border text-sm font-bold font-mono ${
-                              currentResult.success
+                            <div className={`flex items-center gap-2 p-3 rounded-xl border text-sm font-bold font-mono ${currentResult.success
                                 ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400'
                                 : 'bg-red-500/10 border-red-500/30 text-red-400'
-                            }`}>
+                              }`}>
                               {currentResult.success
                                 ? <><CheckCircle2 size={16} /> Accepted — {currentResult.passedCount}/{currentResult.totalCount} tests passed</>
                                 : <><XCircle size={16} /> {currentResult.errorMessage ? 'Wrong Answer' : 'Runtime Error'} — {currentResult.passedCount}/{currentResult.totalCount} tests passed</>
@@ -781,13 +765,13 @@ export default function DsaSandbox() {
                               </pre>
                             )}
 
-                             {/* Error details */}
-                             {currentResult.errorMessage && !currentResult.success && !/^(none|no errors|no error|no errors found|null|undefined)$/i.test(currentResult.errorMessage.trim()) && (
-                               <div className="flex gap-2 text-xs font-mono text-red-400 bg-red-500/5 border border-red-500/15 rounded-xl p-3">
-                                 <AlertTriangle size={12} className="shrink-0 mt-0.5" />
-                                 <span className="whitespace-pre-wrap">{currentResult.errorMessage}</span>
-                               </div>
-                             )}
+                            {/* Error details */}
+                            {currentResult.errorMessage && !currentResult.success && !/^(none|no errors|no error|no errors found|null|undefined)$/i.test(currentResult.errorMessage.trim()) && (
+                              <div className="flex gap-2 text-xs font-mono text-red-400 bg-red-500/5 border border-red-500/15 rounded-xl p-3">
+                                <AlertTriangle size={12} className="shrink-0 mt-0.5" />
+                                <span className="whitespace-pre-wrap">{currentResult.errorMessage}</span>
+                              </div>
+                            )}
                           </>
                         )}
 
@@ -804,18 +788,56 @@ export default function DsaSandbox() {
                     {outputPanel === 'testcases' && (
                       <div className="space-y-2">
                         {activeProblem.testCases?.length > 0 ? (
-                          activeProblem.testCases.map((tc, i) => (
-                            <div key={i} className="grid grid-cols-2 gap-3 bg-white/[0.02] border border-white/5 rounded-xl p-3 text-xs font-mono">
-                              <div>
-                                <span className="text-[9px] text-gray-500 uppercase tracking-wider">Input</span>
-                                <pre className="mt-1 text-cyan-300 whitespace-pre-wrap break-all">{tc.input}</pre>
+                          activeProblem.testCases.map((tc, i) => {
+                            const tr = currentResult?.testResults?.[i];
+                            const hasResult = tr !== undefined && tr.yourOutput !== undefined;
+                            // Compute passed from actual output comparison, not AI's passed field
+                            const normalize = (s) => String(s ?? '').trim().replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+                            const passed = hasResult
+                              ? normalize(tr.yourOutput) === normalize(tc.expectedOutput)
+                              : false;
+                            return (
+                              <div key={i} className={`border rounded-xl p-3 text-xs font-mono transition-colors ${
+                                hasResult
+                                  ? passed
+                                    ? 'bg-emerald-500/5 border-emerald-500/25'
+                                    : 'bg-red-500/5 border-red-500/25'
+                                  : 'bg-white/[0.02] border-white/5'
+                              }`}>
+                                {/* Header row with test number and badge */}
+                                <div className="flex items-center gap-2 mb-2">
+                                  <span className="text-[9px] text-gray-500 uppercase tracking-wider font-mono">Test {i + 1}</span>
+                                  {hasResult && (
+                                    <span className={`text-[8px] font-bold uppercase tracking-widest px-1.5 py-0.5 rounded-full ${
+                                      passed ? 'bg-emerald-500/20 text-emerald-400' : 'bg-red-500/20 text-red-400'
+                                    }`}>
+                                      {passed ? '✓ Passed' : '✗ Failed'}
+                                    </span>
+                                  )}
+                                </div>
+                                <div className="grid grid-cols-3 gap-3">
+                                  <div>
+                                    <span className="text-[9px] text-gray-500 uppercase tracking-wider">Input</span>
+                                    <pre className="mt-1 text-cyan-300 whitespace-pre-wrap break-all">{tc.input}</pre>
+                                  </div>
+                                  <div>
+                                    <span className="text-[9px] text-gray-500 uppercase tracking-wider">Expected</span>
+                                    <pre className="mt-1 text-emerald-300 whitespace-pre-wrap break-all">{tc.expectedOutput}</pre>
+                                  </div>
+                                  <div>
+                                    <span className="text-[9px] text-gray-500 uppercase tracking-wider">Your Output</span>
+                                    {hasResult ? (
+                                      <pre className={`mt-1 whitespace-pre-wrap break-all ${passed ? 'text-emerald-300' : 'text-red-400'}`}>
+                                        {tr.yourOutput ?? '—'}
+                                      </pre>
+                                    ) : (
+                                      <p className="mt-1 text-gray-600">— run to see</p>
+                                    )}
+                                  </div>
+                                </div>
                               </div>
-                              <div>
-                                <span className="text-[9px] text-gray-500 uppercase tracking-wider">Expected Output</span>
-                                <pre className="mt-1 text-emerald-300 whitespace-pre-wrap break-all">{tc.expectedOutput}</pre>
-                              </div>
-                            </div>
-                          ))
+                            );
+                          })
                         ) : (
                           <p className="text-gray-500 text-xs font-mono text-center py-4">
                             Test cases will load after AI hydration...

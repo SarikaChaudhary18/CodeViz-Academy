@@ -95,8 +95,10 @@ exports.getProblemDetails = async (req, res, next) => {
       JSON.stringify(problem.templates).includes("std::cin")
     );
 
-    if (!problem.description || !problem.templates || !problem.templates.javascript || hasDriverCode) {
-      logger.info(`Sheet Controller: Hydrating problem details dynamically using LLM for ${problem.title} (Reason: ${hasDriverCode ? 'Polled/Driver templates detected' : 'Missing metadata'})...`);
+    const hasWeakTestCases = !problem.testCases || problem.testCases.length < 4;
+
+    if (!problem.description || !problem.templates || !problem.templates.javascript || hasDriverCode || hasWeakTestCases) {
+      logger.info(`Sheet Controller: Hydrating problem details dynamically using LLM for ${problem.title} (Reason: ${hasDriverCode ? 'Polled/Driver templates detected' : hasWeakTestCases ? 'Weak/insufficient test cases' : 'Missing metadata'})...`);
       
       const prompt = `You are an expert algorithms educator and problem setter. Generate details for the coding problem titled "${problem.title}" (External resource: ${problem.link || 'N/A'}).
       
@@ -105,7 +107,12 @@ exports.getProblemDetails = async (req, res, next) => {
       - "examples": An array of examples. Each example must have: "input", "output", "explanation". Give 2 realistic examples.
       - "constraints": Markdown text describing the computational constraints (e.g. O(N) time complexity, array lengths, values ranges).
       - "templates": An object containing empty starter code templates for languages: "cpp", "java", "python", "javascript". Match LeetCode style function declarations exactly (e.g., in C++: "class Solution {\npublic:\n    int solve(vector<int>& nums) {\n        \n    }\n};"). Do NOT include any main function, driver code, while loops to read inputs, solved code logic, comments containing the solution, or large library imports. The templates must be completely empty shell templates with just function names, signatures, and empty bodies.
-      - "testCases": An array of at least 3 test cases. Each test case must have: "input" (raw string parameter value), "expectedOutput" (raw string output).
+      - "testCases": Generate exactly 4 high-quality, comprehensive test cases. Do not generate random or filler cases. Every testcase must be extremely important and cover distinct scenarios to thoroughly test the correctness of the code. Follow this exact strategy for the 4 test cases:
+        1. Test Case 1: Standard/Normal case (a typical average input to verify basic functionality).
+        2. Test Case 2: Boundary/Edge case (e.g., minimum/maximum inputs, empty/single element, n=0/n=1, negative numbers, etc.) designed to catch off-by-one errors and boundary issues (such as j < i vs j <= i).
+        3. Test Case 3: Adversarial/Tricky case (specifically designed to fail common incorrect solutions, wrong formulas, wrong order, duplicate elements, or incorrect index traversal).
+        4. Test Case 4: Performance/Larger scale case (a larger input, but still readable, to ensure scaling correctness, recursion/loop bounds, and correct output format under load).
+        Each "input" must be the exact raw string value. "expectedOutput" must be the exact character-perfect output the correct solution produces — including all spaces, newlines, and formatting. Do NOT round or approximate outputs.
       - "editorial": A brief markdown overview of the optimal approach (e.g. sliding window, hashmap) and time/space complexity.
       
       Ensure your output is a strictly valid JSON block. Avoid any leading/trailing explanations. Only return the JSON.`;
@@ -179,11 +186,15 @@ exports.runCode = async (req, res, next) => {
     Execute/evaluate this code logic. Compare the results against the expected outputs of the test cases.
     Return ONLY a JSON object with this exact structure:
     {
-      "success": true, // true if all standard test cases pass, false otherwise
+      "success": true,
       "compilerOutput": "stdout messages / compilation log / standard output showing execution",
-      "passedCount": 2, // number of passed test cases
-      "totalCount": 3,  // total number of test cases checked
-      "errorMessage": "details of syntax errors or failing testcase inputs/outputs, if any"
+      "passedCount": 2,
+      "totalCount": 3,
+      "errorMessage": "details of syntax errors or failing testcase inputs/outputs, if any",
+      "testResults": [
+        { "input": "...", "expectedOutput": "...", "yourOutput": "...", "passed": true },
+        { "input": "...", "expectedOutput": "...", "yourOutput": "...", "passed": false }
+      ]
     }
     Only output valid JSON. No explanations, no markdown wrapper.`;
 
@@ -224,11 +235,15 @@ exports.submitCode = async (req, res, next) => {
     
     Evaluate the correctness. Return ONLY a JSON object matching this structure:
     {
-      "success": true, // true if all test cases pass without logical errors
+      "success": true,
       "compilerOutput": "Standard output logs showing tests execution status",
       "passedCount": 3,
       "totalCount": 3,
-      "errorMessage": "Assertion error details or compile errors, if any"
+      "errorMessage": "Assertion error details or compile errors, if any",
+      "testResults": [
+        { "input": "...", "expectedOutput": "...", "yourOutput": "...", "passed": true },
+        { "input": "...", "expectedOutput": "...", "yourOutput": "...", "passed": false }
+      ]
     }
     Only output valid JSON.`;
 

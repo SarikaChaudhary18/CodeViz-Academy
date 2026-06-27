@@ -215,7 +215,7 @@ export default function AppLayout({ children }) {
       "min-h-screen flex flex-col font-sans selection:bg-violet-600/30 relative overflow-hidden transition-colors duration-500 z-10",
       isDark ? "bg-[#000000] text-gray-100" : "bg-white text-black"
     )}>
-      <Lightning hue={190} xOffset={0} speed={1.0} intensity={0.25} size={1.5} />
+      <Lightning hue={190} xOffset={0} speed={1.0} intensity={0.7} size={1.5} />
       {/* Dark Radial Glow Background (Dark theme only) */}
       {isDark && (
         <div

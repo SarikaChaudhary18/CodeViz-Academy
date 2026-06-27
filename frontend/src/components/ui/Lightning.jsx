@@ -99,20 +99,18 @@ export default function Lightning({
           vec2 uv = fragCoord / iResolution.xy;
           uv = 2.0 * uv - 1.0;
           uv.x *= iResolution.x / iResolution.y;
+          // Apply horizontal offset.
+          uv.x += uXOffset;
           
-          // Generate two layers of smooth background noise
-          float n1 = fbm(uv * (uSize * 0.6) + vec2(iTime * uSpeed * 0.03, iTime * uSpeed * 0.015));
-          float n2 = fbm(uv * (uSize * 1.2) - vec2(iTime * uSpeed * 0.02, -iTime * uSpeed * 0.025));
-          float combined = mix(n1, n2, 0.55);
+          // Adjust uv based on size and animate with speed.
+          uv += 2.0 * fbm(uv * uSize + 0.8 * iTime * uSpeed) - 1.0;
           
-          // Very dark, low saturation base color for the background
-          vec3 baseColor = hsv2rgb(vec3(uHue / 360.0, 0.6, 0.15));
-          
-          // Subtle motion pulse
-          float pulse = 0.9 + 0.1 * sin(iTime * uSpeed * 0.4);
-          vec3 col = baseColor * (0.1 + 0.9 * combined) * pulse * uIntensity;
-          
-          // Output colors
+          float dist = abs(uv.x);
+          // Compute base color using hue.
+          vec3 baseColor = hsv2rgb(vec3(uHue / 360.0, 0.7, 0.8));
+          // Compute color with intensity and speed affecting time.
+          vec3 col = baseColor * pow(mix(0.0, 0.07, hash11(iTime * uSpeed)) / dist, 1.0) * uIntensity;
+          col = pow(col, vec3(1.0));
           fragColor = vec4(col, 1.0);
       }
 
@@ -192,5 +190,5 @@ export default function Lightning({
     };
   }, [hue, xOffset, speed, intensity, size]);
 
-  return <canvas ref={canvasRef} className="fixed inset-0 w-full h-full pointer-events-none z-[-1]" style={{ background: 'transparent' }} />;
+  return <canvas ref={canvasRef} className="fixed inset-0 w-full h-full pointer-events-none" style={{ background: 'transparent', zIndex: 0 }} />;
 }
