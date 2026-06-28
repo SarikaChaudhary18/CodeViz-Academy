@@ -1,1021 +1,779 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Play, ArrowRight, Target, BookOpen, Terminal, Users, Sparkles } from 'lucide-react';
-import { motion } from 'framer-motion';
+import {
+  Play,
+  ArrowRight,
+  Target,
+  BookOpen,
+  Terminal,
+  Users,
+  Sparkles,
+  Star,
+  Check,
+  ChevronDown,
+  Github,
+  Award,
+  Shield,
+  Search,
+  Code
+} from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import logo from '../../assets/logo.png';
-import TextReveal from '../ui/TextReveal';
-import * as THREE from 'three';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { cn } from "../../lib/utils";
 
-// Register ScrollTrigger safely for React
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
+// Rotating features for hero subheading
+const ROTATING_TOPICS = ["DSA Sheets", "Interactive Roadmaps", "ATS Resume Auditing", "Mock Interviews"];
+
+// Grayscale Company List
+const COMPANIES = [
+  { name: "Google", logo: "Google" },
+  { name: "Microsoft", logo: "Microsoft" },
+  { name: "Amazon", logo: "Amazon" },
+  { name: "Adobe", logo: "Adobe" },
+  { name: "Meta", logo: "Meta" },
+  { name: "Netflix", logo: "Netflix" }
+];
+
+// FAQS
+const FAQS = [
+  {
+    q: "Is the coding sandbox free to practice?",
+    a: "Yes! Our coding sandbox is completely free for practicing standard DSA sheets and basic language scripts. Upgrading to Pro unlocks custom test-case parameters and AI debugger logs."
+  },
+  {
+    q: "How does the AI Resume Auditor scan my resume?",
+    a: "Simply upload your resume in PDF format. Our parser extracts the text structures, evaluates them against 10 strict ATS and formatting rules, and gives you actionable feedback with copy-pasteable LaTeX code."
+  },
+  {
+    q: "Can I coordinate mock interviews with peers?",
+    a: "Absolutely! You can use our real-time websocket squads to connect with peers, track leaderboard rankings, review progress streams, and prepare for interviews collaboratively."
+  },
+  {
+    q: "How many career roadmaps are available?",
+    a: "We offer 5 predefined engineering tracks (Frontend, Backend, DSA, DevOps, Mobile) built directly from verified industry paths. Each track features step-by-step nodes, multiple-choice quizzes, and capstones."
+  }
+];
 
-// ==================== Premium Background (Floating Beams & Grain Noise) ====================
-function createBeam(width, height, layer) {
-  const angle = -35 + Math.random() * 10;
-  const baseSpeed = 0.2 + layer * 0.2;
-  const baseOpacity = 0.08 + layer * 0.05;
-  const baseWidth = 10 + layer * 5;
-  return {
-    x: Math.random() * width,
-    y: Math.random() * height,
-    width: baseWidth,
-    length: height * 2.5,
-    angle,
-    speed: baseSpeed + Math.random() * 0.2,
-    opacity: baseOpacity + Math.random() * 0.1,
-    pulse: Math.random() * Math.PI * 2,
-    pulseSpeed: 0.01 + Math.random() * 0.015,
-    layer,
-  };
-}
-
-const AuroraBackground = ({ isDark }) => {
-  const canvasRef = useRef(null);
-  const noiseRef = useRef(null);
-  const beamsRef = useRef([]);
-  const animationFrameRef = useRef(0);
-
-  const LAYERS = 3;
-  const BEAMS_PER_LAYER = 8;
-
-  useEffect(() => {
-    if (!isDark) return;
-
-    const canvas = canvasRef.current;
-    const noiseCanvas = noiseRef.current;
-    if (!canvas || !noiseCanvas) return;
-    const ctx = canvas.getContext("2d");
-    const nCtx = noiseCanvas.getContext("2d");
-    if (!ctx || !nCtx) return;
-
-    const resizeCanvas = () => {
-      const dpr = window.devicePixelRatio || 1;
-      canvas.width = window.innerWidth * dpr;
-      canvas.height = window.innerHeight * dpr;
-      canvas.style.width = `${window.innerWidth}px`;
-      canvas.style.height = `${window.innerHeight}px`;
-      ctx.setTransform(1, 0, 0, 1, 0, 0);
-      ctx.scale(dpr, dpr);
-
-      noiseCanvas.width = window.innerWidth * dpr;
-      noiseCanvas.height = window.innerHeight * dpr;
-      noiseCanvas.style.width = `${window.innerWidth}px`;
-      noiseCanvas.style.height = `${window.innerHeight}px`;
-      nCtx.setTransform(1, 0, 0, 1, 0, 0);
-      nCtx.scale(dpr, dpr);
-
-      beamsRef.current = [];
-      for (let layer = 1; layer <= LAYERS; layer++) {
-        for (let i = 0; i < BEAMS_PER_LAYER; i++) {
-          beamsRef.current.push(createBeam(window.innerWidth, window.innerHeight, layer));
-        }
-      }
-    };
-
-    resizeCanvas();
-    window.addEventListener("resize", resizeCanvas);
-
-    const generateNoise = () => {
-      const imgData = nCtx.createImageData(noiseCanvas.width, noiseCanvas.height);
-      for (let i = 0; i < imgData.data.length; i += 4) {
-        const v = Math.random() * 255;
-        imgData.data[i] = v;
-        imgData.data[i + 1] = v;
-        imgData.data[i + 2] = v;
-        imgData.data[i + 3] = 12;
-      }
-      nCtx.putImageData(imgData, 0, 0);
-    };
-
-    const drawBeam = (beam) => {
-      ctx.save();
-      ctx.translate(beam.x, beam.y);
-      ctx.rotate((beam.angle * Math.PI) / 180);
-
-      const pulsingOpacity = Math.min(1, beam.opacity * (0.8 + Math.sin(beam.pulse) * 0.4));
-      const gradient = ctx.createLinearGradient(0, 0, 0, beam.length);
-      gradient.addColorStop(0, `rgba(0,255,255,0)`);
-      gradient.addColorStop(0.2, `rgba(0,255,255,${pulsingOpacity * 0.5})`);
-      gradient.addColorStop(0.5, `rgba(0,255,255,${pulsingOpacity})`);
-      gradient.addColorStop(0.8, `rgba(0,255,255,${pulsingOpacity * 0.5})`);
-      gradient.addColorStop(1, `rgba(0,255,255,0)`);
-
-      ctx.fillStyle = gradient;
-      ctx.filter = `blur(${2 + beam.layer * 2}px)`;
-      ctx.fillRect(-beam.width / 2, 0, beam.width, beam.length);
-      ctx.restore();
-    };
-
-    const animate = () => {
-      if (!canvas || !ctx) return;
-
-      const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-      gradient.addColorStop(0, "#050505");
-      gradient.addColorStop(1, "#111111");
-      ctx.fillStyle = gradient;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      beamsRef.current.forEach((beam) => {
-        beam.y -= beam.speed * (beam.layer / LAYERS + 0.5);
-        beam.pulse += beam.pulseSpeed;
-        if (beam.y + beam.length < -50) {
-          beam.y = window.innerHeight + 50;
-          beam.x = Math.random() * window.innerWidth;
-        }
-        drawBeam(beam);
-      });
-
-      generateNoise();
-      animationFrameRef.current = requestAnimationFrame(animate);
-    };
-    animate();
-
-    return () => {
-      window.removeEventListener("resize", resizeCanvas);
-      cancelAnimationFrame(animationFrameRef.current);
-    };
-  }, [isDark]);
-
-  return (
-    <div className="absolute inset-0 z-0 pointer-events-none w-full h-full overflow-hidden transition-opacity duration-1000" style={{ opacity: isDark ? 0.85 : 0 }}>
-      <canvas ref={noiseRef} className="absolute inset-0 z-0 pointer-events-none" />
-      <canvas ref={canvasRef} className="absolute inset-0 z-10" />
-    </div>
-  );
-};
-
-// ==================== Magnetic Button component ====================
-const MagneticButton = React.forwardRef(({ className, children, as: Component = "button", ...props }, forwardedRef) => {
-  const localRef = useRef(null);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const element = localRef.current;
-    if (!element) return;
-
-    const ctx = gsap.context(() => {
-      const handleMouseMove = (e) => {
-        const rect = element.getBoundingClientRect();
-        const h = rect.width / 2;
-        const w = rect.height / 2;
-        const x = e.clientX - rect.left - h;
-        const y = e.clientY - rect.top - w;
-
-        gsap.to(element, {
-          x: x * 0.4,
-          y: y * 0.4,
-          rotationX: -y * 0.15,
-          rotationY: x * 0.15,
-          scale: 1.05,
-          ease: "power2.out",
-          duration: 0.4,
-        });
-      };
-
-      const handleMouseLeave = () => {
-        gsap.to(element, {
-          x: 0,
-          y: 0,
-          rotationX: 0,
-          rotationY: 0,
-          scale: 1,
-          ease: "elastic.out(1, 0.3)",
-          duration: 1.2,
-        });
-      };
-
-      element.addEventListener("mousemove", handleMouseMove);
-      element.addEventListener("mouseleave", handleMouseLeave);
-
-      return () => {
-        element.removeEventListener("mousemove", handleMouseMove);
-        element.removeEventListener("mouseleave", handleMouseLeave);
-      };
-    }, element);
-
-    return () => ctx.revert();
-  }, []);
-
-  return (
-    <Component
-      ref={(node) => {
-        localRef.current = node;
-        if (typeof forwardedRef === "function") forwardedRef(node);
-        else if (forwardedRef) forwardedRef.current = node;
-      }}
-      className={cn("cursor-pointer", className)}
-      {...props}
-    >
-      {children}
-    </Component>
-  );
-});
-MagneticButton.displayName = "MagneticButton";
-
-// ==================== Cinematic Curtain Reveal Footer ====================
-const FOOTER_STYLES = `
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap');
-
-.cinematic-footer-wrapper {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  
-  /* Theme variables mapping */
-  --bg-color: #020617;
-  --fg-color: #ffffff;
-  --primary-color: #8b5cf6;
-  --secondary-color: #06b6d4;
-  
-  --pill-bg-1: rgba(255, 255, 255, 0.03);
-  --pill-bg-2: rgba(255, 255, 255, 0.01);
-  --pill-shadow: rgba(0, 0, 0, 0.5);
-  --pill-highlight: rgba(255, 255, 255, 0.1);
-  --pill-inset-shadow: rgba(0, 0, 0, 0.8);
-  --pill-border: rgba(255, 255, 255, 0.08);
-  
-  --pill-bg-1-hover: rgba(255, 255, 255, 0.08);
-  --pill-bg-2-hover: rgba(255, 255, 255, 0.02);
-  --pill-border-hover: rgba(255, 255, 255, 0.2);
-  --pill-shadow-hover: rgba(0, 0, 0, 0.7);
-  --pill-highlight-hover: rgba(255, 255, 255, 0.2);
-}
-
-html.light .cinematic-footer-wrapper {
-  --bg-color: #ffffff;
-  --fg-color: #000000;
-  --primary-color: #000000;
-  --secondary-color: #333333;
-  
-  --pill-bg-1: rgba(0, 0, 0, 0.03);
-  --pill-bg-2: rgba(0, 0, 0, 0.01);
-  --pill-shadow: rgba(0, 0, 0, 0.03);
-  --pill-highlight: rgba(0, 0, 0, 0.05);
-  --pill-inset-shadow: rgba(255, 255, 255, 0.8);
-  --pill-border: rgba(0, 0, 0, 0.08);
-  
-  --pill-bg-1-hover: rgba(0, 0, 0, 0.08);
-  --pill-bg-2-hover: rgba(0, 0, 0, 0.02);
-  --pill-border-hover: rgba(0, 0, 0, 0.20);
-  --pill-shadow-hover: rgba(0, 0, 0, 0.08);
-  --pill-highlight-hover: rgba(0, 0, 0, 0.1);
-}
-
-@keyframes footer-breathe {
-  0% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
-  100% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
-}
-
-@keyframes footer-scroll-marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-
-@keyframes footer-heartbeat {
-  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(239, 68, 68, 0.3)); }
-  15%, 45% { transform: scale(1.2); filter: drop-shadow(0 0 10px rgba(239, 68, 68, 0.6)); }
-  30% { transform: scale(1); }
-}
-
-.animate-footer-breathe {
-  animation: footer-breathe 8s ease-in-out infinite alternate;
-}
-
-.animate-footer-scroll-marquee {
-  animation: footer-scroll-marquee 40s linear infinite;
-}
-
-.animate-footer-heartbeat {
-  animation: footer-heartbeat 2s cubic-bezier(0.25, 1, 0.5, 1) infinite;
-}
-
-.footer-bg-grid {
-  background-size: 60px 60px;
-  background-image: 
-    linear-gradient(to right, rgba(120, 120, 120, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(120, 120, 120, 0.05) 1px, transparent 1px);
-  mask-image: linear-gradient(to bottom, transparent, black 30%, black 70%, transparent);
-  -webkit-mask-image: linear-gradient(to bottom, transparent, black 30%, black 70%, transparent);
-}
-
-.footer-aurora {
-  background: radial-gradient(
-    circle at 50% 50%, 
-    rgba(139, 92, 246, 0.12) 0%, 
-    rgba(6, 182, 212, 0.12) 40%, 
-    transparent 70%
-  );
-}
-
-.footer-glass-pill {
-  background: linear-gradient(145deg, var(--pill-bg-1) 0%, var(--pill-bg-2) 100%);
-  box-shadow: 
-      0 10px 30px -10px var(--pill-shadow), 
-      inset 0 1px 1px var(--pill-highlight), 
-      inset 0 -1px 2px var(--pill-inset-shadow);
-  border: 1px solid var(--pill-border);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  color: var(--fg-color);
-}
-
-.footer-glass-pill:hover {
-  background: linear-gradient(145deg, var(--pill-bg-1-hover) 0%, var(--pill-bg-2-hover) 100%);
-  border-color: var(--pill-border-hover);
-  box-shadow: 
-      0 20px 40px -10px var(--pill-shadow-hover), 
-      inset 0 1px 1px var(--pill-highlight-hover);
-}
-
-.footer-giant-bg-text {
-  font-size: 20vw;
-  line-height: 0.75;
-  font-weight: 900;
-  letter-spacing: -0.05em;
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(120, 120, 120, 0.08);
-  background: linear-gradient(180deg, rgba(120, 120, 120, 0.15) 0%, transparent 60%);
-  -webkit-background-clip: text;
-  background-clip: text;
-}
-
-.footer-text-glow {
-  background: linear-gradient(180deg, var(--fg-color) 0%, rgba(120, 120, 120, 0.6) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-`;
-
-const MarqueeItem = () => (
-  <div className="flex items-center space-x-12 px-6">
-    <span>Gamified Careers</span> <span className="text-violet-500">✦</span>
-    <span>DSA Sheets Tracking</span> <span className="text-cyan-400">✦</span>
-    <span>AI Resume Audit</span> <span className="text-violet-500">✦</span>
-    <span>Mock Interview Sandbox</span> <span className="text-cyan-400">✦</span>
-    <span>WebSocket Squads</span> <span className="text-violet-500">✦</span>
-    <span>Absolute Privacy</span> <span className="text-cyan-400">✦</span>
-  </div>
-);
-
-const CinematicFooter = ({ navigate, isDark }) => {
-  const wrapperRef = useRef(null);
-  const giantTextRef = useRef(null);
-  const headingRef = useRef(null);
-  const linksRef = useRef(null);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    if (!wrapperRef.current) return;
-
-    const ctx = gsap.context(() => {
-      // Background giant text parallax
-      gsap.fromTo(
-        giantTextRef.current,
-        { y: "8vh", scale: 0.85, opacity: 0 },
-        {
-          y: "0vh",
-          scale: 1,
-          opacity: 1,
-          ease: "power1.out",
-          scrollTrigger: {
-            trigger: wrapperRef.current,
-            start: "top 85%",
-            end: "bottom bottom",
-            scrub: 1,
-          },
-        }
-      );
-
-      // Staggered reveal animations
-      gsap.fromTo(
-        [headingRef.current, linksRef.current],
-        { y: 40, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          stagger: 0.15,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: wrapperRef.current,
-            start: "top 50%",
-            end: "bottom bottom",
-            scrub: 1,
-          },
-        }
-      );
-    }, wrapperRef);
-
-    return () => ctx.revert();
-  }, []);
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
-  return (
-    <>
-      <style dangerouslySetInnerHTML={{ __html: FOOTER_STYLES }} />
-
-      {/* Curtain reveal viewport box */}
-      <div
-        ref={wrapperRef}
-        className="relative h-screen w-full"
-        style={{ clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)" }}
-      >
-        {/* Underlay fixed footer */}
-        <footer className={cn(
-          "fixed bottom-0 left-0 flex h-screen w-full flex-col justify-between overflow-hidden transition-colors duration-500 cinematic-footer-wrapper",
-          isDark ? "bg-[#020617] text-white" : "bg-white text-black"
-        )}>
-
-          {/* Ambient Aurora glow */}
-          {isDark && (
-            <div className="footer-aurora absolute left-1/2 top-1/2 h-[60vh] w-[80vw] -translate-x-1/2 -translate-y-1/2 animate-footer-breathe rounded-[50%] blur-[80px] pointer-events-none z-0" />
-          )}
-          <div className="footer-bg-grid absolute inset-0 z-0 pointer-events-none" />
-
-          {/* Giant background text */}
-          <div
-            ref={giantTextRef}
-            className="footer-giant-bg-text absolute -bottom-[2vh] left-1/2 -translate-x-1/2 whitespace-nowrap z-0 pointer-events-none select-none uppercase font-mono tracking-widest font-black"
-          >
-            STUDYQUEST
-          </div>
-
-          {/* 1. Diagonal Sleek Marquee */}
-          <div className={cn(
-            "absolute top-16 left-0 w-full overflow-hidden border-y bg-opacity-65 backdrop-blur-md py-4.5 z-10 -rotate-2 scale-110 shadow-2xl transition-colors duration-500",
-            isDark ? "border-white/5 bg-[#020617]" : "border-zinc-200 bg-white"
-          )}>
-            <div className="flex w-max animate-footer-scroll-marquee text-xs md:text-sm font-bold tracking-[0.25em] text-zinc-500 uppercase">
-              <MarqueeItem />
-              <MarqueeItem />
-            </div>
-          </div>
-
-          {/* 2. Main Center Content */}
-          <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-6 mt-20 w-full max-w-5xl mx-auto">
-            <h2
-              ref={headingRef}
-              className="text-5xl md:text-7xl font-black footer-text-glow tracking-tighter mb-10 text-center"
-            >
-              Ready to begin?
-            </h2>
-
-            {/* Interactive Magnetic Pills */}
-            <div ref={linksRef} className="flex flex-col items-center gap-6 w-full">
-              <div className="flex flex-wrap justify-center gap-4 w-full">
-                <MagneticButton
-                  onClick={() => navigate('/register')}
-                  className="footer-glass-pill px-8 py-4.5 rounded-full font-bold text-sm md:text-base flex items-center gap-2.5 group"
-                >
-                  <Sparkles size={18} className="text-violet-500 group-hover:animate-pulse" />
-                  Seed Profile
-                </MagneticButton>
-
-                <MagneticButton
-                  onClick={() => navigate('/login')}
-                  className="footer-glass-pill px-8 py-4.5 rounded-full font-bold text-sm md:text-base flex items-center gap-2.5 group"
-                >
-                  <Play size={14} className="text-cyan-500 group-hover:scale-110 transition-transform" />
-                  Initialize OS
-                </MagneticButton>
-              </div>
-
-              {/* Secondary links */}
-              <div className="flex flex-wrap justify-center gap-3 md:gap-6 w-full mt-2">
-                <MagneticButton onClick={() => navigate('/login')} className="footer-glass-pill px-5 py-2.5 rounded-full text-zinc-500 font-medium text-xs hover:text-current">
-                  Privacy Policy
-                </MagneticButton>
-                <MagneticButton onClick={() => navigate('/login')} className="footer-glass-pill px-5 py-2.5 rounded-full text-zinc-500 font-medium text-xs hover:text-current">
-                  Terms of Service
-                </MagneticButton>
-                <MagneticButton onClick={() => navigate('/login')} className="footer-glass-pill px-5 py-2.5 rounded-full text-zinc-500 font-medium text-xs hover:text-current">
-                  Support OS
-                </MagneticButton>
-              </div>
-            </div>
-          </div>
-
-          {/* 3. Bottom Bar / Credits */}
-          <div className="relative z-20 w-full pb-8 px-6 md:px-12 flex flex-col md:flex-row items-center justify-between gap-6">
-
-            {/* Copyright */}
-            <div className="text-zinc-500 text-[10px] md:text-xs font-semibold tracking-widest uppercase order-2 md:order-1 font-mono">
-              © 2026 StudyQuest. All rights reserved.
-            </div>
-
-            {/* "Made with Love" Badge */}
-            <div className="footer-glass-pill px-6 py-2.5 rounded-full flex items-center gap-2 order-1 md:order-2 cursor-default border-border/50">
-              <span className="text-zinc-500 text-[9px] md:text-xs font-bold uppercase tracking-widest font-mono">Crafted</span>
-
-              <span className="text-zinc-500 text-[9px] md:text-xs font-bold uppercase tracking-widest font-mono">by</span>
-              <span className="font-black text-xs md:text-sm tracking-normal font-sans ml-1 text-cyan-400">StudyQuest Team</span>
-            </div>
-
-            {/* Back to top */}
-            <MagneticButton
-              onClick={scrollToTop}
-              className="w-12 h-12 rounded-full footer-glass-pill flex items-center justify-center text-zinc-500 hover:text-current group order-3"
-            >
-              <svg className="w-4.5 h-4.5 transform group-hover:-translate-y-1.5 transition-transform duration-300" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
-              </svg>
-            </MagneticButton>
-
-          </div>
-        </footer>
-      </div>
-    </>
-  );
-};
-
-// ==================== Main Hero Component ====================
 export default function Hero() {
   const navigate = useNavigate();
-  const [count, setCount] = useState(0);
-  const [isCompiling, setIsCompiling] = useState(false);
-  const [isHeaderHovered, setIsHeaderHovered] = useState(false);
-  const [titleNumber, setTitleNumber] = useState(0);
-  const aiTitles = ["intelligent", "gamified", "adaptive", "collaborative", "comprehensive"];
+  const [topicIndex, setTopicIndex] = useState(0);
+  const [activeFaq, setActiveFaq] = useState(null);
+
+  // Stats Counters state
+  const [stats, setStats] = useState({ roadmaps: 0, resources: 0, docs: 0, users: 0 });
 
   useEffect(() => {
+    // Subheading rotation loop
     const interval = setInterval(() => {
-      setTitleNumber((prev) => (prev + 1) % aiTitles.length);
-    }, 2500);
+      setTopicIndex((prev) => (prev + 1) % ROTATING_TOPICS.length);
+    }, 2800);
     return () => clearInterval(interval);
   }, []);
 
-  const theme = "dark";
-  const isDark = true;
+  useEffect(() => {
+    // Stats incremental count animation
+    const duration = 1500;
+    const steps = 30;
+    const stepTime = duration / steps;
+    let step = 0;
 
-  const toggleTheme = () => { };
+    const timer = setInterval(() => {
+      step++;
+      setStats({
+        roadmaps: Math.min(58, Math.floor((58 / steps) * step)),
+        resources: Math.min(1500, Math.floor((1500 / steps) * step)),
+        docs: Math.min(600, Math.floor((600 / steps) * step)),
+        users: Math.min(20, Math.floor((20 / steps) * step)) // Representing 20K
+      });
 
-  const runCode = () => {
-    setIsCompiling(true);
-    setTimeout(() => {
-      setCount((prev) => prev + 1);
-      setIsCompiling(false);
-    }, 500);
+      if (step >= steps) {
+        clearInterval(timer);
+      }
+    }, stepTime);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  const toggleFaq = (index) => {
+    setActiveFaq(activeFaq === index ? null : index);
   };
 
   return (
-    <div className={cn(
-      "min-h-screen w-full font-sans relative overflow-hidden transition-colors duration-500",
-      isDark ? "bg-[#000000] text-white" : "bg-white text-black"
-    )}>
-      {/* WebGL Aurora Shader Background (Active in Dark Mode only) */}
-      <AuroraBackground isDark={isDark} />
+    <div className="min-h-screen bg-[#030712] text-slate-100 font-sans selection:bg-indigo-600/30 selection:text-indigo-200 overflow-x-hidden relative">
+      
+      {/* Background Radial Ambient Gradients (Subtle 10% accent opacity max) */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[600px] bg-gradient-to-b from-indigo-900/10 via-transparent to-transparent pointer-events-none z-0" />
+      <div className="absolute top-[400px] right-[-10%] w-[500px] h-[500px] bg-indigo-600/[0.03] rounded-full blur-[120px] pointer-events-none z-0" />
+      <div className="absolute top-[1200px] left-[-10%] w-[500px] h-[500px] bg-violet-600/[0.03] rounded-full blur-[120px] pointer-events-none z-0" />
 
+      {/* Grid Pattern overlay */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#1f2937_1px,transparent_1px),linear-gradient(to_bottom,#1f2937_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-[0.25] pointer-events-none z-0" />
 
-      {/* Dark Radial Glow Background (only in dark mode) */}
-      {isDark && (
-        <div
-          className="absolute inset-0 z-0 pointer-events-none"
-          style={{
-            backgroundImage: `radial-gradient(circle 500px at 50% 100px, rgba(255, 255, 255, 0.03), transparent)`,
-          }}
-        />
-      )}
-
-      {/* Light Mode Grid (only in light mode) */}
-      {!isDark && (
-        <div className="absolute inset-0 z-0 pointer-events-none bg-grid-black/[0.03] bg-[size:20px_20px]" />
-      )}
-
-      {/* Clean Header */}
-      <header className={cn(
-        "relative z-10 max-w-7xl mx-auto px-8 py-6 flex items-center justify-between border-b transition-colors",
-        isDark ? "border-white/10" : "border-zinc-200"
-      )}>
-        <div className="flex items-center gap-3">
-          <img src={logo} alt="StudyQuest Logo" className="w-10 h-10 object-contain rounded-lg" />
-          <span className="text-lg font-black tracking-wider font-mono">
-            STUDYQUEST
-          </span>
-        </div>
-
-        <div className="flex items-center gap-6">
-
-
-          <button
-            onClick={() => navigate('/login')}
-            className={cn(
-              "text-xs font-mono font-bold uppercase tracking-wider transition-colors cursor-pointer",
-              isDark ? "text-zinc-400 hover:text-white" : "text-zinc-600 hover:text-black"
-            )}
-          >
-            Login
-          </button>
-          <button
-            onClick={() => navigate('/register')}
-            className={cn(
-              "text-xs font-mono font-bold px-4 py-2 transition-colors cursor-pointer border",
-              isDark
-                ? "bg-white border-white hover:bg-zinc-200 text-black"
-                : "bg-black border-black hover:bg-zinc-800 text-white"
-            )}
-          >
-            Register
-          </button>
-        </div>
-      </header>
-
-      {/* Hero Content */}
-      <main className="relative z-10 max-w-3xl mx-auto px-8 pt-24 pb-20 flex flex-col items-center text-center space-y-10">
-
-        {/* Centered info */}
-        <div className="space-y-8 flex flex-col items-center w-full">
-
-          <button className="flex items-center space-x-2 px-4 py-2 bg-white/5 hover:bg-white/10 backdrop-blur-sm rounded-full text-xs transition-all duration-300 group cursor-pointer border border-white/5">
-            <span className="text-zinc-400">Support for AI Models</span>
-            <ArrowRight size={12} className="text-zinc-500 transform group-hover:translate-x-1 transition-transform duration-300" />
-          </button>
-
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-none max-w-3xl pt-4 flex flex-col items-center text-center w-full">
-            <span className="text-white">This is Career Prep</span>
-            <span className="relative flex w-full h-[1.3em] justify-center overflow-hidden pt-2">
-              &nbsp;
-              {aiTitles.map((title, index) => (
-                <motion.span
-                  key={index}
-                  className="absolute font-black tracking-widest text-cyan-400 text-glow-cyan uppercase"
-                  initial={{ opacity: 0, y: -50 }}
-                  transition={{ type: "spring", stiffness: 100, damping: 15 }}
-                  animate={
-                    titleNumber === index
-                      ? { y: 0, opacity: 1 }
-                      : { y: titleNumber > index ? -100 : 100, opacity: 0 }
-                  }
-                >
-                  {title}
-                </motion.span>
-              ))}
+      {/* Modern Sticky Glass Navbar */}
+      <nav className="sticky top-0 z-50 w-full border-b border-slate-800/80 bg-[#030712]/75 backdrop-blur-md transition-all">
+        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-3 cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+            <img src={logo} alt="CodeViz Academy Logo" className="w-8 h-8 object-contain rounded-lg shadow-md border border-slate-800" />
+            <span className="text-sm font-bold tracking-tight text-white font-mono uppercase">
+              CodeViz Academy
             </span>
-          </h1>
+          </div>
 
-          <p className="leading-relaxed text-sm sm:text-base max-w-xl text-zinc-400">
-            A minimalist workspace for tracking data structures, auditing resume formats, practicing mock interviews, and syncing levels. Complete daily quests, earn XP, and level up your software engineering credentials.
-          </p>
+          {/* Desktop Nav menu */}
+          <div className="hidden md:flex items-center gap-8">
+            <a href="#features" className="text-xs font-medium text-slate-400 hover:text-white transition-colors">Features</a>
+            <a href="#bento" className="text-xs font-medium text-slate-400 hover:text-white transition-colors">Workspace</a>
+            <a href="#pricing" className="text-xs font-medium text-slate-400 hover:text-white transition-colors">Pricing</a>
+            <a href="#faq" className="text-xs font-medium text-slate-400 hover:text-white transition-colors">FAQ</a>
+          </div>
 
-          <div className="flex flex-row gap-4 flex-wrap justify-center pt-2">
-            <button
-              onClick={() => navigate('/register')}
-              className="flex items-center gap-2 font-bold px-8 py-3.5 bg-cyan-600 hover:bg-cyan-500 text-white rounded-full transition-all cursor-pointer shadow-lg shadow-cyan-500/20 active:scale-[0.98] text-sm"
-            >
-              Get Started <ArrowRight size={16} />
-            </button>
+          <div className="flex items-center gap-4">
             <button
               onClick={() => navigate('/login')}
-              className="flex items-center gap-2 bg-white/5 font-semibold px-8 py-3.5 border border-white/10 hover:bg-white/10 text-white rounded-full transition-all cursor-pointer text-sm"
+              className="text-xs font-semibold text-slate-300 hover:text-white px-3 py-1.5 transition-colors cursor-pointer"
             >
               Sign In
             </button>
+            <button
+              onClick={() => navigate('/register')}
+              className="text-xs font-semibold bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-lg border border-indigo-500/20 hover:border-indigo-400/40 transition-all cursor-pointer shadow-lg shadow-indigo-600/10 active:scale-[0.98]"
+            >
+              Get Started
+            </button>
           </div>
         </div>
+      </nav>
 
-      </main>
+      {/* Main Container */}
+      <div className="relative z-10 w-full">
+        
+        {/* HERO SECTION */}
+        <header className="max-w-7xl mx-auto px-6 pt-20 pb-16 flex flex-col items-center text-center">
+          
+          {/* Subtle Tag Badge */}
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-slate-900 border border-slate-800 rounded-full text-[11px] font-medium text-slate-400 shadow-inner mb-6"
+          >
+            <Sparkles size={11} className="text-indigo-400" />
+            <span>Redesigned Modern Sandbox Platform</span>
+          </motion.div>
 
-      {/* Grid features */}
-      <section className={cn(
-        "relative z-10 max-w-7xl mx-auto px-8 py-16 border-t transition-colors",
-        isDark ? "border-zinc-800" : "border-zinc-200"
-      )}>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {/* Module 1 */}
-          <div className={cn(
-            "border p-6 space-y-3 transition-colors rounded-2xl backdrop-blur-sm",
-            isDark ? "border-zinc-800 bg-[#09090b]/40" : "border-zinc-200 bg-zinc-50/50"
-          )}>
-            <div className={cn(
-              "w-8 h-8 flex items-center justify-center rounded-lg",
-              isDark ? "bg-cyan-500/10 text-cyan-400 border border-cyan-500/20" : "bg-cyan-50 text-cyan-600 border border-cyan-100"
-            )}>
-              <Target size={16} />
-            </div>
-            <h3 className="font-bold text-sm uppercase tracking-wide">Company Prep</h3>
-            <p className={cn("text-xs leading-relaxed", isDark ? "text-zinc-400" : "text-zinc-600")}>Tailored arrays filtered by big tech pipeline standards.</p>
+          {/* Focal Heading */}
+          <motion.h1
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-[1.1] max-w-3xl"
+          >
+            Build Skills. Track Progress. <br className="hidden sm:inline" />
+            <span className="bg-gradient-to-r from-indigo-400 via-violet-400 to-indigo-400 bg-clip-text text-transparent">
+              Get Hired.
+            </span>
+          </motion.h1>
+
+          {/* Subheading describing rotating core elements */}
+          <div className="h-8 flex items-center justify-center mt-6 overflow-hidden">
+            <AnimatePresence mode="wait">
+              <motion.p
+                key={topicIndex}
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: -20, opacity: 0 }}
+                transition={{ duration: 0.35, ease: "easeInOut" }}
+                className="text-sm font-mono tracking-widest text-indigo-400 font-bold uppercase"
+              >
+                {ROTATING_TOPICS[topicIndex]}
+              </motion.p>
+            </AnimatePresence>
           </div>
 
-          {/* Module 2 */}
-          <div className={cn(
-            "border p-6 space-y-3 transition-colors rounded-2xl backdrop-blur-sm",
-            isDark ? "border-zinc-800 bg-[#09090b]/40" : "border-zinc-200 bg-zinc-50/50"
-          )}>
-            <div className={cn(
-              "w-8 h-8 flex items-center justify-center rounded-lg",
-              isDark ? "bg-cyan-500/10 text-cyan-400 border border-cyan-500/20" : "bg-cyan-50 text-cyan-600 border border-cyan-100"
-            )}>
-              <BookOpen size={16} />
-            </div>
-            <h3 className="font-bold text-sm uppercase tracking-wide">DSA Sheets</h3>
-            <p className={cn("text-xs leading-relaxed", isDark ? "text-zinc-400" : "text-zinc-600")}>Track data structure progress with clean local states.</p>
-          </div>
+          {/* Brief Text Description */}
+          <motion.p
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.25 }}
+            className="text-sm sm:text-base max-w-xl text-slate-400 mt-4 leading-relaxed"
+          >
+            CodeViz Academy is a unified preparation workspace. Track curriculum progress, test coding algorithms, analyze ATS formatting, and simulate mock interviews in real-time.
+          </motion.p>
 
-          {/* Module 3 */}
-          <div className={cn(
-            "border p-6 space-y-3 transition-colors rounded-2xl backdrop-blur-sm",
-            isDark ? "border-zinc-800 bg-[#09090b]/40" : "border-zinc-200 bg-zinc-50/50"
-          )}>
-            <div className={cn(
-              "w-8 h-8 flex items-center justify-center rounded-lg",
-              isDark ? "bg-cyan-500/10 text-cyan-400 border border-cyan-500/20" : "bg-cyan-50 text-cyan-600 border border-cyan-100"
-            )}>
-              <Terminal size={16} />
-            </div>
-            <h3 className="font-bold text-sm uppercase tracking-wide">AI Resume Auditor</h3>
-            <p className={cn("text-xs leading-relaxed", isDark ? "text-zinc-400" : "text-zinc-600")}>Audit formatting metrics and LaTeX structures instantly.</p>
-          </div>
+          {/* CTA Buttons */}
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.35 }}
+            className="flex flex-row gap-4 flex-wrap justify-center mt-10"
+          >
+            <button
+              onClick={() => navigate('/register')}
+              className="flex items-center gap-2 font-semibold px-8 py-3.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl transition-all cursor-pointer shadow-lg shadow-indigo-600/20 active:scale-[0.98] text-sm"
+            >
+              Start Learning <ArrowRight size={16} />
+            </button>
+            <button
+              onClick={() => navigate('/login')}
+              className="flex items-center gap-2 bg-slate-900/80 font-semibold px-8 py-3.5 border border-slate-800 hover:bg-slate-880 text-slate-300 hover:text-white rounded-xl transition-all cursor-pointer text-sm"
+            >
+              Explore Sandbox
+            </button>
+          </motion.div>
 
-          {/* Module 4 */}
-          <div className={cn(
-            "border p-6 space-y-3 transition-colors rounded-2xl backdrop-blur-sm",
-            isDark ? "border-zinc-800 bg-[#09090b]/40" : "border-zinc-200 bg-zinc-50/50"
-          )}>
-            <div className={cn(
-              "w-8 h-8 flex items-center justify-center rounded-lg",
-              isDark ? "bg-cyan-500/10 text-cyan-400 border border-cyan-500/20" : "bg-cyan-50 text-cyan-600 border border-cyan-100"
-            )}>
-              <Users size={16} />
-            </div>
-            <h3 className="font-bold text-sm uppercase tracking-wide">Squad Chat</h3>
-            <p className={cn("text-xs leading-relaxed", isDark ? "text-zinc-400" : "text-zinc-600")}>Sync levels, activity streams, and live rooms via WebSockets.</p>
-          </div>
-        </div>
-      </section>
-
-      {/* Centered interactive terminal widget moved down */}
-      <section className="relative z-10 max-w-7xl mx-auto px-8 pb-20 flex flex-col items-center select-text">
-        <div className="w-full max-w-xl text-left">
-          <div className={cn(
-            "border rounded-lg overflow-hidden backdrop-blur-sm transition-colors duration-500",
-            isDark ? "border-zinc-800 bg-black/90" : "border-zinc-200 bg-zinc-50/90"
-          )}>
-            {/* Terminal Header */}
-            <div className={cn(
-              "px-4 py-2 flex items-center justify-between border-b transition-colors",
-              isDark ? "bg-white/5 text-white border-white/10" : "bg-zinc-100 text-black border-zinc-200"
-            )}>
-              <span className="font-mono text-xs font-bold">interactive_terminal.js</span>
-              <span className={cn(
-                "text-[10px] font-mono px-2 py-0.5 border rounded transition-colors",
-                isDark ? "bg-cyan-500/10 text-cyan-400 border-cyan-500/20" : "bg-cyan-50 text-cyan-600 border-cyan-100"
-              )}>
-                ACTIVE
-              </span>
-            </div>
-
-            {/* Terminal Body */}
-            <div className="p-6 space-y-4 font-mono text-xs">
-              <div className="space-y-1 text-zinc-500">
-                <p>// Run compile to increment code execution state</p>
-                <p>const studyQuest = require("studyquest-core");</p>
-                <p>const sandbox = studyQuest.createSandbox();</p>
+          {/* Premium Product Mockup Dashboard Preview (CSS Coded Mockup) */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+            className="w-full max-w-5xl mt-16 rounded-2xl border border-slate-800 bg-[#090d16]/80 p-3 shadow-2xl relative overflow-hidden group"
+          >
+            {/* Header window control dots */}
+            <div className="flex items-center justify-between px-3 pb-3 border-b border-slate-905">
+              <div className="flex gap-1.5">
+                <div className="w-2.5 h-2.5 rounded-full bg-red-500/60" />
+                <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/60" />
+                <div className="w-2.5 h-2.5 rounded-full bg-green-500/60" />
               </div>
+              <div className="text-[10px] text-slate-500 font-mono">studyquest.codeviz.academy/dashboard</div>
+              <div className="w-8" />
+            </div>
 
-              {/* Status Output */}
-              <div className={cn(
-                "border p-4 transition-colors rounded-xl",
-                isDark ? "border-white/5 bg-white/[0.01]" : "border-zinc-200 bg-zinc-100/50"
-              )}>
-                <p className="text-[10px] text-zinc-500 uppercase tracking-widest mb-1 font-bold">Execution Feed</p>
-                <div className="flex items-center justify-between">
-                  <span className={isDark ? "text-zinc-400" : "text-zinc-700"}>Successful executions:</span>
-                  <span className={cn(
-                    "font-bold text-xs transition-colors font-mono text-cyan-400"
-                  )}>
-                    {count}
-                  </span>
+            {/* Simulated UI layout */}
+            <div className="grid grid-cols-12 gap-3 p-3 text-left">
+              {/* Left sidebar nav mockup */}
+              <div className="col-span-3 hidden md:flex flex-col gap-2.5 border-r border-slate-900 pr-3">
+                <div className="h-6 bg-indigo-500/10 rounded border border-indigo-500/20 flex items-center px-2 text-[10px] text-indigo-400 font-mono font-bold">Active Track</div>
+                <div className="h-7 bg-slate-900 rounded flex items-center px-2 text-[10px] text-slate-300 font-medium hover:bg-slate-800 cursor-pointer transition-colors">
+                  <BookOpen size={10} className="mr-2 text-indigo-400" /> Web Development
+                </div>
+                <div className="h-7 bg-slate-900/40 rounded flex items-center px-2 text-[10px] text-slate-400 font-medium hover:bg-slate-800 cursor-pointer transition-colors">
+                  <Terminal size={10} className="mr-2 text-slate-500" /> Algorithms Practice
+                </div>
+                <div className="h-7 bg-slate-900/40 rounded flex items-center px-2 text-[10px] text-slate-400 font-medium hover:bg-slate-800 cursor-pointer transition-colors">
+                  <Target size={10} className="mr-2 text-slate-500" /> ATS Resume Audit
+                </div>
+                <div className="h-7 bg-slate-900/40 rounded flex items-center px-2 text-[10px] text-slate-400 font-medium hover:bg-slate-800 cursor-pointer transition-colors">
+                  <Users size={10} className="mr-2 text-slate-500" /> Community Squads
                 </div>
               </div>
 
-              {/* Action trigger */}
-              <div className={cn(
-                "flex items-center justify-between pt-2 border-t transition-colors",
-                isDark ? "border-white/10" : "border-zinc-200"
-              )}>
-                <span className="text-[10px] text-zinc-500 font-bold uppercase">
-                  {isCompiling ? "Compiling source..." : "Status: Ready"}
-                </span>
+              {/* Center Panel - Dashboard metrics */}
+              <div className="col-span-12 md:col-span-9 space-y-4">
+                {/* Stats row */}
+                <div className="grid grid-cols-3 gap-3">
+                  <div className="bg-[#0e1322] border border-slate-800/60 p-3.5 rounded-xl">
+                    <span className="block text-[9px] text-slate-500 font-mono font-semibold uppercase tracking-wider">Level Rank</span>
+                    <span className="text-base font-bold text-white tracking-tight">Level 8 (Specialist)</span>
+                    <div className="w-full bg-slate-800 h-1 rounded-full mt-2 overflow-hidden">
+                      <div className="bg-indigo-500 h-full w-[70%]" />
+                    </div>
+                  </div>
+                  <div className="bg-[#0e1322] border border-slate-800/60 p-3.5 rounded-xl">
+                    <span className="block text-[9px] text-slate-500 font-mono font-semibold uppercase tracking-wider">Streak</span>
+                    <span className="text-base font-bold text-orange-400 tracking-tight flex items-center gap-1">
+                      🔥 14 Days
+                    </span>
+                  </div>
+                  <div className="bg-[#0e1322] border border-slate-800/60 p-3.5 rounded-xl">
+                    <span className="block text-[9px] text-slate-500 font-mono font-semibold uppercase tracking-wider">Quests Solved</span>
+                    <span className="text-base font-bold text-green-400 tracking-tight">42 / 60</span>
+                  </div>
+                </div>
 
-                <button
-                  onClick={runCode}
-                  disabled={isCompiling}
-                  className={cn(
-                    "flex items-center gap-2 font-bold text-xs px-4 py-2 border transition-all cursor-pointer disabled:opacity-50 rounded-lg",
-                    isDark
-                      ? "bg-cyan-600 border-cyan-600 hover:bg-cyan-500 text-white shadow-lg shadow-cyan-500/20 active:scale-[0.98]"
-                      : "bg-cyan-600 border-cyan-600 hover:bg-cyan-700 text-white active:scale-[0.98]"
-                  )}
+                {/* Simulated Content Block (Timeline nodes + active item detail) */}
+                <div className="bg-[#0c101d] border border-slate-850 p-4 rounded-xl space-y-3 relative">
+                  <div className="flex items-center justify-between border-b border-slate-900 pb-2">
+                    <h4 className="text-[11px] font-bold uppercase tracking-wider text-slate-300">Current Sprint: Javascript Core</h4>
+                    <span className="text-[9px] bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 px-2 py-0.5 rounded uppercase font-mono font-semibold">Active Node</span>
+                  </div>
+
+                  <div className="flex flex-col sm:flex-row items-center justify-between gap-4 py-2">
+                    {/* Visual node line preview */}
+                    <div className="flex items-center gap-2 w-full sm:w-auto">
+                      <div className="w-6 h-6 rounded-full bg-indigo-500/20 border border-indigo-500 flex items-center justify-center text-[10px] text-indigo-400 font-bold font-mono">1</div>
+                      <div className="h-0.5 w-6 bg-indigo-500" />
+                      <div className="w-6 h-6 rounded-full bg-indigo-500/20 border border-indigo-500 flex items-center justify-center text-[10px] text-indigo-400 font-bold font-mono">2</div>
+                      <div className="h-0.5 w-6 bg-slate-800" />
+                      <div className="w-6 h-6 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-[10px] text-slate-500 font-bold font-mono">3</div>
+                    </div>
+
+                    <div className="flex items-center gap-3 w-full sm:w-auto justify-end">
+                      <div className="text-right">
+                        <span className="block text-[10px] font-bold text-slate-200">Topic: Closures & Scopes</span>
+                        <span className="block text-[8px] text-slate-500">Estimated duration: 25 mins</span>
+                      </div>
+                      <button className="px-3.5 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-[10px] font-bold transition-all shadow-md active:scale-[0.98]">
+                        Complete Node
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </header>
+
+        {/* TRUSTED BY COMPANIES */}
+        <section className="border-t border-slate-900 bg-[#030712]/50 py-10 w-full overflow-hidden">
+          <div className="max-w-7xl mx-auto px-6 text-center space-y-6">
+            <p className="text-[10px] text-slate-500 font-mono uppercase tracking-widest">
+              Trusted by learners preparing for technical interview pipelines at
+            </p>
+            <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-45 hover:opacity-75 transition-opacity">
+              {COMPANIES.map((company, index) => (
+                <span
+                  key={index}
+                  className="text-lg md:text-xl font-extrabold tracking-tight text-slate-500 font-sans hover:text-indigo-400 cursor-default transition-colors"
                 >
-                  <Play size={12} fill="white" className="text-white" /> RUN COMPILE
+                  {company.name}
+                </span>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* LEARNING STATISTICS */}
+        <section className="max-w-7xl mx-auto px-6 py-16 border-t border-slate-900">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+            <div className="bg-slate-900/30 border border-slate-850 p-6 rounded-2xl backdrop-blur-sm">
+              <span className="block text-3xl md:text-4xl font-extrabold text-white tracking-tight">{stats.roadmaps}</span>
+              <span className="block text-[10px] text-slate-500 font-mono uppercase mt-2">Active Career Tracks</span>
+            </div>
+            <div className="bg-slate-900/30 border border-slate-850 p-6 rounded-2xl backdrop-blur-sm">
+              <span className="block text-3xl md:text-4xl font-extrabold text-white tracking-tight">{stats.resources}+</span>
+              <span className="block text-[10px] text-slate-500 font-mono uppercase mt-2">Curated Resources</span>
+            </div>
+            <div className="bg-slate-900/30 border border-slate-850 p-6 rounded-2xl backdrop-blur-sm">
+              <span className="block text-3xl md:text-4xl font-extrabold text-white tracking-tight">{stats.docs}+</span>
+              <span className="block text-[10px] text-slate-500 font-mono uppercase mt-2">Documentation Guides</span>
+            </div>
+            <div className="bg-slate-900/30 border border-slate-850 p-6 rounded-2xl backdrop-blur-sm">
+              <span className="block text-3xl md:text-4xl font-extrabold text-white tracking-tight">{stats.users}K+</span>
+              <span className="block text-[10px] text-slate-500 font-mono uppercase mt-2">Active Students</span>
+            </div>
+          </div>
+        </section>
+
+        {/* BENTO FEATURE WORKSPACE PREVIEW */}
+        <section id="bento" className="max-w-7xl mx-auto px-6 py-20 border-t border-slate-900">
+          <div className="text-center space-y-4 mb-16">
+            <span className="text-[10px] text-indigo-400 font-mono font-bold tracking-widest uppercase">Visual Preview</span>
+            <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight leading-none">
+              A Unified Platform. No Clutter.
+            </h2>
+            <p className="text-sm text-slate-400 max-w-xl mx-auto leading-relaxed">
+              Why use five separate applications? Coordinate your code, resume auditing, interactive checklists, and community feeds inside one dashboard.
+            </p>
+          </div>
+
+          {/* Bento layout */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+            {/* Box 1: Interactive Roadmap Preview */}
+            <div className="col-span-1 md:col-span-2 border border-slate-855 bg-[#090d16]/60 p-6 rounded-2xl flex flex-col justify-between hover:border-slate-800 transition-colors">
+              <div className="space-y-2">
+                <span className="text-[9px] font-mono text-slate-500 uppercase tracking-widest">MODULE 01</span>
+                <h3 className="text-lg font-bold text-white tracking-tight">Structured Learning Roadmaps</h3>
+                <p className="text-xs text-slate-400 leading-relaxed max-w-lg">
+                  Follow visual path guidelines configured from top syllabus templates. Complete coding nodes, pass checklists, and evaluate your milestone stats.
+                </p>
+              </div>
+
+              {/* Node Graph Mockup */}
+              <div className="bg-[#04060b] border border-slate-900 p-4 rounded-xl mt-6 flex flex-col items-center sm:flex-row justify-around gap-4">
+                <div className="flex flex-col items-center gap-1">
+                  <span className="text-[9px] font-mono text-slate-500 uppercase">START</span>
+                  <div className="px-4 py-2 bg-green-500/10 border border-green-500/30 text-green-400 rounded-lg text-xs font-bold font-mono">HTML Basics</div>
+                </div>
+                <div className="h-0.5 w-6 bg-green-500/40 hidden sm:block" />
+                <div className="flex flex-col items-center gap-1">
+                  <span className="text-[9px] font-mono text-indigo-400 uppercase font-bold">CURRENT</span>
+                  <div className="px-4 py-2 bg-indigo-500/20 border border-indigo-500 text-indigo-400 rounded-lg text-xs font-bold font-mono">CSS Grid & Layouts</div>
+                </div>
+                <div className="h-0.5 w-6 bg-slate-850 hidden sm:block" />
+                <div className="flex flex-col items-center gap-1">
+                  <span className="text-[9px] font-mono text-slate-500 uppercase">LOCKED</span>
+                  <div className="px-4 py-2 bg-slate-900 border border-slate-800 text-slate-500 rounded-lg text-xs font-bold font-mono">JavaScript Scopes</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Box 2: Resume scoring index */}
+            <div className="border border-slate-855 bg-[#090d16]/60 p-6 rounded-2xl flex flex-col justify-between hover:border-slate-800 transition-colors">
+              <div className="space-y-2">
+                <span className="text-[9px] font-mono text-slate-500 uppercase tracking-widest">MODULE 02</span>
+                <h3 className="text-lg font-bold text-white tracking-tight">ATS Resume Auditor</h3>
+                <p className="text-xs text-slate-400 leading-relaxed">
+                  Evaluate formatting density metrics, sections alignment, and get instant recommendations to pass corporate filter gates.
+                </p>
+              </div>
+
+              {/* Score mockup */}
+              <div className="bg-[#04060b] border border-slate-900 p-4 rounded-xl mt-6 space-y-3">
+                <div className="flex justify-between items-center">
+                  <span className="text-[10px] text-slate-400 font-medium">Format Evaluation</span>
+                  <span className="text-xs font-mono font-bold text-green-400">91%</span>
+                </div>
+                <div className="w-full bg-slate-900 h-1.5 rounded-full overflow-hidden">
+                  <div className="bg-green-500 h-full w-[91%]" />
+                </div>
+                <div className="space-y-1.5 text-[9px] text-slate-500 font-mono">
+                  <div className="flex items-center gap-1.5 text-green-400">✓ ATS structure parsed correctly</div>
+                  <div className="flex items-center gap-1.5 text-green-400">✓ Decoupled table structures detected</div>
+                  <div className="flex items-center gap-1.5 text-amber-500">⚠ Action density is slightly low</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Box 3: Coding Sandbox Mockup */}
+            <div className="border border-slate-855 bg-[#090d16]/60 p-6 rounded-2xl flex flex-col justify-between hover:border-slate-800 transition-colors">
+              <div className="space-y-2">
+                <span className="text-[9px] font-mono text-slate-500 uppercase tracking-widest">MODULE 03</span>
+                <h3 className="text-lg font-bold text-white tracking-tight">DSA Code Sandbox</h3>
+                <p className="text-xs text-slate-400 leading-relaxed">
+                  Write solution algorithms in a robust sandbox. Includes dynamic tests execution, code state persistence, and language runtimes.
+                </p>
+              </div>
+
+              {/* Editor Mockup */}
+              <div className="bg-[#04060b] border border-slate-900 rounded-xl mt-6 overflow-hidden font-mono text-[10px] text-slate-400">
+                <div className="bg-slate-905 px-3 py-1.5 border-b border-slate-950 flex items-center justify-between text-slate-500">
+                  <span>bubble_sort.js</span>
+                  <span className="text-[8px] bg-slate-800 px-1.5 py-0.5 rounded text-slate-400">JavaScript</span>
+                </div>
+                <div className="p-3.5 space-y-1">
+                  <p><span className="text-indigo-400">function</span> <span className="text-yellow-400">bubbleSort</span>(arr) &#123;</p>
+                  <p className="pl-4">let len = arr.length;</p>
+                  <p className="pl-4"><span className="text-indigo-400">for</span> (let i = 0; i &lt; len; i++) &#123;</p>
+                  <p className="pl-8 text-slate-500">// optimize loop swaps</p>
+                  <p className="pl-4">&#125;</p>
+                  <p>&#125;</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Box 4: Communities Leaderboard */}
+            <div className="col-span-1 md:col-span-2 border border-slate-855 bg-[#090d16]/60 p-6 rounded-2xl flex flex-col justify-between hover:border-slate-800 transition-colors">
+              <div className="space-y-2">
+                <span className="text-[9px] font-mono text-slate-500 uppercase tracking-widest">MODULE 04</span>
+                <h3 className="text-lg font-bold text-white tracking-tight">Active Peer Leaderboards</h3>
+                <p className="text-xs text-slate-400 leading-relaxed max-w-lg">
+                  Join WebSocket-driven chat groups, compare progress points on live leaderboards, check daily completions, and prepare in dynamic squads.
+                </p>
+              </div>
+
+              {/* Leaderboard Mockup */}
+              <div className="bg-[#04060b] border border-slate-900 p-4 rounded-xl mt-6 space-y-2.5">
+                <div className="flex justify-between items-center text-[10px] text-slate-400 border-b border-slate-900 pb-1.5">
+                  <span>Rankings</span>
+                  <span>Daily XP</span>
+                </div>
+                <div className="flex justify-between items-center text-[10px]">
+                  <div className="flex items-center gap-2">
+                    <span className="text-amber-500 font-bold">1</span>
+                    <span className="text-slate-200">SarikaChaudhary</span>
+                  </div>
+                  <span className="text-indigo-400 font-mono font-bold">1,240 XP</span>
+                </div>
+                <div className="flex justify-between items-center text-[10px]">
+                  <div className="flex items-center gap-2">
+                    <span className="text-slate-400 font-bold">2</span>
+                    <span className="text-slate-200">OperatorStudy</span>
+                  </div>
+                  <span className="text-indigo-400 font-mono font-bold">980 XP</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* WHY CHOOSE CODEVIZ */}
+        <section id="features" className="max-w-7xl mx-auto px-6 py-20 border-t border-slate-900">
+          <div className="text-center space-y-4 mb-16">
+            <span className="text-[10px] text-indigo-400 font-mono font-bold tracking-widest uppercase">Platform Pillars</span>
+            <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight leading-none">
+              Built for Software Engineers
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="space-y-4 group">
+              <div className="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center group-hover:scale-105 transition-transform">
+                <Target size={18} />
+              </div>
+              <h3 className="text-sm font-bold uppercase tracking-wider text-slate-200 group-hover:text-indigo-400 transition-colors">Targeted DSA Sheets</h3>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                Filter by target companies standards to build high-demand problem solving metrics without solving duplicate questions.
+              </p>
+            </div>
+
+            <div className="space-y-4 group">
+              <div className="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center group-hover:scale-105 transition-transform">
+                <Terminal size={18} />
+              </div>
+              <h3 className="text-sm font-bold uppercase tracking-wider text-slate-200 group-hover:text-indigo-400 transition-colors">Interactive Documentation</h3>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                Review concepts directly alongside code syntax checklists, filterable by track topics, and save links inside your local state parameters.
+              </p>
+            </div>
+
+            <div className="space-y-4 group">
+              <div className="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center group-hover:scale-105 transition-transform">
+                <Users size={18} />
+              </div>
+              <h3 className="text-sm font-bold uppercase tracking-wider text-slate-200 group-hover:text-indigo-400 transition-colors">Multiverse Peer Groups</h3>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                Practice together. Sync status points over WebSockets and track global placement metrics collectively.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* TESTIMONIALS */}
+        <section className="max-w-7xl mx-auto px-6 py-20 border-t border-slate-900">
+          <div className="text-center space-y-4 mb-16">
+            <span className="text-[10px] text-indigo-400 font-mono font-bold tracking-widest uppercase">Testimonials</span>
+            <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight leading-none">
+              Success Stories
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="border border-slate-850 bg-[#090d16]/30 p-8 rounded-2xl space-y-4">
+              <div className="flex gap-1">
+                {[...Array(5)].map((_, i) => <Star key={i} size={14} className="text-amber-400 fill-amber-400" />)}
+              </div>
+              <p className="text-xs text-slate-300 leading-relaxed italic">
+                "The structured roadmap tracks kept me highly focused. I tracked HTML/CSS frameworks, practiced compiler scripts in the sandbox, and cracked my placement OA without jumping between platforms."
+              </p>
+              <div>
+                <span className="block text-xs font-bold text-white">Ankit Sharma</span>
+                <span className="block text-[9px] text-slate-500 font-mono uppercase">Software Intern, Adobe</span>
+              </div>
+            </div>
+
+            <div className="border border-slate-850 bg-[#090d16]/30 p-8 rounded-2xl space-y-4">
+              <div className="flex gap-1">
+                {[...Array(5)].map((_, i) => <Star key={i} size={14} className="text-amber-400 fill-amber-400" />)}
+              </div>
+              <p className="text-xs text-slate-300 leading-relaxed italic">
+                "CodeViz's ATS Resume Auditor scanned my LaTeX file structure and identified missing sections immediately. After making the recommended overrides, my response rate from tech applications improved dramatically."
+              </p>
+              <div>
+                <span className="block text-xs font-bold text-white">Riya Patel</span>
+                <span className="block text-[9px] text-slate-500 font-mono uppercase">Associate Engineer, Amazon</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* PRICING PLANS */}
+        <section id="pricing" className="max-w-7xl mx-auto px-6 py-20 border-t border-slate-900">
+          <div className="text-center space-y-4 mb-16">
+            <span className="text-[10px] text-indigo-400 font-mono font-bold tracking-widest uppercase">Membership Tiers</span>
+            <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight leading-none">
+              Accelerate Your Career Scaling
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            
+            {/* Free Tier */}
+            <div className="border border-slate-850 bg-[#090d16]/40 p-8 rounded-2xl flex flex-col justify-between hover:border-slate-800 transition-colors">
+              <div className="space-y-6">
+                <div className="space-y-2">
+                  <h3 className="text-xs font-bold font-mono text-slate-400 uppercase tracking-widest">FREE SANDBOX</h3>
+                  <div className="flex items-baseline gap-1 text-white">
+                    <span className="text-4xl font-black">₹99</span>
+                    <span className="text-[10px] text-slate-500 font-mono">/ MONTH</span>
+                  </div>
+                </div>
+                <p className="text-xs text-slate-400 leading-relaxed">
+                  Start tracking algorithms, complete baseline DSA sheets, and explore default roadmaps.
+                </p>
+                <ul className="space-y-2.5 text-[11px] text-slate-400 pt-6 border-t border-slate-905 font-mono">
+                  <li className="flex items-center gap-2"><Check size={12} className="text-indigo-400" /> 905 DSA Practice Problems</li>
+                  <li className="flex items-center gap-2"><Check size={12} className="text-indigo-400" /> Basic Code Execution</li>
+                  <li className="flex items-center gap-2"><Check size={12} className="text-indigo-400" /> Community Chat Rooms</li>
+                  <li className="flex items-center gap-2"><Check size={12} className="text-indigo-400" /> Standard Roadmap Paths</li>
+                </ul>
+              </div>
+              <button
+                onClick={() => navigate('/register')}
+                className="w-full mt-8 py-3 bg-slate-900 border border-slate-800 hover:bg-slate-850 text-white font-mono text-xs font-bold rounded-xl transition-colors cursor-pointer text-center"
+              >
+                INITIALIZE ACCOUNT
+              </button>
+            </div>
+
+            {/* Pro Tier (Recommended) */}
+            <div className="border-2 border-indigo-600 bg-[#0c1222] p-8 rounded-2xl flex flex-col justify-between hover:border-indigo-500 transition-all shadow-xl shadow-indigo-600/5 relative">
+              <div className="absolute top-0 right-6 -translate-y-1/2 bg-indigo-600 text-white font-mono text-[9px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                RECOMMENDED
+              </div>
+              <div className="space-y-6">
+                <div className="space-y-2">
+                  <h3 className="text-xs font-bold font-mono text-indigo-400 uppercase tracking-widest">PRO DEVELOPER</h3>
+                  <div className="flex items-baseline gap-1 text-white">
+                    <span className="text-4xl font-black">₹399</span>
+                    <span className="text-[10px] text-slate-500 font-mono">/ MONTH</span>
+                  </div>
+                </div>
+                <p className="text-xs text-slate-300 leading-relaxed">
+                  Full-stack tool suite for aggressive technical interview preparation and profile validation.
+                </p>
+                <ul className="space-y-2.5 text-[11px] text-slate-300 pt-6 border-t border-slate-905 font-mono">
+                  <li className="flex items-center gap-2"><Check size={12} className="text-indigo-400" /> Everything in Free Sandbox</li>
+                  <li className="flex items-center gap-2"><Check size={12} className="text-indigo-400" /> AI-Powered Resume Auditor</li>
+                  <li className="flex items-center gap-2"><Check size={12} className="text-indigo-400" /> AI-Assisted Mock Interviews</li>
+                  <li className="flex items-center gap-2"><Check size={12} className="text-indigo-400" /> Custom Input Sandbox Testing</li>
+                  <li className="flex items-center gap-2"><Check size={12} className="text-indigo-400" /> Priority Hackathon Pipeline</li>
+                </ul>
+              </div>
+              <button
+                onClick={() => navigate('/register')}
+                className="w-full mt-8 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-mono text-xs font-bold rounded-xl transition-colors cursor-pointer text-center shadow-lg shadow-indigo-600/10"
+              >
+                UPGRADE TO PRO
+              </button>
+            </div>
+
+            {/* Team Tier */}
+            <div className="border border-slate-850 bg-[#090d16]/40 p-8 rounded-2xl flex flex-col justify-between hover:border-slate-800 transition-colors">
+              <div className="space-y-6">
+                <div className="space-y-2">
+                  <h3 className="text-xs font-bold font-mono text-slate-400 uppercase tracking-widest">TEAM STACK</h3>
+                  <div className="flex items-baseline gap-1 text-white">
+                    <span className="text-4xl font-black">₹699</span>
+                    <span className="text-[10px] text-slate-500 font-mono">/ MONTH</span>
+                  </div>
+                </div>
+                <p className="text-xs text-slate-400 leading-relaxed">
+                  Shared workspace features designed for bootcamp cohorts, hacker groups, and university squads.
+                </p>
+                <ul className="space-y-2.5 text-[11px] text-slate-400 pt-6 border-t border-slate-905 font-mono">
+                  <li className="flex items-center gap-2"><Check size={12} className="text-indigo-400" /> Everything in Pro Developer</li>
+                  <li className="flex items-center gap-2"><Check size={12} className="text-indigo-400" /> Dedicated Shared Squad Rooms</li>
+                  <li className="flex items-center gap-2"><Check size={12} className="text-indigo-400" /> Batch Performance Analytics</li>
+                  <li className="flex items-center gap-2"><Check size={12} className="text-indigo-400" /> Custom Interview Pipelines</li>
+                  <li className="flex items-center gap-2"><Check size={12} className="text-indigo-400" /> Priority Live Support</li>
+                </ul>
+              </div>
+              <button
+                onClick={() => navigate('/register')}
+                className="w-full mt-8 py-3 bg-slate-900 border border-slate-800 hover:bg-slate-855 text-white font-mono text-xs font-bold rounded-xl transition-colors cursor-pointer text-center"
+              >
+                CREATE TEAM SQUAD
+              </button>
+            </div>
+
+          </div>
+        </section>
+
+        {/* FAQ ACCORDION SECTION */}
+        <section id="faq" className="max-w-4xl mx-auto px-6 py-20 border-t border-slate-900">
+          <div className="text-center space-y-4 mb-16">
+            <span className="text-[10px] text-indigo-400 font-mono font-bold tracking-widest uppercase">FAQ</span>
+            <h2 className="text-3xl font-black text-white tracking-tight leading-none">
+              Frequently Asked Questions
+            </h2>
+          </div>
+
+          <div className="space-y-3">
+            {FAQS.map((faq, index) => (
+              <div
+                key={index}
+                className="border border-slate-850 rounded-xl bg-[#090d16]/30 overflow-hidden transition-all"
+              >
+                <button
+                  onClick={() => toggleFaq(index)}
+                  className="w-full px-6 py-4 flex items-center justify-between text-left text-xs font-semibold text-slate-200 hover:text-white transition-colors cursor-pointer"
+                >
+                  <span>{faq.q}</span>
+                  <ChevronDown
+                    size={14}
+                    className={cn(
+                      "text-slate-400 transition-transform duration-200",
+                      activeFaq === index && "transform rotate-180 text-white"
+                    )}
+                  />
                 </button>
+                <AnimatePresence initial={false}>
+                  {activeFaq === index && (
+                    <motion.div
+                      initial={{ height: 0 }}
+                      animate={{ height: "auto" }}
+                      exit={{ height: 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="overflow-hidden"
+                    >
+                      <div className="px-6 pb-5 pt-1 text-[11px] text-slate-400 leading-relaxed border-t border-slate-900/40">
+                        {faq.a}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
-            </div>
+            ))}
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Detailed Features Grid */}
-      <section className="relative z-10 max-w-7xl mx-auto px-8 py-24 border-t border-zinc-850 transition-colors bg-black">
-        <div className="text-center space-y-4 mb-16">
-          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
-            CORE PLATFORM MODULES
-          </h2>
-          <p className="text-xs text-zinc-400 font-mono tracking-widest uppercase">
-            Deep-dive into the high-performance engineering workspace
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Feature 1 */}
-          <div className="border border-zinc-800 bg-[#09090b] p-8 space-y-6 rounded-xl hover:border-zinc-700 transition-all">
-            <div className="space-y-2">
-              <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">MODULE 01</span>
-              <h3 className="text-xl font-bold tracking-wide uppercase text-white">Coding Sandbox</h3>
-            </div>
-            <p className="text-xs text-zinc-400 leading-relaxed">
-              Solve algorithmic challenges inside a high-fidelity editor. Powered by Monaco, featuring automated starter code generation, language selection (JS, Python, C++, Java), active timer, and live output draw feeds.
-            </p>
-            <ul className="space-y-1.5 text-[11px] text-zinc-500 font-mono">
-              <li>• Real-time syntax checking & compilation</li>
-              <li>• Custom input execution pipeline</li>
-              <li>• Embedded problem descriptions, editorial & hints</li>
-            </ul>
-            <div className="flex gap-2 pt-2">
-              <span className="bg-zinc-900 text-zinc-400 font-mono text-[9px] px-2.5 py-1 border border-zinc-800 rounded-md uppercase">Monaco Editor</span>
-              <span className="bg-zinc-900 text-zinc-400 font-mono text-[9px] px-2.5 py-1 border border-zinc-800 rounded-md uppercase">Multi-Language</span>
-            </div>
-          </div>
-
-          {/* Feature 2 */}
-          <div className="border border-zinc-800 bg-[#09090b] p-8 space-y-6 rounded-xl hover:border-zinc-700 transition-all">
-            <div className="space-y-2">
-              <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">MODULE 02</span>
-              <h3 className="text-xl font-bold tracking-wide uppercase text-white">AI Resume Auditor</h3>
-            </div>
-            <p className="text-xs text-zinc-400 leading-relaxed">
-              Instantly scan and audit your software engineering resume. Our parser reviews formatting integrity, sections completeness, density metrics, and offers copy-pasteable LaTeX patches to beat ATS filters.
-            </p>
-            <ul className="space-y-1.5 text-[11px] text-zinc-500 font-mono">
-              <li>• Exact PDF content extraction & structure audit</li>
-              <li>• Quantitative scoring across 10 formatting rules</li>
-              <li>• Immediate copy-pasteable LaTeX overrides</li>
-            </ul>
-            <div className="flex gap-2 pt-2">
-              <span className="bg-zinc-900 text-zinc-400 font-mono text-[9px] px-2.5 py-1 border border-zinc-800 rounded-md uppercase">PDF Parsing</span>
-              <span className="bg-zinc-900 text-zinc-400 font-mono text-[9px] px-2.5 py-1 border border-zinc-800 rounded-md uppercase">ATS Verification</span>
-            </div>
-          </div>
-
-          {/* Feature 3 */}
-          <div className="border border-zinc-800 bg-[#09090b] p-8 space-y-6 rounded-xl hover:border-zinc-700 transition-all">
-            <div className="space-y-2">
-              <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">MODULE 03</span>
-              <h3 className="text-xl font-bold tracking-wide uppercase text-white">Sequential Career Paths</h3>
-            </div>
-            <p className="text-xs text-zinc-400 leading-relaxed">
-              Explore 60 learning roadmaps powered by roadmap.sh data. Pre-seeded with conceptual multiple-choice quizzes for every node and hand-on capstone projects to verify actual coding application.
-            </p>
-            <ul className="space-y-1.5 text-[11px] text-zinc-500 font-mono">
-              <li>• 60 predefined career & language roadmaps</li>
-              <li>• Interactive quizzes with dynamic validation</li>
-              <li>• Hands-on capstone verifier with XP awarding</li>
-            </ul>
-            <div className="flex gap-2 pt-2">
-              <span className="bg-zinc-900 text-zinc-400 font-mono text-[9px] px-2.5 py-1 border border-zinc-800 rounded-md uppercase">60 Tracks</span>
-              <span className="bg-zinc-900 text-zinc-400 font-mono text-[9px] px-2.5 py-1 border border-zinc-800 rounded-md uppercase">Quiz + Capstone</span>
-            </div>
-          </div>
-
-          {/* Feature 4 */}
-          <div className="border border-zinc-800 bg-[#09090b] p-8 space-y-6 rounded-xl hover:border-zinc-700 transition-all">
-            <div className="space-y-2">
-              <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">MODULE 04</span>
-              <h3 className="text-xl font-bold tracking-wide uppercase text-white">Socket Communities</h3>
-            </div>
-            <p className="text-xs text-zinc-400 leading-relaxed">
-              Learn in a multiplayer workspace. Track peer levels on the global leaderboard, chat in real-time rooms driven by Socket.io, and discover active hackathons aggregated live across top competition networks.
-            </p>
-            <ul className="space-y-1.5 text-[11px] text-zinc-500 font-mono">
-              <li>• Live workspace peer feed & streaking</li>
-              <li>• Threaded room channels using WebSockets</li>
-              <li>• Automated Unstop, Devpost & Devfolio scraping</li>
-            </ul>
-            <div className="flex gap-2 pt-2">
-              <span className="bg-zinc-900 text-zinc-400 font-mono text-[9px] px-2.5 py-1 border border-zinc-800 rounded-md uppercase">WebSockets</span>
-              <span className="bg-zinc-900 text-zinc-400 font-mono text-[9px] px-2.5 py-1 border border-zinc-800 rounded-md uppercase">Scraped Aggregator</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Subscription Pricing Section */}
-      <section className="relative z-10 max-w-7xl mx-auto px-8 py-24 border-t border-zinc-850 transition-colors bg-black">
-        <div className="text-center space-y-4 mb-16">
-          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
-            MEMBERSHIP TIERS
-          </h2>
-          <p className="text-xs text-zinc-400 font-mono tracking-widest uppercase">
-            Choose the plan that fits your career acceleration scale
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Tier 1 */}
-          <div className="border border-zinc-800 bg-[#09090b] p-8 space-y-6 rounded-xl flex flex-col justify-between hover:border-zinc-700 transition-all">
-            <div className="space-y-4">
-              <h3 className="text-md font-bold tracking-wider font-mono text-zinc-400 uppercase">FREE SANDBOX</h3>
-              <div className="flex items-baseline gap-1">
-                <span className="text-4xl font-extrabold">₹99</span>
-                <span className="text-xs text-zinc-500 font-mono">/ MONTH</span>
+        {/* MODERN PROFESSIONAL FOOTER */}
+        <footer className="border-t border-slate-900 bg-[#02050c] text-slate-400 py-16 w-full">
+          <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-5 gap-8 border-b border-slate-900 pb-12">
+            
+            {/* Logo and Tagline column */}
+            <div className="col-span-2 space-y-4">
+              <div className="flex items-center gap-2.5">
+                <img src={logo} alt="CodeViz Logo" className="w-7 h-7 object-contain rounded-lg border border-slate-800" />
+                <span className="text-xs font-black tracking-wider text-white font-mono uppercase">CodeViz Academy</span>
               </div>
-              <p className="text-xs text-zinc-400 leading-relaxed">
-                Start tracking algorithms, complete baseline DSA sheets, and explore default roadmaps.
+              <p className="text-[11px] text-slate-500 leading-relaxed max-w-sm">
+                A structured engineering workspace providing step-by-step tracks, sandbox code compilations, ATS auditor scorecards, and live peer networks.
               </p>
-              <ul className="space-y-2 text-xs text-zinc-500 pt-4 border-t border-zinc-800 font-mono">
-                <li>✓ 905 DSA Practice Problems</li>
-                <li>✓ Basic Code Execution</li>
-                <li>✓ Community Chat Rooms</li>
-                <li>✓ Standard Roadmap Paths</li>
+            </div>
+
+            {/* Links column 1 */}
+            <div className="space-y-3">
+              <span className="block text-[10px] font-bold text-slate-300 uppercase tracking-widest font-mono">Product</span>
+              <ul className="space-y-2 text-[11px]">
+                <li><a href="#features" className="hover:text-white transition-colors">Platform Features</a></li>
+                <li><a href="#pricing" className="hover:text-white transition-colors">Pricing Options</a></li>
+                <li><span className="text-slate-600 cursor-not-allowed">Product Roadmap</span></li>
               </ul>
             </div>
-            <button
-              onClick={() => navigate('/register')}
-              className="w-full mt-6 py-2.5 bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 text-white font-mono text-xs font-bold rounded-lg transition-colors cursor-pointer text-center"
-            >
-              INITIALIZE ACCOUNT
-            </button>
-          </div>
 
-          {/* Tier 2 */}
-          <div className="border border-zinc-700 bg-zinc-950 p-8 space-y-6 rounded-xl relative flex flex-col justify-between hover:border-zinc-650 transition-all shadow-lg">
-            <div className="absolute top-0 right-8 -translate-y-1/2 bg-white text-black font-mono text-[9px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
-              RECOMMENDED
-            </div>
-            <div className="space-y-4">
-              <h3 className="text-md font-bold tracking-wider font-mono text-zinc-200 uppercase">PRO DEVELOPER</h3>
-              <div className="flex items-baseline gap-1">
-                <span className="text-4xl font-extrabold">₹399</span>
-                <span className="text-xs text-zinc-500 font-mono">/ MONTH</span>
-              </div>
-              <p className="text-xs text-zinc-300 leading-relaxed">
-                Full-stack tool suite for aggressive technical interview preparation and profile validation.
-              </p>
-              <ul className="space-y-2 text-xs text-zinc-400 pt-4 border-t border-zinc-800 font-mono">
-                <li>✓ Everything in Free Sandbox</li>
-                <li>✓ AI-Powered Resume Auditor</li>
-                <li>✓ AI-Assisted Mock Interviews</li>
-                <li>✓ Custom Input Sandbox Testing</li>
-                <li>✓ Priority Hackathon Pipeline</li>
+            {/* Links column 2 */}
+            <div className="space-y-3">
+              <span className="block text-[10px] font-bold text-slate-300 uppercase tracking-widest font-mono">Resources</span>
+              <ul className="space-y-2 text-[11px]">
+                <li><span onClick={() => navigate('/login')} className="hover:text-white transition-colors cursor-pointer">Learning Dashboard</span></li>
+                <li><a href="#faq" className="hover:text-white transition-colors">Help & FAQ</a></li>
+                <li><a href="https://github.com/SarikaChaudhary18/CodeViz-Academy" className="hover:text-white flex items-center gap-1 transition-colors"><Github size={10} /> GitHub Source</a></li>
               </ul>
             </div>
-            <button
-              onClick={() => navigate('/register')}
-              className="w-full mt-6 py-2.5 bg-white text-black hover:bg-zinc-200 font-mono text-xs font-bold rounded-lg transition-colors cursor-pointer text-center shadow-md"
-            >
-              UPGRADE TO PRO
-            </button>
-          </div>
 
-          {/* Tier 3 */}
-          <div className="border border-zinc-800 bg-[#09090b] p-8 space-y-6 rounded-xl flex flex-col justify-between hover:border-zinc-700 transition-all">
-            <div className="space-y-4">
-              <h3 className="text-md font-bold tracking-wider font-mono text-zinc-400 uppercase">TEAM STACK</h3>
-              <div className="flex items-baseline gap-1">
-                <span className="text-4xl font-extrabold">₹699</span>
-                <span className="text-xs text-zinc-500 font-mono">/ MONTH</span>
-              </div>
-              <p className="text-xs text-zinc-400 leading-relaxed">
-                Shared workspace features designed for bootcamp cohorts, hacker groups, and university squads.
-              </p>
-              <ul className="space-y-2 text-xs text-zinc-500 pt-4 border-t border-zinc-800 font-mono">
-                <li>✓ Everything in Pro Developer</li>
-                <li>✓ Dedicated Shared Squad Rooms</li>
-                <li>✓ Batch Performance Analytics</li>
-                <li>✓ Custom Interview Pipelines</li>
-                <li>✓ Priority Live Support</li>
+            {/* Links column 3 */}
+            <div className="space-y-3">
+              <span className="block text-[10px] font-bold text-slate-300 uppercase tracking-widest font-mono">Legal</span>
+              <ul className="space-y-2 text-[11px]">
+                <li><span onClick={() => navigate('/login')} className="hover:text-white transition-colors cursor-pointer">Privacy Policy</span></li>
+                <li><span onClick={() => navigate('/login')} className="hover:text-white transition-colors cursor-pointer">Terms of Service</span></li>
+                <li><span onClick={() => navigate('/login')} className="hover:text-white transition-colors cursor-pointer">Support Form</span></li>
               </ul>
             </div>
-            <button
-              onClick={() => navigate('/register')}
-              className="w-full mt-6 py-2.5 bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 text-white font-mono text-xs font-bold rounded-lg transition-colors cursor-pointer text-center"
-            >
-              CREATE TEAM SQUAD
-            </button>
           </div>
-        </div>
-      </section>
 
-      {/* Cinematic Curtain Reveal Footer */}
-      <CinematicFooter navigate={navigate} isDark={isDark} />
+          <div className="max-w-7xl mx-auto px-6 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[10px] text-slate-500 font-mono">
+            <span>© 2026 CodeViz Academy. All rights reserved.</span>
+            <div className="flex items-center gap-2 bg-slate-900/50 border border-slate-850 px-4 py-2 rounded-full cursor-default">
+              <span>DESIGNED FOR GENERAL PLACEMENT ACCELERATION</span>
+            </div>
+          </div>
+        </footer>
+
+      </div>
     </div>
   );
 }
-
