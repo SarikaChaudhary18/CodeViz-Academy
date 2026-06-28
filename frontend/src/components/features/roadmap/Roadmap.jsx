@@ -8,7 +8,7 @@ import {
   ChevronRight, ChevronDown, ExternalLink, BookOpen, Code2,
   CheckCircle2, Circle, Lock, Zap, Target, Terminal, Lightbulb,
   Trophy, HelpCircle, ChevronLeft, Search, X, Clock, BarChart2,
-  BookOpenCheck, Shield, ChevronUp, Layers, Cpu, Award
+  BookOpenCheck, Shield, ChevronUp, Layers, Cpu, Award, Globe, Brain, Settings, Smartphone, MapPin
 } from 'lucide-react';
 import { TRACKS, ROADMAPS } from './roadmapData.js';
 
@@ -495,7 +495,7 @@ export default function Roadmap() {
             suggestions.push({
               title: `${n.title} Roadmap`,
               subtitle: `Access core curriculum for ${n.title} in ${t.label}`,
-              icon: '📍',
+              icon: 'pin',
               action: () => {
                 setSelectedTrackId(t.id);
                 setTimeout(() => setSelectedNode(n), 150);
@@ -504,7 +504,7 @@ export default function Roadmap() {
             suggestions.push({
               title: `${n.title} Interview Prep`,
               subtitle: `Review best practices and practice quiz questions`,
-              icon: '🏆',
+              icon: 'award',
               action: () => {
                 setSelectedTrackId(t.id);
                 setTimeout(() => setSelectedNode(n), 150);
@@ -523,9 +523,54 @@ export default function Roadmap() {
     );
   };
 
+  const handleSearchSubmit = (queryText) => {
+    const q = (queryText || searchQuery).trim().toLowerCase();
+    if (!q) return;
+
+    let matchFound = false;
+    for (const t of TRACKS) {
+      const r = ROADMAPS[t.id];
+      if (!r) continue;
+      for (const p of r.phases) {
+        for (const n of p.nodes) {
+          if (n.title.toLowerCase().includes(q)) {
+            setSelectedTrackId(t.id);
+            setSelectedNode(n);
+            setSearchQuery('');
+            setSearchOpen(false);
+            
+            // Scroll to the timeline section
+            const timelineEl = document.getElementById('timeline');
+            if (timelineEl) {
+              timelineEl.scrollIntoView({ behavior: 'smooth' });
+            }
+            matchFound = true;
+            break;
+          }
+        }
+        if (matchFound) break;
+      }
+      if (matchFound) break;
+    }
+  };
+
   const handleTrackChange = (trackId) => {
     setSelectedTrackId(trackId);
     setSelectedNode(null);
+  };
+
+  const handleNodeClick = (node) => {
+    setSelectedNode(node);
+  };
+
+  const renderTrackIcon = (iconName, color) => {
+    const size = 30;
+    if (iconName === 'Globe') return <Globe size={size} style={{ color }} />;
+    if (iconName === 'Brain') return <Brain size={size} style={{ color }} />;
+    if (iconName === 'Settings') return <Settings size={size} style={{ color }} />;
+    if (iconName === 'Cpu') return <Cpu size={size} style={{ color }} />;
+    if (iconName === 'Smartphone') return <Smartphone size={size} style={{ color }} />;
+    return null;
   };
 
   return (
@@ -571,7 +616,7 @@ export default function Roadmap() {
             className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white leading-tight"
           >
             Become a Professional <br className="hidden sm:inline" />
-            <span className="bg-gradient-to-r from-violet-400 via-indigo-300 to-cyan-400 bg-clip-text text-transparent">Software Developer</span>
+            <span className="bg-gradient-to-r from-slate-100 to-slate-400 bg-clip-text text-transparent">Software Developer</span>
           </motion.h1>
 
           <motion.p
@@ -591,11 +636,18 @@ export default function Roadmap() {
             className="max-w-md mx-auto relative px-2"
           >
             <div className="relative">
-              <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
+              <button
+                type="button"
+                onClick={() => handleSearchSubmit()}
+                className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white transition-colors cursor-pointer"
+              >
+                <Search size={16} />
+              </button>
               <input
                 type="text"
                 value={searchQuery}
                 onChange={e => { setSearchQuery(e.target.value); setSearchOpen(!!e.target.value); }}
+                onKeyDown={e => { if (e.key === 'Enter') handleSearchSubmit(); }}
                 placeholder="Search roadmaps, skills or topics..."
                 className="w-full bg-[#151b2a]/90 backdrop-blur border border-white/10 rounded-2xl pl-12 pr-4 py-3.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-violet-500/50 shadow-2xl transition-all"
               />
@@ -626,7 +678,9 @@ export default function Roadmap() {
                       }}
                       className="w-full flex items-center gap-3.5 px-5 py-3 hover:bg-slate-900 border-b border-white/5 last:border-0 text-left transition-colors"
                     >
-                      <span className="text-base flex-shrink-0">{suggestion.icon}</span>
+                      <span className="text-base flex-shrink-0 text-violet-400">
+                        {suggestion.icon === 'pin' ? <MapPin size={14} /> : <Award size={14} />}
+                      </span>
                       <div className="flex-1 min-w-0">
                         <p className="text-xs font-semibold text-white truncate">{suggestion.title}</p>
                         <p className="text-[10px] text-slate-500 truncate mt-0.5 font-sans">{suggestion.subtitle}</p>
@@ -652,7 +706,7 @@ export default function Roadmap() {
               { label: 'Recommended Projects', value: '500+' }
             ].map((stat, i) => (
               <div key={i} className="text-center">
-                <span className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent font-mono">{stat.value}</span>
+                <span className="text-xl sm:text-2xl font-bold text-violet-400 font-mono">{stat.value}</span>
                 <span className="block text-[10px] font-mono uppercase tracking-widest text-slate-500 mt-1">{stat.label}</span>
               </div>
             ))}
@@ -689,7 +743,7 @@ export default function Roadmap() {
                     initial={{ width: 0 }}
                     animate={{ width: `${pct}%` }}
                     transition={{ duration: 0.8, ease: 'easeOut' }}
-                    className="h-full bg-gradient-to-r from-violet-500 to-cyan-400 rounded-full"
+                    className="h-full bg-violet-600 rounded-full"
                   />
                 </div>
               </div>
@@ -756,8 +810,8 @@ export default function Roadmap() {
                   />
 
                   <div>
-                    <span className="text-3xl block group-hover:scale-110 transition-transform select-none">{t.icon}</span>
-                    <h5 className="text-sm font-extrabold text-white mt-3 truncate">{t.label}</h5>
+                    <span className="block group-hover:scale-110 transition-transform select-none mb-2">{renderTrackIcon(t.icon, t.color)}</span>
+                    <h5 className="text-sm font-extrabold text-white mt-1 truncate">{t.label}</h5>
                   </div>
 
                   <div className="space-y-1">
@@ -947,7 +1001,7 @@ export default function Roadmap() {
                   </p>
 
                   <div className="flex justify-between items-center mt-5 text-[10px] font-mono text-slate-500 uppercase">
-                    <span>⭐⭐☆ Difficulty</span>
+                    <span>Difficulty</span>
                     <button 
                       onClick={() => handleNodeClick(phase.nodes[0])}
                       className="text-white font-bold hover:underline flex items-center gap-0.5 cursor-pointer"
@@ -970,12 +1024,12 @@ export default function Roadmap() {
 
         {/* ─── 7️⃣ DOCUMENTATION ENGINE (VS Code Feel) ─── */}
         <section id="docs" className="scroll-mt-10">
-          <DocEngine />
+          <DocEngine trackId={selectedTrackId} />
         </section>
 
         {/* ─── 8️⃣ RESOURCE INDEX (Netflix Style Carousels) ─── */}
         <section id="resources" className="scroll-mt-10">
-          <ResourceEngine />
+          <ResourceEngine trackId={selectedTrackId} />
         </section>
 
         {/* ─── 6️⃣ AI CAREER BLUEPRINT PLANNER ─── */}

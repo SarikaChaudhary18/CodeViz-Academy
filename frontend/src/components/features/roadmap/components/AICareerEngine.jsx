@@ -118,7 +118,7 @@ export default function AICareerEngine() {
           <button
             type="submit"
             disabled={loading || !form.targetRole.trim()}
-            className="w-full py-3 bg-gradient-to-r from-amber-500 to-orange-600 hover:brightness-110 disabled:opacity-50 text-slate-950 font-bold uppercase rounded-xl tracking-wider transition-all flex items-center justify-center gap-2 shadow-md shadow-amber-500/10 cursor-pointer text-xs"
+            className="w-full py-3 bg-violet-600 hover:bg-violet-700 disabled:opacity-50 text-white font-bold uppercase rounded-xl tracking-wider transition-all flex items-center justify-center gap-2 shadow-md shadow-violet-600/10 cursor-pointer text-xs"
           >
             {loading ? (
               <>

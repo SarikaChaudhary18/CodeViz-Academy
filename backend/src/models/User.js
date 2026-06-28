@@ -74,6 +74,10 @@ const UserSchema = new mongoose.Schema({
     type: String, // YYYY-MM-DD
     default: null,
   },
+  bookmarkedRoadmaps: {
+    type: [String],
+    default: [],
+  },
 }, {
   timestamps: true,
 });

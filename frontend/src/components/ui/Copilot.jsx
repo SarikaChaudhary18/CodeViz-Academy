@@ -138,7 +138,7 @@ export default function Copilot() {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => setIsOpen(!isOpen)}
-          className="w-12 h-12 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 flex items-center justify-center text-black cursor-pointer shadow-[0_4px_20px_rgba(6,182,212,0.4)] relative"
+          className="w-12 h-12 rounded-full bg-violet-600 hover:bg-violet-700 flex items-center justify-center text-white cursor-pointer shadow-[0_4px_20px_rgba(139,92,246,0.3)] relative"
         >
           {isOpen ? <X size={20} /> : <Sparkles size={20} className="animate-pulse" />}
         </motion.button>
@@ -157,7 +157,7 @@ export default function Copilot() {
             {/* Header */}
             <div className="p-4 border-b border-white/5 flex items-center justify-between bg-white/[0.02]">
               <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-lg bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400">
+                <div className="w-8 h-8 rounded-lg bg-violet-500/10 border border-violet-500/20 flex items-center justify-center text-violet-400">
                   <Bot size={16} />
                 </div>
                 <div>
@@ -174,7 +174,7 @@ export default function Copilot() {
                 <span className="text-[9px] font-mono text-zinc-400 uppercase tracking-widest block">
                   DAILY AI QUOTA
                 </span>
-                <span className="text-xs font-mono font-bold text-cyan-400">
+                <span className="text-xs font-mono font-bold text-violet-400">
                   {user?.aiUsageToday || 0} / {parseInt(import.meta.env.VITE_DAILY_AI_LIMIT || "5", 10)} USED
                 </span>
               </div>
@@ -191,7 +191,7 @@ export default function Copilot() {
                   )}
                   <div className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-xs leading-relaxed ${
                     msg.role === 'user'
-                      ? 'bg-cyan-500 text-black font-semibold'
+                      ? 'bg-violet-600 text-white font-semibold'
                       : msg.isError 
                       ? 'bg-rose-950/20 border border-rose-500/20 text-rose-300'
                       : 'bg-white/[0.02] border border-white/5 text-zinc-300'
@@ -202,7 +202,7 @@ export default function Copilot() {
               ))}
               {loading && (
                 <div className="flex items-center gap-2 text-zinc-500 text-[10px] font-mono animate-pulse">
-                  <Cpu size={12} className="animate-spin text-cyan-400" /> WAKING MODEL AND EXAMINING PROMPT...
+                  <Cpu size={12} className="animate-spin text-violet-400" /> WAKING MODEL AND EXAMINING PROMPT...
                 </div>
               )}
               <div ref={chatEndRef} />
@@ -244,13 +244,13 @@ export default function Copilot() {
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
                   placeholder="Ask a question or upload code image..."
-                  className="flex-1 bg-white/[0.02] border border-white/5 hover:border-white/10 focus:border-cyan-500/50 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none placeholder-zinc-500 font-sans"
+                  className="flex-1 bg-white/[0.02] border border-white/5 hover:border-white/10 focus:border-violet-500/50 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none placeholder-zinc-500 font-sans"
                 />
 
                 <button
                   type="submit"
                   disabled={loading || (!prompt.trim() && !image)}
-                  className="p-2.5 bg-cyan-500 hover:bg-cyan-400 disabled:bg-zinc-800 text-black disabled:text-zinc-600 rounded-xl transition-all cursor-pointer"
+                  className="p-2.5 bg-violet-600 hover:bg-violet-700 disabled:bg-zinc-800 text-white disabled:text-zinc-600 rounded-xl transition-all cursor-pointer"
                 >
                   <Send size={14} />
                 </button>

@@ -69,31 +69,109 @@ const ROADMAP_SH_TRACKS = [
 
 // ─── AI-powered node generator ────────────────────────────────────────────────
 async function generateRoadmapNodes(roadmapId, title) {
-  const prompt = `You are a senior curriculum engineer at roadmap.sh. Build a professional sequential learning path for the track: "${title}".
-
-Return ONLY a valid JSON object (no markdown, no code fences):
+  const prompt = `You are an elite curriculum engineer at roadmap.sh. Build a professional sequential learning path for the track: "${title}".
+      
+Return ONLY a valid JSON object (no markdown wrappers, no code fences):
 {
   "description": "Step by step guide to mastering ${title} in 2026",
+  "difficulty": "Beginner|Intermediate|Advanced",
+  "estimatedDuration": "3 months",
+  "category": "Web Development|AI & Data Science|DevOps|Mobile Development|Data Engineering|Cybersecurity",
+  "tags": ["tag1", "tag2"],
+  "learningOutcomes": ["Outcome 1", "Outcome 2"],
+  "careerRoles": ["Job Title 1", "Job Title 2"],
+  "resources": [
+    {
+      "title": "Resource Title",
+      "provider": "Provider Name",
+      "type": "documentation|video|course|book",
+      "difficulty": "Beginner|Intermediate|Advanced",
+      "duration": "e.g. 5 hours",
+      "rating": 4.8,
+      "cost": "free|paid",
+      "url": "https://example.com",
+      "thumbnail": "https://example.com/image.png"
+    }
+  ],
+  "documentation": [
+    {
+      "topic": "Topic Name",
+      "summary": "Short summary...",
+      "deepDive": "Detailed deep dive description...",
+      "commonMistakes": "Common mistakes to avoid...",
+      "bestPractices": "Best practices for production...",
+      "codeExamples": "Code snippet...",
+      "references": "https://example.com"
+    }
+  ],
+  "graph": {
+    "nodes": [
+      {
+        "id": "node1",
+        "label": "Node Label",
+        "type": "root|milestone|tool",
+        "level": 1,
+        "color": "#a855f7"
+      }
+    ],
+    "edges": [
+      {
+        "from": "node1",
+        "to": "node2",
+        "relation": "prerequisite"
+      }
+    ]
+  },
   "nodes": [
     {
-      "title": "Concise milestone title",
-      "description": "Detailed description covering key tools, practices, concepts and theories for this milestone.",
-      "quiz": {
-        "question": "A precise conceptual multiple-choice question to verify deep understanding of this milestone.",
-        "options": ["Option A", "Option B", "Option C", "Option D"],
-        "answer": 0
-      },
-      "capstone": "A concrete hands-on project mission the learner must build and deploy to check off this node."
+      "nodeId": "unique-node-id",
+      "title": "Milestone title",
+      "shortDescription": "Quick overview...",
+      "detailedDescription": "Deep-dive concept explanation...",
+      "difficulty": "Beginner|Intermediate|Advanced",
+      "estimatedHours": 10,
+      "order": 1,
+      "prerequisites": [],
+      "learningObjectives": ["Objective 1", "Objective 2"],
+      "technologies": ["Tool1", "Tool2"],
+      "resources": [
+        {
+          "title": "Node specific resource",
+          "url": "https://example.com",
+          "type": "video|article"
+        }
+      ],
+      "documentation": [
+        {
+          "topic": "Node specific topic",
+          "summary": "Summary..."
+        }
+      ],
+      "projects": [
+        {
+          "title": "Mini Project Title",
+          "description": "Mini project requirement details...",
+          "difficulty": "Beginner|Intermediate|Advanced",
+          "estimatedHours": 5
+        }
+      ],
+      "quizzes": [
+        {
+          "question": "Quiz question text?",
+          "difficulty": "Easy|Medium|Hard",
+          "topic": "Subtopic",
+          "options": ["Option A", "Option B", "Option C", "Option D"],
+          "answer": 0,
+          "explanation": "Why correct option is correct",
+          "hint": "Hint to solve the quiz"
+        }
+      ],
+      "capstone": "Main hands-on project description to complete this node."
     }
   ]
 }
 
-Requirements:
-- Exactly 5 nodes in strict logical learning order (foundational → advanced)
-- Each node must build on the previous
-- Questions must test conceptual depth, not trivial facts
-- Capstone projects must be deployable/demonstrable
-- Strict valid JSON. No comments. No markdown wrapper.`;
+Provide exactly 4 or 5 high-quality nodes in logical order. Ensure the graph edges connect all these nodes correctly. Ensure strict valid JSON output. No markdown block wrapper. No comment lines.`;
 
   const result = await aiService.generateContentJSON(prompt);
   return result;
@@ -105,6 +183,7 @@ async function triggerRoadmapSeeding() {
     const existing = await Roadmap.find().select('roadmapId').lean();
     const existingIds = new Set(existing.map(r => r.roadmapId));
 
+    // Limit seeding to a very small set or check missing
     const toSeed = ROADMAP_SH_TRACKS.filter(t => !existingIds.has(t.roadmapId));
 
     if (toSeed.length === 0) {
@@ -112,19 +191,45 @@ async function triggerRoadmapSeeding() {
       return;
     }
 
-    logger.info(`Roadmap Seeder: Seeding ${toSeed.length} new roadmaps from roadmap.sh track list...`);
+    logger.info(`Roadmap Seeder: Seeding ${toSeed.length} new roadmaps with expanded structured schemas...`);
 
     let seeded = 0;
 
     for (const track of toSeed) {
       try {
         const generated = await generateRoadmapNodes(track.roadmapId, track.title);
+        
+        // Calculate stats
+        const totalNodes = generated.nodes ? generated.nodes.length : 0;
+        const totalProjects = generated.nodes ? generated.nodes.reduce((sum, n) => sum + (n.projects ? n.projects.length : 0), 0) + generated.nodes.filter(n => n.capstone).length : 0;
+        const totalResources = (generated.resources ? generated.resources.length : 0) + (generated.nodes ? generated.nodes.reduce((sum, n) => sum + (n.resources ? n.resources.length : 0), 0) : 0);
+        const totalDocs = (generated.documentation ? generated.documentation.length : 0) + (generated.nodes ? generated.nodes.reduce((sum, n) => sum + (n.documentation ? n.documentation.length : 0), 0) : 0);
+
         await Roadmap.findOneAndUpdate(
           { roadmapId: track.roadmapId },
           {
             roadmapId: track.roadmapId,
             title: track.title,
             description: generated.description || `Step by step guide to master ${track.title} in 2026`,
+            icon: generated.icon || '',
+            color: generated.color || '#06b6d4',
+            banner: generated.banner || '',
+            difficulty: generated.difficulty || 'Intermediate',
+            estimatedDuration: generated.estimatedDuration || '3 months',
+            category: generated.category || 'Web Development',
+            tags: generated.tags || [],
+            stats: {
+              totalNodes,
+              totalProjects,
+              totalResources,
+              totalDocs
+            },
+            resources: generated.resources || [],
+            documentation: generated.documentation || [],
+            graph: generated.graph || { nodes: [], edges: [] },
+            careerRoles: generated.careerRoles || [],
+            prerequisites: generated.prerequisites || [],
+            learningOutcomes: generated.learningOutcomes || [],
             nodes: generated.nodes || [],
             sourceUrl: `https://roadmap.sh/${track.roadmapId}`
           },
@@ -146,4 +251,4 @@ async function triggerRoadmapSeeding() {
   }
 }
 
-module.exports = { triggerRoadmapSeeding, ROADMAP_SH_TRACKS };
+module.exports = { triggerRoadmapSeeding, ROADMAP_SH_TRACKS, generateRoadmapNodes };

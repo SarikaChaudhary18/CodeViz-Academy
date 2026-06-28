@@ -1,10 +1,10 @@
 // ─── TRACKS ──────────────────────────────────────────────────────────────────
 export const TRACKS = [
-  { id: 'web-dev',  label: 'Web Dev',    icon: '🌐', color: '#06b6d4' },
-  { id: 'dsa',      label: 'DSA',        icon: '🧠', color: '#a855f7' },
-  { id: 'devops',   label: 'DevOps',     icon: '⚙️', color: '#f97316' },
-  { id: 'ai-ml',    label: 'AI / ML',    icon: '🤖', color: '#ec4899' },
-  { id: 'mobile',   label: 'Mobile',     icon: '📱', color: '#22c55e' },
+  { id: 'web-dev',  label: 'Web Dev',    icon: 'Globe', color: '#06b6d4' },
+  { id: 'dsa',      label: 'DSA',        icon: 'Brain', color: '#a855f7' },
+  { id: 'devops',   label: 'DevOps',     icon: 'Settings', color: '#f97316' },
+  { id: 'ai-ml',    label: 'AI / ML',    icon: 'Cpu', color: '#ec4899' },
+  { id: 'mobile',   label: 'Mobile',     icon: 'Smartphone', color: '#22c55e' },
 ];
 
 // ─── ROADMAPS ─────────────────────────────────────────────────────────────────

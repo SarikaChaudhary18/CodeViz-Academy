@@ -70,6 +70,7 @@ exports.login = async (req, res, next) => {
     const user = await User.findOne({ email });
     
     if (!user || !(await bcrypt.compare(password, user.password))) {
+      logger.warn(`Failed login attempt for email: ${email}`);
       return res.status(401).json({ status: 'fail', message: 'Invalid credentials.' });
     }
 

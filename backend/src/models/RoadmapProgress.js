@@ -12,9 +12,45 @@ const RoadmapProgressSchema = new mongoose.Schema({
     required: true,
   },
   completedNodes: {
-    type: [Number], // Indices of completed nodes, e.g. [0, 1]
-    default: [0],   // First node (index 0) is unlocked/completed by default
+    type: [String], // Array of completed nodeIds (or node indices as strings)
+    default: [],
   },
+  currentNode: {
+    type: String,
+    default: '',
+  },
+  completionPercentage: {
+    type: Number,
+    default: 0,
+  },
+  xpEarned: {
+    type: Number,
+    default: 0,
+  },
+  streak: {
+    type: Number,
+    default: 0,
+  },
+  badges: {
+    type: [String],
+    default: [],
+  },
+  lastVisitedNode: {
+    type: String,
+    default: '',
+  },
+  lastVisitedAt: {
+    type: Date,
+    default: null,
+  },
+  completedProjects: {
+    type: [String], // NodeIds of completed capstones/mini projects
+    default: [],
+  },
+  quizScore: {
+    type: Number,
+    default: 0,
+  }
 }, {
   timestamps: true,
 });

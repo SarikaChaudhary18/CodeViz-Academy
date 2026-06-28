@@ -338,7 +338,7 @@ export default function CompanyPrepSandbox({ question, onClose, onComplete }) {
             initial={{ opacity: 0, y: -30, x: '-50%' }}
             animate={{ opacity: 1, y: 0, x: '-50%' }}
             exit={{ opacity: 0, y: -30, x: '-50%' }}
-            className="fixed top-6 left-1/2 z-50 bg-gradient-to-r from-cyan-500 to-emerald-400 text-black font-extrabold font-mono text-sm px-6 py-3 rounded-2xl shadow-[0_0_30px_rgba(0,255,255,0.4)] flex items-center gap-2"
+            className="fixed top-6 left-1/2 z-50 bg-gradient-to-r from-violet-600 to-indigo-600 text-white font-extrabold font-mono text-sm px-6 py-3 rounded-2xl shadow-[0_4px_25px_rgba(139,92,246,0.3)] flex items-center gap-2"
           >
             <Zap size={16} className="fill-current animate-bounce" /> {xpToast} Earned! Code Accepted.
           </motion.div>
@@ -399,7 +399,7 @@ export default function CompanyPrepSandbox({ question, onClose, onComplete }) {
           <button
             onClick={handleSubmit}
             disabled={isRunning || isSubmitting}
-            className="flex items-center gap-1.5 px-4 py-1.5 rounded-lg bg-gradient-to-r from-cyan-500 to-emerald-400 text-black text-xs font-mono font-bold transition-all hover:opacity-90 disabled:opacity-50 cursor-pointer"
+            className="flex items-center gap-1.5 px-4 py-1.5 rounded-lg bg-violet-600 hover:bg-violet-700 text-white text-xs font-mono font-bold transition-all disabled:opacity-50 cursor-pointer"
           >
             {isSubmitting ? <Loader2 size={13} className="animate-spin" /> : <Send size={13} />}
             Submit

@@ -43,16 +43,20 @@ const RELATIONSHIPS = {
     { source: 'MVVM/MVI', target: 'Clean Architecture', desc: 'Layered domain encapsulation' },
     { source: 'Clean Architecture', target: 'Dagger Hilt', desc: 'Module dependency injection' },
     { source: 'Dagger Hilt', target: 'Room DB', desc: 'Local SQL database storage' }
+  ],
+  'dsa': [
+    { source: 'Arrays & Strings', target: 'Linked Lists', desc: 'Linear sequential pointer manipulation' },
+    { source: 'Arrays & Strings', target: 'Sorting Algorithms', desc: 'Ordering items efficiently' },
+    { source: 'Linked Lists', target: 'Trees & BST', desc: 'Transition from linear to hierarchical nodes' },
+    { source: 'Sorting Algorithms', target: 'Dynamic Programming', desc: 'Complexity optimization and subproblem sorting' },
+    { source: 'Trees & BST', target: 'Dynamic Programming', desc: 'Overlapping subproblems on trees and graphs' }
   ]
 };
 
 export default function KnowledgeGraph({ roadmapId = 'web-dev' }) {
   // Map internal track names to match relationships keys
   const getMappedTrackId = (id) => {
-    if (id === 'web-dev') return 'web-dev';
-    if (id === 'ai-ml') return 'ai-ml';
-    if (id === 'devops') return 'devops';
-    if (id === 'mobile') return 'mobile';
+    if (id === 'web-dev' || id === 'ai-ml' || id === 'devops' || id === 'mobile' || id === 'dsa') return id;
     return 'web-dev';
   };
 
