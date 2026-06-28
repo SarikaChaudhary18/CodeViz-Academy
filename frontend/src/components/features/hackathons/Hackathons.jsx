@@ -229,13 +229,13 @@ export default function Hackathons() {
                       {/* Host & status labels row */}
                       <div className="flex justify-between items-start gap-2 mb-3 w-full min-w-0">
                         <span className="text-[9px] font-mono text-slate-400 uppercase tracking-widest truncate min-w-0 flex-1">{h.host}</span>
-                        <div className="flex items-center gap-1.5 shrink-0">
+                        <div className="flex items-center gap-1.5 shrink-0 min-w-0 max-w-[65%] flex-wrap justify-end">
                           {h.prizePool && (
-                            <span className="px-2 py-0.5 rounded bg-amber-500/10 border border-amber-500/20 text-[9px] font-mono font-bold text-amber-400 flex items-center gap-1">
+                            <span className="px-2 py-0.5 rounded bg-amber-500/10 border border-amber-500/20 text-[9px] font-mono font-bold text-amber-400 flex items-center gap-1 max-w-full break-words whitespace-normal text-right">
                               🏆 {h.prizePool}
                             </span>
                           )}
-                          <span className={cn("px-2 py-0.5 rounded border text-[9px] font-mono font-bold", status.class)}>
+                          <span className={cn("px-2 py-0.5 rounded border text-[9px] font-mono font-bold shrink-0", status.class)}>
                             {status.label}
                           </span>
                         </div>
