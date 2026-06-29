@@ -375,10 +375,16 @@ export default function DsaSheets() {
                                               target="_blank"
                                               rel="noopener noreferrer"
                                               onClick={e => e.stopPropagation()}
-                                              className="p-1.5 rounded-lg text-gray-600 hover:text-violet-400 hover:bg-violet-400/10 transition-all"
-                                              title="Open on LeetCode"
+                                              className="p-1.5 rounded-lg text-gray-600 hover:bg-violet-400/10 transition-all flex items-center justify-center"
+                                              title={p.link.includes('leetcode.com') ? "Open on LeetCode" : "Open Link"}
                                             >
-                                              <ExternalLink size={12} />
+                                              {p.link.includes('leetcode.com') ? (
+                                                <svg className="w-3.5 h-3.5 fill-[#FFA116]" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                  <path d="M13.483 0a1.374 1.374 0 0 0-.961.438L7.116 6.226l-3.854 4.126a5.266 5.266 0 0 0-1.209 2.104 5.35 5.35 0 0 0-.125.513 5.527 5.527 0 0 0 .062 2.362 5.83 5.83 0 0 0 .349 1.017 5.938 5.938 0 0 0 1.271 1.818l4.277 4.193.039.038c2.248 2.165 5.852 2.133 8.063-.074l2.396-2.392c.54-.54.54-1.414.074-1.954l-5.32-5.594c-.062-.062-.125-.125-.187-.188l3.966-4.254c.484-.53.473-1.378-.023-1.895l-2.072-2.073c-.274-.274-.633-.427-.999-.427zM6.53 14.773l1.879-1.996a.915.915 0 0 1 1.272 0l1.876 1.996a.915.915 0 0 1 0 1.273l-1.876 1.996a.915.915 0 0 1-1.272 0L6.53 16.046a.915.915 0 0 1 0-1.273zm10.94 0l1.877-1.996a.915.915 0 0 1 1.273 0l1.877 1.996a.915.915 0 0 1 0 1.273l-1.877 1.996a.915.915 0 0 1-1.273 0l-1.877-1.996a.915.915 0 0 1 0-1.273z"/>
+                                                </svg>
+                                              ) : (
+                                                <ExternalLink size={12} className="text-gray-600 hover:text-violet-400" />
+                                              )}
                                             </a>
                                           )}
                                           {/* Solve in Sandbox */}
