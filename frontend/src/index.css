@@ -20,6 +20,25 @@
   --color-popover-foreground: #ffffff;
   
   --animate-spin-slow: spin 5s linear infinite;
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(calc(-100% - var(--gap, 4rem)));
+    }
+  }
+  @keyframes marquee-reverse {
+    from {
+      transform: translateX(calc(-100% - var(--gap, 4rem)));
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+  --animate-marquee: marquee var(--duration, 30s) linear infinite;
+  --animate-marquee-reverse: marquee-reverse var(--duration, 30s) linear infinite;
 }
 
 /* Custom base styles and scrollbars */

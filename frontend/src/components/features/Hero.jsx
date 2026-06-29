@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import {
   Play,
   ArrowRight,
@@ -15,24 +15,120 @@ import {
   Award,
   Shield,
   Search,
-  Code
+  Code,
+  Heart,
+  Mail,
+  Instagram,
+  Linkedin,
+  Youtube,
+  Sun,
+  Moon,
+  MessageSquare
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import logo from '../../assets/logo.png';
 import { cn } from "../../lib/utils";
+import Lightning from '../ui/Lightning';
+import { Marquee } from '../ui/marquee';
+
+import googleLogo from '../../assets/logos/google.png';
+import microsoftLogo from '../../assets/logos/microsoft.png';
+import adobeLogo from '../../assets/logos/adobe.png';
+import metaLogo from '../../assets/logos/meta.png';
+import netflixLogo from '../../assets/logos/netflix.png';
+import atlassianLogo from '../../assets/logos/atlassian.png';
+import veersaLogo from '../../assets/logos/veersa.png';
+import wiproLogo from '../../assets/logos/wipro.png';
+import cognizantLogo from '../../assets/logos/cognizant.png';
+import jpmorganLogo from '../../assets/logos/jpmorgan.png';
+import eyLogo from '../../assets/logos/ey.png';
+import morganstanleyLogo from '../../assets/logos/morganstanley.png';
 
 // Rotating features for hero subheading
 const ROTATING_TOPICS = ["DSA Sheets", "Interactive Roadmaps", "ATS Resume Auditing", "Mock Interviews"];
 
-// Grayscale Company List
+// Grayscale Company List using high-quality vector URLs from Simple Icons
 const COMPANIES = [
-  { name: "Google", logo: "Google" },
-  { name: "Microsoft", logo: "Microsoft" },
-  { name: "Amazon", logo: "Amazon" },
-  { name: "Adobe", logo: "Adobe" },
-  { name: "Meta", logo: "Meta" },
-  { name: "Netflix", logo: "Netflix" }
+  { name: "Google", logo: googleLogo },
+  { name: "Microsoft", logo: microsoftLogo },
+  { name: "Adobe", logo: adobeLogo },
+  { name: "Meta", logo: metaLogo },
+  { name: "Netflix", logo: netflixLogo },
+  { name: "Atlassian", logo: atlassianLogo },
+  { name: "Veersa", logo: veersaLogo },
+  { name: "Wipro", logo: wiproLogo },
+  { name: "Cognizant", logo: cognizantLogo },
+  { name: "JP Morgan", logo: jpmorganLogo },
+  { name: "EY", logo: eyLogo },
+  { name: "Morgan Stanley", logo: morganstanleyLogo }
 ];
+
+const navigation = {
+  categories: [
+    {
+      id: "codeviz",
+      name: "CodeViz Academy",
+      sections: [
+        {
+          id: "tracks",
+          name: "Tracks",
+          items: [
+            { name: "DSA Sheets", href: "/login" },
+            { name: "Roadmaps", href: "/login" },
+            { name: "Language Tracks", href: "/login" },
+          ],
+        },
+        {
+          id: "features",
+          name: "Features",
+          items: [
+            { name: "Code Sandbox", href: "/login" },
+            { name: "Resume Auditor", href: "/login" },
+            { name: "Mock Interviews", href: "/login" },
+          ],
+        },
+        {
+          id: "workspace",
+          name: "Workspace",
+          items: [
+            { name: "Active Sprint", href: "/login" },
+            { name: "Submissions", href: "/login" },
+            { name: "Code Editor", href: "/login" },
+          ],
+        },
+        {
+          id: "community",
+          name: "Community",
+          items: [
+            { name: "Peer Squads", href: "/login" },
+            { name: "Leaderboards", href: "/login" },
+            { name: "GitHub Source", href: "https://github.com/SarikaChaudhary18/CodeViz-Academy" },
+          ],
+        },
+        {
+          id: "resources",
+          name: "Resources",
+          items: [
+            { name: "Documentation", href: "/login" },
+            { name: "Platform FAQ", href: "#faq" },
+            { name: "Pricing Plans", href: "#pricing" },
+          ],
+        },
+        {
+          id: "company",
+          name: "Company",
+          items: [
+            { name: "About Us", href: "/login" },
+            { name: "Terms of Service", href: "/login" },
+            { name: "Privacy Policy", href: "/login" },
+          ],
+        },
+      ],
+    },
+  ],
+};
+
+const Underline = `hover:-translate-y-1 border border-dotted border-slate-800 rounded-xl p-2.5 transition-transform flex items-center justify-center text-slate-400 hover:text-white transition-colors`;
 
 // FAQS
 const FAQS = [
@@ -108,6 +204,9 @@ export default function Hero() {
 
       {/* Grid Pattern overlay */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#1f2937_1px,transparent_1px),linear-gradient(to_bottom,#1f2937_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-[0.25] pointer-events-none z-0" />
+
+      {/* WebGL Lightning Thunder Background */}
+      <Lightning />
 
       {/* Modern Sticky Glass Navbar */}
       <nav className="sticky top-0 z-50 w-full border-b border-slate-800/80 bg-[#030712]/75 backdrop-blur-md transition-all">
@@ -315,26 +414,42 @@ export default function Hero() {
         </header>
 
         {/* TRUSTED BY COMPANIES */}
-        <section className="border-t border-slate-900 bg-[#030712]/50 py-10 w-full overflow-hidden">
-          <div className="max-w-7xl mx-auto px-6 text-center space-y-6">
-            <p className="text-[10px] text-slate-500 font-mono uppercase tracking-widest">
+        <section className="bg-transparent py-10 w-full overflow-hidden">
+          <div className="w-full text-center space-y-6">
+            <p className="text-[10px] text-white font-mono uppercase tracking-widest px-6">
               Trusted by learners preparing for technical interview pipelines at
             </p>
-            <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-45 hover:opacity-75 transition-opacity">
-              {COMPANIES.map((company, index) => (
-                <span
-                  key={index}
-                  className="text-lg md:text-xl font-extrabold tracking-tight text-slate-500 font-sans hover:text-indigo-400 cursor-default transition-colors"
-                >
-                  {company.name}
-                </span>
-              ))}
+            <div className="relative w-full opacity-85 hover:opacity-100 transition-opacity">
+              <Marquee pauseOnHover className="py-2">
+                {COMPANIES.map((company, index) => (
+                  <div
+                    key={index}
+                    className="flex flex-col items-center justify-center gap-3.5 px-8 py-2 text-white transition-all cursor-default select-none shrink-0"
+                  >
+                    {company.logo && (
+                      <div className="flex items-center justify-center h-12 w-auto">
+                        <img
+                          src={company.logo}
+                          alt={`${company.name} Logo`}
+                          className="h-12 w-auto object-contain transition-transform duration-300 hover:scale-105"
+                        />
+                      </div>
+                    )}
+                    <span className="text-[10px] font-bold tracking-wider font-mono uppercase text-white/90 hover:text-white transition-colors">
+                      {company.name}
+                    </span>
+                  </div>
+                ))}
+              </Marquee>
+              {/* Fade gradients */}
+              <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-[#030712] to-transparent pointer-events-none z-10" />
+              <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[#030712] to-transparent pointer-events-none z-10" />
             </div>
           </div>
         </section>
 
         {/* LEARNING STATISTICS */}
-        <section className="max-w-7xl mx-auto px-6 py-16 border-t border-slate-900">
+        <section className="max-w-7xl mx-auto px-6 py-16">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
             <div className="bg-slate-900/30 border border-slate-850 p-6 rounded-2xl backdrop-blur-sm">
               <span className="block text-3xl md:text-4xl font-extrabold text-white tracking-tight">{stats.roadmaps}</span>
@@ -356,7 +471,7 @@ export default function Hero() {
         </section>
 
         {/* BENTO FEATURE WORKSPACE PREVIEW */}
-        <section id="bento" className="max-w-7xl mx-auto px-6 py-20 border-t border-slate-900">
+        <section id="bento" className="max-w-7xl mx-auto px-6 py-20">
           <div className="text-center space-y-4 mb-16">
             <span className="text-[10px] text-indigo-400 font-mono font-bold tracking-widest uppercase">Visual Preview</span>
             <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight leading-none">
@@ -489,7 +604,7 @@ export default function Hero() {
         </section>
 
         {/* WHY CHOOSE CODEVIZ */}
-        <section id="features" className="max-w-7xl mx-auto px-6 py-20 border-t border-slate-900">
+        <section id="features" className="max-w-7xl mx-auto px-6 py-20">
           <div className="text-center space-y-4 mb-16">
             <span className="text-[10px] text-indigo-400 font-mono font-bold tracking-widest uppercase">Platform Pillars</span>
             <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight leading-none">
@@ -531,7 +646,7 @@ export default function Hero() {
         </section>
 
         {/* TESTIMONIALS */}
-        <section className="max-w-7xl mx-auto px-6 py-20 border-t border-slate-900">
+        <section className="max-w-7xl mx-auto px-6 py-20">
           <div className="text-center space-y-4 mb-16">
             <span className="text-[10px] text-indigo-400 font-mono font-bold tracking-widest uppercase">Testimonials</span>
             <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight leading-none">
@@ -569,7 +684,7 @@ export default function Hero() {
         </section>
 
         {/* PRICING PLANS */}
-        <section id="pricing" className="max-w-7xl mx-auto px-6 py-20 border-t border-slate-900">
+        <section id="pricing" className="max-w-7xl mx-auto px-6 py-20">
           <div className="text-center space-y-4 mb-16">
             <span className="text-[10px] text-indigo-400 font-mono font-bold tracking-widest uppercase">Membership Tiers</span>
             <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight leading-none">
@@ -672,7 +787,7 @@ export default function Hero() {
         </section>
 
         {/* FAQ ACCORDION SECTION */}
-        <section id="faq" className="max-w-4xl mx-auto px-6 py-20 border-t border-slate-900">
+        <section id="faq" className="max-w-4xl mx-auto px-6 py-20">
           <div className="text-center space-y-4 mb-16">
             <span className="text-[10px] text-indigo-400 font-mono font-bold tracking-widest uppercase">FAQ</span>
             <h2 className="text-3xl font-black text-white tracking-tight leading-none">
@@ -720,55 +835,131 @@ export default function Hero() {
         </section>
 
         {/* MODERN PROFESSIONAL FOOTER */}
-        <footer className="border-t border-slate-900 bg-[#02050c] text-slate-400 py-16 w-full">
-          <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-5 gap-8 border-b border-slate-900 pb-12">
-            
-            {/* Logo and Tagline column */}
-            <div className="col-span-2 space-y-4">
-              <div className="flex items-center gap-2.5">
-                <img src={logo} alt="CodeViz Logo" className="w-7 h-7 object-contain rounded-lg border border-slate-800" />
-                <span className="text-xs font-black tracking-wider text-white font-mono uppercase">CodeViz Academy</span>
-              </div>
-              <p className="text-[11px] text-slate-500 leading-relaxed max-w-sm">
-                A structured engineering workspace providing step-by-step tracks, sandbox code compilations, ATS auditor scorecards, and live peer networks.
+        <footer className="w-full bg-[#02050c]/30 text-slate-400 py-12 px-4">
+          <div className="relative mx-auto grid max-w-7xl items-center justify-center gap-6 p-10 pb-0 md:flex">
+            <Link to="/">
+              <p className="flex items-center justify-center rounded-full">
+                <img src={logo} alt="CodeViz Logo" className="w-8 h-8 object-contain rounded-lg border border-slate-800" />
               </p>
-            </div>
+            </Link>
+            <p className="bg-transparent text-center text-[11px] leading-relaxed text-slate-500 md:text-left max-w-4xl">
+              Welcome to CodeViz Academy, a structured engineering workspace designed to accelerate technical interview preparation.
+              We specialize in interactive roadmaps, step-by-step DSA tracks, ATS-optimized resume analysis, and collaborative peer learning.
+              Our mission is to provide developers with the exact tools and feedback loop needed to master algorithmic thinking and stand out in placements.
+            </p>
+          </div>
 
-            {/* Links column 1 */}
-            <div className="space-y-3">
-              <span className="block text-[10px] font-bold text-slate-300 uppercase tracking-widest font-mono">Product</span>
-              <ul className="space-y-2 text-[11px]">
-                <li><a href="#features" className="hover:text-white transition-colors">Platform Features</a></li>
-                <li><a href="#pricing" className="hover:text-white transition-colors">Pricing Options</a></li>
-                <li><span className="text-slate-600 cursor-not-allowed">Product Roadmap</span></li>
-              </ul>
+          <div className="mx-auto max-w-7xl px-6 py-10">
+            <div className="border-b border-dotted border-slate-800/60"> </div>
+            <div className="py-10">
+              {navigation.categories.map((category) => (
+                <div
+                  key={category.name}
+                  className="grid grid-cols-3 flex-row justify-between gap-6 leading-6 md:flex"
+                >
+                  {category.sections.map((section) => (
+                    <div key={section.name} className="space-y-2">
+                      <span className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest font-mono">
+                        {section.name}
+                      </span>
+                      <ul
+                        role="list"
+                        className="flex flex-col space-y-1.5"
+                      >
+                        {section.items.map((item) => (
+                          <li key={item.name} className="flow-root">
+                            <Link
+                              to={item.href}
+                              className="text-xs text-slate-500 hover:text-white transition-colors"
+                            >
+                              {item.name}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              ))}
             </div>
+            <div className="border-b border-dotted border-slate-800/60"> </div>
+          </div>
 
-            {/* Links column 2 */}
-            <div className="space-y-3">
-              <span className="block text-[10px] font-bold text-slate-300 uppercase tracking-widest font-mono">Resources</span>
-              <ul className="space-y-2 text-[11px]">
-                <li><span onClick={() => navigate('/login')} className="hover:text-white transition-colors cursor-pointer">Learning Dashboard</span></li>
-                <li><a href="#faq" className="hover:text-white transition-colors">Help & FAQ</a></li>
-                <li><a href="https://github.com/SarikaChaudhary18/CodeViz-Academy" className="hover:text-white flex items-center gap-1 transition-colors"><Github size={10} /> GitHub Source</a></li>
-              </ul>
+          <div className="flex flex-wrap justify-center items-center gap-6 gap-y-4 px-6 py-4">
+            <div className="flex flex-wrap items-center justify-center gap-6 gap-y-4">
+              <a
+                aria-label="Email"
+                href="mailto:support@codevizacademy.com"
+                target="_blank"
+                rel="noreferrer"
+                className={Underline}
+              >
+                <Mail strokeWidth={1.5} className="h-5 w-5" />
+              </a>
+              <a
+                aria-label="Twitter"
+                href="https://x.com/codeviz_academy"
+                target="_blank"
+                rel="noreferrer"
+                className={Underline}
+              >
+                <MessageSquare strokeWidth={1.5} className="h-5 w-5" />
+              </a>
+              <a
+                aria-label="Instagram"
+                href="https://www.instagram.com/codeviz_academy"
+                target="_blank"
+                rel="noreferrer"
+                className={Underline}
+              >
+                <Instagram className="h-5 w-5" />
+              </a>
+              <a
+                aria-label="LinkedIn"
+                href="https://www.linkedin.com/company/codeviz-academy"
+                target="_blank"
+                rel="noreferrer"
+                className={Underline}
+              >
+                <Linkedin className="h-5 w-5" />
+              </a>
+              <a
+                aria-label="YouTube"
+                href="https://www.youtube.com/@codeviz-academy"
+                target="_blank"
+                rel="noreferrer"
+                className={Underline}
+              >
+                <Youtube className="h-5 w-5" />
+              </a>
             </div>
-
-            {/* Links column 3 */}
-            <div className="space-y-3">
-              <span className="block text-[10px] font-bold text-slate-300 uppercase tracking-widest font-mono">Legal</span>
-              <ul className="space-y-2 text-[11px]">
-                <li><span onClick={() => navigate('/login')} className="hover:text-white transition-colors cursor-pointer">Privacy Policy</span></li>
-                <li><span onClick={() => navigate('/login')} className="hover:text-white transition-colors cursor-pointer">Terms of Service</span></li>
-                <li><span onClick={() => navigate('/login')} className="hover:text-white transition-colors cursor-pointer">Support Form</span></li>
-              </ul>
+            <div className="flex items-center justify-center p-2.5 rounded-xl border border-dotted border-slate-800 hover:bg-slate-900/40 transition-all cursor-pointer">
+              <Sun className="h-5 w-5 text-slate-400 hover:text-white" />
             </div>
           </div>
 
-          <div className="max-w-7xl mx-auto px-6 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[10px] text-slate-500 font-mono">
-            <span>© 2026 CodeViz Academy. All rights reserved.</span>
-            <div className="flex items-center gap-2 bg-slate-900/50 border border-slate-850 px-4 py-2 rounded-full cursor-default">
-              <span>DESIGNED FOR GENERAL PLACEMENT ACCELERATION</span>
+          <div className="mx-auto mb-10 mt-10 flex flex-col justify-between text-center text-xs md:max-w-7xl">
+            <div className="flex flex-row items-center justify-center gap-1 text-slate-600">
+              <span> © </span>
+              <span>{new Date().getFullYear()}</span>
+              <span>Made with</span>
+              <Heart className="text-red-600 mx-1 h-4 w-4 animate-pulse" />
+              <span> by </span>
+              <span className="hover:text-white cursor-pointer text-slate-400 transition-colors">
+                <Link
+                  aria-label="CodeViz Team"
+                  className="font-bold"
+                  to="/"
+                >
+                  CodeViz Team
+                </Link>
+              </span>
+              <span className="mx-1">-</span>
+              <span className="hover:text-white cursor-pointer text-slate-400 transition-colors">
+                <Link aria-label="CodeViz Academy" to="/">
+                  CodeViz Academy
+                </Link>
+              </span>
             </div>
           </div>
         </footer>

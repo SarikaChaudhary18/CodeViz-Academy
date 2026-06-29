@@ -574,7 +574,7 @@ export default function Roadmap() {
   };
 
   return (
-    <div className="min-h-screen bg-[#070b10] text-gray-100 font-sans selection:bg-violet-600/30 selection:text-violet-200 overflow-x-hidden relative pb-20">
+    <div className="min-h-screen bg-transparent text-gray-100 font-sans selection:bg-violet-600/30 selection:text-violet-200 overflow-x-hidden relative pb-20">
       
       {/* Interactive Cursor Follow Glow */}
       <div 

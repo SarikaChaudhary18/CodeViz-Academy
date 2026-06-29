@@ -17,16 +17,13 @@ export default defineConfig({
   server: {
     port: 3000,
     host: true,
-    hmr: {
-      clientPort: 5000,
-    },
     proxy: {
       '/api': {
-        target: 'http://localhost:5000',
+        target: 'http://localhost:5050',
         changeOrigin: true,
       },
       '/socket.io': {
-        target: 'http://localhost:5000',
+        target: 'http://localhost:5050',
         ws: true,
         changeOrigin: true,
       },

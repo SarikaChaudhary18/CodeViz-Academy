@@ -4,6 +4,7 @@ import { Eye, EyeOff, Mail, Sparkles, User, Lock, Briefcase, Building } from "lu
 import { cn } from "../../../lib/utils";
 import { useStore } from "../../../hooks/useStore";
 import logo from '../../../assets/logo.png';
+import Lightning from '../../ui/Lightning';
 
 // ==================== Pupil Component ====================
 const Pupil = ({ 
@@ -322,6 +323,8 @@ export default function Auth({ isRegisterMode = false }) {
       "min-h-screen grid lg:grid-cols-2 font-sans select-none overflow-hidden transition-colors duration-500",
       "bg-[#000000] text-white"
     )}>
+      {/* WebGL Lightning Thunder Background */}
+      <Lightning />
 
       {/* Left Content Section: Cartoon Characters (desktop only) */}
       <div className={cn(
