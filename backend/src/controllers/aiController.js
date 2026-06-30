@@ -83,22 +83,48 @@ Evaluate the candidate's last answer and ask the next challenging technical or b
       aiResult = await aiService.generateContentJSON(prompt);
     } 
     else if (toolType === 'execution-trace') {
-      const prompt = `You are a DSA execution trace engine. Analyze this code and produce a detailed, educational step-by-step trace:
-\`\`\`
+      const prompt = `You are an expert DSA teacher and reasoning engine (NVIDIA Nemotron Ultra).
+
+The user has provided the following input:
+---
 ${payload}
-\`\`\`
+---
 
-For each execution step, track the EXACT state of ALL data structures (arrays, stacks, variables).
-Detect the algorithm type (sorting, recursion, searching, DP, tree traversal, etc.).
-Identify the operation at each step (COMPARE, SWAP, RECURSE, RETURN, PUSH, POP, ASSIGN, CHECK, LOOP, etc.).
+STEP 1 - DETECT INPUT TYPE:
+Determine if this is:
+(a) ACTUAL CODE - ready to trace execution
+(b) A PROBLEM STATEMENT / LEETCODE QUESTION - needs approach + solution first
 
-You must respond with a JSON object matching this EXACT schema (no extra fields, no markdown):
+STEP 2 - IF IT IS A PROBLEM STATEMENT:
+- Explain the optimal approach in plain English (time/space complexity)
+- Write the optimal solution code in JavaScript
+- Then trace that solution
+
+IF IT IS CODE:
+- Trace the given code directly
+
+STEP 3 - PRODUCE RICH TRACE:
+For each execution step, track ALL data structures, variables, and operations.
+
+You MUST respond with ONLY a valid JSON object. No markdown, no explanation outside JSON:
 {
-  "algorithmType": "sorting|recursion|searching|dp|tree|graph|other",
-  "summary": "One line description of what this code does",
+  "inputType": "code" or "problem",
+  "algorithmType": "sorting|recursion|searching|dp|tree|graph|string|other",
+  "problemTitle": "Two Sum" or null,
+  "summary": "One concise sentence: what this algorithm does",
+  "approach": "Multi-line explanation of the approach, time/space complexity, why this approach is optimal. Use plain English.",
+  "timeComplexity": "O(n log n)",
+  "spaceComplexity": "O(1)",
+  "code": "the actual JS code being traced (either given code or generated optimal solution)",
   "graph": {
-    "nodes": [{"id": "n1", "label": "Start", "type": "start"}, {"id": "n2", "label": "factorial(3)", "type": "process", "vars": "n=3"}],
-    "edges": [{"from": "n1", "to": "n2", "label": ""}]
+    "nodes": [
+      {"id": "n1", "label": "Start", "type": "start"},
+      {"id": "n2", "label": "Call sort(arr)", "type": "process", "vars": "arr=[5,3,1]"}
+    ],
+    "edges": [
+      {"from": "n1", "to": "n2", "label": ""},
+      {"from": "n2", "to": "n3", "label": "i=0"}
+    ]
   },
   "steps": [
     {
@@ -106,28 +132,31 @@ You must respond with a JSON object matching this EXACT schema (no extra fields,
       "line": 2,
       "nodeId": "n2",
       "operation": "COMPARE",
-      "description": "Comparing arr[0]=5 with arr[1]=3",
+      "description": "Comparing arr[0]=5 with arr[1]=3. Since 5 > 3, a swap is needed.",
+      "insight": "This is the core comparison step of bubble sort. Larger elements bubble up.",
       "arrayState": [5, 3, 8, 1, 4],
       "highlighted": [0, 1],
       "swapped": [],
       "sorted": [],
-      "callStack": ["bubbleSort(arr)", "outer i=0"],
+      "callStack": ["bubbleSort(arr)", "outer loop i=0"],
       "variables": {"i": 0, "j": 0, "temp": null}
     }
   ]
 }
 
-Rules:
-- arrayState: full array at that step (null if no array)
-- highlighted: indices being COMPARED (orange)
-- swapped: indices being SWAPPED (red flash)
-- sorted: indices already in final position (green)
-- callStack: current call stack as array of strings
-- variables: object with all relevant variable names and values
-- operation must be one of: COMPARE, SWAP, ASSIGN, RECURSE, RETURN, PUSH, POP, CHECK, LOOP_START, LOOP_END, CALL, BASE_CASE
-- Generate at least 8 steps, maximum 20 steps for clarity
-- For recursion: track function call depth in callStack`;
-      aiResult = await aiService.generateContentJSON(prompt);
+RULES:
+- "insight": short educational tip explaining WHY this step matters (very important!)
+- arrayState: full array snapshot at this step (null if not array-based)
+- highlighted: indices being compared (shown orange)
+- swapped: indices being swapped (shown red)
+- sorted: indices confirmed in final position (shown green)
+- callStack: array of active call frames, top = most recent
+- variables: ALL relevant variables as key-value pairs (numbers, not strings)
+- operations: COMPARE | SWAP | ASSIGN | RECURSE | RETURN | PUSH | POP | CHECK | LOOP_START | LOOP_END | CALL | BASE_CASE
+- Generate between 10 and 20 meaningful steps
+- Make descriptions EDUCATIONAL: explain what is happening and why
+- The "approach" field must be 3-6 sentences covering: algorithm choice, key insight, time/space complexity`;
+      aiResult = await aiService.generateWithNemotron(prompt);
     } 
     else if (toolType === 'step-debugger') {
       const prompt = `Simulate a step-by-step debugger run on this code:

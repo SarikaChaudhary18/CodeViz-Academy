@@ -136,6 +136,55 @@ async function callNvidia(key, prompt) {
 }
 
 /**
+ * Call NVIDIA Nemotron Ultra (reasoning model) — non-streaming, returns full response
+ */
+async function callNemotron(prompt) {
+  const NEMOTRON_KEY = '***REMOVED***';
+  const url = 'https://integrate.api.nvidia.com/v1/chat/completions';
+
+  logger.info('AI Service: Calling NVIDIA Nemotron Ultra reasoning model');
+  const response = await axios.post(
+    url,
+    {
+      model: 'nvidia/nemotron-3-ultra-550b-a55b',
+      messages: [{ role: 'user', content: prompt }],
+      temperature: 0.6,
+      top_p: 0.95,
+      max_tokens: 16384,
+      extra_body: {
+        chat_template_kwargs: { enable_thinking: true },
+        reasoning_budget: 8192
+      },
+      stream: false
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${NEMOTRON_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      timeout: 120000
+    }
+  );
+
+  if (!response.data?.choices?.[0]) throw new Error('Invalid Nemotron response');
+  return response.data.choices[0].message.content;
+}
+
+/**
+ * Generate structured JSON using Nemotron reasoning model.
+ * Falls back to standard generateContentJSON on failure.
+ */
+async function generateWithNemotron(prompt) {
+  try {
+    const raw = await callNemotron(prompt);
+    return cleanAndParseJSON(raw);
+  } catch (err) {
+    logger.warn(`Nemotron failed (${err.message}), falling back to standard providers`);
+    return generateContentJSON(prompt);
+  }
+}
+
+/**
  * Main function to generate content and parse it as JSON.
  * It will try available keys in order, falling back dynamically.
  */
@@ -305,6 +354,7 @@ async function generateCopilotResponse(prompt, imageBase64 = null, mimeType = nu
 
 module.exports = {
   generateContentJSON,
+  generateWithNemotron,
   generateCopilotResponse,
   isKeyOnCooldown,
   cooldowns
