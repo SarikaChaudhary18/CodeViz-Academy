@@ -9,6 +9,13 @@ export const useStore = create((set, get) => ({
   isAuthenticated: false,
   authLoading: true,
   authError: null,
+  isAuthModalOpen: false,
+  authModalRedirectPath: null,
+  userRole: 'student',
+
+  openAuthModal: (redirectPath = null) => set({ isAuthModalOpen: true, authModalRedirectPath: redirectPath }),
+  closeAuthModal: () => set({ isAuthModalOpen: false, authModalRedirectPath: null }),
+  setUserRole: (role) => set({ userRole: role }),
 
   login: async (email, password) => {
     set({ authLoading: true, authError: null });
