@@ -180,14 +180,14 @@ html.light {
   --color-cyber-bg: #ffffff;
   --color-cyber-card: rgba(255, 255, 255, 0.95);
   --color-cyber-panel: rgba(245, 245, 245, 0.95);
-  --color-cyber-border: rgba(0, 0, 0, 0.1);
-  --color-cyber-border-glow: rgba(0, 0, 0, 0.05);
+  --color-cyber-border: rgba(0, 0, 0, 0.08);
+  --color-cyber-border-glow: rgba(234, 88, 12, 0.15);
   
-  --color-neon-violet: #000000;
-  --color-neon-cyan: #000000;
-  --color-neon-rose: #222222;
-  --color-neon-green: #111111;
-  --color-neon-yellow: #333333;
+  --color-neon-violet: #ea580c; /* Orange-600 */
+  --color-neon-cyan: #f97316; /* Orange-500 */
+  --color-neon-rose: #c2410c; /* Orange-700 */
+  --color-neon-green: #10b981;
+  --color-neon-yellow: #f59e0b;
 
   --color-popover: rgba(255, 255, 255, 0.98);
   --color-popover-foreground: #000000;
@@ -212,6 +212,7 @@ html.light .absolute[class*="bg-cyan-400/"] {
 /* Force container backgrounds to pure white */
 html.light .bg-\[\#020617\],
 html.light .bg-\[\#07080a\],
+html.light .bg-\[\#030712\],
 html.light .bg-\[\#07080c\]\/50,
 html.light .bg-\[\#0c0e14\]\/50,
 html.light .bg-\[\#070b19\]\/80,
@@ -285,48 +286,53 @@ html.light .text-gray-200,
 html.light .text-slate-100,
 html.light .text-slate-200,
 html.light .text-zinc-100,
-html.light .text-zinc-200 {
+html.light .text-zinc-200,
+html.light p,
+html.light span:not(.text-orange-500):not(.text-orange-600):not(.text-cyan-400):not(.text-violet-400),
+html.light div:not(.bg-orange-500) {
+  color: #000000;
+}
+
+/* Make sure paragraphs are specifically black */
+html.light p,
+html.light .text-gray-400,
+html.light .text-slate-400,
+html.light .text-zinc-400 {
   color: #000000 !important;
 }
 
 html.light .text-transparent {
-  color: #000000 !important;
-  -webkit-text-fill-color: #000000 !important;
+  color: #ea580c !important;
+  -webkit-text-fill-color: #ea580c !important;
   background-clip: border-box !important;
   -webkit-background-clip: border-box !important;
   background-image: none !important;
 }
 
 html.light .text-gray-300,
-html.light .text-gray-400,
 html.light .text-gray-500,
 html.light .text-slate-300,
-html.light .text-slate-400,
 html.light .text-slate-500,
 html.light .text-zinc-300,
-html.light .text-zinc-400,
 html.light .text-zinc-500,
 html.light .text-slate-400\/70,
 html.light .text-slate-400\/80 {
-  color: #3f3f46 !important;
+  color: #27272a !important;
 }
 
-/* Map neon text colors to solid black */
+/* Map neon text colors to orange accents */
 html.light .text-cyan-400,
 html.light .text-cyan-300,
 html.light .text-violet-400,
 html.light .text-violet-300,
+html.light .text-violet-500,
 html.light .text-neon-cyan,
 html.light .text-neon-violet,
 html.light .text-indigo-400,
 html.light .text-indigo-500,
-html.light .text-emerald-400,
-html.light .text-emerald-500,
-html.light .text-rose-400,
-html.light .text-rose-500,
 html.light .text-amber-500,
 html.light .text-amber-400 {
-  color: #000000 !important;
+  color: #ea580c !important;
 }
 
 /* Invert transparent white backgrounds to light gray tints */
@@ -338,17 +344,20 @@ html.light .bg-white\/\[0\.04\],
 html.light .bg-white\/\[0\.05\],
 html.light .bg-white\/\[0\.06\] {
   background-color: rgba(0, 0, 0, 0.02) !important;
+  color: #000000 !important;
 }
 
 html.light .bg-white\/10,
 html.light .bg-white\/\[0\.08\],
 html.light .bg-white\/\[0\.1\] {
-  background-color: rgba(0, 0, 0, 0.05) !important;
+  background-color: rgba(0, 0, 0, 0.04) !important;
+  color: #000000 !important;
 }
 
 html.light .bg-white\/20,
 html.light .bg-white\/30 {
   background-color: rgba(0, 0, 0, 0.08) !important;
+  color: #000000 !important;
 }
 
 /* Invert borders */
@@ -364,23 +373,39 @@ html.light .border-slate-700 {
 
 html.light .border-violet-500,
 html.light .border-cyan-500,
+html.light .border-indigo-500,
 html.light .border-emerald-500,
 html.light .border-violet-500\/10,
 html.light .border-violet-500\/20,
 html.light .border-cyan-500\/20,
 html.light .border-cyan-500\/10 {
-  border-color: rgba(0, 0, 0, 0.12) !important;
+  border-color: #f97316 !important;
 }
 
 /* Invert solid white and black */
 html.light .bg-white {
-  background-color: #000000 !important;
-  color: #ffffff !important;
+  background-color: #ffffff !important;
+  color: #000000 !important;
 }
 
 html.light .bg-black {
   background-color: #ffffff !important;
   color: #000000 !important;
+}
+
+/* Specific buttons / highlights styled with orange background and white text */
+html.light .bg-violet-600,
+html.light .bg-indigo-600,
+html.light .bg-cyan-500 {
+  background-color: #f97316 !important;
+  color: #ffffff !important;
+}
+
+html.light .hover\:bg-violet-500:hover,
+html.light .hover\:bg-indigo-500:hover,
+html.light .hover\:bg-cyan-400:hover {
+  background-color: #ea580c !important;
+  color: #ffffff !important;
 }
 
 html.light svg {
@@ -393,7 +418,7 @@ html.light select,
 html.light textarea {
   color: #000000 !important;
   background-color: rgba(0, 0, 0, 0.015) !important;
-  border-color: rgba(0, 0, 0, 0.12) !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
 }
 
 html.light input::placeholder {
@@ -402,7 +427,7 @@ html.light input::placeholder {
 
 html.light .border-violet-500\/25,
 html.light .bg-violet-900\/10 {
-  border-color: rgba(0, 0, 0, 0.12) !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
   background-color: rgba(0, 0, 0, 0.015) !important;
 }
 
@@ -439,7 +464,7 @@ html.light ::-webkit-scrollbar-thumb:hover {
     background-color: rgba(255, 255, 255, 0.01);
   }
   50% {
-    background-color: rgba(72, 213, 93, 0.1);
+    background-color: rgba(249, 115, 22, 0.1);
   }
 }
 
