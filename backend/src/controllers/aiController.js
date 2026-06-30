@@ -17,7 +17,18 @@ exports.processAiTool = async (req, res, next) => {
     if (toolType === 'socratic') {
       const prompt = `Act as an expert Socratic programming mentor. The student is asking: "${payload}". Do not give them the solution or code. Instead, write a short, friendly reply asking 1 or 2 guiding questions that lead them to the correct programming logic or boundary check themselves. Respond directly in plain text.`;
       const responseText = await aiService.generateCopilotResponse(prompt);
-      aiResult = { response: responseText };
+      
+      let cleanedText = responseText;
+      try {
+        if (typeof responseText === 'string' && (responseText.trim().startsWith('{') || responseText.trim().startsWith('['))) {
+          const parsed = JSON.parse(responseText);
+          cleanedText = parsed.response || parsed.text || responseText;
+        }
+      } catch (e) {
+        logger.error(`Error parsing socratic text: ${e.message}`);
+      }
+      
+      aiResult = { response: cleanedText };
     } 
     else if (toolType === 'bug-detective') {
       const prompt = `Analyze the following code for bugs, syntax errors, security flaws, or potential resource leaks:

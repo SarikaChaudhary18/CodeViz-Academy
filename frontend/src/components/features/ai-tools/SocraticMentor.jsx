@@ -35,7 +35,15 @@ export default function SocraticMentor() {
         payload: userText
       });
       
-      const botText = res.data?.response || "I am reflecting on your question...";
+      let botText = res.data?.response || "I am reflecting on your question...";
+      try {
+        if (typeof botText === 'string' && (botText.trim().startsWith('{') || botText.trim().startsWith('['))) {
+          const parsed = JSON.parse(botText);
+          botText = parsed.response || parsed.text || botText;
+        }
+      } catch (e) {
+        console.error("JSON parsing fallback:", e);
+      }
       setMessages(prev => [...prev, { sender: 'bot', text: botText }]);
     } catch (err) {
       console.error('Failed to get response from Socratic Mentor:', err.message);
