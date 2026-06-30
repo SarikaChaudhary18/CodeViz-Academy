@@ -969,6 +969,7 @@ export default function Hero() {
                 </Link>
               </span>
             </div>
+          </div>
         </footer>
 
       </div>
