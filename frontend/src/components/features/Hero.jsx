@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { useStore } from '../../hooks/useStore';
+import AuthModal from './auth/AuthModal';
 import {
   Play,
   ArrowRight,
@@ -107,7 +109,7 @@ const navigation = {
         },
         {
           id: "resources",
-          name: "Resources",
+          name: "Workspace",
           items: [
             { name: "Documentation", href: "/login" },
             { name: "Platform FAQ", href: "#faq" },
@@ -152,6 +154,7 @@ const FAQS = [
 
 export default function Hero() {
   const navigate = useNavigate();
+  const { isAuthenticated, openAuthModal } = useStore();
   const [topicIndex, setTopicIndex] = useState(0);
   const [activeFaq, setActiveFaq] = useState(null);
 
@@ -194,48 +197,53 @@ export default function Hero() {
     setActiveFaq(activeFaq === index ? null : index);
   };
 
+  const handleFeatureClick = (path) => {
+    if (isAuthenticated) {
+      navigate(path);
+    } else {
+      openAuthModal(path);
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-[#030712] text-slate-100 font-sans selection:bg-indigo-600/30 selection:text-indigo-200 overflow-x-hidden relative">
+    <div className="min-h-screen bg-[#ffffff] text-zinc-900 font-sans selection:bg-orange-600/30 selection:text-orange-950 overflow-x-hidden relative">
       
-      {/* Background Radial Ambient Gradients (Subtle 10% accent opacity max) */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[600px] bg-gradient-to-b from-indigo-900/10 via-transparent to-transparent pointer-events-none z-0" />
-      <div className="absolute top-[400px] right-[-10%] w-[500px] h-[500px] bg-indigo-600/[0.03] rounded-full blur-[120px] pointer-events-none z-0" />
-      <div className="absolute top-[1200px] left-[-10%] w-[500px] h-[500px] bg-violet-600/[0.03] rounded-full blur-[120px] pointer-events-none z-0" />
+      {/* Background Radial Ambient Gradients */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[600px] bg-gradient-to-b from-orange-100/30 via-transparent to-transparent pointer-events-none z-0" />
+      <div className="absolute top-[400px] right-[-10%] w-[500px] h-[500px] bg-orange-600/[0.02] rounded-full blur-[120px] pointer-events-none z-0" />
+      <div className="absolute top-[1200px] left-[-10%] w-[500px] h-[500px] bg-orange-600/[0.02] rounded-full blur-[120px] pointer-events-none z-0" />
 
       {/* Grid Pattern overlay */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#1f2937_1px,transparent_1px),linear-gradient(to_bottom,#1f2937_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-[0.25] pointer-events-none z-0" />
-
-      {/* WebGL Lightning Thunder Background */}
-      <Lightning />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#e5e7eb_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-[0.4] pointer-events-none z-0" />
 
       {/* Modern Sticky Glass Navbar */}
-      <nav className="sticky top-0 z-50 w-full border-b border-slate-800/80 bg-[#030712]/75 backdrop-blur-md transition-all">
+      <nav className="sticky top-0 z-50 w-full border-b border-zinc-200 bg-white/80 backdrop-blur-md transition-all">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3 cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-            <img src={logo} alt="CodeViz Academy Logo" className="w-8 h-8 object-contain rounded-lg shadow-md border border-slate-800" />
-            <span className="text-sm font-bold tracking-tight text-white font-mono uppercase">
+            <img src={logo} alt="CodeViz Academy Logo" className="w-8 h-8 object-contain rounded-lg shadow-sm border border-zinc-200" />
+            <span className="text-sm font-bold tracking-tight text-zinc-950 font-mono uppercase">
               CodeViz Academy
             </span>
           </div>
 
           {/* Desktop Nav menu */}
           <div className="hidden md:flex items-center gap-8">
-            <a href="#features" className="text-xs font-medium text-slate-400 hover:text-white transition-colors">Features</a>
-            <a href="#bento" className="text-xs font-medium text-slate-400 hover:text-white transition-colors">Workspace</a>
-            <a href="#pricing" className="text-xs font-medium text-slate-400 hover:text-white transition-colors">Pricing</a>
-            <a href="#faq" className="text-xs font-medium text-slate-400 hover:text-white transition-colors">FAQ</a>
+            <a href="#features" className="text-xs font-semibold text-zinc-600 hover:text-orange-600 transition-colors">Features</a>
+            <a href="#bento" className="text-xs font-semibold text-zinc-600 hover:text-orange-600 transition-colors">Workspace</a>
+            <a href="#pricing" className="text-xs font-semibold text-zinc-600 hover:text-orange-600 transition-colors">Pricing</a>
+            <a href="#faq" className="text-xs font-semibold text-zinc-600 hover:text-orange-600 transition-colors">FAQ</a>
           </div>
 
           <div className="flex items-center gap-4">
             <button
-              onClick={() => navigate('/login')}
-              className="text-xs font-semibold text-slate-300 hover:text-white px-3 py-1.5 transition-colors cursor-pointer"
+              onClick={() => handleFeatureClick('/dashboard')}
+              className="text-xs font-bold text-zinc-700 hover:text-orange-600 px-3 py-1.5 transition-colors cursor-pointer"
             >
               Sign In
             </button>
             <button
-              onClick={() => navigate('/register')}
-              className="text-xs font-semibold bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-lg border border-indigo-500/20 hover:border-indigo-400/40 transition-all cursor-pointer shadow-lg shadow-indigo-600/10 active:scale-[0.98]"
+              onClick={() => handleFeatureClick('/dashboard')}
+              className="text-xs font-bold bg-orange-600 hover:bg-orange-500 text-white px-4 py-2 rounded-lg border border-orange-500/20 hover:border-orange-400/40 transition-all cursor-pointer shadow-md active:scale-[0.98]"
             >
               Get Started
             </button>
@@ -307,14 +315,14 @@ export default function Hero() {
             className="flex flex-row gap-4 flex-wrap justify-center mt-10"
           >
             <button
-              onClick={() => navigate('/register')}
-              className="flex items-center gap-2 font-semibold px-8 py-3.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl transition-all cursor-pointer shadow-lg shadow-indigo-600/20 active:scale-[0.98] text-sm"
+              onClick={() => handleFeatureClick('/dashboard')}
+              className="flex items-center gap-2 font-semibold px-8 py-3.5 bg-orange-600 hover:bg-orange-500 text-white rounded-xl transition-all cursor-pointer shadow-lg shadow-orange-600/20 active:scale-[0.98] text-sm"
             >
               Start Learning <ArrowRight size={16} />
             </button>
             <button
-              onClick={() => navigate('/login')}
-              className="flex items-center gap-2 bg-slate-900/80 font-semibold px-8 py-3.5 border border-slate-800 hover:bg-slate-880 text-slate-300 hover:text-white rounded-xl transition-all cursor-pointer text-sm"
+              onClick={() => handleFeatureClick('/dsa-sheets')}
+              className="flex items-center gap-2 bg-zinc-100 hover:bg-zinc-200 text-zinc-800 font-semibold px-8 py-3.5 border border-zinc-200 rounded-xl transition-all cursor-pointer text-sm"
             >
               Explore Sandbox
             </button>
@@ -715,69 +723,69 @@ export default function Hero() {
                 </ul>
               </div>
               <button
-                onClick={() => navigate('/register')}
-                className="w-full mt-8 py-3 bg-slate-900 border border-slate-800 hover:bg-slate-850 text-white font-mono text-xs font-bold rounded-xl transition-colors cursor-pointer text-center"
+                onClick={() => handleFeatureClick('/dashboard')}
+                className="w-full mt-8 py-3 bg-zinc-100 hover:bg-zinc-200 text-zinc-900 border border-zinc-200 font-mono text-xs font-bold rounded-xl transition-colors cursor-pointer text-center"
               >
                 INITIALIZE ACCOUNT
               </button>
             </div>
 
             {/* Pro Tier (Recommended) */}
-            <div className="border-2 border-indigo-600 bg-[#0c1222] p-8 rounded-2xl flex flex-col justify-between hover:border-indigo-500 transition-all shadow-xl shadow-indigo-600/5 relative">
-              <div className="absolute top-0 right-6 -translate-y-1/2 bg-indigo-600 text-white font-mono text-[9px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+            <div className="border-2 border-orange-600 bg-orange-50/10 p-8 rounded-2xl flex flex-col justify-between hover:border-orange-500 transition-all shadow-xl shadow-orange-600/5 relative">
+              <div className="absolute top-0 right-6 -translate-y-1/2 bg-orange-600 text-white font-mono text-[9px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
                 RECOMMENDED
               </div>
               <div className="space-y-6">
                 <div className="space-y-2">
-                  <h3 className="text-xs font-bold font-mono text-indigo-400 uppercase tracking-widest">PRO DEVELOPER</h3>
-                  <div className="flex items-baseline gap-1 text-white">
+                  <h3 className="text-xs font-bold font-mono text-orange-600 uppercase tracking-widest">PRO DEVELOPER</h3>
+                  <div className="flex items-baseline gap-1 text-zinc-950">
                     <span className="text-4xl font-black">₹399</span>
-                    <span className="text-[10px] text-slate-500 font-mono">/ MONTH</span>
+                    <span className="text-[10px] text-zinc-500 font-mono">/ MONTH</span>
                   </div>
                 </div>
-                <p className="text-xs text-slate-300 leading-relaxed">
+                <p className="text-xs text-zinc-700 leading-relaxed">
                   Full-stack tool suite for aggressive technical interview preparation and profile validation.
                 </p>
-                <ul className="space-y-2.5 text-[11px] text-slate-300 pt-6 border-t border-slate-905 font-mono">
-                  <li className="flex items-center gap-2"><Check size={12} className="text-indigo-400" /> Everything in Free Sandbox</li>
-                  <li className="flex items-center gap-2"><Check size={12} className="text-indigo-400" /> AI-Powered Resume Auditor</li>
-                  <li className="flex items-center gap-2"><Check size={12} className="text-indigo-400" /> AI-Assisted Mock Interviews</li>
-                  <li className="flex items-center gap-2"><Check size={12} className="text-indigo-400" /> Custom Input Sandbox Testing</li>
-                  <li className="flex items-center gap-2"><Check size={12} className="text-indigo-400" /> Priority Hackathon Pipeline</li>
+                <ul className="space-y-2.5 text-[11px] text-zinc-600 pt-6 border-t border-zinc-100 font-mono">
+                  <li className="flex items-center gap-2"><Check size={12} className="text-orange-600" /> Everything in Free Sandbox</li>
+                  <li className="flex items-center gap-2"><Check size={12} className="text-orange-600" /> AI-Powered Resume Auditor</li>
+                  <li className="flex items-center gap-2"><Check size={12} className="text-orange-600" /> AI-Assisted Mock Interviews</li>
+                  <li className="flex items-center gap-2"><Check size={12} className="text-orange-600" /> Custom Input Sandbox Testing</li>
+                  <li className="flex items-center gap-2"><Check size={12} className="text-orange-600" /> Priority Hackathon Pipeline</li>
                 </ul>
               </div>
               <button
-                onClick={() => navigate('/register')}
-                className="w-full mt-8 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-mono text-xs font-bold rounded-xl transition-colors cursor-pointer text-center shadow-lg shadow-indigo-600/10"
+                onClick={() => handleFeatureClick('/dashboard')}
+                className="w-full mt-8 py-3 bg-orange-600 hover:bg-orange-500 text-white font-mono text-xs font-bold rounded-xl transition-colors cursor-pointer text-center shadow-lg shadow-orange-600/10"
               >
                 UPGRADE TO PRO
               </button>
             </div>
 
             {/* Team Tier */}
-            <div className="border border-slate-850 bg-[#090d16]/40 p-8 rounded-2xl flex flex-col justify-between hover:border-slate-800 transition-colors">
+            <div className="border border-zinc-200 bg-zinc-50/20 p-8 rounded-2xl flex flex-col justify-between hover:border-zinc-350 transition-colors">
               <div className="space-y-6">
                 <div className="space-y-2">
-                  <h3 className="text-xs font-bold font-mono text-slate-400 uppercase tracking-widest">TEAM STACK</h3>
-                  <div className="flex items-baseline gap-1 text-white">
+                  <h3 className="text-xs font-bold font-mono text-zinc-500 uppercase tracking-widest">TEAM STACK</h3>
+                  <div className="flex items-baseline gap-1 text-zinc-950">
                     <span className="text-4xl font-black">₹699</span>
-                    <span className="text-[10px] text-slate-500 font-mono">/ MONTH</span>
+                    <span className="text-[10px] text-zinc-500 font-mono">/ MONTH</span>
                   </div>
                 </div>
-                <p className="text-xs text-slate-400 leading-relaxed">
+                <p className="text-xs text-zinc-700 leading-relaxed">
                   Shared workspace features designed for bootcamp cohorts, hacker groups, and university squads.
                 </p>
-                <ul className="space-y-2.5 text-[11px] text-slate-400 pt-6 border-t border-slate-905 font-mono">
-                  <li className="flex items-center gap-2"><Check size={12} className="text-indigo-400" /> Everything in Pro Developer</li>
-                  <li className="flex items-center gap-2"><Check size={12} className="text-indigo-400" /> Dedicated Shared Squad Rooms</li>
-                  <li className="flex items-center gap-2"><Check size={12} className="text-indigo-400" /> Batch Performance Analytics</li>
-                  <li className="flex items-center gap-2"><Check size={12} className="text-indigo-400" /> Custom Interview Pipelines</li>
-                  <li className="flex items-center gap-2"><Check size={12} className="text-indigo-400" /> Priority Live Support</li>
+                <ul className="space-y-2.5 text-[11px] text-zinc-600 pt-6 border-t border-zinc-100 font-mono">
+                  <li className="flex items-center gap-2"><Check size={12} className="text-orange-600" /> Everything in Pro Developer</li>
+                  <li className="flex items-center gap-2"><Check size={12} className="text-orange-600" /> Dedicated Shared Squad Rooms</li>
+                  <li className="flex items-center gap-2"><Check size={12} className="text-orange-600" /> Batch Performance Analytics</li>
+                  <li className="flex items-center gap-2"><Check size={12} className="text-orange-600" /> Custom Interview Pipelines</li>
+                  <li className="flex items-center gap-2"><Check size={12} className="text-orange-600" /> Priority Live Support</li>
                 </ul>
               </div>
               <button
-                onClick={() => navigate('/register')}
-                className="w-full mt-8 py-3 bg-slate-900 border border-slate-800 hover:bg-slate-855 text-white font-mono text-xs font-bold rounded-xl transition-colors cursor-pointer text-center"
+                onClick={() => handleFeatureClick('/dashboard')}
+                className="w-full mt-8 py-3 bg-zinc-900 hover:bg-zinc-800 text-white font-mono text-xs font-bold rounded-xl transition-colors cursor-pointer text-center"
               >
                 CREATE TEAM SQUAD
               </button>
@@ -961,10 +969,10 @@ export default function Hero() {
                 </Link>
               </span>
             </div>
-          </div>
         </footer>
 
       </div>
+      <AuthModal />
     </div>
   );
 }
