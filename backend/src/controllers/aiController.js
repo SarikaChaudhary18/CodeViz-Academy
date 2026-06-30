@@ -83,20 +83,50 @@ Evaluate the candidate's last answer and ask the next challenging technical or b
       aiResult = await aiService.generateContentJSON(prompt);
     } 
     else if (toolType === 'execution-trace') {
-      const prompt = `Analyze this code and trace its execution tree, recursive call stack, or loop states:
+      const prompt = `You are a DSA execution trace engine. Analyze this code and produce a detailed, educational step-by-step trace:
 \`\`\`
 ${payload}
 \`\`\`
-Return a structured JSON graph of nodes and edges (NOT Mermaid syntax). Each node has an id, label, type (start/end/process/decision), and optional vars string. Each edge has from, to, optional label.
-Also list step-by-step execution logs with node references.
-You must respond with a JSON object matching this EXACT schema:
+
+For each execution step, track the EXACT state of ALL data structures (arrays, stacks, variables).
+Detect the algorithm type (sorting, recursion, searching, DP, tree traversal, etc.).
+Identify the operation at each step (COMPARE, SWAP, RECURSE, RETURN, PUSH, POP, ASSIGN, CHECK, LOOP, etc.).
+
+You must respond with a JSON object matching this EXACT schema (no extra fields, no markdown):
 {
+  "algorithmType": "sorting|recursion|searching|dp|tree|graph|other",
+  "summary": "One line description of what this code does",
   "graph": {
     "nodes": [{"id": "n1", "label": "Start", "type": "start"}, {"id": "n2", "label": "factorial(3)", "type": "process", "vars": "n=3"}],
     "edges": [{"from": "n1", "to": "n2", "label": ""}]
   },
-  "steps": [{"step": 1, "nodeId": "n2", "description": "Call factorial with n=3", "variables": "n=3"}]
-}`;
+  "steps": [
+    {
+      "step": 1,
+      "line": 2,
+      "nodeId": "n2",
+      "operation": "COMPARE",
+      "description": "Comparing arr[0]=5 with arr[1]=3",
+      "arrayState": [5, 3, 8, 1, 4],
+      "highlighted": [0, 1],
+      "swapped": [],
+      "sorted": [],
+      "callStack": ["bubbleSort(arr)", "outer i=0"],
+      "variables": {"i": 0, "j": 0, "temp": null}
+    }
+  ]
+}
+
+Rules:
+- arrayState: full array at that step (null if no array)
+- highlighted: indices being COMPARED (orange)
+- swapped: indices being SWAPPED (red flash)
+- sorted: indices already in final position (green)
+- callStack: current call stack as array of strings
+- variables: object with all relevant variable names and values
+- operation must be one of: COMPARE, SWAP, ASSIGN, RECURSE, RETURN, PUSH, POP, CHECK, LOOP_START, LOOP_END, CALL, BASE_CASE
+- Generate at least 8 steps, maximum 20 steps for clarity
+- For recursion: track function call depth in callStack`;
       aiResult = await aiService.generateContentJSON(prompt);
     } 
     else if (toolType === 'step-debugger') {
