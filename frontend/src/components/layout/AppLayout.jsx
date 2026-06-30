@@ -237,13 +237,13 @@ export default function AppLayout({ children }) {
       )}>
         {/* Brand Logo & Title */}
         <div className="flex items-center gap-3 select-none">
-          <img src={logo} alt="StudyQuest Logo" className="w-10 h-10 object-contain rounded-lg" />
+          <img src={logo} alt="CodeViz Academy Logo" className="w-10 h-10 object-contain rounded-lg" />
           <div className="hidden sm:block">
             <h1 className="font-extrabold text-sm tracking-wide">
-              STUDYQUEST
+              CODEVIZ ACADEMY
             </h1>
             <span className={cn("text-[9px] tracking-widest font-mono", isDark ? "text-cyan-400" : "text-zinc-500")}>
-              CAREER PLATFORM
+              VISUAL CODING ACADEMY
             </span>
           </div>
         </div>

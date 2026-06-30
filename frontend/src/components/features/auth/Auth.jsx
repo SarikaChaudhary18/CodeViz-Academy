@@ -333,8 +333,8 @@ export default function Auth({ isRegisterMode = false }) {
       )}>
         <div className="relative z-20">
           <div className="flex items-center gap-2 text-lg font-semibold">
-            <img src={logo} alt="StudyQuest Logo" className="w-8 h-8 object-contain rounded-lg" />
-            <span className="font-mono tracking-wider font-bold">STUDYQUEST</span>
+            <img src={logo} alt="CodeViz Academy Logo" className="w-8 h-8 object-contain rounded-lg" />
+            <span className="font-mono tracking-wider font-bold">CODEVIZ ACADEMY</span>
           </div>
         </div>
 

@@ -45,7 +45,7 @@ export default function Copilot() {
   const [image, setImage] = useState(null); // base64
   const [mimeType, setMimeType] = useState(null);
   const [messages, setMessages] = useState([
-    { role: 'assistant', text: 'Hi! I am your StudyQuest AI Copilot. You can ask me coding questions or upload a screenshot/image of a problem or error, and I will help you debug!' }
+    { role: 'assistant', text: 'Hi! I am your CodeViz AI Copilot. You can ask me coding questions or upload a screenshot/image of a problem or error, and I will help you debug!' }
   ]);
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
@@ -161,7 +161,7 @@ export default function Copilot() {
                   <Bot size={16} />
                 </div>
                 <div>
-                  <h4 className="text-xs font-bold text-white uppercase tracking-wider">STUDYQUEST COPILOT</h4>
+                  <h4 className="text-xs font-bold text-white uppercase tracking-wider">CODEVIZ COPILOT</h4>
                   <div className="flex items-center gap-1 mt-0.5">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                     <span className="text-[9px] font-mono text-zinc-500 uppercase tracking-widest">ACTIVE</span>
