@@ -1,0 +1,70 @@
+[
+  {
+    "title": "Advanced DSA Masterclass",
+    "category": "DSA",
+    "lessonsCount": 5,
+    "duration": "4h 30m",
+    "difficulty": "Hard",
+    "instructor": "Sarika Chaudhary",
+    "description": "Master trees, graphs, dynamic programming, and advanced algorithmic thinking for top product placements.",
+    "youtubePlaylistUrl": "https://www.youtube.com/playlist?list=PLgUwDviBHe0oF65T-zELtbWfR21Yw74J3",
+    "videos": [
+      { "videoId": "_t2yNBEgSdc", "title": "Complexity Analysis & Big O Notation", "duration": "45m" },
+      { "videoId": "9A9E378J-wE", "title": "Arrays & Vectors Operations", "duration": "55m" },
+      { "videoId": "RBSG1g56pWk", "title": "Linked Lists Pointer Traversals", "duration": "50m" },
+      { "videoId": "N_R_Xg9fP3w", "title": "Binary Tree Traversals", "duration": "60m" },
+      { "videoId": "H9S3_G8k38w", "title": "Introduction to Dynamic Programming", "duration": "50m" }
+    ]
+  },
+  {
+    "title": "Full-Stack Next.js Developer",
+    "category": "Development",
+    "lessonsCount": 5,
+    "duration": "5h 10m",
+    "difficulty": "Medium",
+    "instructor": "Mohit Mudgil",
+    "description": "Build enterprise-grade web applications with server components, database sync, and WebSocket architectures.",
+    "youtubePlaylistUrl": "https://www.youtube.com/playlist?list=PL4cUxeGkcC9g9gP2onazEKdF7AacK4_1H",
+    "videos": [
+      { "videoId": "tN7g-Tf4-G8", "title": "Next.js App Router Architecture", "duration": "55m" },
+      { "videoId": "6sH8bE-C0Aw", "title": "React Server Components vs Client Components", "duration": "65m" },
+      { "videoId": "M3-Q-qO80y8", "title": "Data Fetching & Server Actions", "duration": "60m" },
+      { "videoId": "p32JvC7y9W4", "title": "State Management with Zustand", "duration": "55m" },
+      { "videoId": "y9-qE-T87Bw", "title": "Database Syncing with MongoDB & Mongoose", "duration": "75m" }
+    ]
+  },
+  {
+    "title": "System Design Fundamentals",
+    "category": "Systems",
+    "lessonsCount": 5,
+    "duration": "3h 50m",
+    "difficulty": "Hard",
+    "instructor": "AI Socratic Mentor",
+    "description": "Learn load balancing, horizontal scalability, caching strategies, and database sharding with microservices.",
+    "youtubePlaylistUrl": "https://www.youtube.com/playlist?list=PLMCXHnjXnTnOdSg1b89-Jz8w2wWn4A0Qo",
+    "videos": [
+      { "videoId": "i53Gi_K39-M", "title": "Introduction to System Design Scalability", "duration": "45m" },
+      { "videoId": "U-T-A-87G9w", "title": "Load Balancers & Hashing Algorithms", "duration": "40m" },
+      { "videoId": "gJ-Q837K_8g", "title": "Database Replication, Partitioning & Sharding", "duration": "50m" },
+      { "videoId": "8G-N3g-9P3w", "title": "Distributed Caching (Redis vs Memcached)", "duration": "45m" },
+      { "videoId": "kG-P3b-T89w", "title": "Microservices Communication: REST, gRPC & WebSockets", "duration": "50m" }
+    ]
+  },
+  {
+    "title": "Modern UI/UX with Tailwind & Framer Motion",
+    "category": "Frontend",
+    "lessonsCount": 5,
+    "duration": "3h 25m",
+    "difficulty": "Easy",
+    "instructor": "Sarika Chaudhary",
+    "description": "Design immersive web structures with smooth transitions, interactive animations, and responsive bento grids.",
+    "youtubePlaylistUrl": "https://www.youtube.com/playlist?list=PL4cUxeGkcC9i371Qp_N6r5-sI5wT07k0V",
+    "videos": [
+      { "videoId": "h7SgE7F3wF8", "title": "Flexbox, Grid & Responsive Bento Containers", "duration": "40m" },
+      { "videoId": "A-Q-k-T-G9w", "title": "Framer Motion Animation Layouts & AnimatePresence", "duration": "45m" },
+      { "videoId": "gJ-R9-9N84w", "title": "Custom Dark Mode Engine & Local variables", "duration": "35m" },
+      { "videoId": "yG-P3b-T90k", "title": "Interactive Micro-animations & Hover transitions", "duration": "40m" },
+      { "videoId": "m9-R3g-N_P3", "title": "Designing a Premium User Dashboard UI", "duration": "45m" }
+    ]
+  }
+]

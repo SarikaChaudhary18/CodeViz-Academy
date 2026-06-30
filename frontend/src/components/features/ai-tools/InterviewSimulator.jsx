@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Play, Sparkles, Terminal, Volume2, ShieldAlert, CheckCircle, RefreshCw } from 'lucide-react';
+import { Sparkles, Volume2, ShieldAlert } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { api } from '../../../lib/api';
 
 const INTERVIEW_QUESTIONS = [
   {
@@ -22,29 +23,60 @@ export default function InterviewSimulator() {
   const [answerText, setAnswerText] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [feedback, setFeedback] = useState(null);
+  const [history, setHistory] = useState([]);
 
   const startSimulator = () => {
     setActiveQuestionIdx(0);
     setAnswerText('');
     setFeedback(null);
+    setHistory([]);
   };
 
-  const handleAnswerSubmit = (e) => {
+  const handleAnswerSubmit = async (e) => {
     e.preventDefault();
     if (!answerText.trim()) return;
 
     setSubmitting(true);
     setFeedback(null);
 
-    setTimeout(() => {
-      setFeedback({
-        score: 82,
-        strengths: "Correct definition of dynamic binding contexts and lexical scope parameters.",
-        gaps: "Missed discussing the call/apply/bind override triggers.",
-        verdict: "Passable answer. Boost review on execution contexts."
+    const question = INTERVIEW_QUESTIONS[activeQuestionIdx].question;
+
+    try {
+      const res = await api.post('/ai/tool', {
+        toolType: 'interview-simulator',
+        payload: {
+          role: 'Fullstack Engineer',
+          company: 'Google',
+          history: history,
+          lastAnswer: answerText
+        }
       });
+
+      if (res.status === 'success' || res.data) {
+        const result = res.data;
+        const evaluationScore = Math.min(100, Math.round((result.score || 8) * 10));
+
+        setFeedback({
+          score: evaluationScore,
+          strengths: result.evaluation || 'Feedback processed successfully.',
+          gaps: result.nextQuestion || 'Ready to proceed.',
+          verdict: evaluationScore >= 70 ? 'Strong Answer.' : 'Needs Improvement.'
+        });
+
+        // Save progress history state
+        setHistory(prev => [...prev, { q: question, a: answerText, score: evaluationScore }]);
+      }
+    } catch (err) {
+      console.error('Failed to run Interview Simulator:', err.message);
+      setFeedback({
+        score: 0,
+        strengths: "Verification failed. Check environment configurations.",
+        gaps: "Ensure the NVIDIA/Gemini API key is configured.",
+        verdict: "Evaluation failed."
+      });
+    } finally {
       setSubmitting(false);
-    }, 1500);
+    }
   };
 
   const handleNext = () => {
@@ -58,7 +90,7 @@ export default function InterviewSimulator() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
+    <div className="max-w-4xl mx-auto space-y-6 text-left">
       {/* Header */}
       <div>
         <h1 className="text-3xl font-black text-zinc-950 flex items-center gap-2">
@@ -127,7 +159,7 @@ export default function InterviewSimulator() {
                   onChange={(e) => setAnswerText(e.target.value)}
                   placeholder="Type your response here..."
                   disabled={submitting || feedback !== null}
-                  className="w-full h-32 p-4 font-mono text-xs border border-zinc-200 rounded-2xl focus:outline-none focus:border-orange-500 bg-white text-zinc-950 leading-relaxed"
+                  className="w-full h-32 p-4 font-mono text-xs border border-zinc-200 rounded-2xl focus:outline-none focus:border-orange-500 bg-white text-zinc-955 leading-relaxed"
                 />
 
                 {!feedback && (
@@ -156,12 +188,12 @@ export default function InterviewSimulator() {
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="p-3 bg-zinc-50 border border-zinc-150 rounded-xl">
-                      <span className="text-[9px] font-mono text-green-600 font-bold block uppercase">Core Strengths</span>
+                    <div className="p-3 bg-zinc-50 border border-zinc-155 rounded-xl">
+                      <span className="text-[9px] font-mono text-green-600 font-bold block uppercase">AI Assessment</span>
                       <p className="text-[11px] text-zinc-700 leading-normal mt-1">{feedback.strengths}</p>
                     </div>
-                    <div className="p-3 bg-zinc-50 border border-zinc-150 rounded-xl">
-                      <span className="text-[9px] font-mono text-amber-600 font-bold block uppercase">Knowledge Gaps</span>
+                    <div className="p-3 bg-zinc-50 border border-zinc-155 rounded-xl">
+                      <span className="text-[9px] font-mono text-amber-600 font-bold block uppercase">Follow-up / Recommendation</span>
                       <p className="text-[11px] text-zinc-700 leading-normal mt-1">{feedback.gaps}</p>
                     </div>
                   </div>
@@ -170,7 +202,7 @@ export default function InterviewSimulator() {
                     <span className="text-[10px] font-mono text-zinc-500 italic">Verdict: {feedback.verdict}</span>
                     <button
                       onClick={handleNext}
-                      className="flex items-center gap-1 px-5 py-2 bg-zinc-900 hover:bg-zinc-800 text-white rounded-xl text-xs font-mono font-bold transition-all shadow-sm"
+                      className="flex items-center gap-1 px-5 py-2 bg-zinc-900 hover:bg-zinc-800 text-white rounded-xl text-xs font-mono font-bold transition-all shadow-sm cursor-pointer"
                     >
                       {activeQuestionIdx + 1 === INTERVIEW_QUESTIONS.length ? 'Finish Session' : 'Next Question'} &rarr;
                     </button>

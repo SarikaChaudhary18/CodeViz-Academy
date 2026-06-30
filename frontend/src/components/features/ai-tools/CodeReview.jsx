@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Sparkles, Terminal, FileCode, CheckCircle, Flame, Star } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { Sparkles, Terminal, FileCode } from 'lucide-react';
+import { api } from '../../../lib/api';
 
 export default function CodeReview() {
   const [code, setCode] = useState(`function computeFibonacci(n) {
@@ -11,41 +11,47 @@ export default function CodeReview() {
   const [reviewing, setReviewing] = useState(false);
   const [reviewResult, setReviewResult] = useState(null);
 
-  const handleReview = () => {
+  const handleReview = async () => {
+    if (!code.trim()) return;
     setReviewing(true);
     setReviewResult(null);
 
-    setTimeout(() => {
-      setReviewResult({
-        complexity: {
-          time: "O(2^N)",
-          space: "O(N) (recursion call stack depth)"
-        },
-        readabilityScore: 88,
-        cleanlinessScore: 92,
-        feedback: [
-          "Code is highly readable and matches basic recursive definitions.",
-          "CRITICAL PERFORMANCE RISK: Exponential time complexity O(2^N) due to redundant overlapping subproblems calculation.",
-          "REMEDIAL ADVICE: Implement memoization or bottom-up tabulation to scale time complexity down to O(N)."
-        ],
-        optimizedCode: `function computeFibonacci(n) {
-  let dp = [0, 1];
-  for (let i = 2; i <= n; i++) {
-    dp[i] = dp[i - 1] + dp[i - 2];
-  }
-  return dp[n];
-}`
+    try {
+      const res = await api.post('/ai/tool', {
+        toolType: 'code-review',
+        payload: code
       });
+
+      if (res.status === 'success' || res.data) {
+        const result = res.data;
+        setReviewResult({
+          complexity: result.complexity || { time: "O(N)", space: "O(1)" },
+          readabilityScore: Math.max(50, Math.round((result.rating || 85) * 0.95)),
+          cleanlinessScore: result.rating || 85,
+          feedback: result.suggestions || [],
+          optimizedCode: result.details || '// Optimized recommendation complete'
+        });
+      }
+    } catch (err) {
+      console.error('Failed to run AI Code Review:', err.message);
+      setReviewResult({
+        complexity: { time: "N/A", space: "N/A" },
+        readabilityScore: 0,
+        cleanlinessScore: 0,
+        feedback: ["Verification failed. Verify API key settings."],
+        optimizedCode: "// Review failed"
+      });
+    } finally {
       setReviewing(false);
-    }, 1500);
+    }
   };
 
   return (
-    <div className="max-w-5xl mx-auto space-y-6">
+    <div className="max-w-5xl mx-auto space-y-6 text-left">
       {/* Header */}
       <div>
         <h1 className="text-3xl font-black text-zinc-950 flex items-center gap-2">
-          <Sparkles className="text-orange-600 w-8 h-8" />
+          <Sparkles className="text-orange-600 w-8 h-8 animate-pulse" />
           AI CODE REVIEWER
         </h1>
         <p className="text-xs text-zinc-500 font-mono uppercase tracking-widest mt-1">
@@ -60,7 +66,7 @@ export default function CodeReview() {
             <span className="text-xs font-mono font-bold text-zinc-950 flex items-center gap-1.5">
               <FileCode size={14} className="text-orange-600" /> SOURCE FOR REVIEW
             </span>
-            <span className="text-[10px] font-mono text-zinc-400">JavaScript</span>
+            <span className="text-[10px] font-mono text-zinc-400">JavaScript / Python</span>
           </div>
 
           <textarea
@@ -75,7 +81,7 @@ export default function CodeReview() {
               disabled={reviewing || !code.trim()}
               className="flex items-center gap-2 px-6 py-2.5 bg-orange-600 hover:bg-orange-500 text-white rounded-xl text-xs font-mono font-bold transition-all shadow-sm cursor-pointer disabled:opacity-50"
             >
-              {reviewing ? 'Running compiler ast...' : 'Launch AI Review'} <Sparkles size={12} />
+              {reviewing ? 'Running AI reviewer...' : 'Launch AI Review'} <Sparkles size={12} />
             </button>
           </div>
         </div>
@@ -90,7 +96,7 @@ export default function CodeReview() {
             {reviewing && (
               <div className="py-12 text-center text-zinc-500 font-mono text-xs space-y-3 animate-pulse">
                 <div className="w-8 h-8 rounded-full border-4 border-orange-500/10 border-t-orange-500 animate-spin mx-auto" />
-                <p>Auditing complexity scopes...</p>
+                <p>Auditing complexity scopes and modular metrics...</p>
               </div>
             )}
 
@@ -123,16 +129,18 @@ export default function CodeReview() {
                 </div>
 
                 {/* Feedback points */}
-                <div className="space-y-2">
-                  <span className="text-[10px] font-mono text-zinc-550 uppercase font-bold block">Critique Logs</span>
-                  <div className="space-y-1.5">
-                    {reviewResult.feedback.map((point, index) => (
-                      <div key={index} className="text-[11px] text-zinc-650 leading-relaxed pl-3 border-l-2 border-orange-500">
-                        {point}
-                      </div>
-                    ))}
+                {reviewResult.feedback.length > 0 && (
+                  <div className="space-y-2">
+                    <span className="text-[10px] font-mono text-zinc-550 uppercase font-bold block">Critique Logs</span>
+                    <div className="space-y-1.5">
+                      {reviewResult.feedback.map((point, index) => (
+                        <div key={index} className="text-[11px] text-zinc-650 leading-relaxed pl-3 border-l-2 border-orange-500">
+                          {point}
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                </div>
+                )}
 
                 {/* Code suggestion */}
                 <div className="space-y-2">

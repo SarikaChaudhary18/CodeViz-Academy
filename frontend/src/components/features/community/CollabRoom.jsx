@@ -1,13 +1,10 @@
-import React, { useState } from 'react';
-import { Terminal, Users, Play, Send, Zap, User, Code } from 'lucide-react';
-import { motion } from 'framer-motion';
-
-const MOCK_PEERS = [
-  { id: 1, name: "Sarika (Editor)", status: "Typing...", active: true },
-  { id: 2, name: "Mohit (Viewer)", status: "Reviewing", active: false }
-];
+import React, { useState, useEffect, useRef } from 'react';
+import { Terminal, Users, Play, Code } from 'lucide-react';
+import { useStore } from '../../../hooks/useStore';
+import { socketService } from '../../../lib/socket';
 
 export default function CollabRoom() {
+  const user = useStore(state => state.user);
   const [code, setCode] = useState(`// Collaborative Workspace Session
 function syncDataStructures() {
   console.log("Syncing arrays nodes across sockets...");
@@ -15,20 +12,67 @@ function syncDataStructures() {
 
   const [chatInput, setChatInput] = useState('');
   const [chatMessages, setChatMessages] = useState([
-    { user: "Sarika", text: "I'll optimize the search loops." },
-    { user: "Mohit", text: "Looks clean. Watch out for null boundaries." }
+    { user: "System", text: "Joined collaborative coding workspace." }
   ]);
+  const [peers, setPeers] = useState([]);
+  const typingTimeoutRef = useRef(null);
+
+  const roomId = 'default_collab_room_lobby';
+
+  useEffect(() => {
+    // Connect socket if not connected
+    const socket = socketService.getSocket();
+    if (socket) {
+      socketService.joinRoom(roomId);
+
+      // Listen for code sync
+      const unsubscribeCode = socketService.onCollabCodeReceived((data) => {
+        if (data.sender !== user?.username) {
+          setCode(data.code);
+          // Add peer to list if not present
+          setPeers(prev => {
+            if (!prev.some(p => p.name === data.sender)) {
+              return [...prev, { name: data.sender, status: "Editing" }];
+            }
+            return prev.map(p => p.name === data.sender ? { ...p, status: "Editing" } : p);
+          });
+        }
+      });
+
+      // Listen for chat sync
+      const unsubscribeChat = socketService.onCollabChatReceived((data) => {
+        setChatMessages(prev => [...prev, { user: data.user, text: data.text }]);
+      });
+
+      return () => {
+        unsubscribeCode();
+        unsubscribeChat();
+        socketService.leaveRoom(roomId);
+      };
+    }
+  }, [user]);
+
+  const handleCodeChange = (e) => {
+    const val = e.target.value;
+    setCode(val);
+
+    // Emit changes to peers (debounced by 300ms)
+    if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current);
+    typingTimeoutRef.current = setTimeout(() => {
+      socketService.emitCollabCodeChange(roomId, val);
+    }, 300);
+  };
 
   const handleChatSend = (e) => {
     e.preventDefault();
     if (!chatInput.trim()) return;
 
-    setChatMessages(prev => [...prev, { user: "You", text: chatInput }]);
+    socketService.emitCollabChatSend(roomId, chatInput);
     setChatInput('');
   };
 
   return (
-    <div className="max-w-5xl mx-auto space-y-6">
+    <div className="max-w-5xl mx-auto space-y-6 text-left">
       {/* Header */}
       <div>
         <h1 className="text-3xl font-black text-zinc-950 flex items-center gap-2">
@@ -36,7 +80,7 @@ function syncDataStructures() {
           COLLABORATIVE CODING ROOM
         </h1>
         <p className="text-xs text-zinc-500 font-mono uppercase tracking-widest mt-1">
-          Synchronize code changes and whiteboard drawings in real-time over WebSocket lanes
+          Synchronize code changes and chat in real-time over WebSocket lanes
         </p>
       </div>
 
@@ -48,43 +92,50 @@ function syncDataStructures() {
             <span className="text-xs font-mono font-bold text-zinc-950 flex items-center gap-1.5">
               <Terminal size={14} className="text-orange-600" /> LIVE COLLAB CODE
             </span>
-            <span className="text-[10px] font-mono text-zinc-400">Node sync active</span>
+            <span className="text-[10px] font-mono text-zinc-400">WebSocket connection active</span>
           </div>
 
           <textarea
             value={code}
-            onChange={(e) => setCode(e.target.value)}
+            onChange={handleCodeChange}
             className="w-full h-72 p-4 font-mono text-xs border border-zinc-200 rounded-xl focus:outline-none focus:border-orange-500 bg-zinc-50 text-zinc-900 leading-relaxed"
           />
 
-          <div className="p-3 bg-orange-50 border border-orange-100 rounded-xl text-[10px] text-zinc-650 font-mono leading-normal text-left">
-            💡 <strong>Collab Hint:</strong> Any code typed in this window immediately reflects on your connected peers screens.
+          <div className="p-3 bg-orange-50 border border-orange-100 rounded-xl text-[10px] text-zinc-650 font-mono leading-normal">
+            💡 <strong>Collab Active:</strong> Any edits made in this workspace immediately broadcast to peers connected to this session.
           </div>
         </div>
 
         {/* Sidebar chat & users list (Right) */}
         <div className="lg:col-span-5 flex flex-col gap-6">
           
-          {/* Peer checklist */}
-          <div className="bg-white border border-zinc-200 rounded-3xl p-5 shadow-sm text-left">
+          {/* Peer Checklist */}
+          <div className="bg-white border border-zinc-200 rounded-3xl p-5 shadow-sm">
             <h3 className="text-xs font-mono font-bold text-zinc-900 uppercase tracking-widest flex items-center gap-1.5 border-b border-zinc-100 pb-3 mb-3">
-              <Users size={14} className="text-orange-600" /> Peers in Room
+              <Users size={14} className="text-orange-600" /> Active Room Peers
             </h3>
             <div className="space-y-2">
-              {MOCK_PEERS.map((peer) => (
-                <div key={peer.id} className="flex justify-between items-center text-xs">
+              <div className="flex justify-between items-center text-xs">
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-green-550 animate-ping" />
+                  <span className="font-semibold text-zinc-800">{user?.username || 'You'} (Host)</span>
+                </div>
+                <span className="text-[10px] font-mono text-zinc-400 uppercase font-bold">Online</span>
+              </div>
+              {peers.map((peer, idx) => (
+                <div key={idx} className="flex justify-between items-center text-xs">
                   <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 rounded-full bg-green-500 animate-ping" />
+                    <div className="w-2 h-2 rounded-full bg-green-500" />
                     <span className="font-semibold text-zinc-800">{peer.name}</span>
                   </div>
-                  <span className="text-[10px] font-mono text-zinc-555 italic">{peer.status}</span>
+                  <span className="text-[10px] font-mono text-zinc-500 font-bold uppercase">{peer.status}</span>
                 </div>
               ))}
             </div>
           </div>
 
           {/* Sync Chat */}
-          <div className="bg-white border border-zinc-200 rounded-3xl p-5 shadow-sm flex-col flex-1 min-h-[220px] flex justify-between text-left">
+          <div className="bg-white border border-zinc-200 rounded-3xl p-5 shadow-sm flex flex-col justify-between min-h-[220px]">
             <h3 className="text-xs font-mono font-bold text-zinc-900 uppercase tracking-widest border-b border-zinc-100 pb-3 mb-3">
               Room Chat Feed
             </h3>
@@ -102,7 +153,7 @@ function syncDataStructures() {
                 type="text"
                 value={chatInput}
                 onChange={(e) => setChatInput(e.target.value)}
-                placeholder="Send chat..."
+                placeholder="Send message to room..."
                 className="flex-1 h-8 px-3 rounded-lg border border-zinc-200 text-xs focus:outline-none focus:border-orange-500 bg-zinc-50 text-zinc-950"
               />
               <button 

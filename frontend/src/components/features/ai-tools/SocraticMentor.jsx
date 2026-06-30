@@ -1,20 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, Brain, Bot, User, RefreshCw, HelpCircle } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { Send, Brain, Bot, User, RefreshCw } from 'lucide-react';
+import { api } from '../../../lib/api';
 
 const INITIAL_MESSAGES = [
   {
     sender: 'bot',
     text: "Greetings, Learner. I am your Socratic Mentor. I will not solve your code for you; instead, I will ask questions to guide you. What programming concept or logic constraint are you struggling with today?"
   }
-];
-
-const MOCK_RESPONSES = [
-  "Interesting choice. What do you think happens to the execution context stack frame when that function returns?",
-  "Let's trace that step. If your array has a length of zero, what would your base case return?",
-  "Before we write code, can you define the subproblem in plain words?",
-  "Why do you prefer an iterative loop here instead of a recursion? What are the space memory implications?",
-  "If we double the input size N, how does the number of operations scale with your proposed approach?"
 ];
 
 export default function SocraticMentor() {
@@ -27,30 +19,38 @@ export default function SocraticMentor() {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  const handleSend = (e) => {
+  const handleSend = async (e) => {
     e.preventDefault();
     if (!inputValue.trim()) return;
 
-    const userMessage = { sender: 'user', text: inputValue };
+    const userText = inputValue;
+    const userMessage = { sender: 'user', text: userText };
     setMessages(prev => [...prev, userMessage]);
     setInputValue('');
     setIsTyping(true);
 
-    // Mock Socratic reply after 1.2s
-    setTimeout(() => {
-      const randomResponse = MOCK_RESPONSES[Math.floor(Math.random() * MOCK_RESPONSES.length)];
-      const botMessage = { sender: 'bot', text: randomResponse };
-      setMessages(prev => [...prev, botMessage]);
+    try {
+      const res = await api.post('/ai/tool', {
+        toolType: 'socratic',
+        payload: userText
+      });
+      
+      const botText = res.data?.response || "I am reflecting on your question...";
+      setMessages(prev => [...prev, { sender: 'bot', text: botText }]);
+    } catch (err) {
+      console.error('Failed to get response from Socratic Mentor:', err.message);
+      setMessages(prev => [...prev, { sender: 'bot', text: "My cognitive pathways are currently jammed. Let's try reflecting on the problem again in a moment." }]);
+    } finally {
       setIsTyping(false);
-    }, 1200);
+    }
   };
 
   return (
-    <div className="max-w-4xl mx-auto h-[calc(100vh-140px)] flex flex-col justify-between bg-white border border-zinc-200 rounded-3xl overflow-hidden shadow-sm">
+    <div className="max-w-4xl mx-auto h-[calc(100vh-140px)] flex flex-col justify-between bg-white border border-zinc-200 rounded-3xl overflow-hidden shadow-sm text-left">
       {/* Header */}
       <div className="bg-zinc-50 border-b border-zinc-200 px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-orange-600/10 border border-orange-200 text-orange-600 flex items-center justify-center">
+          <div className="w-9 h-9 rounded-xl bg-orange-600/10 border border-orange-200 text-orange-600 flex items-center justify-center animate-pulse">
             <Brain size={18} />
           </div>
           <div className="text-left">
@@ -110,7 +110,7 @@ export default function SocraticMentor() {
           type="text"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
-          placeholder="Ask a question or explain your reasoning..."
+          placeholder="Explain your reasoning or ask about a concept..."
           className="flex-1 h-10 px-4 rounded-xl border border-zinc-200 text-xs focus:outline-none focus:border-orange-500 bg-white text-zinc-900"
         />
         <button

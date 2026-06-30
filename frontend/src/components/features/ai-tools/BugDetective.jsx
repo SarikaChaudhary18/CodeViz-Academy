@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { ShieldAlert, Terminal, Play, AlertCircle, CheckCircle, ArrowRight } from 'lucide-react';
+import { ShieldAlert, Terminal, Play, AlertCircle, CheckCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { api } from '../../../lib/api';
 
 export default function BugDetective() {
   const [code, setCode] = useState(`function findUser(users, id) {
@@ -15,45 +16,49 @@ export default function BugDetective() {
   const [detecting, setDetecting] = useState(false);
   const [report, setReport] = useState(null);
 
-  const handleScan = () => {
+  const handleScan = async () => {
+    if (!code.trim()) return;
     setDetecting(true);
     setReport(null);
 
-    setTimeout(() => {
+    try {
+      const res = await api.post('/ai/tool', {
+        toolType: 'bug-detective',
+        payload: code
+      });
+
+      if (res.status === 'success' || res.data) {
+        const result = res.data;
+        setReport({
+          bugsFound: result.bugs?.length || 0,
+          diagnoses: result.bugs || [],
+          remediation: result.explanation || 'Code logic analysis completed.'
+        });
+      }
+    } catch (err) {
+      console.error('Failed to run Bug Detective:', err.message);
       setReport({
-        bugsFound: 2,
-        severity: "Medium",
+        bugsFound: 0,
         diagnoses: [
           {
-            line: 2,
-            type: "Out of Bounds Error",
-            details: "The loop condition 'i <= users.length' allows 'i' to equal 'users.length', which attempts to access users[users.length]. This evaluates to undefined and throws an error when reading 'users[i].id'."
-          },
-          {
-            line: 2,
-            type: "Scope Leakage",
-            details: "Declaring loop variable 'i' using 'var' leaks it outside block scope. Use 'let' to retain strict block scopes."
+            line: 0,
+            type: "System Check Error",
+            details: "Could not contact Bug Detective service. Verify environment AI api keys."
           }
         ],
-        remediation: `function findUser(users, id) {
-  for (let i = 0; i < users.length; i++) {
-    if (users[i] && users[i].id === id) {
-      return users[i];
-    }
-  }
-  return null;
-}`
+        remediation: "Verify the backend configuration."
       });
+    } finally {
       setDetecting(false);
-    }, 1500);
+    }
   };
 
   return (
-    <div className="max-w-5xl mx-auto space-y-6">
+    <div className="max-w-5xl mx-auto space-y-6 text-left">
       {/* Header */}
       <div>
         <h1 className="text-3xl font-black text-zinc-950 flex items-center gap-2">
-          <ShieldAlert className="text-orange-600 w-8 h-8" />
+          <ShieldAlert className="text-orange-600 w-8 h-8 animate-pulse" />
           BUG DETECTIVE
         </h1>
         <p className="text-xs text-zinc-500 font-mono uppercase tracking-widest mt-1">
@@ -68,7 +73,7 @@ export default function BugDetective() {
             <span className="text-xs font-mono font-bold text-zinc-950 flex items-center gap-1.5">
               <Terminal size={14} className="text-orange-600" /> SOURCE SANDBOX
             </span>
-            <span className="text-[10px] font-mono text-zinc-400">JavaScript</span>
+            <span className="text-[10px] font-mono text-zinc-400">JavaScript / Python</span>
           </div>
 
           <textarea
@@ -98,7 +103,7 @@ export default function BugDetective() {
             {detecting && (
               <div className="py-12 text-center text-zinc-500 font-mono text-xs space-y-3 animate-pulse">
                 <div className="w-8 h-8 rounded-full border-4 border-orange-500/10 border-t-orange-500 animate-spin mx-auto" />
-                <p>Analyzing ast scopes...</p>
+                <p>Analyzing AST scopes and syntax parameters...</p>
               </div>
             )}
 
@@ -111,35 +116,46 @@ export default function BugDetective() {
             {report && !detecting && (
               <div className="space-y-5 text-left">
                 {/* Score */}
-                <div className="flex justify-between items-center bg-red-50 border border-red-100 rounded-xl p-4">
-                  <div className="flex items-center gap-2 text-red-700">
+                <div className={`flex justify-between items-center border rounded-xl p-4 ${
+                  report.bugsFound > 0 ? 'bg-red-50 border-red-100 text-red-700' : 'bg-green-50 border-green-100 text-green-700'
+                }`}>
+                  <div className="flex items-center gap-2">
                     <AlertCircle size={16} />
-                    <span className="text-xs font-mono font-bold">BUGS DETECTED</span>
+                    <span className="text-xs font-mono font-bold">
+                      {report.bugsFound > 0 ? 'BUGS DETECTED' : 'NO BUGS DETECTED'}
+                    </span>
                   </div>
-                  <span className="text-lg font-black text-red-600 font-mono">{report.bugsFound}</span>
+                  <span className="text-lg font-black font-mono">{report.bugsFound}</span>
                 </div>
 
                 {/* Bug Details List */}
-                <div className="space-y-3">
-                  {report.diagnoses.map((diag, index) => (
-                    <div key={index} className="p-3 bg-zinc-50 border border-zinc-150 rounded-xl space-y-1">
-                      <div className="flex justify-between text-[9px] font-mono font-bold text-zinc-555">
-                        <span className="text-red-500 uppercase">{diag.type}</span>
-                        <span>LINE {diag.line}</span>
+                {report.bugsFound > 0 && (
+                  <div className="space-y-3">
+                    {report.diagnoses.map((diag, index) => (
+                      <div key={index} className="p-3 bg-zinc-50 border border-zinc-150 rounded-xl space-y-1">
+                        <div className="flex justify-between text-[9px] font-mono font-bold text-zinc-500">
+                          <span className="text-red-500 uppercase">{diag.type || 'Bug Alert'}</span>
+                          {diag.line > 0 && <span>LINE {diag.line}</span>}
+                        </div>
+                        <p className="text-[11px] text-zinc-650 leading-relaxed">
+                          {diag.description}
+                        </p>
+                        {diag.fix && (
+                          <pre className="p-1 bg-zinc-100 rounded text-[9px] text-zinc-600 font-mono overflow-x-auto mt-1">
+                            {diag.fix}
+                          </pre>
+                        )}
                       </div>
-                      <p className="text-[11px] text-zinc-650 leading-relaxed">
-                        {diag.details}
-                      </p>
-                    </div>
-                  ))}
-                </div>
+                    ))}
+                  </div>
+                )}
 
                 {/* Remediation code preview */}
                 <div className="space-y-2">
-                  <span className="text-[10px] font-mono text-zinc-550 uppercase font-bold block">Recommended Remediation</span>
-                  <pre className="p-3 bg-zinc-50 border border-zinc-150 rounded-xl font-mono text-[9px] text-zinc-700 overflow-x-auto leading-relaxed">
+                  <span className="text-[10px] font-mono text-zinc-550 uppercase font-bold block">Summary & Remediation</span>
+                  <p className="text-[11px] text-zinc-600 leading-relaxed bg-zinc-50 p-4 border border-zinc-150 rounded-2xl whitespace-pre-line font-mono">
                     {report.remediation}
-                  </pre>
+                  </p>
                 </div>
               </div>
             )}

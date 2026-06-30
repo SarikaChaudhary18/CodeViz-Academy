@@ -1,113 +1,100 @@
-import React, { useState } from 'react';
-import { HelpCircle, Clock, CheckCircle2, Award, ArrowRight, RotateCcw, AlertTriangle } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { HelpCircle, Clock, CheckCircle2, Award, ArrowRight, RotateCcw, RefreshCw } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-
-const QUIZ_LIST = [
-  {
-    id: 1,
-    title: 'JavaScript Closures & Scopes',
-    topic: 'Language / JS',
-    questionsCount: 5,
-    duration: '10 mins',
-    difficulty: 'Medium',
-    questions: [
-      {
-        q: "What is a closure in JavaScript?",
-        options: [
-          "A function bundled together with references to its surrounding state (lexical environment).",
-          "A method to close an active browser tab.",
-          "A variable declaration that overrides global scope.",
-          "A data structure used to release system thread locks."
-        ],
-        answer: 0
-      },
-      {
-        q: "Which keyword does NOT create block scope?",
-        options: ["let", "var", "const", "None of the above"],
-        answer: 1
-      },
-      {
-        q: "What does the lexical environment contain?",
-        options: ["Local variables and reference to the parent environment.", "Just functions definitions.", "Only the variables declared with var.", "The system garbage collector pointers."],
-        answer: 0
-      },
-      {
-        q: "Can a closure access variables defined in outer functions after they return?",
-        options: ["Yes, closures hold dynamic reference references.", "No, function stack frames are deleted.", "Only if declared as global.", "Only in Node.js environments."],
-        answer: 0
-      },
-      {
-        q: "What will `console.log(typeof closures)` print if closures is not defined?",
-        options: ["undefined", "ReferenceError", "null", "TypeError"],
-        answer: 1
-      }
-    ]
-  },
-  {
-    id: 2,
-    title: 'Binary Tree Traversals',
-    topic: 'DSA / Algorithms',
-    questionsCount: 3,
-    duration: '6 mins',
-    difficulty: 'Hard',
-    questions: [
-      {
-        q: "What is the pre-order traversal sequence of a tree?",
-        options: ["Root -> Left -> Right", "Left -> Root -> Right", "Left -> Right -> Root", "Right -> Root -> Left"],
-        answer: 0
-      },
-      {
-        q: "Which traversal explores siblings before children?",
-        options: ["Breadth-First Search (BFS)", "Depth-First Search (DFS)", "In-order traversal", "Post-order traversal"],
-        answer: 0
-      },
-      {
-        q: "What is the time complexity of searching a value in a balanced BST?",
-        options: ["O(log N)", "O(N)", "O(1)", "O(N log N)"],
-        answer: 0
-      }
-    ]
-  }
-];
+import { api } from '../../../lib/api';
 
 export default function Quizzes() {
+  const [quizzes, setQuizzes] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [activeQuiz, setActiveQuiz] = useState(null);
+  const [questions, setQuestions] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
   const [score, setScore] = useState(0);
   const [quizFinished, setQuizFinished] = useState(false);
+  const [submitLoading, setSubmitLoading] = useState(false);
+  const [xpEarned, setXpEarned] = useState(0);
 
-  const startQuiz = (quiz) => {
-    setActiveQuiz(quiz);
-    setCurrentQuestionIndex(0);
-    setSelectedOption(null);
-    setScore(0);
-    setQuizFinished(false);
+  useEffect(() => {
+    fetchQuizzes();
+  }, []);
+
+  const fetchQuizzes = async () => {
+    setLoading(true);
+    try {
+      const res = await api.get('/quizzes');
+      if (res.status === 'success' || Array.isArray(res.data)) {
+        setQuizzes(res.data || []);
+      }
+    } catch (err) {
+      console.error('Failed to fetch quizzes list:', err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const startQuiz = async (quizSummary) => {
+    setLoading(true);
+    try {
+      const res = await api.get(`/quizzes/${quizSummary.id}/questions`);
+      if (res.status === 'success' || res.data) {
+        setActiveQuiz(quizSummary);
+        setQuestions(res.data.questions || []);
+        setCurrentQuestionIndex(0);
+        setSelectedOption(null);
+        setScore(0);
+        setQuizFinished(false);
+        setXpEarned(0);
+      }
+    } catch (err) {
+      console.error('Failed to load quiz questions:', err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleOptionSelect = (optionIndex) => {
     setSelectedOption(optionIndex);
   };
 
-  const handleNext = () => {
-    if (selectedOption === activeQuiz.questions[currentQuestionIndex].answer) {
-      setScore(prev => prev + 1);
+  const handleNext = async () => {
+    let currentScore = score;
+    if (selectedOption === questions[currentQuestionIndex].answer) {
+      currentScore += 1;
+      setScore(currentScore);
     }
     
-    if (currentQuestionIndex + 1 < activeQuiz.questions.length) {
+    if (currentQuestionIndex + 1 < questions.length) {
       setCurrentQuestionIndex(prev => prev + 1);
       setSelectedOption(null);
     } else {
-      setQuizFinished(true);
+      // Quiz finished, submit to backend
+      setSubmitLoading(true);
+      try {
+        const submitRes = await api.post(`/quizzes/${activeQuiz.id}/submit`, {
+          score: currentScore,
+          totalQuestions: questions.length
+        });
+        if (submitRes.status === 'success' || submitRes.xpGained !== undefined) {
+          setXpEarned(submitRes.xpGained || 0);
+        }
+      } catch (err) {
+        console.error('Failed to submit quiz score:', err.message);
+      } finally {
+        setSubmitLoading(false);
+        setQuizFinished(true);
+        fetchQuizzes();
+      }
     }
   };
 
   const quitQuiz = () => {
     setActiveQuiz(null);
+    setQuestions([]);
   };
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
+    <div className="max-w-4xl mx-auto space-y-6 text-left">
       {/* Header */}
       <div>
         <h1 className="text-3xl font-black text-zinc-950 flex items-center gap-2">
@@ -115,55 +102,68 @@ export default function Quizzes() {
           CONCEPT QUIZZES
         </h1>
         <p className="text-xs text-zinc-500 font-mono uppercase tracking-widest mt-1">
-          Validate core understanding of language runtimes and data structures
+          Validate core understanding of DSA structures, system design, and AI models
         </p>
       </div>
 
       <AnimatePresence mode="wait">
         {!activeQuiz ? (
           /* Quiz List View */
-          <motion.div 
-            key="list" 
-            initial={{ opacity: 0 }} 
-            animate={{ opacity: 1 }} 
-            exit={{ opacity: 0 }}
-            className="grid grid-cols-1 md:grid-cols-2 gap-6"
-          >
-            {QUIZ_LIST.map((quiz) => (
-              <div 
-                key={quiz.id}
-                className="bg-white rounded-2xl border border-zinc-200 hover:border-orange-250 p-6 flex flex-col justify-between hover:shadow-md transition-all"
-              >
-                <div>
-                  <div className="flex justify-between items-center mb-3">
-                    <span className="px-2.5 py-0.5 bg-orange-50 border border-orange-100 text-[9px] font-bold text-orange-600 font-mono rounded-full">
-                      {quiz.topic}
-                    </span>
-                    <span className="text-[9px] font-mono text-zinc-500 font-bold uppercase">{quiz.difficulty}</span>
-                  </div>
-                  <h3 className="text-base font-extrabold text-zinc-950 tracking-tight mb-2">
-                    {quiz.title}
-                  </h3>
-                  <p className="text-xs text-zinc-500 leading-relaxed mb-4">
-                    Check your algorithmic scopes, parameter reference mappings, and execution flow constraints.
-                  </p>
-                </div>
+          loading ? (
+            <div className="py-20 text-center text-zinc-550 font-mono text-xs animate-pulse">
+              <div className="w-8 h-8 rounded-full border-4 border-orange-500/10 border-t-orange-500 animate-spin mx-auto mb-3" />
+              Fetching dynamic quiz categories...
+            </div>
+          ) : (
+            <motion.div 
+              key="list" 
+              initial={{ opacity: 0 }} 
+              animate={{ opacity: 1 }} 
+              exit={{ opacity: 0 }}
+              className="grid grid-cols-1 md:grid-cols-2 gap-6"
+            >
+              {quizzes.map((quiz) => (
+                <div 
+                  key={quiz.id}
+                  className="bg-white rounded-2xl border border-zinc-200 hover:border-orange-250 p-6 flex flex-col justify-between hover:shadow-md transition-all"
+                >
+                  <div>
+                    <div className="flex justify-between items-center mb-3">
+                      <span className="px-2.5 py-0.5 bg-orange-55 border border-orange-100 text-[9px] font-bold text-orange-600 font-mono rounded-full uppercase">
+                        {quiz.topic}
+                      </span>
+                      <span className="text-[9px] font-mono text-zinc-500 font-bold uppercase">{quiz.difficulty}</span>
+                    </div>
+                    <h3 className="text-base font-extrabold text-zinc-950 tracking-tight mb-2">
+                      {quiz.title}
+                    </h3>
+                    <p className="text-xs text-zinc-500 leading-relaxed mb-4">
+                      Evaluate your parameters, algorithms complexity boundary locks, and theoretical knowledge.
+                    </p>
 
-                <div className="flex justify-between items-center pt-4 border-t border-zinc-100 mt-4">
-                  <div className="flex items-center gap-3 text-[10px] text-zinc-500 font-mono">
-                    <span className="flex items-center gap-1"><HelpCircle size={12} /> {quiz.questionsCount} MCQs</span>
-                    <span className="flex items-center gap-1"><Clock size={12} /> {quiz.duration}</span>
+                    {quiz.bestScore !== null && (
+                      <div className="p-2 bg-green-50 border border-green-200 text-[10px] text-green-700 font-mono font-bold rounded-lg mb-2">
+                        Best Score: {quiz.bestScore} / 10 correct
+                      </div>
+                    )}
                   </div>
-                  <button 
-                    onClick={() => startQuiz(quiz)}
-                    className="flex items-center gap-1.5 px-4 py-2 bg-orange-600 hover:bg-orange-500 text-white rounded-xl text-[10px] font-mono font-bold transition-all shadow-sm"
-                  >
-                    Start Quiz <ArrowRight size={10} />
-                  </button>
+
+                  <div className="flex justify-between items-center pt-4 border-t border-zinc-100 mt-4">
+                    <div className="flex items-center gap-3 text-[10px] text-zinc-500 font-mono">
+                      <span className="flex items-center gap-1"><HelpCircle size={12} /> 10 MCQs pool</span>
+                      <span className="flex items-center gap-1"><Clock size={12} /> 10 mins</span>
+                    </div>
+                    <button 
+                      onClick={() => startQuiz(quiz)}
+                      className="flex items-center gap-1.5 px-4 py-2 bg-orange-600 hover:bg-orange-500 text-white rounded-xl text-[10px] font-mono font-bold transition-all shadow-sm cursor-pointer"
+                    >
+                      Start Quiz <ArrowRight size={10} />
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </motion.div>
+              ))}
+            </motion.div>
+          )
         ) : (
           /* Active Quiz Interactive View */
           <motion.div 
@@ -173,7 +173,11 @@ export default function Quizzes() {
             exit={{ opacity: 0 }}
             className="bg-white border border-zinc-200 rounded-3xl p-6 md:p-8 shadow-lg"
           >
-            {!quizFinished ? (
+            {loading ? (
+              <div className="py-12 text-center text-zinc-500 font-mono text-xs">
+                Generating quiz question list...
+              </div>
+            ) : !quizFinished ? (
               /* Question block */
               <div className="space-y-6">
                 <div className="flex justify-between items-center border-b border-zinc-100 pb-4">
@@ -191,93 +195,92 @@ export default function Quizzes() {
 
                 {/* Progress Indicators */}
                 <div className="flex items-center gap-1 text-[10px] font-mono text-zinc-500">
-                  <span>Question {currentQuestionIndex + 1} of {activeQuiz.questions.length}</span>
+                  <span>Question {currentQuestionIndex + 1} of {questions.length}</span>
                   <div className="flex-1 bg-zinc-100 h-1.5 rounded-full overflow-hidden ml-4">
                     <div 
                       className="bg-orange-600 h-full transition-all duration-300"
-                      style={{ width: `${((currentQuestionIndex + 1) / activeQuiz.questions.length) * 100}%` }}
+                      style={{ width: `${((currentQuestionIndex + 1) / questions.length) * 100}%` }}
                     />
                   </div>
                 </div>
 
-                {/* Question */}
-                <div className="text-sm font-extrabold text-zinc-900 leading-normal bg-zinc-50/50 p-4 rounded-xl border border-zinc-150">
-                  {activeQuiz.questions[currentQuestionIndex].q}
+                {/* Question Prompt */}
+                <div className="text-sm font-extrabold text-zinc-900 leading-snug">
+                  {questions[currentQuestionIndex]?.q}
                 </div>
 
-                {/* Options List */}
-                <div className="space-y-2.5">
-                  {activeQuiz.questions[currentQuestionIndex].options.map((option, idx) => (
+                {/* Options list */}
+                <div className="grid grid-cols-1 gap-3">
+                  {questions[currentQuestionIndex]?.options.map((option, idx) => (
                     <button
                       key={idx}
                       onClick={() => handleOptionSelect(idx)}
-                      className={`w-full p-4 text-left text-xs rounded-xl border transition-all flex items-center justify-between cursor-pointer ${
+                      className={`p-4 rounded-2xl border text-xs font-semibold text-left transition-all ${
                         selectedOption === idx
-                          ? 'border-orange-500 bg-orange-50/40 text-orange-950 font-bold'
-                          : 'border-zinc-200 bg-white hover:bg-zinc-50 text-zinc-800'
+                          ? 'border-orange-500 bg-orange-50/20 text-orange-600 font-bold'
+                          : 'border-zinc-200 hover:border-zinc-300 text-zinc-800'
                       }`}
                     >
-                      <span>{option}</span>
-                      <div className={`w-4 h-4 rounded-full border flex items-center justify-center ${
-                        selectedOption === idx ? 'border-orange-600 bg-orange-600' : 'border-zinc-300'
-                      }`}>
-                        {selectedOption === idx && <div className="w-1.5 h-1.5 bg-white rounded-full" />}
-                      </div>
+                      {option}
                     </button>
                   ))}
                 </div>
 
-                {/* Navigation Button */}
-                <div className="flex justify-end pt-4">
+                {/* Bottom Bar */}
+                <div className="flex justify-end pt-4 border-t border-zinc-100">
                   <button
-                    disabled={selectedOption === null}
                     onClick={handleNext}
-                    className={`flex items-center gap-1.5 px-6 py-2.5 rounded-xl font-mono text-xs font-bold transition-all shadow-sm ${
-                      selectedOption === null 
-                        ? 'bg-zinc-100 text-zinc-400 border border-zinc-200 cursor-not-allowed'
-                        : 'bg-orange-600 hover:bg-orange-500 text-white cursor-pointer'
-                    }`}
+                    disabled={selectedOption === null}
+                    className="flex items-center gap-1.5 px-5 py-2.5 bg-orange-600 hover:bg-orange-500 disabled:bg-zinc-150 disabled:text-zinc-400 text-white rounded-xl text-xs font-mono font-bold transition-all shadow-sm cursor-pointer"
                   >
-                    {currentQuestionIndex + 1 === activeQuiz.questions.length ? 'Finish Quiz' : 'Next Question'} &rarr;
+                    {currentQuestionIndex + 1 === questions.length ? 'Submit Quiz' : 'Next Question'} <ArrowRight size={12} />
                   </button>
                 </div>
               </div>
             ) : (
-              /* Quiz Score Summary Screen */
-              <div className="text-center py-8 space-y-6">
-                <div className="w-20 h-20 rounded-full bg-orange-50 border-2 border-orange-100 flex items-center justify-center mx-auto text-orange-600">
-                  <CheckCircle2 size={40} />
+              /* Quiz Finished Summary Block */
+              <div className="text-center py-8 space-y-6 max-w-md mx-auto">
+                <div className="w-16 h-16 bg-orange-100 border border-orange-200 rounded-full flex items-center justify-center mx-auto text-orange-600">
+                  <Award size={32} />
                 </div>
-                
+
                 <div className="space-y-2">
-                  <h2 className="text-xl font-black text-zinc-950">QUIZ COMPLETION METRICS</h2>
-                  <p className="text-xs text-zinc-500 font-mono">{activeQuiz.title}</p>
+                  <h2 className="text-xl font-black text-zinc-950">Quiz Completed!</h2>
+                  <p className="text-xs text-zinc-550 font-mono">
+                    Evaluation finalized by Canonical system checks.
+                  </p>
                 </div>
 
-                <div className="max-w-[280px] bg-zinc-50 border border-zinc-200 rounded-2xl p-6 mx-auto">
-                  <div className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">Final Accuracy Score</div>
-                  <div className="text-4xl font-black text-orange-600 mt-2 font-mono">
-                    {score} / {activeQuiz.questions.length}
+                {/* Metrics */}
+                <div className="p-5 bg-zinc-50 border border-zinc-200 rounded-2xl grid grid-cols-2 gap-4">
+                  <div className="text-left border-r border-zinc-150 pr-4">
+                    <span className="text-[10px] font-mono text-zinc-400 uppercase block">Correct Responses</span>
+                    <span className="text-xl font-mono font-black text-orange-600">{score} <span className="text-xs text-zinc-400 font-normal">/ {questions.length}</span></span>
                   </div>
-                  <div className="text-[10px] text-zinc-650 font-mono mt-3 font-semibold">
-                    {score === activeQuiz.questions.length ? 'Perfect Score! Core synced!' : 
-                     score >= activeQuiz.questions.length / 2 ? 'Passed. Some scope overrides required.' : 
-                     'Underperforming. Re-auditing recommended.'}
+                  <div className="text-left pl-4">
+                    <span className="text-[10px] font-mono text-zinc-400 uppercase block">XP Rewarded</span>
+                    <span className="text-xl font-mono font-black text-green-600">+{xpEarned} XP</span>
                   </div>
                 </div>
 
-                <div className="flex justify-center gap-3 pt-6">
-                  <button
+                {/* Info spaced repetition */}
+                <div className="text-[10px] text-zinc-500 font-mono bg-orange-50 border border-orange-100 p-3 rounded-xl leading-normal text-left">
+                  💡 This topic has been queued in your **Spaced Repetition Decay Checklist**. Its decay curve has reset to 100% strength.
+                </div>
+
+                {/* Actions */}
+                <div className="flex gap-4 justify-center pt-2">
+                  <button 
                     onClick={() => startQuiz(activeQuiz)}
-                    className="flex items-center gap-1.5 px-4 py-2 border border-zinc-200 bg-white hover:bg-zinc-55 text-zinc-700 hover:text-zinc-950 rounded-xl text-xs font-mono font-bold transition-all shadow-sm"
+                    className="flex items-center gap-1.5 px-4 py-2 border border-zinc-200 hover:bg-zinc-50 rounded-xl text-xs font-mono font-bold text-zinc-700 transition-all cursor-pointer"
                   >
-                    <RotateCcw size={12} /> Retry Quiz
+                    <RotateCcw size={12} /> Retake
                   </button>
-                  <button
+                  <button 
                     onClick={quitQuiz}
-                    className="px-5 py-2 bg-orange-600 hover:bg-orange-500 text-white rounded-xl text-xs font-mono font-bold transition-all shadow-sm"
+                    className="flex items-center gap-1.5 px-4 py-2 bg-orange-600 hover:bg-orange-500 text-white rounded-xl text-xs font-mono font-bold transition-all shadow-sm cursor-pointer"
                   >
-                    Done & Exit
+                    Catalog Home
                   </button>
                 </div>
               </div>

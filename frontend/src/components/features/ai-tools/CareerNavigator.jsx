@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Compass, Briefcase, Building, Target, CheckCircle2, ChevronRight, Award } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { Compass, Briefcase, Building, Target, CheckCircle2, Award } from 'lucide-react';
+import { api } from '../../../lib/api';
 
 export default function CareerNavigator() {
   const [role, setRole] = useState('Frontend Developer');
@@ -8,39 +8,48 @@ export default function CareerNavigator() {
   const [loading, setLoading] = useState(false);
   const [pathway, setPathway] = useState(null);
 
-  const handleGenerate = (e) => {
+  const handleGenerate = async (e) => {
     e.preventDefault();
     setLoading(true);
     setPathway(null);
 
-    setTimeout(() => {
-      setPathway({
-        difficultyScore: "Tier 1 (Elite)",
-        readinessPct: 68,
-        coreSkills: [
-          { name: "JavaScript / Engine Scopes", level: "Expert required" },
-          { name: "DOM Render Pipeline & Repaints", level: "High efficiency" },
-          { name: "Web Security (CORS, CSP, XSS)", level: "Baseline competency" },
-          { name: "System Scalability & CDN Caching", level: "Theoretical understanding" }
-        ],
-        hiringStages: [
-          "Stage 1: ATS Screening Index (Target Resume Score > 85%)",
-          "Stage 2: Technical Phone Screen (Focus on DSA Arrays/Strings)",
-          "Stage 3: Frontend Architecture Loop (Design a real-time chat client)",
-          "Stage 4: Core Algorithmic Round (Hard DP / Graph problems)",
-          "Stage 5: Googleness / Leadership Principles"
-        ]
+    try {
+      const res = await api.post('/ai/tool', {
+        toolType: 'career-navigator',
+        payload: `Target Role: ${role}, Target Entity: ${company}`
       });
+
+      if (res.status === 'success' || res.data) {
+        const result = res.data;
+        setPathway({
+          difficultyScore: result.estimatedWeeks ? `Estimated Preparation: ${result.estimatedWeeks} Weeks` : "Medium/Hard Tier",
+          readinessPct: 75,
+          coreSkills: (result.sprintPath || []).map((step, idx) => ({
+            name: step,
+            level: `Phase Step ${idx + 1}`
+          })),
+          hiringStages: result.tips || ["Review core domain structures."]
+        });
+      }
+    } catch (err) {
+      console.error('Failed to run Career Navigator:', err.message);
+      setPathway({
+        difficultyScore: "N/A",
+        readinessPct: 0,
+        coreSkills: [{ name: "Failed to map skills", level: "API key error" }],
+        hiringStages: ["Verify your environment keys."]
+      });
+    } finally {
       setLoading(false);
-    }, 1200);
+    }
   };
 
   return (
-    <div className="max-w-5xl mx-auto space-y-6">
+    <div className="max-w-5xl mx-auto space-y-6 text-left">
       {/* Header */}
       <div>
         <h1 className="text-3xl font-black text-zinc-950 flex items-center gap-2">
-          <Compass className="text-orange-600 w-8 h-8" />
+          <Compass className="text-orange-600 w-8 h-8 animate-pulse" />
           AI CAREER NAVIGATOR
         </h1>
         <p className="text-xs text-zinc-500 font-mono uppercase tracking-widest mt-1">
@@ -71,7 +80,7 @@ export default function CareerNavigator() {
                   onChange={(e) => setRole(e.target.value)}
                   placeholder="e.g. Frontend Developer"
                   required
-                  className="w-full h-10 pl-9 pr-3 rounded-xl border border-zinc-200 text-xs focus:outline-none focus:border-orange-500 bg-zinc-50 text-zinc-950"
+                  className="w-full h-10 pl-9 pr-3 rounded-xl border border-zinc-200 text-xs focus:outline-none focus:border-orange-500 bg-zinc-50 text-zinc-955"
                 />
               </div>
             </div>
@@ -90,7 +99,7 @@ export default function CareerNavigator() {
                   onChange={(e) => setCompany(e.target.value)}
                   placeholder="e.g. Google"
                   required
-                  className="w-full h-10 pl-9 pr-3 rounded-xl border border-zinc-200 text-xs focus:outline-none focus:border-orange-500 bg-zinc-50 text-zinc-950"
+                  className="w-full h-10 pl-9 pr-3 rounded-xl border border-zinc-200 text-xs focus:outline-none focus:border-orange-500 bg-zinc-50 text-zinc-955"
                 />
               </div>
             </div>
@@ -156,8 +165,8 @@ export default function CareerNavigator() {
 
                 {/* stages */}
                 <div className="space-y-2">
-                  <span className="text-[10px] font-mono text-zinc-550 uppercase font-bold flex items-center gap-1.5">
-                    <Award size={12} className="text-orange-600" /> Target Hiring Stages
+                  <span className="text-[10px] font-mono text-zinc-555 uppercase font-bold flex items-center gap-1.5">
+                    <Award size={12} className="text-orange-600" /> Target Prep Suggestions
                   </span>
                   <div className="space-y-1.5">
                     {pathway.hiringStages.map((stage, index) => (

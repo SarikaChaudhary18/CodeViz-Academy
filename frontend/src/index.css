@@ -209,7 +209,6 @@ html.light .absolute[class*="bg-cyan-400/"] {
   display: none !important;
 }
 
-/* Force container backgrounds to pure white */
 html.light .bg-\[\#020617\],
 html.light .bg-\[\#07080a\],
 html.light .bg-\[\#030712\],
@@ -217,6 +216,15 @@ html.light .bg-\[\#07080c\]\/50,
 html.light .bg-\[\#0c0e14\]\/50,
 html.light .bg-\[\#070b19\]\/80,
 html.light .bg-\[\#070b19\]\/25,
+html.light .bg-\[\#090d16\]\/80,
+html.light .bg-\[\#090d16\]\/60,
+html.light .bg-\[\#090d16\]\/40,
+html.light .bg-\[\#090d16\]\/30,
+html.light .bg-\[\#0e1322\],
+html.light .bg-\[\#0c101d\],
+html.light .bg-\[\#06080d\]\/60,
+html.light .bg-\[\#02050b\]\/40,
+html.light .bg-\[\#04060b\],
 html.light .bg-zinc-950,
 html.light .bg-zinc-950\/40,
 html.light .bg-zinc-900,
@@ -224,6 +232,8 @@ html.light .bg-slate-950,
 html.light .bg-slate-900,
 html.light .bg-slate-900\/50,
 html.light .bg-black,
+html.light .bg-slate-955,
+html.light .bg-slate-905,
 html.light .bg-slate-950\/95,
 html.light .bg-zinc-950\/70,
 html.light .bg-zinc-900\/30,
@@ -235,6 +245,17 @@ html.light .bg-slate-900\/90 {
   background-color: #ffffff !important;
   background-image: none !important;
   color: #000000 !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* For secondary sub-wrappers, use a subtle light zinc/slate background for depth */
+html.light .bg-\[\#04060b\],
+html.light .bg-\[\#06080d\]\/60,
+html.light .bg-\[\#02050b\]\/40,
+html.light .bg-slate-905 {
+  background-color: #f4f4f5 !important;
+  color: #000000 !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
 }
 
 /* AppLayout Overrides */
@@ -252,6 +273,36 @@ html.light header {
 
 html.light main {
   background-color: #ffffff !important;
+}
+
+/* Footer light mode overrides */
+html.light footer {
+  background-color: #ffffff !important;
+  background-image: none !important;
+  border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
+  color: #09090b !important;
+}
+
+html.light footer p,
+html.light footer span,
+html.light footer a {
+  color: #52525b !important;
+}
+
+html.light footer a:hover,
+html.light footer span a:hover,
+html.light footer span:hover {
+  color: #ea580c !important;
+}
+
+html.light footer div,
+html.light footer p.flex,
+html.light footer img {
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+html.light footer .hover\:bg-slate-900\/40:hover {
+  background-color: #f4f4f5 !important;
 }
 
 /* Glassmorphism maps to clean white boxes with shadow */

@@ -1,35 +1,49 @@
 import React, { useState } from 'react';
-import { Play, RotateCcw, ChevronRight, ChevronLeft, Terminal, Server } from 'lucide-react';
-import { motion } from 'framer-motion';
-
-const DEBUG_STEPS = [
-  { line: 2, desc: "Initialize loop variables: i = 0", state: { arr: [3, 1, 2], i: 0, j: null, temp: null } },
-  { line: 3, desc: "Inner loop starts: j = 0. Compare arr[0] (3) and arr[1] (1)", state: { arr: [3, 1, 2], i: 0, j: 0, temp: null } },
-  { line: 4, desc: "Condition met (3 > 1). Perform swap operations", state: { arr: [3, 1, 2], i: 0, j: 0, temp: 3 } },
-  { line: 5, desc: "Swap complete: arr = [1, 3, 2]", state: { arr: [1, 3, 2], i: 0, j: 0, temp: null } },
-  { line: 3, desc: "Inner loop increments: j = 1. Compare arr[1] (3) and arr[2] (2)", state: { arr: [1, 3, 2], i: 0, j: 1, temp: null } },
-  { line: 4, desc: "Condition met (3 > 2). Perform swap operations", state: { arr: [1, 3, 2], i: 0, j: 1, temp: 3 } },
-  { line: 5, desc: "Swap complete: arr = [1, 2, 3]", state: { arr: [1, 2, 3], i: 0, j: 1, temp: null } },
-  { line: 7, desc: "Sorting algorithm finished. Returns [1, 2, 3]", state: { arr: [1, 2, 3], i: 1, j: null, temp: null } }
-];
-
-const CODE_LINES = [
-  "function bubbleSort(arr) {",
-  "  for (let i = 0; i < arr.length; i++) {",
-  "    for (let j = 0; j < arr.length - 1; j++) {",
-  "      if (arr[j] > arr[j + 1]) {",
-  "        swap(arr, j, j + 1);",
-  "      }",
-  "    }",
-  "  }",
-  "}"
-];
+import { Play, RotateCcw, ChevronRight, ChevronLeft, Terminal, Server, Sparkles } from 'lucide-react';
+import { api } from '../../../lib/api';
+import Mermaid from './Mermaid';
 
 export default function StepDebugger() {
+  const [code, setCode] = useState(`function bubbleSort(arr) {
+  for (let i = 0; i < arr.length; i++) {
+    for (let j = 0; j < arr.length - 1; j++) {
+      if (arr[j] > arr[j + 1]) {
+        let temp = arr[j];
+        arr[j] = arr[j + 1];
+        arr[j + 1] = temp;
+      }
+    }
+  }
+}`);
+
+  const [loading, setLoading] = useState(false);
+  const [debugData, setDebugData] = useState(null);
   const [stepIndex, setStepIndex] = useState(0);
 
+  const handleGenerate = async () => {
+    if (!code.trim()) return;
+    setLoading(true);
+    setDebugData(null);
+    setStepIndex(0);
+
+    try {
+      const res = await api.post('/ai/tool', {
+        toolType: 'step-debugger',
+        payload: code
+      });
+
+      if (res.status === 'success' || res.data) {
+        setDebugData(res.data);
+      }
+    } catch (err) {
+      console.error('Failed to generate debugger steps:', err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleNext = () => {
-    if (stepIndex < DEBUG_STEPS.length - 1) {
+    if (debugData?.debugSteps && stepIndex < debugData.debugSteps.length - 1) {
       setStepIndex(prev => prev + 1);
     }
   };
@@ -44,119 +58,151 @@ export default function StepDebugger() {
     setStepIndex(0);
   };
 
-  const activeStep = DEBUG_STEPS[stepIndex];
+  const codeLines = code.split('\n');
+  const activeStep = debugData?.debugSteps?.[stepIndex];
 
   return (
-    <div className="max-w-5xl mx-auto space-y-6">
+    <div className="max-w-5xl mx-auto space-y-6 text-left">
       {/* Header */}
       <div>
         <h1 className="text-3xl font-black text-zinc-950 flex items-center gap-2">
-          <Server className="text-orange-600 w-8 h-8" />
+          <Server className="text-orange-600 w-8 h-8 animate-pulse" />
           STEP-BY-STEP DEBUGGER
         </h1>
         <p className="text-xs text-zinc-500 font-mono uppercase tracking-widest mt-1">
-          Execute code forward and backward to inspect register memory values
+          Execute code forward and backward to inspect register memory values dynamically
         </p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         
         {/* Editor panel with highlighted active line (Left) */}
-        <div className="lg:col-span-6 bg-white border border-zinc-200 rounded-3xl p-6 shadow-sm flex flex-col justify-between">
+        <div className="lg:col-span-6 bg-white border border-zinc-200 rounded-3xl p-6 shadow-sm flex flex-col justify-between min-h-[450px]">
           <div className="space-y-4">
             <div className="flex items-center justify-between border-b border-zinc-100 pb-3">
               <span className="text-xs font-mono font-bold text-zinc-950 flex items-center gap-1.5">
                 <Terminal size={14} className="text-orange-600" /> SOURCE PROGRAM
               </span>
-              <span className="text-[10px] font-mono text-zinc-400">bubble_sort.js</span>
+              <span className="text-[10px] font-mono text-zinc-400">Debugger Console</span>
             </div>
 
-            <div className="font-mono text-xs text-zinc-800 space-y-0.5 text-left bg-zinc-50 p-4 border border-zinc-150 rounded-xl">
-              {CODE_LINES.map((lineText, index) => {
-                const lineNumber = index + 1;
-                const isCurrentLine = lineNumber === activeStep.line;
-                return (
-                  <div 
-                    key={index} 
-                    className={`flex items-center py-0.5 pl-2 rounded transition-colors ${
-                      isCurrentLine ? 'bg-orange-100/60 border-l-4 border-orange-600 font-bold' : ''
-                    }`}
-                  >
-                    <span className="w-6 text-[10px] text-zinc-400 select-none">{lineNumber}</span>
-                    <span>{lineText}</span>
-                  </div>
-                );
-              })}
-            </div>
+            {!debugData && !loading ? (
+              <textarea
+                value={code}
+                onChange={(e) => setCode(e.target.value)}
+                className="w-full h-72 p-4 font-mono text-xs border border-zinc-200 rounded-xl focus:outline-none focus:border-orange-500 bg-zinc-50 text-zinc-900 leading-relaxed"
+              />
+            ) : (
+              <div className="font-mono text-xs text-zinc-800 space-y-0.5 text-left bg-zinc-50 p-4 border border-zinc-150 rounded-xl overflow-y-auto max-h-[300px]">
+                {codeLines.map((lineText, index) => {
+                  const lineNumber = index + 1;
+                  const isCurrentLine = activeStep && lineNumber === activeStep.line;
+                  return (
+                    <div 
+                      key={index} 
+                      className={`flex items-center py-0.5 pl-2 rounded transition-colors ${
+                        isCurrentLine ? 'bg-orange-100/60 border-l-4 border-orange-600 font-bold' : ''
+                      }`}
+                    >
+                      <span className="w-6 text-[10px] text-zinc-400 select-none">{lineNumber}</span>
+                      <span className="whitespace-pre">{lineText}</span>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
 
           {/* Controls */}
           <div className="flex items-center justify-between pt-4 border-t border-zinc-100 mt-4">
             <button
-              onClick={handleReset}
-              className="p-2 hover:bg-zinc-100 border border-zinc-200 rounded-xl text-zinc-500 hover:text-zinc-950 transition-all cursor-pointer"
+              onClick={() => {
+                setDebugData(null);
+                setStepIndex(0);
+              }}
+              className="p-2 hover:bg-zinc-100 border border-zinc-200 rounded-xl text-zinc-400 hover:text-zinc-650 transition-all cursor-pointer"
             >
               <RotateCcw size={14} />
             </button>
 
-            <div className="flex gap-2">
+            {!debugData ? (
               <button
-                onClick={handlePrev}
-                disabled={stepIndex === 0}
-                className="px-4 py-2 border border-zinc-200 bg-white hover:bg-zinc-50 disabled:opacity-50 text-zinc-800 rounded-xl text-xs font-mono font-bold transition-all cursor-pointer flex items-center gap-1"
+                onClick={handleGenerate}
+                disabled={loading || !code.trim()}
+                className="flex items-center gap-2 px-6 py-2.5 bg-orange-600 hover:bg-orange-500 text-white rounded-xl text-xs font-mono font-bold transition-all shadow-sm cursor-pointer"
               >
-                <ChevronLeft size={14} /> Back
+                {loading ? 'Initializing JVM...' : 'Launch Debugger'} <Sparkles size={12} />
               </button>
-              <button
-                onClick={handleNext}
-                disabled={stepIndex === DEBUG_STEPS.length - 1}
-                className="px-4 py-2 bg-orange-600 hover:bg-orange-500 disabled:opacity-50 text-white rounded-xl text-xs font-mono font-bold transition-all shadow-sm cursor-pointer flex items-center gap-1"
-              >
-                Forward <ChevronRight size={14} />
-              </button>
-            </div>
+            ) : (
+              <div className="flex gap-2">
+                <button
+                  onClick={handlePrev}
+                  disabled={stepIndex === 0}
+                  className="px-4 py-2 border border-zinc-200 bg-white hover:bg-zinc-50 disabled:opacity-50 text-zinc-800 rounded-xl text-xs font-mono font-bold transition-all cursor-pointer flex items-center gap-1"
+                >
+                  &larr; Back
+                </button>
+                <button
+                  onClick={handleNext}
+                  disabled={stepIndex === debugData.debugSteps.length - 1}
+                  className="px-4 py-2 bg-orange-600 hover:bg-orange-500 disabled:opacity-50 text-white rounded-xl text-xs font-mono font-bold transition-all shadow-sm cursor-pointer flex items-center gap-1"
+                >
+                  Forward &rarr;
+                </button>
+              </div>
+            )}
           </div>
         </div>
 
         {/* State and Variable Inspector (Right) */}
-        <div className="lg:col-span-6 bg-white border border-zinc-200 rounded-3xl p-6 shadow-sm flex flex-col justify-between">
-          <div className="space-y-6">
-            <h2 className="text-sm font-mono font-bold text-zinc-950 uppercase tracking-wider">
-              Registers & Memory Inspector
-            </h2>
-
-            {/* Step Description */}
-            <div className="p-3 bg-orange-50/50 border border-orange-100 rounded-xl text-xs text-zinc-800 text-left font-mono">
-              <strong>Step {stepIndex + 1}:</strong> {activeStep.desc}
+        <div className="lg:col-span-6 bg-white border border-zinc-200 rounded-3xl p-6 shadow-sm flex flex-col justify-between min-h-[450px]">
+          {loading && (
+            <div className="py-24 text-center text-zinc-555 font-mono text-xs space-y-3 animate-pulse my-auto">
+              <div className="w-8 h-8 rounded-full border-4 border-orange-500/10 border-t-orange-500 animate-spin mx-auto" />
+              <p>Simulating debugger registers allocation states...</p>
             </div>
+          )}
 
-            {/* Variable Table */}
-            <div className="border border-zinc-200 rounded-xl overflow-hidden text-left font-mono text-xs">
-              <div className="grid grid-cols-2 bg-zinc-55 border-b border-zinc-200 font-bold p-3">
-                <span>Register Variable</span>
-                <span>Runtime Value</span>
-              </div>
-
-              <div className="divide-y divide-zinc-200 bg-zinc-50/30">
-                <div className="grid grid-cols-2 p-3">
-                  <span className="text-zinc-500 font-bold">arr</span>
-                  <span className="text-orange-600 font-bold">[{activeStep.state.arr.join(', ')}]</span>
-                </div>
-                <div className="grid grid-cols-2 p-3">
-                  <span className="text-zinc-500 font-bold">i</span>
-                  <span className="text-zinc-800">{activeStep.state.i}</span>
-                </div>
-                <div className="grid grid-cols-2 p-3">
-                  <span className="text-zinc-500 font-bold">j</span>
-                  <span className="text-zinc-800">{activeStep.state.j === null ? 'null' : activeStep.state.j}</span>
-                </div>
-                <div className="grid grid-cols-2 p-3">
-                  <span className="text-zinc-500 font-bold">temp</span>
-                  <span className="text-zinc-850 font-bold">{activeStep.state.temp === null ? 'null' : activeStep.state.temp}</span>
-                </div>
-              </div>
+          {!debugData && !loading && (
+            <div className="py-24 text-center text-zinc-400 font-mono text-xs my-auto">
+              Initialize simulation and launch debugger to inspect registers state tables.
             </div>
-          </div>
+          )}
+
+          {debugData && !loading && (
+            <div className="space-y-6">
+              <h2 className="text-sm font-mono font-bold text-zinc-950 uppercase tracking-wider border-b border-zinc-100 pb-3">
+                Registers & Memory Inspector
+              </h2>
+
+              {/* Step Description */}
+              {activeStep && (
+                <div className="p-3 bg-orange-50/50 border border-orange-100 rounded-xl text-xs text-zinc-800 text-left font-mono">
+                  <strong>Step {stepIndex + 1}:</strong> {activeStep.action || 'Executing code line.'}
+                </div>
+              )}
+
+              {/* Mermaid trace map */}
+              {debugData.mermaidCode && (
+                <div className="w-full">
+                  <Mermaid chart={debugData.mermaidCode} />
+                </div>
+              )}
+
+              {/* Variable Table */}
+              {activeStep && activeStep.variablesState && (
+                <div className="border border-zinc-200 rounded-xl overflow-hidden text-left font-mono text-xs">
+                  <div className="grid grid-cols-2 bg-zinc-50 border-b border-zinc-200 font-bold p-3">
+                    <span>Register Variable</span>
+                    <span>Value State</span>
+                  </div>
+                  <div className="p-3 bg-zinc-50/20 text-orange-600 font-bold font-mono whitespace-pre-line">
+                    {activeStep.variablesState}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
         </div>
 
       </div>

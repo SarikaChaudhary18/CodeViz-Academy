@@ -18,6 +18,10 @@ const questRoutes = require('./routes/questRoutes');
 const hackathonRoutes = require('./routes/hackathonRoutes');
 const copilotRoutes = require('./routes/copilotRoutes');
 const companyPrepRoutes = require('./routes/companyPrepRoutes');
+const courseRoutes = require('./routes/courseRoutes');
+const quizRoutes = require('./routes/quizRoutes');
+const forgettingRoutes = require('./routes/forgettingRoutes');
+const aiRoutes = require('./routes/aiRoutes');
 
 const app = express();
 
@@ -63,6 +67,10 @@ app.use('/api/quests', questRoutes);
 app.use('/api/hackathons', hackathonRoutes);
 app.use('/api/copilot', copilotRoutes);
 app.use('/api/company-prep', companyPrepRoutes);
+app.use('/api/courses', courseRoutes);
+app.use('/api/quizzes', quizRoutes);
+app.use('/api/forgetting-prediction', forgettingRoutes);
+app.use('/api/ai', aiRoutes);
 
 // Global centrally-managed error handler
 app.use(errorHandler);

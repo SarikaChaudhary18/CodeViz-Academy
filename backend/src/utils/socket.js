@@ -4,6 +4,7 @@ const Message = require('../models/Message');
 const logger = require('../config/logger');
 
 let io = null;
+const matchmakingQueue = []; // Queue storing { userId, username, level, socket }
 
 const initializeSocket = (server) => {
   io = new Server(server, {
@@ -13,15 +14,6 @@ const initializeSocket = (server) => {
     },
     pingTimeout: 60000,
   });
-
-  // Scale readiness hook: Redis adapter registration placeholder
-  // if (process.env.REDIS_URL) {
-  //   const { createClient } = require('redis');
-  //   const { createAdapter } = require('@socket.io/redis-adapter');
-  //   const pubClient = createClient({ url: process.env.REDIS_URL });
-  //   const subClient = pubClient.duplicate();
-  //   io.adapter(createAdapter(pubClient, subClient));
-  // }
 
   // Handshake Authorization Middleware
   io.use((socket, next) => {
@@ -43,7 +35,7 @@ const initializeSocket = (server) => {
   io.on('connection', (socket) => {
     logger.info(`WebSocket Client connected: ${socket.user.username} (ID: ${socket.user.id})`);
 
-    // Join Room (e.g. Community channel)
+    // Join Room (e.g. Community channel or collab room)
     socket.on('join_room', (roomId) => {
       socket.join(roomId);
       logger.debug(`User ${socket.user.username} joined WebSocket room: ${roomId}`);
@@ -64,7 +56,6 @@ const initializeSocket = (server) => {
       }
 
       try {
-        // Save to Database asynchronously
         const newMessage = await Message.create({
           senderId: socket.user.id,
           communityId,
@@ -72,12 +63,8 @@ const initializeSocket = (server) => {
           codeSnippet: codeSnippet || '',
         });
 
-        // Populate sender details for rendering
         const populatedMessage = await newMessage.populate('senderId', 'username level');
-
-        // Broadcast to all clients in the room
         io.to(communityId).emit('receive_message', populatedMessage);
-        
         logger.debug(`Message sent in room ${communityId} by ${socket.user.username}`);
       } catch (err) {
         logger.error(`Error broadcasting Socket message: ${err.message}`);
@@ -85,8 +72,79 @@ const initializeSocket = (server) => {
       }
     });
 
+    // --- COLLABORATIVE CODING SYNC EVENTS ---
+    socket.on('collab_code_change', (data) => {
+      const { roomId, code } = data;
+      socket.to(roomId).emit('receive_collab_code', { code, sender: socket.user.username });
+    });
+
+    socket.on('collab_chat_send', (data) => {
+      const { roomId, text } = data;
+      io.to(roomId).emit('receive_collab_chat', { text, user: socket.user.username });
+    });
+
+    // --- RANDOM MATCHMAKING LOBBY ---
+    socket.on('join_matchmaking', (data) => {
+      const { level } = data;
+      
+      // Prevent duplicates in queue
+      const exists = matchmakingQueue.some(item => item.userId === socket.user.id);
+      if (exists) return;
+
+      matchmakingQueue.push({
+        userId: socket.user.id,
+        username: socket.user.username,
+        level: level || 1,
+        socket: socket
+      });
+
+      logger.info(`User ${socket.user.username} joined matchmaking. Queue size: ${matchmakingQueue.length}`);
+
+      if (matchmakingQueue.length >= 2) {
+        const player1 = matchmakingQueue.shift();
+        const player2 = matchmakingQueue.shift();
+
+        const matchRoomId = `game_room_${player1.userId}_${player2.userId}_${Date.now()}`;
+        
+        player1.socket.join(matchRoomId);
+        player2.socket.join(matchRoomId);
+
+        // Notify both players of matchmaking success
+        player1.socket.emit('match_found', {
+          matchRoomId,
+          opponent: { name: player2.username, level: player2.level }
+        });
+
+        player2.socket.emit('match_found', {
+          matchRoomId,
+          opponent: { name: player1.username, level: player1.level }
+        });
+
+        logger.info(`Match found! Created room ${matchRoomId} between ${player1.username} and ${player2.username}`);
+      }
+    });
+
+    socket.on('leave_matchmaking', () => {
+      const idx = matchmakingQueue.findIndex(item => item.userId === socket.user.id);
+      if (idx !== -1) {
+        matchmakingQueue.splice(idx, 1);
+        logger.info(`User ${socket.user.username} left matchmaking queue.`);
+      }
+    });
+
+    // --- MULTIPLAYER GAME EVENTS ---
+    socket.on('game_event_send', (data) => {
+      const { roomId, eventType, payload } = data;
+      socket.to(roomId).emit('receive_game_event', { eventType, payload, sender: socket.user.username });
+    });
+
     socket.on('disconnect', () => {
       logger.info(`WebSocket Client disconnected: ${socket.user.username}`);
+      // Remove from matchmaking queue on disconnect
+      const idx = matchmakingQueue.findIndex(item => item.userId === socket.user.id);
+      if (idx !== -1) {
+        matchmakingQueue.splice(idx, 1);
+      }
     });
   });
 

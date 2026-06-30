@@ -74,4 +74,64 @@ export const socketService = {
     }
     return () => socket?.off('error', callback);
   },
+
+  // --- COLLABORATIVE WORKSPACE ACTIONS ---
+  emitCollabCodeChange: (roomId, code) => {
+    if (socket?.connected) {
+      socket.emit('collab_code_change', { roomId, code });
+    }
+  },
+
+  emitCollabChatSend: (roomId, text) => {
+    if (socket?.connected) {
+      socket.emit('collab_chat_send', { roomId, text });
+    }
+  },
+
+  onCollabCodeReceived: (callback) => {
+    if (socket) {
+      socket.on('receive_collab_code', callback);
+    }
+    return () => socket?.off('receive_collab_code', callback);
+  },
+
+  onCollabChatReceived: (callback) => {
+    if (socket) {
+      socket.on('receive_collab_chat', callback);
+    }
+    return () => socket?.off('receive_collab_chat', callback);
+  },
+
+  // --- MATCHMAKING & MULTIPLAYER GAME ACTIONS ---
+  joinMatchmaking: (level) => {
+    if (socket?.connected) {
+      socket.emit('join_matchmaking', { level });
+    }
+  },
+
+  leaveMatchmaking: () => {
+    if (socket?.connected) {
+      socket.emit('leave_matchmaking');
+    }
+  },
+
+  onMatchFound: (callback) => {
+    if (socket) {
+      socket.on('match_found', callback);
+    }
+    return () => socket?.off('match_found', callback);
+  },
+
+  emitGameEvent: (roomId, eventType, payload) => {
+    if (socket?.connected) {
+      socket.emit('game_event_send', { roomId, eventType, payload });
+    }
+  },
+
+  onGameEventReceived: (callback) => {
+    if (socket) {
+      socket.on('receive_game_event', callback);
+    }
+    return () => socket?.off('receive_game_event', callback);
+  }
 };

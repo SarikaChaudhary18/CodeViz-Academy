@@ -193,16 +193,8 @@ export default function AppLayout({ children }) {
       {/* Global Desktop & Mobile Navigation Header */}
       <header className="h-20 border-b flex items-center justify-between px-6 lg:px-8 z-30 sticky top-0 backdrop-blur-md bg-white/85 border-zinc-200">
         {/* Brand Logo & Title */}
-        <div className="flex items-center gap-3 select-none">
-          <img src={logo} alt="Logo" className="w-10 h-10 object-contain rounded-lg border border-zinc-200" />
-          <div className="hidden sm:block text-left">
-            <h1 className="font-extrabold text-sm tracking-wide text-zinc-950">
-              CODEVIZ ACADEMY
-            </h1>
-            <span className="text-[9px] tracking-widest font-mono text-orange-600 font-bold uppercase">
-              VISUAL CODING ACADEMY
-            </span>
-          </div>
+        <div className="flex items-center select-none">
+          <img src={logo} alt="Logo" className="w-[3rem] h-[3rem] object-contain" />
         </div>
 
         {/* User HUD, Pomodoro, and Theme Controls (right side) */}

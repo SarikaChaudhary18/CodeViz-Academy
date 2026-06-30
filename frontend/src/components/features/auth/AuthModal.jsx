@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Eye, EyeOff, Mail, Sparkles, User, Lock, Briefcase, Building, X } from "lucide-react";
 import { cn } from "../../../lib/utils";
 import { useStore } from "../../../hooks/useStore";
@@ -149,6 +149,7 @@ const EyeBall = ({
 
 export default function AuthModal() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { 
     isAuthModalOpen, 
     authModalRedirectPath, 
@@ -159,6 +160,13 @@ export default function AuthModal() {
     authLoading, 
     authError 
   } = useStore();
+
+  const handleClose = () => {
+    closeAuthModal();
+    if (location.pathname === '/login' || location.pathname === '/register') {
+      navigate('/');
+    }
+  };
 
   const [isRegisterMode, setIsRegisterMode] = useState(false);
   const [username, setUsername] = useState("");
@@ -318,7 +326,7 @@ export default function AuthModal() {
       {/* Backdrop */}
       <div 
         className="absolute inset-0 bg-black/40 backdrop-blur-sm"
-        onClick={closeAuthModal}
+        onClick={handleClose}
       />
 
       {/* Modal Dialog Card */}
@@ -326,7 +334,7 @@ export default function AuthModal() {
         
         {/* Close Button */}
         <button 
-          onClick={closeAuthModal}
+          onClick={handleClose}
           className="absolute top-4 right-4 p-2 rounded-full hover:bg-zinc-100 text-zinc-500 hover:text-zinc-950 transition-colors z-30"
         >
           <X size={18} />

@@ -56,6 +56,41 @@ const seedDefaultCommunities = async (defaultUser) => {
   }
 };
 
+const seedCourses = async () => {
+  try {
+    const Course = require('../models/Course');
+    const coursesAsset = require('./assets/courses.json');
+    
+    for (const courseData of coursesAsset) {
+      const existing = await Course.findOne({ title: courseData.title });
+      if (!existing) {
+        await Course.create(courseData);
+        logger.info(`Seeded Course: ${courseData.title}`);
+      }
+    }
+  } catch (err) {
+    logger.error('Failed to seed courses: %s', err.message);
+  }
+};
+
+const seedQuizzes = async () => {
+  try {
+    const Quiz = require('../models/Quiz');
+    const quizzesAsset = require('./assets/quizzes.json');
+    
+    for (const quizData of quizzesAsset) {
+      const existing = await Quiz.findOne({ topic: quizData.topic });
+      if (!existing) {
+        quizData.questionsCount = quizData.questions ? quizData.questions.length : 0;
+        await Quiz.create(quizData);
+        logger.info(`Seeded Quiz topic: ${quizData.topic} (${quizData.questionsCount} questions)`);
+      }
+    }
+  } catch (err) {
+    logger.error('Failed to seed quizzes: %s', err.message);
+  }
+};
+
 const connectDB = async () => {
   const primaryURI = process.env.MONGODB_URI;
   const localFallbackURI = 'mongodb://127.0.0.1:27017/studyquest';
@@ -100,6 +135,8 @@ const connectDB = async () => {
     if (defaultUser) {
       await seedDefaultCommunities(defaultUser);
     }
+    await seedCourses();
+    await seedQuizzes();
   } catch (err) {
     logger.error('Primary MongoDB connection failed: %s', err.message);
     
@@ -114,6 +151,8 @@ const connectDB = async () => {
         if (defaultUser) {
           await seedDefaultCommunities(defaultUser);
         }
+        await seedCourses();
+        await seedQuizzes();
         return;
       } catch (fallbackErr) {
         logger.error('Fallback local MongoDB connection also failed: %s', fallbackErr.message);

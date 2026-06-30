@@ -201,7 +201,7 @@ export default function Hero() {
     if (isAuthenticated) {
       navigate(path);
     } else {
-      openAuthModal(path);
+      navigate('/login');
     }
   };
 
@@ -218,12 +218,9 @@ export default function Hero() {
 
       {/* Modern Sticky Glass Navbar */}
       <nav className="sticky top-0 z-50 w-full border-b border-zinc-200 bg-white/80 backdrop-blur-md transition-all">
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-3 cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-            <img src={logo} alt="CodeViz Academy Logo" className="w-8 h-8 object-contain rounded-lg shadow-sm border border-zinc-200" />
-            <span className="text-sm font-bold tracking-tight text-zinc-950 font-mono uppercase">
-              CodeViz Academy
-            </span>
+        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+          <div className="flex items-center cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+            <img src={logo} alt="Logo" className="w-[3.5rem] h-[3.5rem] object-contain" />
           </div>
 
           {/* Desktop Nav menu */}
@@ -236,13 +233,13 @@ export default function Hero() {
 
           <div className="flex items-center gap-4">
             <button
-              onClick={() => handleFeatureClick('/dashboard')}
+              onClick={() => navigate('/login')}
               className="text-xs font-bold text-zinc-700 hover:text-orange-600 px-3 py-1.5 transition-colors cursor-pointer"
             >
               Sign In
             </button>
             <button
-              onClick={() => handleFeatureClick('/dashboard')}
+              onClick={() => navigate('/register')}
               className="text-xs font-bold bg-orange-600 hover:bg-orange-500 text-white px-4 py-2 rounded-lg border border-orange-500/20 hover:border-orange-400/40 transition-all cursor-pointer shadow-md active:scale-[0.98]"
             >
               Get Started
@@ -450,8 +447,8 @@ export default function Hero() {
                 ))}
               </Marquee>
               {/* Fade gradients */}
-              <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-[#030712] to-transparent pointer-events-none z-10" />
-              <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[#030712] to-transparent pointer-events-none z-10" />
+              <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-white to-transparent pointer-events-none z-10" />
+              <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-white to-transparent pointer-events-none z-10" />
             </div>
           </div>
         </section>
@@ -846,9 +843,9 @@ export default function Hero() {
         <footer className="w-full bg-[#02050c]/30 text-slate-400 py-12 px-4">
           <div className="relative mx-auto grid max-w-7xl items-center justify-center gap-6 p-10 pb-0 md:flex">
             <Link to="/">
-              <p className="flex items-center justify-center rounded-full">
-                <img src={logo} alt="CodeViz Logo" className="w-8 h-8 object-contain rounded-lg border border-slate-800" />
-              </p>
+              <div className="flex items-center justify-center">
+                <img src={logo} alt="Logo" className="w-[3.5rem] h-[3.5rem] object-contain" />
+              </div>
             </Link>
             <p className="bg-transparent text-center text-[11px] leading-relaxed text-slate-500 md:text-left max-w-4xl">
               Welcome to CodeViz Academy, a structured engineering workspace designed to accelerate technical interview preparation.

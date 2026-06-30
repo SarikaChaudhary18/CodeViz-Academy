@@ -1,37 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Calendar, RefreshCw, Eye, BrainCircuit, CheckSquare, Sparkles, TrendingDown } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-
-const INITIAL_TOPICS = [
-  {
-    id: 1,
-    topicName: "Dynamic Programming Scopes",
-    studiedDaysAgo: 5,
-    initialRetention: 100,
-    currentRetention: 38,
-    status: "Critical Decay",
-    reviewAction: "Review Knapsack DP state transitions."
-  },
-  {
-    id: 2,
-    topicName: "Graph Traversals (BFS & DFS)",
-    studiedDaysAgo: 2,
-    initialRetention: 100,
-    currentRetention: 72,
-    status: "Muted Decay",
-    reviewAction: "Trace graph adjacency lists."
-  },
-  {
-    id: 3,
-    topicName: "JS Lexical Environments",
-    studiedDaysAgo: 1,
-    initialRetention: 100,
-    currentRetention: 90,
-    status: "Stable Retention",
-    reviewAction: "Review lexical environment lexical parents."
-  }
-];
+import { api } from '../../../lib/api';
 
 // Ebbinghaus Forgetting Curve points: R = e^(-t/S)
 const CURVE_DATA = [
@@ -46,20 +17,44 @@ const CURVE_DATA = [
 ];
 
 export default function ForgettingPrediction() {
-  const [topics, setTopics] = useState(INITIAL_TOPICS);
+  const [topics, setTopics] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [boostLoadingId, setBoostLoadingId] = useState(null);
 
-  const boostRetention = (topicId) => {
-    setTopics(prevTopics => 
-      prevTopics.map(topic => 
-        topic.id === topicId 
-          ? { ...topic, currentRetention: 100, status: "Fully Restored", studiedDaysAgo: 0 } 
-          : topic
-      )
-    );
+  useEffect(() => {
+    fetchDecayChecklist();
+  }, []);
+
+  const fetchDecayChecklist = async () => {
+    setLoading(true);
+    try {
+      const res = await api.get('/forgetting-prediction');
+      if (res.status === 'success' || Array.isArray(res.data)) {
+        setTopics(res.data || []);
+      }
+    } catch (err) {
+      console.error('Failed to fetch spaced repetition decay checklist:', err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const boostRetention = async (topicId) => {
+    setBoostLoadingId(topicId);
+    try {
+      const res = await api.post('/forgetting-prediction/boost', { topicId });
+      if (res.status === 'success') {
+        await fetchDecayChecklist();
+      }
+    } catch (err) {
+      console.error('Failed to boost retention:', err.message);
+    } finally {
+      setBoostLoadingId(null);
+    }
   };
 
   return (
-    <div className="max-w-5xl mx-auto space-y-6">
+    <div className="max-w-5xl mx-auto space-y-6 text-left">
       {/* Header */}
       <div>
         <h1 className="text-3xl font-black text-zinc-950 flex items-center gap-2">
@@ -67,7 +62,7 @@ export default function ForgettingPrediction() {
           FORGETTING PREDICTION
         </h1>
         <p className="text-xs text-zinc-500 font-mono uppercase tracking-widest mt-1">
-          Predict cognitive memory decay using Ebbinghaus curve metrics
+          Predict cognitive memory decay using Ebbinghaus curve and SM-2 algorithms
         </p>
       </div>
 
@@ -77,59 +72,72 @@ export default function ForgettingPrediction() {
         <div className="lg:col-span-2 space-y-6">
           <div className="bg-white border border-zinc-200 rounded-3xl p-6 shadow-sm space-y-4">
             <h2 className="text-sm font-mono font-bold text-orange-600 uppercase tracking-widest flex items-center gap-2">
-              <TrendingDown size={14} /> Topic Decay Checklists
+              <TrendingDown size={14} /> Spaced Repetition Checklist
             </h2>
             <p className="text-xs text-zinc-550 leading-relaxed">
-              Based on spaced repetition metrics, these topics are decaying from active cache. Reviewing them today restores them to 100% strength.
+              Based on spaced repetition metrics, these topics decay from active cache. Completing corresponding quizzes automatically registers them, and boosting restores retention immediately.
             </p>
 
-            <div className="space-y-4 pt-2">
-              {topics.map((topic) => (
-                <div 
-                  key={topic.id}
-                  className="p-4 rounded-2xl border border-zinc-200 bg-zinc-50/50 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 transition-all hover:border-zinc-300"
-                >
-                  <div className="space-y-1">
-                    <h3 className="text-sm font-extrabold text-zinc-900 leading-tight">
-                      {topic.topicName}
-                    </h3>
-                    <p className="text-[10px] text-zinc-500 font-mono">
-                      Studied {topic.studiedDaysAgo} days ago • Status: <span className={`font-bold ${
-                        topic.currentRetention < 40 ? 'text-red-500' :
-                        topic.currentRetention < 85 ? 'text-amber-500' : 'text-green-600'
-                      }`}>{topic.status}</span>
-                    </p>
-                    <p className="text-[11px] text-zinc-650 italic mt-1 leading-normal">
-                      "{topic.reviewAction}"
-                    </p>
-                  </div>
-
-                  <div className="flex items-center gap-4 w-full sm:w-auto justify-between sm:justify-end border-t sm:border-t-0 pt-3 sm:pt-0 border-zinc-150">
-                    <div className="text-right">
-                      <span className="text-[9px] text-zinc-400 font-mono block">Retention</span>
-                      <span className={`text-lg font-black font-mono ${
-                        topic.currentRetention < 40 ? 'text-red-600' :
-                        topic.currentRetention < 85 ? 'text-amber-600' : 'text-green-600'
-                      }`}>
-                        {topic.currentRetention}%
-                      </span>
+            {loading ? (
+              <div className="py-12 text-center text-zinc-500 font-mono text-xs animate-pulse">
+                Analyzing cognitive decay logs...
+              </div>
+            ) : topics.length === 0 ? (
+              <div className="py-12 text-center text-zinc-400 font-mono text-xs border border-dashed border-zinc-200 rounded-2xl">
+                No active spaced repetition topics logged yet. Complete concept quizzes to begin tracking retention decay!
+              </div>
+            ) : (
+              <div className="space-y-4 pt-2">
+                {topics.map((topic) => (
+                  <div 
+                    key={topic.id}
+                    className="p-4 rounded-2xl border border-zinc-200 bg-zinc-50/50 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 transition-all hover:border-zinc-300"
+                  >
+                    <div className="space-y-1">
+                      <h3 className="text-sm font-extrabold text-zinc-900 leading-tight">
+                        {topic.topicName}
+                      </h3>
+                      <p className="text-[10px] text-zinc-500 font-mono">
+                        Last studied {topic.studiedDaysAgo} days ago • Interval: {topic.interval}d • Status: <span className={`font-bold ${
+                          topic.currentRetention < 40 ? 'text-red-500' :
+                          topic.currentRetention < 80 ? 'text-amber-500' : 'text-green-600'
+                        }`}>{topic.status}</span>
+                      </p>
+                      <p className="text-[11px] text-zinc-650 italic mt-1 leading-normal">
+                        "{topic.reviewAction}"
+                      </p>
                     </div>
 
-                    <button 
-                      onClick={() => boostRetention(topic.id)}
-                      disabled={topic.currentRetention === 100}
-                      className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-[10px] font-mono font-bold transition-all shadow-sm ${
-                        topic.currentRetention === 100
-                          ? 'bg-zinc-100 text-zinc-400 border border-zinc-200 cursor-not-allowed'
-                          : 'bg-orange-600 hover:bg-orange-500 text-white cursor-pointer'
-                      }`}
-                    >
-                      <RefreshCw size={10} className={topic.currentRetention === 100 ? '' : 'animate-spin-slow'} style={{ animationDuration: '4s' }} /> Boost Cache
-                    </button>
+                    <div className="flex items-center gap-4 w-full sm:w-auto justify-between sm:justify-end border-t sm:border-t-0 pt-3 sm:pt-0 border-zinc-150">
+                      <div className="text-right">
+                        <span className="text-[9px] text-zinc-400 font-mono block">Retention</span>
+                        <span className={`text-lg font-black font-mono ${
+                          topic.currentRetention < 40 ? 'text-red-600' :
+                          topic.currentRetention < 80 ? 'text-amber-600' : 'text-green-600'
+                        }`}>
+                          {topic.currentRetention}%
+                        </span>
+                      </div>
+
+                      <button 
+                        onClick={() => boostRetention(topic.id)}
+                        disabled={topic.currentRetention === 100 || boostLoadingId === topic.id}
+                        className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-[10px] font-mono font-bold transition-all shadow-sm ${
+                          topic.currentRetention === 100
+                            ? 'bg-zinc-100 text-zinc-400 border border-zinc-200 cursor-not-allowed'
+                            : 'bg-orange-600 hover:bg-orange-500 text-white cursor-pointer'
+                        }`}
+                      >
+                        <RefreshCw 
+                          size={10} 
+                          className={boostLoadingId === topic.id ? 'animate-spin' : ''} 
+                        /> {boostLoadingId === topic.id ? 'Boosting...' : 'Boost Cache'}
+                      </button>
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
 
@@ -157,6 +165,7 @@ export default function ForgettingPrediction() {
                     strokeWidth={2.5} 
                     dot={{ stroke: '#ea580c', strokeWidth: 2, r: 3 }} 
                     activeDot={{ r: 5 }} 
+                    isAnimationActive={false}
                   />
                 </LineChart>
               </ResponsiveContainer>
