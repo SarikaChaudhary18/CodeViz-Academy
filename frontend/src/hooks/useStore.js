@@ -485,5 +485,55 @@ export const useStore = create((set, get) => ({
       console.error('Failed to fetch tracker stats:', err.message);
       set({ trackerLoading: false });
     }
+  },
+
+  // --- STUDY BUDDIES PEERS STATE ---
+  peers: [],
+  peersLoading: false,
+  fetchPeers: async () => {
+    set({ peersLoading: true });
+    try {
+      const response = await api.get('/auth/users');
+      set({ peers: response.data, peersLoading: false });
+    } catch (err) {
+      console.error('Failed to fetch peers:', err.message);
+      set({ peersLoading: false });
+    }
+  },
+  sendConnection: async (userId) => {
+    try {
+      const response = await api.post(`/auth/connect/${userId}`);
+      await get().fetchPeers();
+      return response.message;
+    } catch (err) {
+      console.error('Failed to send connection:', err.message);
+      throw err;
+    }
+  },
+  acceptConnection: async (senderId) => {
+    try {
+      const response = await api.post(`/auth/connect/accept/${senderId}`);
+      if (response.user) {
+        set({ user: response.user });
+      }
+      await get().fetchPeers();
+      return response.message;
+    } catch (err) {
+      console.error('Failed to accept connection:', err.message);
+      throw err;
+    }
+  },
+  rejectConnection: async (senderId) => {
+    try {
+      const response = await api.post(`/auth/connect/reject/${senderId}`);
+      if (response.user) {
+        set({ user: response.user });
+      }
+      await get().fetchPeers();
+      return response.message;
+    } catch (err) {
+      console.error('Failed to reject connection:', err.message);
+      throw err;
+    }
   }
 }));

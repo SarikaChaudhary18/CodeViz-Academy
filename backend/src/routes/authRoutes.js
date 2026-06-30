@@ -14,4 +14,10 @@ router.put('/profile', authenticate, authController.updateProfile);
 
 router.get('/leaderboard', authController.getLeaderboard);
 
+// Connection & Study Buddy Endpoints
+router.get('/users', authenticate, authController.getPeers);
+router.post('/connect/:userId', authenticate, authController.sendConnectionRequest);
+router.post('/connect/accept/:senderId', authenticate, authController.acceptConnectionRequest);
+router.post('/connect/reject/:senderId', authenticate, authController.rejectConnectionRequest);
+
 module.exports = router;

@@ -281,7 +281,7 @@ exports.getProfile = async (req, res, next) => {
 
 exports.updateProfile = async (req, res, next) => {
   try {
-    const { targetRole, targetCompany, codingProfiles, apifyKey } = req.body;
+    const { targetRole, targetCompany, codingProfiles, apifyKey, bio, github } = req.body;
 
     const user = await User.findById(req.user.id);
     if (!user) {
@@ -291,6 +291,8 @@ exports.updateProfile = async (req, res, next) => {
     if (targetRole) user.targetRole = targetRole;
     if (targetCompany) user.targetCompany = targetCompany;
     if (apifyKey) user.apifyKey = apifyKey;
+    if (bio !== undefined) user.bio = bio;
+    if (github !== undefined) user.github = github;
     if (codingProfiles) {
       user.codingProfiles = { ...user.codingProfiles, ...codingProfiles };
     }
@@ -311,6 +313,10 @@ exports.updateProfile = async (req, res, next) => {
         targetCompany: user.targetCompany,
         targetRole: user.targetRole,
         codingProfiles: user.codingProfiles,
+        bio: user.bio,
+        github: user.github,
+        connections: user.connections,
+        connectionRequests: user.connectionRequests,
       }
     });
   } catch (err) {
@@ -338,6 +344,217 @@ exports.getLeaderboard = async (req, res, next) => {
       page,
       pages: Math.ceil(total / limit),
       total
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.getPeers = async (req, res, next) => {
+  try {
+    const currentUser = await User.findById(req.user.id);
+    if (!currentUser) {
+      return res.status(404).json({ status: 'fail', message: 'Current user not found.' });
+    }
+
+    // Retrieve all other users
+    const allUsers = await User.find({ _id: { $ne: currentUser._id } })
+      .select('username streak targetRole targetCompany bio github connections connectionRequests level xp');
+
+    const peers = allUsers.map(peer => {
+      // Calculate connection status
+      let connectionStatus = 'not_connected';
+
+      if (currentUser.connections.includes(peer._id)) {
+        connectionStatus = 'connected';
+      } else if (peer.connectionRequests.some(req => req.from.toString() === currentUser._id.toString() && req.status === 'pending')) {
+        connectionStatus = 'request_sent';
+      } else if (currentUser.connectionRequests.some(req => req.from.toString() === peer._id.toString() && req.status === 'pending')) {
+        connectionStatus = 'request_received';
+      }
+
+      // Calculate matching metrics
+      let matchScore = 40;
+      if (peer.targetCompany && currentUser.targetCompany && peer.targetCompany.toLowerCase() === currentUser.targetCompany.toLowerCase()) {
+        matchScore += 30;
+      }
+      if (peer.targetRole && currentUser.targetRole && peer.targetRole.toLowerCase() === currentUser.targetRole.toLowerCase()) {
+        matchScore += 20;
+      }
+      const streakDiff = Math.abs((peer.streak || 0) - (currentUser.streak || 0));
+      matchScore += Math.max(0, 10 - streakDiff);
+
+      return {
+        id: peer._id,
+        name: peer.username,
+        targetRole: peer.targetRole || 'Software Engineer',
+        targetCompany: peer.targetCompany || 'Google',
+        streak: peer.streak || 0,
+        bio: peer.bio || '',
+        github: peer.github || '',
+        connectionStatus,
+        matchScore: Math.min(100, matchScore),
+        level: peer.level || 1,
+        xp: peer.xp || 0
+      };
+    });
+
+    res.status(200).json({
+      status: 'success',
+      data: peers
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.sendConnectionRequest = async (req, res, next) => {
+  try {
+    const targetUserId = req.params.userId;
+    const currentUserId = req.user.id;
+
+    if (targetUserId === currentUserId) {
+      return res.status(400).json({ status: 'fail', message: 'You cannot connect with yourself.' });
+    }
+
+    const targetUser = await User.findById(targetUserId);
+    if (!targetUser) {
+      return res.status(404).json({ status: 'fail', message: 'Target user not found.' });
+    }
+
+    const currentUser = await User.findById(currentUserId);
+
+    // Check if already connected
+    if (currentUser.connections.includes(targetUserId)) {
+      return res.status(400).json({ status: 'fail', message: 'You are already connected.' });
+    }
+
+    // Check if request already exists from current user to target user
+    const existingRequest = targetUser.connectionRequests.find(
+      r => r.from.toString() === currentUserId && r.status === 'pending'
+    );
+    if (existingRequest) {
+      return res.status(400).json({ status: 'fail', message: 'Connection request already sent.' });
+    }
+
+    // Push connection request to target user
+    targetUser.connectionRequests.push({ from: currentUserId, status: 'pending' });
+    await targetUser.save();
+
+    logger.info(`Connection request sent from ${currentUser.username} to ${targetUser.username}`);
+
+    res.status(200).json({
+      status: 'success',
+      message: 'Connection request sent successfully.'
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.acceptConnectionRequest = async (req, res, next) => {
+  try {
+    const senderId = req.params.senderId;
+    const currentUserId = req.user.id;
+
+    const currentUser = await User.findById(currentUserId);
+    const senderUser = await User.findById(senderId);
+
+    if (!senderUser) {
+      return res.status(404).json({ status: 'fail', message: 'Sender user not found.' });
+    }
+
+    // Find if request exists
+    const requestIndex = currentUser.connectionRequests.findIndex(
+      r => r.from.toString() === senderId && r.status === 'pending'
+    );
+
+    if (requestIndex === -1) {
+      return res.status(400).json({ status: 'fail', message: 'No pending request from this user.' });
+    }
+
+    // Remove from connectionRequests
+    currentUser.connectionRequests.splice(requestIndex, 1);
+
+    // Add to connections for both users
+    if (!currentUser.connections.includes(senderId)) {
+      currentUser.connections.push(senderId);
+    }
+    if (!senderUser.connections.includes(currentUserId)) {
+      senderUser.connections.push(currentUserId);
+    }
+
+    await currentUser.save();
+    await senderUser.save();
+
+    logger.info(`Connection request accepted: ${currentUser.username} and ${senderUser.username} are now connected.`);
+
+    res.status(200).json({
+      status: 'success',
+      message: 'Connection request accepted.',
+      user: {
+        id: currentUser._id,
+        username: currentUser.username,
+        email: currentUser.email,
+        role: currentUser.role,
+        xp: currentUser.xp,
+        level: currentUser.level,
+        streak: currentUser.streak,
+        targetCompany: currentUser.targetCompany,
+        targetRole: currentUser.targetRole,
+        codingProfiles: currentUser.codingProfiles,
+        bio: currentUser.bio,
+        github: currentUser.github,
+        connections: currentUser.connections,
+        connectionRequests: currentUser.connectionRequests,
+      }
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.rejectConnectionRequest = async (req, res, next) => {
+  try {
+    const senderId = req.params.senderId;
+    const currentUserId = req.user.id;
+
+    const currentUser = await User.findById(currentUserId);
+
+    // Find if request exists
+    const requestIndex = currentUser.connectionRequests.findIndex(
+      r => r.from.toString() === senderId && r.status === 'pending'
+    );
+
+    if (requestIndex === -1) {
+      return res.status(400).json({ status: 'fail', message: 'No pending request from this user.' });
+    }
+
+    // Remove from connectionRequests
+    currentUser.connectionRequests.splice(requestIndex, 1);
+    await currentUser.save();
+
+    logger.info(`Connection request from ${senderId} rejected by ${currentUser.username}`);
+
+    res.status(200).json({
+      status: 'success',
+      message: 'Connection request rejected.',
+      user: {
+        id: currentUser._id,
+        username: currentUser.username,
+        email: currentUser.email,
+        role: currentUser.role,
+        xp: currentUser.xp,
+        level: currentUser.level,
+        streak: currentUser.streak,
+        targetCompany: currentUser.targetCompany,
+        targetRole: currentUser.targetRole,
+        codingProfiles: currentUser.codingProfiles,
+        bio: currentUser.bio,
+        github: currentUser.github,
+        connections: currentUser.connections,
+        connectionRequests: currentUser.connectionRequests,
+      }
     });
   } catch (err) {
     next(err);

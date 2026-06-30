@@ -78,6 +78,29 @@ const UserSchema = new mongoose.Schema({
     type: [String],
     default: [],
   },
+  bio: {
+    type: String,
+    default: '',
+  },
+  github: {
+    type: String,
+    default: '',
+  },
+  connections: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+  }],
+  connectionRequests: [{
+    from: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
+    status: {
+      type: String,
+      enum: ['pending', 'accepted', 'rejected'],
+      default: 'pending',
+    },
+  }],
 }, {
   timestamps: true,
 });
