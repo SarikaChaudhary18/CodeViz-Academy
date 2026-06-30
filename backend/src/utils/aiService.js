@@ -172,16 +172,50 @@ async function callNemotron(prompt) {
 
 /**
  * Generate structured JSON using Nemotron reasoning model.
- * Falls back to standard generateContentJSON on failure.
+ * Falls back to 10-model chain on failure.
  */
 async function generateWithNemotron(prompt) {
+  // Try Nemotron first (best reasoning)
   try {
     const raw = await callNemotron(prompt);
     return cleanAndParseJSON(raw);
   } catch (err) {
-    logger.warn(`Nemotron failed (${err.message}), falling back to standard providers`);
-    return generateContentJSON(prompt);
+    logger.warn(`Nemotron failed (${err.message}), cycling through fallback model chain`);
   }
+
+  // 10-model fallback chain: try multiple Groq models + Gemini + Nvidia NIM
+  const FALLBACK_GROQ_MODELS = [
+    'deepseek-r1-distill-llama-70b',
+    'llama-3.3-70b-versatile',
+    'llama-3.1-70b-specdec',
+    'llama-3.2-90b-vision-preview',
+    'mixtral-8x7b-32768',
+    'gemma2-9b-it',
+    'llama-3.1-8b-instant',
+  ];
+
+  const groqKeys = getKeys(process.env.GROQ_API_KEY);
+  for (const key of groqKeys) {
+    if (isKeyOnCooldown(key)) continue;
+    for (const model of FALLBACK_GROQ_MODELS) {
+      try {
+        logger.info(`Fallback: trying Groq model ${model}`);
+        const response = await axios.post(
+          'https://api.groq.com/openai/v1/chat/completions',
+          { model, messages: [{ role: 'user', content: prompt }], response_format: { type: 'json_object' } },
+          { headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' }, timeout: 30000 }
+        );
+        if (response.data?.choices?.[0]?.message?.content) {
+          return cleanAndParseJSON(response.data.choices[0].message.content);
+        }
+      } catch (e) {
+        logger.warn(`Fallback Groq model ${model} failed: ${e.message}`);
+      }
+    }
+  }
+
+  // Final fallback: standard provider chain
+  return generateContentJSON(prompt);
 }
 
 /**

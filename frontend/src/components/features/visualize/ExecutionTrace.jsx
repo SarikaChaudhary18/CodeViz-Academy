@@ -261,44 +261,40 @@ export default function ExecutionTrace() {
       </div>
 
       {/* ── INPUT ROW ── */}
-      <div style={{ display:'grid', gridTemplateColumns:'1fr 200px', gap:14, alignItems:'start' }}>
-        <div style={{ background:'white', border:'1px solid #e2e8f0', borderRadius:24, padding:18, boxShadow:'0 1px 4px rgba(0,0,0,0.04)' }}>
-          <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:10, paddingBottom:10, borderBottom:'1px solid #f1f5f9' }}>
-            <span style={{ fontSize:11, fontFamily:'monospace', fontWeight:800, color:'#0f172a', display:'flex', alignItems:'center', gap:6 }}>
-              <FileCode2 size={13} color="#ea580c" /> CODE / PROBLEM INPUT
-            </span>
-            <div style={{ display:'flex', gap:8, alignItems:'center' }}>
-              <span style={{ fontSize:9, color:'#94a3b8', fontFamily:'monospace' }}>Powered by NVIDIA Nemotron Ultra</span>
-              <button onClick={()=>{ setData(null); setIdx(0); setPlaying(false); }} style={{ background:'none', border:'1px solid #e2e8f0', padding:'4px 8px', borderRadius:8, cursor:'pointer', color:'#94a3b8' }}><RotateCcw size={12} /></button>
-            </div>
-          </div>
-          <CodeView code={data ? codeToShow : input} activeLine={step?.line} editable={!data} onChange={setInput} />
+      <div style={{ background:'white', border:'1px solid #e2e8f0', borderRadius:24, padding:22, boxShadow:'0 1px 6px rgba(0,0,0,0.04)' }}>
+        <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:14, paddingBottom:12, borderBottom:'1px solid #f1f5f9' }}>
+          <span style={{ fontSize:11, fontFamily:'monospace', fontWeight:800, color:'#0f172a', display:'flex', alignItems:'center', gap:7 }}>
+            <FileCode2 size={14} color="#ea580c" /> INPUT — Code or Problem
+          </span>
+          <button onClick={()=>{ setData(null); setIdx(0); setPlaying(false); }} style={{ background:'none', border:'1px solid #e2e8f0', padding:'5px 9px', borderRadius:9, cursor:'pointer', color:'#94a3b8' }}><RotateCcw size={12} /></button>
         </div>
 
-        {/* Side: example prompts */}
-        <div style={{ display:'flex', flexDirection:'column', gap:8 }}>
-          <span style={{ fontSize:9, fontFamily:'monospace', fontWeight:800, color:'#94a3b8', textTransform:'uppercase', letterSpacing:'0.1em' }}>Try an example</span>
-          {[
-            ['Two Sum problem', 'Given an array of integers nums and a target, return indices of two numbers that add up to target.'],
-            ['Binary Search', 'function binarySearch(arr, t){ let l=0,r=arr.length-1; while(l<=r){ let m=Math.floor((l+r)/2); if(arr[m]===t)return m; arr[m]<t?l=m+1:r=m-1; } return -1; }'],
-            ['Merge Sort', 'Explain merge sort and show its divide and conquer approach with an example array [38,27,43,3,9]'],
-            ['Fibonacci DP', 'function fib(n,memo={}){ if(n<=1)return n; if(memo[n])return memo[n]; return memo[n]=fib(n-1,memo)+fib(n-2,memo); } fib(6);'],
-          ].map(([label, val])=>(
-            <button key={label} onClick={()=>{ setInput(val); setData(null); }}
-              style={{ padding:'9px 12px', background:'white', border:'1px solid #e2e8f0', borderRadius:12, fontFamily:'monospace', fontSize:10, fontWeight:700, color:'#334155', cursor:'pointer', textAlign:'left', display:'flex', alignItems:'center', gap:6, transition:'all 0.15s' }}
-              onMouseEnter={e=>e.currentTarget.style.borderColor='#fb923c'}
-              onMouseLeave={e=>e.currentTarget.style.borderColor='#e2e8f0'}
-            >
-              <Zap size={9} color="#ea580c" /> {label}
+        {/* Main input area */}
+        <div style={{ display:'grid', gridTemplateColumns:'1fr 190px', gap:16, alignItems:'start' }}>
+          <div>
+            <CodeView code={data ? codeToShow : input} activeLine={step?.line} editable={!data} onChange={setInput} />
+            <button onClick={run} disabled={loading || !input.trim()}
+              style={{ width:'100%', marginTop:12, display:'flex', alignItems:'center', justifyContent:'center', gap:8, padding:'12px 0', background:'#ea580c', color:'white', border:'none', borderRadius:12, fontFamily:'monospace', fontSize:12, fontWeight:900, cursor:'pointer', opacity: loading ? 0.7 : 1, boxShadow:'0 4px 14px rgba(234,88,12,0.28)', transition:'opacity 0.2s' }}>
+              {loading ? <><div style={{ width:13, height:13, border:'2.5px solid rgba(255,255,255,0.3)', borderTop:'2.5px solid white', borderRadius:'50%', animation:'spin 0.7s linear infinite' }} /> Analyzing...</> : <><Sparkles size={13} /> Trace Execution</>}
             </button>
-          ))}
-          <button onClick={run} disabled={loading || !input.trim()}
-            style={{ marginTop:4, padding:'12px', background:'#ea580c', color:'white', border:'none', borderRadius:14, fontFamily:'monospace', fontSize:12, fontWeight:900, cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', gap:8, boxShadow:'0 4px 14px rgba(234,88,12,0.3)', opacity: loading ? 0.7 : 1 }}>
-            {loading
-              ? <><div style={{ width:13, height:13, border:'2.5px solid rgba(255,255,255,0.3)', borderTop:'2.5px solid white', borderRadius:'50%', animation:'spin 0.7s linear infinite' }} /> Tracing...</>
-              : <><Sparkles size={13} /> Trace with AI</>
-            }
-          </button>
+          </div>
+
+          {/* Quick examples */}
+          <div style={{ display:'flex', flexDirection:'column', gap:6 }}>
+            <span style={{ fontSize:9, fontFamily:'monospace', fontWeight:800, color:'#94a3b8', textTransform:'uppercase', letterSpacing:'0.1em', marginBottom:2 }}>Quick examples</span>
+            {[
+              ['Two Sum', 'Given an array of integers and a target, return indices of the two numbers that add up to target. Use O(n) approach.'],
+              ['Binary Search', 'function binarySearch(arr,t){let l=0,r=arr.length-1;while(l<=r){let m=Math.floor((l+r)/2);if(arr[m]===t)return m;arr[m]<t?l=m+1:r=m-1;}return -1;}\nbinarySearch([1,3,5,7,9,11],7);'],
+              ['Merge Sort', 'Explain merge sort. Show divide and conquer with example [38,27,43,3,9,82,10].'],
+              ['Fib DP', 'function fib(n,memo={}){if(n<=1)return n;if(memo[n])return memo[n];return memo[n]=fib(n-1,memo)+fib(n-2,memo);}\nfib(6);'],
+              ['Valid Parens', 'Given a string of brackets, determine if it is valid. Use a stack approach.'],
+            ].map(([label, val])=>(
+              <button key={label} className="ex-btn" onClick={()=>{ setInput(val); setData(null); }}
+                style={{ padding:'9px 12px', background:'white', border:'1px solid #e2e8f0', borderRadius:11, fontFamily:'monospace', fontSize:10, fontWeight:700, color:'#334155', cursor:'pointer', textAlign:'left', display:'flex', alignItems:'center', gap:7, transition:'all 0.15s' }}>
+                <Zap size={9} color="#ea580c" /> {label}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
