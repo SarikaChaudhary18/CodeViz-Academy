@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Eye, ArrowRight, RotateCcw, Box, Network, Sparkles, ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { api } from '../../../lib/api';
-import Mermaid from './Mermaid';
+import InteractiveGraph from './InteractiveGraph';
 
 export default function ExecutionTrace() {
   const [code, setCode] = useState(`function factorial(n) {
@@ -129,10 +129,14 @@ factorial(3);`);
                 <Network size={14} className="text-orange-600" /> Trace Visualizer Graph
               </h2>
 
-              {/* Dynamic Mermaid Diagram */}
-              {traceData.mermaidCode && (
+              {/* Interactive Flow Graph */}
+              {traceData.graph && (
                 <div className="w-full">
-                  <Mermaid chart={traceData.mermaidCode} />
+                  <InteractiveGraph
+                    graphData={traceData.graph}
+                    activeNodeId={activeStepData?.nodeId}
+                    title="Execution Flow"
+                  />
                 </div>
               )}
 

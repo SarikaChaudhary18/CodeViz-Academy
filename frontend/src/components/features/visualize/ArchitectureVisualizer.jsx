@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Network, Star, Database, Sparkles, Box, ListCollapse } from 'lucide-react';
 import { api } from '../../../lib/api';
-import Mermaid from './Mermaid';
+import InteractiveGraph from './InteractiveGraph';
 
 export default function ArchitectureVisualizer() {
   const [spec, setSpec] = useState(`Express App server with CORS, Rate limiting, authentication middleware, user model, auth routes, and MongoDB database cluster connection.`);
@@ -107,9 +107,12 @@ export default function ArchitectureVisualizer() {
                 Pipeline Graph Topology
               </h2>
 
-              {archData.mermaidCode && (
+              {archData.graph && (
                 <div className="w-full">
-                  <Mermaid chart={archData.mermaidCode} />
+                  <InteractiveGraph
+                    graphData={archData.graph}
+                    title="Architecture Graph"
+                  />
                 </div>
               )}
 

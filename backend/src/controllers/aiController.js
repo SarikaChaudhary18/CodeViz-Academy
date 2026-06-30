@@ -87,10 +87,15 @@ Evaluate the candidate's last answer and ask the next challenging technical or b
 \`\`\`
 ${payload}
 \`\`\`
-Produce a valid flowchart diagram using Mermaid.js syntax (starting with "graph TD" or similar) and list step-by-step logs. Do not include markdown code block characters inside the mermaidCode string. You must respond with a JSON object matching this schema:
+Return a structured JSON graph of nodes and edges (NOT Mermaid syntax). Each node has an id, label, type (start/end/process/decision), and optional vars string. Each edge has from, to, optional label.
+Also list step-by-step execution logs with node references.
+You must respond with a JSON object matching this EXACT schema:
 {
-  "mermaidCode": "graph TD\\n  A[Start] --> B[Step]",
-  "steps": [{"step": number, "description": "what happens", "variables": "state details"}]
+  "graph": {
+    "nodes": [{"id": "n1", "label": "Start", "type": "start"}, {"id": "n2", "label": "factorial(3)", "type": "process", "vars": "n=3"}],
+    "edges": [{"from": "n1", "to": "n2", "label": ""}]
+  },
+  "steps": [{"step": 1, "nodeId": "n2", "description": "Call factorial with n=3", "variables": "n=3"}]
 }`;
       aiResult = await aiService.generateContentJSON(prompt);
     } 
@@ -99,10 +104,14 @@ Produce a valid flowchart diagram using Mermaid.js syntax (starting with "graph 
 \`\`\`
 ${payload}
 \`\`\`
-Return the line execution path and variable values at each line. Output a Mermaid.js flowchart mapping control flow. Do not include markdown characters in mermaidCode. You must respond with a JSON object matching this schema:
+Return the line execution path and variable values at each line as a structured JSON graph (NOT Mermaid). Nodes represent lines/blocks, edges represent control flow.
+You must respond with a JSON object matching this EXACT schema:
 {
-  "mermaidCode": "graph TD\\n  Start --> Line1",
-  "debugSteps": [{"line": number, "variablesState": "e.g. x=2, y=5", "action": "explanation of execution"}]
+  "graph": {
+    "nodes": [{"id": "l1", "label": "Line 1: function entry", "type": "start"}, {"id": "l2", "label": "i=0, j<arr.length", "type": "decision", "vars": "i=0"}],
+    "edges": [{"from": "l1", "to": "l2", "label": "enter"}]
+  },
+  "debugSteps": [{"line": number, "nodeId": "l1", "variablesState": "e.g. x=2, y=5", "action": "explanation of execution"}]
 }`;
       aiResult = await aiService.generateContentJSON(prompt);
     } 
@@ -111,9 +120,13 @@ Return the line execution path and variable values at each line. Output a Mermai
 \`\`\`
 ${payload}
 \`\`\`
-Generate an architecture block schema mapping component boundaries and dependencies. Output a valid Mermaid.js flowchart of the component modules. You must respond with a JSON object matching this schema:
+Generate an architecture block schema mapping component boundaries and dependencies as a structured JSON graph (NOT Mermaid). Nodes are modules/components, edges are dependencies.
+You must respond with a JSON object matching this EXACT schema:
 {
-  "mermaidCode": "graph LR\\n  ModuleA --> ModuleB",
+  "graph": {
+    "nodes": [{"id": "m1", "label": "AuthController", "type": "process"}, {"id": "m2", "label": "UserModel", "type": "process"}],
+    "edges": [{"from": "m1", "to": "m2", "label": "uses"}]
+  },
   "components": [{"name": "string", "type": "e.g. class, function, boundary", "purpose": "role in system"}]
 }`;
       aiResult = await aiService.generateContentJSON(prompt);

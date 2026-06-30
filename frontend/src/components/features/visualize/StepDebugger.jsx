@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Play, RotateCcw, ChevronRight, ChevronLeft, Terminal, Server, Sparkles } from 'lucide-react';
 import { api } from '../../../lib/api';
-import Mermaid from './Mermaid';
+import InteractiveGraph from './InteractiveGraph';
 
 export default function StepDebugger() {
   const [code, setCode] = useState(`function bubbleSort(arr) {
@@ -182,10 +182,14 @@ export default function StepDebugger() {
                 </div>
               )}
 
-              {/* Mermaid trace map */}
-              {debugData.mermaidCode && (
+              {/* Interactive Flow Graph */}
+              {debugData.graph && (
                 <div className="w-full">
-                  <Mermaid chart={debugData.mermaidCode} />
+                  <InteractiveGraph
+                    graphData={debugData.graph}
+                    activeNodeId={activeStep?.nodeId}
+                    title="Control Flow"
+                  />
                 </div>
               )}
 
