@@ -371,6 +371,8 @@ export default function DsaSandbox() {
     return clean;
   };
 
+  const currentResult = submitResult || runResult;
+
   return (
     <div className="h-screen bg-white flex flex-col overflow-hidden text-zinc-900" style={{ background: '#ffffff', color: '#09090b' }}>
 
