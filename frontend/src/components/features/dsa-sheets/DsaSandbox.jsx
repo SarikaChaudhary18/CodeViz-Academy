@@ -352,7 +352,14 @@ export default function DsaSandbox() {
       <div className="min-h-screen bg-[#07080a] flex items-center justify-center flex-col gap-4">
         <XCircle size={40} className="text-red-400" />
         <p className="text-white font-mono">Problem not found.</p>
-        <button onClick={() => na  // Helper to remove duplicate title from AI generated description
+        <button onClick={() => navigate('/dsa-sheets')} className="text-cyan-400 font-mono text-sm hover:underline flex items-center gap-1">
+          <ArrowLeft size={14} /> Back to Sheets
+        </button>
+      </div>
+    );
+  }
+
+  // Helper to remove duplicate title from AI generated description
   const cleanDescription = (desc = '') => {
     let clean = desc.trim();
     const titleEscaped = activeProblem?.title ? activeProblem.title.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&') : '';
