@@ -299,31 +299,45 @@ export default function Courses() {
               key={course._id}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="bg-white rounded-2xl border border-zinc-200 hover:border-orange-250 p-6 flex flex-col justify-between hover:shadow-lg transition-all"
+              className="bg-white rounded-2xl border border-zinc-200 hover:border-orange-300 flex flex-col hover:shadow-lg transition-all overflow-hidden"
             >
-              <div>
-                {/* Category & Difficulty Tag */}
-                <div className="flex justify-between items-center mb-3">
-                  <span className="px-2 py-0.5 bg-orange-50 border border-orange-100 text-[9px] font-bold text-orange-600 font-mono rounded">
-                    {course.category}
-                  </span>
+              {/* Thumbnail */}
+              {course.thumbnail ? (
+                <div className="relative w-full aspect-video bg-zinc-950 overflow-hidden">
+                  <img src={course.thumbnail} alt={course.title} className="w-full h-full object-cover" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                  <div className="absolute bottom-2 left-3 flex gap-1.5">
+                    <span className="px-2 py-0.5 bg-orange-600 text-[9px] font-bold text-white font-mono rounded">{course.category}</span>
+                    <span className={`px-2 py-0.5 text-[9px] font-mono font-bold rounded ${
+                      course.difficulty === 'Hard' ? 'bg-red-600 text-white' :
+                      course.difficulty === 'Medium' ? 'bg-amber-500 text-white' : 'bg-green-600 text-white'
+                    }`}>{course.difficulty}</span>
+                  </div>
+                  <div className="absolute top-2 right-2 bg-black/70 text-white text-[9px] font-mono px-2 py-0.5 rounded">
+                    {course.lessonsCount} lessons
+                  </div>
+                </div>
+              ) : (
+                <div className="flex justify-between items-center px-5 pt-5">
+                  <span className="px-2 py-0.5 bg-orange-50 border border-orange-100 text-[9px] font-bold text-orange-600 font-mono rounded">{course.category}</span>
                   <span className={`text-[9px] font-mono font-bold uppercase ${
                     course.difficulty === 'Hard' ? 'text-red-500' :
                     course.difficulty === 'Medium' ? 'text-amber-600' : 'text-green-600'
-                  }`}>
-                    {course.difficulty}
-                  </span>
+                  }`}>{course.difficulty}</span>
                 </div>
+              )}
+
+              <div className="p-5 flex flex-col flex-1">
 
                 {/* Title & Info */}
-                <h3 className="text-base font-extrabold text-zinc-950 tracking-tight mb-2 hover:text-orange-600 transition-colors">
+                <h3 className="text-base font-extrabold text-zinc-950 tracking-tight mb-1.5 hover:text-orange-600 transition-colors">
                   {course.title}
                 </h3>
-                <p className="text-xs text-zinc-650 leading-relaxed mb-4">
+                <p className="text-xs text-zinc-500 leading-relaxed mb-3 line-clamp-2">
                   {course.description}
                 </p>
                 
-                <div className="text-[10px] text-zinc-500 font-mono mb-6">
+                <div className="text-[10px] text-zinc-500 font-mono mb-4">
                   Instructor: <span className="font-bold text-zinc-700">{course.instructor}</span>
                 </div>
               </div>

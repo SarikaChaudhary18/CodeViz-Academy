@@ -34,10 +34,24 @@ const CourseSchema = new mongoose.Schema({
     type: String,
     default: '',
   },
-  videos: [{
+  thumbnail: {
+    type: String,
+    default: '',
+  },
+  channelTitle: {
+    type: String,
+    default: '',
+  },
+  playlistId: {
+    type: String,
+    default: '',
+  },
+  videos: [{ 
     videoId: { type: String, required: true },
     title: { type: String, required: true },
     duration: { type: String, default: '' },
+    thumbnail: { type: String, default: '' },
+    position: { type: Number, default: 0 },
   }],
 }, {
   timestamps: true,
