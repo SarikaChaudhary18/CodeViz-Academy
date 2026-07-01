@@ -56,6 +56,7 @@ export default function AppLayout({ children }) {
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
   const [audioVolume, setAudioVolume] = useState(0.5);
   const [audioElement, setAudioElement] = useState(null);
+  const [showMobileSidebar, setShowMobileSidebar] = useState(false);
 
   // Focus Audio streams
   const audioTracks = {
@@ -193,7 +194,13 @@ export default function AppLayout({ children }) {
       {/* Global Desktop & Mobile Navigation Header */}
       <header className="h-20 border-b flex items-center justify-between px-6 lg:px-8 z-30 sticky top-0 backdrop-blur-md bg-white/85 border-zinc-200">
         {/* Brand Logo & Title */}
-        <div className="flex items-center select-none">
+        <div className="flex items-center gap-3 select-none">
+          <button
+            onClick={() => setShowMobileSidebar(true)}
+            className="p-2 -ml-2 rounded-lg lg:hidden hover:bg-zinc-100 text-zinc-700 cursor-pointer"
+          >
+            <Menu className="w-5 h-5" />
+          </button>
           <img src={logo} alt="Logo" className="w-[3rem] h-[3rem] object-contain" />
         </div>
 
@@ -475,6 +482,200 @@ export default function AppLayout({ children }) {
         </div>
 
       </div>
+
+      {/* Mobile Left Sidebar Overlay */}
+      <AnimatePresence>
+        {showMobileSidebar && (
+          <div className="lg:hidden fixed inset-0 z-50 flex">
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.5 }}
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 bg-black"
+              onClick={() => setShowMobileSidebar(false)}
+            />
+            {/* Sliding Drawer */}
+            <motion.aside
+              initial={{ x: '-100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '-100%' }}
+              transition={{ type: 'tween', duration: 0.3 }}
+              className="relative w-64 h-full z-10 flex-shrink-0"
+            >
+              {/* Close Button overlay */}
+              <button
+                onClick={() => setShowMobileSidebar(false)}
+                className="absolute top-4 right-[-44px] p-2 bg-zinc-900 text-white rounded-r-lg shadow-md cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+              
+              <div className="h-full flex flex-col bg-white p-4 overflow-y-auto">
+                <div className="flex items-center gap-3 mb-6 border-b pb-4">
+                  <img src={logo} alt="Logo" className="w-10 h-10 object-contain animate-pulse" />
+                  <span className="font-bold text-xs font-mono">CODEVIZ ACADEMY</span>
+                </div>
+                <div className="space-y-6">
+                  {/* Learning */}
+                  <div className="space-y-2 text-left">
+                    <span className="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-widest block">Learning</span>
+                    <div className="space-y-0.5">
+                      {learningGroup.map(item => (
+                        <Link 
+                          key={item.name} 
+                          to={item.path} 
+                          onClick={() => setShowMobileSidebar(false)}
+                          className={cn(
+                            "block px-3 py-2 rounded-xl text-xs font-semibold transition-all",
+                            location.pathname === item.path 
+                              ? "bg-orange-50 text-orange-600 font-bold" 
+                              : "text-zinc-650 hover:bg-zinc-50 hover:text-zinc-950"
+                          )}
+                        >
+                          {item.name}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* AI Tools */}
+                  <div className="space-y-2 text-left">
+                    <span className="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-widest block">AI Tools</span>
+                    <div className="space-y-0.5">
+                      {aiToolsGroup.map(item => (
+                        <Link 
+                          key={item.name} 
+                          to={item.path} 
+                          onClick={() => setShowMobileSidebar(false)}
+                          className={cn(
+                            "block px-3 py-2 rounded-xl text-xs font-semibold transition-all",
+                            location.pathname === item.path 
+                              ? "bg-orange-50 text-orange-600 font-bold" 
+                              : "text-zinc-650 hover:bg-zinc-50 hover:text-zinc-950"
+                          )}
+                        >
+                          {item.name}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Visualize */}
+                  <div className="space-y-2 text-left">
+                    <span className="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-widest block">Visualize</span>
+                    <div className="space-y-0.5">
+                      {visualizeGroup.map(item => (
+                        <Link 
+                          key={item.name} 
+                          to={item.path} 
+                          onClick={() => setShowMobileSidebar(false)}
+                          className={cn(
+                            "block px-3 py-2 rounded-xl text-xs font-semibold transition-all",
+                            location.pathname === item.path 
+                              ? "bg-orange-50 text-orange-600 font-bold" 
+                              : "text-zinc-650 hover:bg-zinc-50 hover:text-zinc-950"
+                          )}
+                        >
+                          {item.name}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Community */}
+                  <div className="space-y-2 text-left">
+                    <span className="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-widest block">Community</span>
+                    <div className="space-y-0.5">
+                      {communityGroup.map(item => (
+                        <Link 
+                          key={item.name} 
+                          to={item.path} 
+                          onClick={() => setShowMobileSidebar(false)}
+                          className={cn(
+                            "block px-3 py-2 rounded-xl text-xs font-semibold transition-all",
+                            location.pathname === item.path 
+                              ? "bg-orange-50 text-orange-600 font-bold" 
+                              : "text-zinc-650 hover:bg-zinc-50 hover:text-zinc-950"
+                          )}
+                        >
+                          {item.name}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Games */}
+                  <div className="space-y-2 text-left">
+                    <span className="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-widest block">Games</span>
+                    <div className="space-y-0.5">
+                      {gamesGroup.map(item => (
+                        <Link 
+                          key={item.name} 
+                          to={item.path} 
+                          onClick={() => setShowMobileSidebar(false)}
+                          className={cn(
+                            "block px-3 py-2 rounded-xl text-xs font-semibold transition-all",
+                            location.pathname === item.path 
+                              ? "bg-orange-50 text-orange-600 font-bold" 
+                              : "text-zinc-650 hover:bg-zinc-50 hover:text-zinc-950"
+                          )}
+                        >
+                          {item.name}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Career */}
+                  <div className="space-y-2 text-left">
+                    <span className="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-widest block">Career</span>
+                    <div className="space-y-0.5">
+                      {careerGroup.map(item => (
+                        <Link 
+                          key={item.name} 
+                          to={item.path} 
+                          onClick={() => setShowMobileSidebar(false)}
+                          className={cn(
+                            "block px-3 py-2 rounded-xl text-xs font-semibold transition-all",
+                            location.pathname === item.path 
+                              ? "bg-orange-50 text-orange-600 font-bold" 
+                              : "text-zinc-650 hover:bg-zinc-50 hover:text-zinc-950"
+                          )}
+                        >
+                          {item.name}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Admin */}
+                  <div className="space-y-2 text-left">
+                    <span className="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-widest block">Admin / Role</span>
+                    <div className="space-y-0.5">
+                      {adminGroup.map(item => (
+                        <Link 
+                          key={item.name} 
+                          to={item.path} 
+                          onClick={() => setShowMobileSidebar(false)}
+                          className={cn(
+                            "block px-3 py-2 rounded-xl text-xs font-semibold transition-all",
+                            location.pathname === item.path 
+                              ? "bg-orange-50 text-orange-600 font-bold" 
+                              : "text-zinc-650 hover:bg-zinc-50 hover:text-zinc-950"
+                          )}
+                        >
+                          {item.name}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.aside>
+          </div>
+        )}
+      </AnimatePresence>
 
     </div>
   );
