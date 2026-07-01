@@ -1,8 +1,11 @@
 const User = require('../models/User');
+const Notification = require('../models/Notification');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const axios = require('axios');
 const logger = require('../config/logger');
+const { getIO } = require('../utils/socket');
+
 
 // Generate JWT Access Token
 const generateAccessToken = (user) => {
@@ -441,6 +444,25 @@ exports.sendConnectionRequest = async (req, res, next) => {
     targetUser.connectionRequests.push({ from: currentUserId, status: 'pending' });
     await targetUser.save();
 
+    // Create notification for target user
+    const notification = await Notification.create({
+      recipient: targetUserId,
+      sender: currentUserId,
+      type: 'friend_request',
+      message: `${currentUser.username} sent you a connection request.`,
+    });
+
+    // Populate sender info for real-time delivery
+    const populatedNotification = await notification.populate('sender', 'username level avatarColor');
+
+    // Emit real-time notification to target user's personal room
+    try {
+      const io = getIO();
+      io.to(`user:${targetUserId}`).emit('notification', populatedNotification);
+    } catch (e) {
+      logger.warn('Socket not ready for notification emit: ' + e.message);
+    }
+
     logger.info(`Connection request sent from ${currentUser.username} to ${targetUser.username}`);
 
     res.status(200).json({
@@ -486,6 +508,24 @@ exports.acceptConnectionRequest = async (req, res, next) => {
 
     await currentUser.save();
     await senderUser.save();
+
+    // Create notification for original sender that their request was accepted
+    const notification = await Notification.create({
+      recipient: senderId,
+      sender: currentUserId,
+      type: 'friend_accepted',
+      message: `${currentUser.username} accepted your connection request!`,
+    });
+
+    const populatedNotification = await notification.populate('sender', 'username level avatarColor');
+
+    // Emit real-time notification to sender's personal room
+    try {
+      const io = getIO();
+      io.to(`user:${senderId}`).emit('notification', populatedNotification);
+    } catch (e) {
+      logger.warn('Socket not ready for notification emit: ' + e.message);
+    }
 
     logger.info(`Connection request accepted: ${currentUser.username} and ${senderUser.username} are now connected.`);
 
@@ -555,6 +595,41 @@ exports.rejectConnectionRequest = async (req, res, next) => {
         connections: currentUser.connections,
         connectionRequests: currentUser.connectionRequests,
       }
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.getNotifications = async (req, res, next) => {
+  try {
+    const notifications = await Notification.find({ recipient: req.user.id })
+      .populate('sender', 'username level avatarColor')
+      .sort({ createdAt: -1 })
+      .limit(50);
+
+    const unreadCount = notifications.filter(n => !n.read).length;
+
+    res.status(200).json({
+      status: 'success',
+      data: notifications,
+      unreadCount,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.markNotificationsRead = async (req, res, next) => {
+  try {
+    await Notification.updateMany(
+      { recipient: req.user.id, read: false },
+      { $set: { read: true } }
+    );
+
+    res.status(200).json({
+      status: 'success',
+      message: 'All notifications marked as read.',
     });
   } catch (err) {
     next(err);

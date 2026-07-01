@@ -27,7 +27,23 @@ const seedDefaultUser = async () => {
   }
 };
 
+const cleanupSeededData = async () => {
+  try {
+    const Community = require('../models/Community');
+    const operatorUser = await User.findOne({ email: 'operator@studyquest.io' });
+    if (operatorUser) {
+      const seededNames = ['general-lobby', 'algorithms-dsa', 'system-design', 'mock-sandbox', 'resume-audit'];
+      const result = await Community.deleteMany({ name: { $in: seededNames }, createdBy: operatorUser._id });
+      await User.deleteOne({ _id: operatorUser._id });
+      logger.info(`Cleanup: Removed ${result.deletedCount} seeded communities and operator user.`);
+    }
+  } catch (err) {
+    logger.error('Failed to cleanup seeded data: %s', err.message);
+  }
+};
+
 const seedDefaultCommunities = async (defaultUser) => {
+
   try {
     const Community = require('../models/Community');
     const defaultSectors = [
@@ -129,12 +145,9 @@ const connectDB = async () => {
 
   try {
     await setupEventsAndConnect(mongoURI);
-    await seedDefaultUser();
-    
-    const defaultUser = await User.findOne({ email: 'operator@studyquest.io' });
-    if (defaultUser) {
-      await seedDefaultCommunities(defaultUser);
-    }
+    // One-time cleanup: remove old seeded operator user and their communities
+    await cleanupSeededData();
+    // Note: Default user/community seeding removed — all data is user-generated
     await seedCourses();
     await seedQuizzes();
   } catch (err) {
@@ -145,12 +158,6 @@ const connectDB = async () => {
       try {
         logger.info('Attempting fallback to local MongoDB...');
         await setupEventsAndConnect(localFallbackURI);
-        await seedDefaultUser();
-        
-        const defaultUser = await User.findOne({ email: 'operator@studyquest.io' });
-        if (defaultUser) {
-          await seedDefaultCommunities(defaultUser);
-        }
         await seedCourses();
         await seedQuizzes();
         return;

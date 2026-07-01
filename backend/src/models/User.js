@@ -86,6 +86,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     default: '',
   },
+  avatarColor: {
+    type: String,
+    default: '#f97316', // orange-500 default
+  },
   connections: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',

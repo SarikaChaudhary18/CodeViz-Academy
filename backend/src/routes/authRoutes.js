@@ -20,4 +20,9 @@ router.post('/connect/:userId', authenticate, authController.sendConnectionReque
 router.post('/connect/accept/:senderId', authenticate, authController.acceptConnectionRequest);
 router.post('/connect/reject/:senderId', authenticate, authController.rejectConnectionRequest);
 
+// Notification Endpoints
+router.get('/notifications', authenticate, authController.getNotifications);
+router.post('/notifications/read', authenticate, authController.markNotificationsRead);
+
 module.exports = router;
+

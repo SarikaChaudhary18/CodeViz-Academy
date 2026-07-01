@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Search, Users, MessageSquare, Compass, CheckCircle2, UserCheck, Flame, UserPlus, XCircle, CheckCircle, Github } from 'lucide-react';
+import { Search, Users, MessageSquare, Compass, CheckCircle2, UserCheck, Flame, UserPlus, XCircle, CheckCircle, Github, RefreshCw } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useStore } from '../../../hooks/useStore';
 
@@ -15,28 +15,49 @@ export default function BuddyFinder() {
 
   const [searchTerm, setSearchTerm] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     fetchPeers();
   }, [fetchPeers]);
 
+  // Refresh on window focus to pick up new registrations
+  useEffect(() => {
+    const onFocus = () => fetchPeers();
+    window.addEventListener('focus', onFocus);
+    return () => window.removeEventListener('focus', onFocus);
+  }, [fetchPeers]);
+
+  const handleRefresh = async () => {
+    setRefreshing(true);
+    await fetchPeers();
+    setRefreshing(false);
+  };
+
   const handleConnect = async (peerId) => {
+    setErrorMsg('');
     try {
       await sendConnection(peerId);
-      setSuccessMsg('Connection invite sent successfully!');
-      setTimeout(() => setSuccessMsg(''), 3000);
+      setSuccessMsg('Connection invite sent! They will see a notification.');
+      setTimeout(() => setSuccessMsg(''), 4000);
+      await fetchPeers(); // Refresh list to update status
     } catch (err) {
-      console.error(err);
+      setErrorMsg(err.message || 'Failed to send invite.');
+      setTimeout(() => setErrorMsg(''), 4000);
     }
   };
 
   const handleAccept = async (senderId) => {
+    setErrorMsg('');
     try {
       await acceptConnection(senderId);
-      setSuccessMsg('Accepted connection invite!');
-      setTimeout(() => setSuccessMsg(''), 3000);
+      setSuccessMsg('Connected! You can now start a video call.');
+      setTimeout(() => setSuccessMsg(''), 4000);
+      await fetchPeers();
     } catch (err) {
-      console.error(err);
+      setErrorMsg(err.message || 'Failed to accept invite.');
+      setTimeout(() => setErrorMsg(''), 4000);
     }
   };
 
@@ -45,6 +66,7 @@ export default function BuddyFinder() {
       await rejectConnection(senderId);
       setSuccessMsg('Invite declined.');
       setTimeout(() => setSuccessMsg(''), 3000);
+      await fetchPeers();
     } catch (err) {
       console.error(err);
     }
@@ -74,11 +96,25 @@ export default function BuddyFinder() {
             Connect with peers preparing for the same tech corporate sprints
           </p>
         </div>
+        <button
+          onClick={handleRefresh}
+          disabled={refreshing || peersLoading}
+          className="flex items-center gap-2 px-3 py-2 bg-zinc-50 border border-zinc-200 rounded-xl text-xs font-mono font-bold text-zinc-600 hover:bg-orange-50 hover:border-orange-200 hover:text-orange-700 transition-all cursor-pointer disabled:opacity-50"
+        >
+          <RefreshCw size={13} className={refreshing ? 'animate-spin' : ''} />
+          Refresh
+        </button>
       </div>
 
       {successMsg && (
-        <div className="bg-orange-50 border border-orange-200 text-orange-700 px-4 py-3 rounded-xl text-xs font-mono">
-          {successMsg}
+        <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-xl text-xs font-mono">
+          ✅ {successMsg}
+        </div>
+      )}
+
+      {errorMsg && (
+        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-xs font-mono">
+          ❌ {errorMsg}
         </div>
       )}
 
@@ -132,12 +168,25 @@ export default function BuddyFinder() {
 
       {/* Loading state */}
       {peersLoading ? (
-        <div className="py-12 flex justify-center items-center text-zinc-500 text-xs font-mono uppercase tracking-widest">
-          Loading peer profiles...
+        <div className="py-12 flex flex-col items-center gap-3 text-zinc-400 text-xs font-mono">
+          <div className="w-8 h-8 border-2 border-orange-200 border-t-orange-600 rounded-full animate-spin" />
+          <span className="uppercase tracking-widest">Fetching registered users...</span>
+        </div>
+      ) : peers.length === 0 ? (
+        <div className="py-14 text-center bg-zinc-50 rounded-2xl border border-dashed border-zinc-200">
+          <Users size={28} className="text-zinc-300 mx-auto mb-3" />
+          <p className="text-xs font-bold font-mono text-zinc-600 uppercase tracking-wider">No other users registered yet</p>
+          <p className="text-[10px] text-zinc-400 font-mono mt-1">You're the first one here! Share the app to find study buddies.</p>
+          <button
+            onClick={handleRefresh}
+            className="mt-4 px-4 py-2 bg-orange-600 hover:bg-orange-500 text-white text-[10px] font-bold font-mono rounded-lg transition-all cursor-pointer"
+          >
+            <RefreshCw size={11} className="inline mr-1" /> Check Again
+          </button>
         </div>
       ) : filteredBuddies.length === 0 ? (
         <div className="py-12 text-center text-zinc-500 text-xs font-mono uppercase tracking-widest bg-zinc-50 rounded-2xl border border-dashed border-zinc-200">
-          No matching study buddies found.
+          No users match your search.
         </div>
       ) : (
         /* Grid List */

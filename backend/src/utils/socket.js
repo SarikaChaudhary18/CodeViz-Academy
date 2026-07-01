@@ -35,6 +35,11 @@ const initializeSocket = (server) => {
   io.on('connection', (socket) => {
     logger.info(`WebSocket Client connected: ${socket.user.username} (ID: ${socket.user.id})`);
 
+    // Auto-join personal user room for targeted notifications & call signaling
+    const personalRoom = `user:${socket.user.id}`;
+    socket.join(personalRoom);
+    logger.debug(`User ${socket.user.username} auto-joined personal room: ${personalRoom}`);
+
     // Join Room (e.g. Community channel or collab room)
     socket.on('join_room', (roomId) => {
       socket.join(roomId);
@@ -63,7 +68,7 @@ const initializeSocket = (server) => {
           codeSnippet: codeSnippet || '',
         });
 
-        const populatedMessage = await newMessage.populate('senderId', 'username level');
+        const populatedMessage = await newMessage.populate('senderId', 'username level avatarColor');
         io.to(communityId).emit('receive_message', populatedMessage);
         logger.debug(`Message sent in room ${communityId} by ${socket.user.username}`);
       } catch (err) {
@@ -81,6 +86,72 @@ const initializeSocket = (server) => {
     socket.on('collab_chat_send', (data) => {
       const { roomId, text } = data;
       io.to(roomId).emit('receive_collab_chat', { text, user: socket.user.username });
+    });
+
+    // --- WebRTC VIDEO CALL SIGNALING ---
+    // Caller sends a call request to a specific user
+    socket.on('call_request', (data) => {
+      const { targetUserId, callerName, callerId } = data;
+      const targetRoom = `user:${targetUserId}`;
+      socket.to(targetRoom).emit('incoming_call', {
+        callerId: callerId || socket.user.id,
+        callerName: callerName || socket.user.username,
+        socketId: socket.id,
+      });
+      logger.debug(`Call request from ${socket.user.username} to user:${targetUserId}`);
+    });
+
+    // Callee accepts and sends back their socket id so ICE/offer can flow
+    socket.on('call_accept', (data) => {
+      const { callerSocketId } = data;
+      socket.to(callerSocketId).emit('call_accepted', {
+        answererSocketId: socket.id,
+        answererName: socket.user.username,
+        answererId: socket.user.id,
+      });
+    });
+
+    // Callee rejects
+    socket.on('call_reject', (data) => {
+      const { callerSocketId } = data;
+      socket.to(callerSocketId).emit('call_rejected', {
+        reason: 'User declined the call.',
+      });
+    });
+
+    // End the ongoing call (notify both peers)
+    socket.on('call_end', (data) => {
+      const { peerSocketId } = data;
+      if (peerSocketId) {
+        socket.to(peerSocketId).emit('call_ended');
+      }
+    });
+
+    // WebRTC Offer (from caller to callee after call_accept)
+    socket.on('webrtc_offer', (data) => {
+      const { targetSocketId, offer } = data;
+      socket.to(targetSocketId).emit('webrtc_offer', {
+        offer,
+        senderSocketId: socket.id,
+      });
+    });
+
+    // WebRTC Answer (from callee back to caller)
+    socket.on('webrtc_answer', (data) => {
+      const { targetSocketId, answer } = data;
+      socket.to(targetSocketId).emit('webrtc_answer', {
+        answer,
+        senderSocketId: socket.id,
+      });
+    });
+
+    // ICE Candidate exchange
+    socket.on('webrtc_ice_candidate', (data) => {
+      const { targetSocketId, candidate } = data;
+      socket.to(targetSocketId).emit('webrtc_ice_candidate', {
+        candidate,
+        senderSocketId: socket.id,
+      });
     });
 
     // --- RANDOM MATCHMAKING LOBBY ---

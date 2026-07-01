@@ -68,6 +68,7 @@ exports.getCommunities = async (req, res, next) => {
 
     const rooms = await Community.find(filter)
       .populate('createdBy', 'username level')
+      .populate('members', 'username level avatarColor')
       .sort({ createdAt: -1 });
 
     res.status(200).json({

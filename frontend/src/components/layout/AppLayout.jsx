@@ -27,7 +27,11 @@ import {
   Award,
   Terminal,
   Users,
-  ChevronDown
+  ChevronDown,
+  Bell,
+  CheckCheck,
+  UserPlus,
+  GraduationCap
 } from 'lucide-react';
 import { cn } from "../../lib/utils";
 import Copilot from '../ui/Copilot';
@@ -46,8 +50,13 @@ export default function AppLayout({ children }) {
     activeAudio,
     setActiveAudio,
     tick,
-    userRole,
-    setUserRole
+    notifications,
+    unreadCount,
+    fetchNotifications,
+    markNotificationsRead,
+    acceptConnection,
+    rejectConnection,
+    fetchPeers,
   } = useStore();
 
   const location = useLocation();
@@ -57,6 +66,8 @@ export default function AppLayout({ children }) {
   const [audioVolume, setAudioVolume] = useState(0.5);
   const [audioElement, setAudioElement] = useState(null);
   const [showMobileSidebar, setShowMobileSidebar] = useState(false);
+  const [showNotifications, setShowNotifications] = useState(false);
+  const notifRef = useRef(null);
 
   // Focus Audio streams
   const audioTracks = {
@@ -76,6 +87,24 @@ export default function AppLayout({ children }) {
     }
     return () => clearInterval(interval);
   }, [timerStatus, tick]);
+
+  // Fetch notifications on mount
+  useEffect(() => {
+    if (user) {
+      fetchNotifications();
+    }
+  }, [user, fetchNotifications]);
+
+  // Close notification dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (notifRef.current && !notifRef.current.contains(e.target)) {
+        setShowNotifications(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   // Audio playback controls
   useEffect(() => {
@@ -113,6 +142,32 @@ export default function AppLayout({ children }) {
   const handleLogout = () => {
     logout();
     navigate('/');
+  };
+
+  const handleOpenNotifications = () => {
+    setShowNotifications(!showNotifications);
+    if (!showNotifications && unreadCount > 0) {
+      markNotificationsRead();
+    }
+  };
+
+  const handleAcceptFromNotif = async (senderId) => {
+    try {
+      await acceptConnection(senderId);
+      await fetchPeers();
+      await fetchNotifications();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleRejectFromNotif = async (senderId) => {
+    try {
+      await rejectConnection(senderId);
+      await fetchNotifications();
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   // XP Progress Calculation
@@ -174,19 +229,39 @@ export default function AppLayout({ children }) {
     { name: 'AI Project Reviewer', path: '/projects/reviewer' }
   ];
 
-  // Admin groups based on role
-  const adminGroup = [];
-  if (userRole === 'faculty') {
-    adminGroup.push({ name: 'Faculty Dashboard', path: '/college/faculty' });
-  } else if (userRole === 'recruiter') {
-    adminGroup.push({ name: 'Recruiter Portal', path: '/career/recruiter' });
-  } else if (userRole === 'enterprise') {
-    adminGroup.push({ name: 'Employee Dashboard', path: '/enterprise/dashboard' });
-    adminGroup.push({ name: 'Certification Badges', path: '/enterprise/badges' });
-  } else {
-    // Default student views
-    adminGroup.push({ name: 'Student Classroom', path: '/college/classroom' });
-  }
+  const studentGroup = [
+    { name: 'Student Classroom', path: '/college/classroom' }
+  ];
+
+  const SidebarLink = ({ item, onClick }) => (
+    <Link
+      to={item.path}
+      onClick={onClick}
+      className={cn(
+        "block px-3 py-2 rounded-xl text-xs font-semibold transition-all",
+        location.pathname === item.path
+          ? "bg-orange-50 text-orange-600 font-bold"
+          : "text-zinc-650 hover:bg-zinc-50 hover:text-zinc-950"
+      )}
+    >
+      {item.name}
+    </Link>
+  );
+
+  const SidebarSection = ({ label, items, onClick }) => (
+    <div className="space-y-2">
+      <span className="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-widest block">{label}</span>
+      <div className="space-y-0.5">
+        {items.map(item => <SidebarLink key={item.name} item={item} onClick={onClick} />)}
+      </div>
+    </div>
+  );
+
+  const notifIcon = (type) => {
+    if (type === 'friend_request') return <UserPlus size={12} className="text-orange-500" />;
+    if (type === 'friend_accepted') return <CheckCheck size={12} className="text-green-500" />;
+    return <Bell size={12} className="text-zinc-400" />;
+  };
 
   return (
     <div className="min-h-screen flex flex-col font-sans selection:bg-orange-600/30 selection:text-orange-950 relative overflow-hidden transition-colors duration-500 z-10 bg-white text-zinc-950">
@@ -204,29 +279,118 @@ export default function AppLayout({ children }) {
           <img src={logo} alt="Logo" className="w-[3rem] h-[3rem] object-contain" />
         </div>
 
-        {/* User HUD, Pomodoro, and Theme Controls (right side) */}
+        {/* User HUD, Pomodoro, and Controls (right side) */}
         <div className="flex items-center gap-3 lg:gap-4">
           
-          {/* Interactive Role Swapper Mock */}
-          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-zinc-200 bg-zinc-50 text-xs font-semibold">
-            <span className="text-[9px] text-zinc-550 font-mono mr-1">ROLE:</span>
-            <select 
-              value={userRole} 
-              onChange={(e) => setUserRole(e.target.value)}
-              className="bg-transparent border-none text-[9px] font-bold font-mono focus:outline-none cursor-pointer text-orange-600 uppercase"
+          {/* Static Student Role Badge */}
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-orange-200 bg-orange-50 text-xs font-semibold">
+            <GraduationCap className="w-3.5 h-3.5 text-orange-600" />
+            <span className="text-[9px] font-bold font-mono text-orange-600 uppercase">Student</span>
+          </div>
+
+          {/* Notification Bell */}
+          <div className="relative" ref={notifRef}>
+            <button
+              onClick={handleOpenNotifications}
+              className="relative flex items-center justify-center w-9 h-9 rounded-full border border-zinc-200 bg-zinc-50 hover:bg-zinc-100 transition-all cursor-pointer"
+              title="Notifications"
             >
-              <option value="student">Student</option>
-              <option value="faculty">Faculty</option>
-              <option value="recruiter">Recruiter</option>
-              <option value="enterprise">Enterprise</option>
-            </select>
+              <Bell className="w-4 h-4 text-zinc-600" />
+              {unreadCount > 0 && (
+                <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-orange-600 text-white text-[9px] font-bold flex items-center justify-center animate-pulse">
+                  {unreadCount > 9 ? '9+' : unreadCount}
+                </span>
+              )}
+            </button>
+
+            {/* Notification Dropdown */}
+            <AnimatePresence>
+              {showNotifications && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                  transition={{ duration: 0.15 }}
+                  className="absolute right-0 mt-3 w-80 bg-white border border-zinc-200 rounded-2xl shadow-xl z-50 overflow-hidden"
+                >
+                  {/* Header */}
+                  <div className="px-4 py-3 border-b border-zinc-100 flex items-center justify-between bg-zinc-50">
+                    <span className="text-[10px] font-bold font-mono text-zinc-700 uppercase tracking-wider">Notifications</span>
+                    {unreadCount > 0 && (
+                      <span className="text-[9px] text-orange-600 font-mono font-bold">{unreadCount} NEW</span>
+                    )}
+                  </div>
+
+                  {/* Notification List */}
+                  <div className="max-h-80 overflow-y-auto divide-y divide-zinc-100">
+                    {notifications.length === 0 ? (
+                      <div className="py-8 text-center">
+                        <Bell size={20} className="text-zinc-300 mx-auto mb-2" />
+                        <p className="text-[10px] text-zinc-400 font-mono uppercase tracking-widest">No notifications yet</p>
+                      </div>
+                    ) : (
+                      notifications.map((notif) => (
+                        <div
+                          key={notif._id}
+                          className={cn(
+                            "px-4 py-3 text-left transition-colors",
+                            !notif.read ? "bg-orange-50/40" : "bg-white hover:bg-zinc-50"
+                          )}
+                        >
+                          <div className="flex items-start gap-3">
+                            {/* Icon */}
+                            <div className={cn(
+                              "w-7 h-7 rounded-full flex items-center justify-center shrink-0 mt-0.5",
+                              notif.type === 'friend_request' ? "bg-orange-100" : "bg-green-100"
+                            )}>
+                              {notifIcon(notif.type)}
+                            </div>
+
+                            {/* Content */}
+                            <div className="flex-1 min-w-0">
+                              <p className="text-[11px] text-zinc-800 font-medium leading-relaxed">{notif.message}</p>
+                              <p className="text-[9px] text-zinc-400 font-mono mt-0.5">
+                                {new Date(notif.createdAt).toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                              </p>
+
+                              {/* Inline Accept/Decline for friend_request */}
+                              {notif.type === 'friend_request' && notif.sender && (
+                                <div className="flex items-center gap-2 mt-2">
+                                  <button
+                                    onClick={() => handleAcceptFromNotif(notif.sender._id)}
+                                    className="px-2.5 py-1 bg-orange-600 hover:bg-orange-500 text-white rounded-lg text-[9px] font-bold font-mono transition-all cursor-pointer"
+                                  >
+                                    Accept
+                                  </button>
+                                  <button
+                                    onClick={() => handleRejectFromNotif(notif.sender._id)}
+                                    className="px-2.5 py-1 bg-zinc-100 hover:bg-zinc-200 text-zinc-600 border border-zinc-200 rounded-lg text-[9px] font-bold font-mono transition-all cursor-pointer"
+                                  >
+                                    Decline
+                                  </button>
+                                </div>
+                              )}
+                            </div>
+
+                            {/* Unread dot */}
+                            {!notif.read && (
+                              <div className="w-1.5 h-1.5 rounded-full bg-orange-500 shrink-0 mt-1.5" />
+                            )}
+                          </div>
+                        </div>
+                      ))
+                    )}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
 
           {/* User Streak HUD */}
           {user && (
             <div className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-zinc-200 bg-zinc-50 text-xs font-semibold text-zinc-900">
               <Flame className="w-4 h-4 text-orange-600 animate-pulse" />
-              <span className="font-mono text-[9px]">{user.streak || 3} DAYS</span>
+              <span className="font-mono text-[9px]">{user.streak || 0} DAYS</span>
             </div>
           )}
 
@@ -288,7 +452,7 @@ export default function AppLayout({ children }) {
             </AnimatePresence>
           </div>
 
-          {/* Profile configuration Avatar and Sign Out Link */}
+          {/* Profile Avatar and Sign Out */}
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-full border border-zinc-200 bg-zinc-50 flex items-center justify-center">
               <UserIcon size={14} className="text-orange-600" />
@@ -312,153 +476,13 @@ export default function AppLayout({ children }) {
         {/* Left Sidebar */}
         <aside className="w-64 border-r border-zinc-200 bg-white p-4 h-[calc(100vh-80px)] overflow-y-auto hidden lg:block text-left select-none scrollbar-thin">
           <div className="space-y-6">
-            {/* Learning */}
-            <div className="space-y-2">
-              <span className="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-widest block">Learning</span>
-              <div className="space-y-0.5">
-                {learningGroup.map(item => (
-                  <Link 
-                    key={item.name} 
-                    to={item.path} 
-                    className={cn(
-                      "block px-3 py-2 rounded-xl text-xs font-semibold transition-all",
-                      location.pathname === item.path 
-                        ? "bg-orange-50 text-orange-600 font-bold" 
-                        : "text-zinc-650 hover:bg-zinc-50 hover:text-zinc-950"
-                    )}
-                  >
-                    {item.name}
-                  </Link>
-                ))}
-              </div>
-            </div>
-
-            {/* AI Tools */}
-            <div className="space-y-2">
-              <span className="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-widest block">AI Tools</span>
-              <div className="space-y-0.5">
-                {aiToolsGroup.map(item => (
-                  <Link 
-                    key={item.name} 
-                    to={item.path} 
-                    className={cn(
-                      "block px-3 py-2 rounded-xl text-xs font-semibold transition-all",
-                      location.pathname === item.path 
-                        ? "bg-orange-50 text-orange-600 font-bold" 
-                        : "text-zinc-650 hover:bg-zinc-50 hover:text-zinc-950"
-                    )}
-                  >
-                    {item.name}
-                  </Link>
-                ))}
-              </div>
-            </div>
-
-            {/* Visualize */}
-            <div className="space-y-2">
-              <span className="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-widest block">Visualize</span>
-              <div className="space-y-0.5">
-                {visualizeGroup.map(item => (
-                  <Link 
-                    key={item.name} 
-                    to={item.path} 
-                    className={cn(
-                      "block px-3 py-2 rounded-xl text-xs font-semibold transition-all",
-                      location.pathname === item.path 
-                        ? "bg-orange-50 text-orange-600 font-bold" 
-                        : "text-zinc-650 hover:bg-zinc-50 hover:text-zinc-950"
-                    )}
-                  >
-                    {item.name}
-                  </Link>
-                ))}
-              </div>
-            </div>
-
-            {/* Community */}
-            <div className="space-y-2">
-              <span className="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-widest block">Community</span>
-              <div className="space-y-0.5">
-                {communityGroup.map(item => (
-                  <Link 
-                    key={item.name} 
-                    to={item.path} 
-                    className={cn(
-                      "block px-3 py-2 rounded-xl text-xs font-semibold transition-all",
-                      location.pathname === item.path 
-                        ? "bg-orange-50 text-orange-600 font-bold" 
-                        : "text-zinc-650 hover:bg-zinc-50 hover:text-zinc-950"
-                    )}
-                  >
-                    {item.name}
-                  </Link>
-                ))}
-              </div>
-            </div>
-
-            {/* Games */}
-            <div className="space-y-2">
-              <span className="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-widest block">Games</span>
-              <div className="space-y-0.5">
-                {gamesGroup.map(item => (
-                  <Link 
-                    key={item.name} 
-                    to={item.path} 
-                    className={cn(
-                      "block px-3 py-2 rounded-xl text-xs font-semibold transition-all",
-                      location.pathname === item.path 
-                        ? "bg-orange-50 text-orange-600 font-bold" 
-                        : "text-zinc-650 hover:bg-zinc-50 hover:text-zinc-950"
-                    )}
-                  >
-                    {item.name}
-                  </Link>
-                ))}
-              </div>
-            </div>
-
-            {/* Career */}
-            <div className="space-y-2">
-              <span className="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-widest block">Career</span>
-              <div className="space-y-0.5">
-                {careerGroup.map(item => (
-                  <Link 
-                    key={item.name} 
-                    to={item.path} 
-                    className={cn(
-                      "block px-3 py-2 rounded-xl text-xs font-semibold transition-all",
-                      location.pathname === item.path 
-                        ? "bg-orange-50 text-orange-600 font-bold" 
-                        : "text-zinc-650 hover:bg-zinc-50 hover:text-zinc-950"
-                    )}
-                  >
-                    {item.name}
-                  </Link>
-                ))}
-              </div>
-            </div>
-
-            {/* Admin Role-based Section */}
-            <div className="space-y-2">
-              <span className="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-widest block">Admin Module ({userRole})</span>
-              <div className="space-y-0.5">
-                {adminGroup.map(item => (
-                  <Link 
-                    key={item.name} 
-                    to={item.path} 
-                    className={cn(
-                      "block px-3 py-2 rounded-xl text-xs font-semibold transition-all",
-                      location.pathname === item.path 
-                        ? "bg-orange-50 text-orange-600 font-bold" 
-                        : "text-zinc-650 hover:bg-zinc-50 hover:text-zinc-950"
-                    )}
-                  >
-                    {item.name}
-                  </Link>
-                ))}
-              </div>
-            </div>
-
+            <SidebarSection label="Learning" items={learningGroup} />
+            <SidebarSection label="AI Tools" items={aiToolsGroup} />
+            <SidebarSection label="Visualize" items={visualizeGroup} />
+            <SidebarSection label="Community" items={communityGroup} />
+            <SidebarSection label="Games" items={gamesGroup} />
+            <SidebarSection label="Career" items={careerGroup} />
+            <SidebarSection label="Student" items={studentGroup} />
           </div>
         </aside>
 
@@ -517,159 +541,13 @@ export default function AppLayout({ children }) {
                   <span className="font-bold text-xs font-mono">CODEVIZ ACADEMY</span>
                 </div>
                 <div className="space-y-6">
-                  {/* Learning */}
-                  <div className="space-y-2 text-left">
-                    <span className="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-widest block">Learning</span>
-                    <div className="space-y-0.5">
-                      {learningGroup.map(item => (
-                        <Link 
-                          key={item.name} 
-                          to={item.path} 
-                          onClick={() => setShowMobileSidebar(false)}
-                          className={cn(
-                            "block px-3 py-2 rounded-xl text-xs font-semibold transition-all",
-                            location.pathname === item.path 
-                              ? "bg-orange-50 text-orange-600 font-bold" 
-                              : "text-zinc-650 hover:bg-zinc-50 hover:text-zinc-950"
-                          )}
-                        >
-                          {item.name}
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* AI Tools */}
-                  <div className="space-y-2 text-left">
-                    <span className="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-widest block">AI Tools</span>
-                    <div className="space-y-0.5">
-                      {aiToolsGroup.map(item => (
-                        <Link 
-                          key={item.name} 
-                          to={item.path} 
-                          onClick={() => setShowMobileSidebar(false)}
-                          className={cn(
-                            "block px-3 py-2 rounded-xl text-xs font-semibold transition-all",
-                            location.pathname === item.path 
-                              ? "bg-orange-50 text-orange-600 font-bold" 
-                              : "text-zinc-650 hover:bg-zinc-50 hover:text-zinc-950"
-                          )}
-                        >
-                          {item.name}
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Visualize */}
-                  <div className="space-y-2 text-left">
-                    <span className="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-widest block">Visualize</span>
-                    <div className="space-y-0.5">
-                      {visualizeGroup.map(item => (
-                        <Link 
-                          key={item.name} 
-                          to={item.path} 
-                          onClick={() => setShowMobileSidebar(false)}
-                          className={cn(
-                            "block px-3 py-2 rounded-xl text-xs font-semibold transition-all",
-                            location.pathname === item.path 
-                              ? "bg-orange-50 text-orange-600 font-bold" 
-                              : "text-zinc-650 hover:bg-zinc-50 hover:text-zinc-950"
-                          )}
-                        >
-                          {item.name}
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Community */}
-                  <div className="space-y-2 text-left">
-                    <span className="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-widest block">Community</span>
-                    <div className="space-y-0.5">
-                      {communityGroup.map(item => (
-                        <Link 
-                          key={item.name} 
-                          to={item.path} 
-                          onClick={() => setShowMobileSidebar(false)}
-                          className={cn(
-                            "block px-3 py-2 rounded-xl text-xs font-semibold transition-all",
-                            location.pathname === item.path 
-                              ? "bg-orange-50 text-orange-600 font-bold" 
-                              : "text-zinc-650 hover:bg-zinc-50 hover:text-zinc-950"
-                          )}
-                        >
-                          {item.name}
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Games */}
-                  <div className="space-y-2 text-left">
-                    <span className="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-widest block">Games</span>
-                    <div className="space-y-0.5">
-                      {gamesGroup.map(item => (
-                        <Link 
-                          key={item.name} 
-                          to={item.path} 
-                          onClick={() => setShowMobileSidebar(false)}
-                          className={cn(
-                            "block px-3 py-2 rounded-xl text-xs font-semibold transition-all",
-                            location.pathname === item.path 
-                              ? "bg-orange-50 text-orange-600 font-bold" 
-                              : "text-zinc-650 hover:bg-zinc-50 hover:text-zinc-950"
-                          )}
-                        >
-                          {item.name}
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Career */}
-                  <div className="space-y-2 text-left">
-                    <span className="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-widest block">Career</span>
-                    <div className="space-y-0.5">
-                      {careerGroup.map(item => (
-                        <Link 
-                          key={item.name} 
-                          to={item.path} 
-                          onClick={() => setShowMobileSidebar(false)}
-                          className={cn(
-                            "block px-3 py-2 rounded-xl text-xs font-semibold transition-all",
-                            location.pathname === item.path 
-                              ? "bg-orange-50 text-orange-600 font-bold" 
-                              : "text-zinc-650 hover:bg-zinc-50 hover:text-zinc-950"
-                          )}
-                        >
-                          {item.name}
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Admin */}
-                  <div className="space-y-2 text-left">
-                    <span className="text-[9px] font-mono font-bold text-zinc-400 uppercase tracking-widest block">Admin / Role</span>
-                    <div className="space-y-0.5">
-                      {adminGroup.map(item => (
-                        <Link 
-                          key={item.name} 
-                          to={item.path} 
-                          onClick={() => setShowMobileSidebar(false)}
-                          className={cn(
-                            "block px-3 py-2 rounded-xl text-xs font-semibold transition-all",
-                            location.pathname === item.path 
-                              ? "bg-orange-50 text-orange-600 font-bold" 
-                              : "text-zinc-650 hover:bg-zinc-50 hover:text-zinc-950"
-                          )}
-                        >
-                          {item.name}
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
+                  <SidebarSection label="Learning" items={learningGroup} onClick={() => setShowMobileSidebar(false)} />
+                  <SidebarSection label="AI Tools" items={aiToolsGroup} onClick={() => setShowMobileSidebar(false)} />
+                  <SidebarSection label="Visualize" items={visualizeGroup} onClick={() => setShowMobileSidebar(false)} />
+                  <SidebarSection label="Community" items={communityGroup} onClick={() => setShowMobileSidebar(false)} />
+                  <SidebarSection label="Games" items={gamesGroup} onClick={() => setShowMobileSidebar(false)} />
+                  <SidebarSection label="Career" items={careerGroup} onClick={() => setShowMobileSidebar(false)} />
+                  <SidebarSection label="Student" items={studentGroup} onClick={() => setShowMobileSidebar(false)} />
                 </div>
               </div>
             </motion.aside>

@@ -25,8 +25,11 @@ export const useStore = create((set, get) => ({
       localStorage.setItem('studyquest_token', token);
       set({ token, user, isAuthenticated: true, authLoading: false });
       
-      // Connect WebSocket
+      // Connect WebSocket and subscribe to notifications
       socketService.connect(token);
+      socketService.onNotification((notification) => {
+        get().addNotification(notification);
+      });
       return user;
     } catch (err) {
       set({ authError: err.message, authLoading: false });
@@ -101,7 +104,11 @@ export const useStore = create((set, get) => ({
       const response = await api.get('/auth/profile');
       set({ user: response.user, isAuthenticated: true, authLoading: false });
       // Connect WebSocket
-      socketService.connect(token);
+      const sock = socketService.connect(token);
+      // Subscribe to real-time notifications
+      socketService.onNotification((notification) => {
+        get().addNotification(notification);
+      });
     } catch (err) {
       console.error('Auth check failed:', err.message);
       localStorage.removeItem('studyquest_token');
@@ -535,5 +542,37 @@ export const useStore = create((set, get) => ({
       console.error('Failed to reject connection:', err.message);
       throw err;
     }
-  }
+  },
+
+  // --- NOTIFICATIONS STATE ---
+  notifications: [],
+  unreadCount: 0,
+
+  fetchNotifications: async () => {
+    try {
+      const response = await api.get('/auth/notifications');
+      set({ notifications: response.data || [], unreadCount: response.unreadCount || 0 });
+    } catch (err) {
+      console.error('Failed to fetch notifications:', err.message);
+    }
+  },
+
+  markNotificationsRead: async () => {
+    try {
+      await api.post('/auth/notifications/read');
+      set((state) => ({
+        notifications: state.notifications.map(n => ({ ...n, read: true })),
+        unreadCount: 0,
+      }));
+    } catch (err) {
+      console.error('Failed to mark notifications as read:', err.message);
+    }
+  },
+
+  addNotification: (notification) => {
+    set((state) => ({
+      notifications: [notification, ...state.notifications],
+      unreadCount: state.unreadCount + 1,
+    }));
+  },
 }));

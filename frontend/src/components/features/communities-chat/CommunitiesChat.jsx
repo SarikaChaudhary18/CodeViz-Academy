@@ -38,15 +38,6 @@ const AVATAR_GRADIENTS = [
   "from-amber-600 to-yellow-600"
 ];
 
-// Mock Members List for Info Drawer
-const MOCK_MEMBERS = [
-  { name: "SarikaChaudhary", level: 8, status: "Online", avatar: "S", active: true },
-  { name: "AnshulDev", level: 6, status: "Online", avatar: "A", active: true },
-  { name: "OperatorStudy", level: 5, status: "Online", avatar: "O", active: true },
-  { name: "StriverFan", level: 4, status: "Offline", avatar: "F", active: false },
-  { name: "CodeWizard", level: 7, status: "Offline", avatar: "W", active: false }
-];
-
 export default function CommunitiesChat() {
   const {
     token,
@@ -215,7 +206,27 @@ export default function CommunitiesChat() {
             {communitiesLoading ? (
               <div className="text-center py-8 text-[10px] font-mono text-zinc-400 uppercase animate-pulse">Loading discussion sectors...</div>
             ) : filteredCommunities.length === 0 ? (
-              <div className="text-center py-8 text-[10px] font-mono text-zinc-400 uppercase">No active groups found.</div>
+              <div className="flex flex-col items-center justify-center py-10 px-4 text-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-orange-50 border border-orange-100 flex items-center justify-center">
+                  <MessageSquare size={18} className="text-orange-400" />
+                </div>
+                <div>
+                  <p className="text-[10px] font-bold font-mono text-zinc-600 uppercase tracking-wider">
+                    {searchQuery ? 'No groups found' : 'No groups yet'}
+                  </p>
+                  <p className="text-[9px] text-zinc-400 font-mono mt-1">
+                    {searchQuery ? 'Try a different search' : 'Create the first discussion group!'}
+                  </p>
+                </div>
+                {!searchQuery && (
+                  <button
+                    onClick={() => setShowAddChannel(true)}
+                    className="px-3 py-1.5 bg-orange-600 hover:bg-orange-500 text-white rounded-lg text-[9px] font-bold font-mono transition-all cursor-pointer"
+                  >
+                    + Create Group
+                  </button>
+                )}
+              </div>
             ) : (
               filteredCommunities.map((chan) => {
                 const isActive = activeCommunity?._id === chan._id;
@@ -514,30 +525,37 @@ export default function CommunitiesChat() {
                   </ul>
                 </div>
 
-                {/* Active Member Roster */}
+                {/* Active Member Roster — Real DB Members */}
                 <div className="space-y-3 border-t border-zinc-200 pt-4">
-                  <span className="block text-[8px] text-zinc-400 font-mono uppercase tracking-widest font-bold">Channel Roster ({MOCK_MEMBERS.length})</span>
+                  <span className="block text-[8px] text-zinc-400 font-mono uppercase tracking-widest font-bold">
+                    Channel Roster ({activeCommunity.members?.length || 0})
+                  </span>
                   
                   <div className="space-y-2.5 max-h-[220px] overflow-y-auto pr-1">
-                    {MOCK_MEMBERS.map((member, idx) => (
-                      <div key={idx} className="flex items-center justify-between text-[10px]">
-                        <div className="flex items-center gap-2 min-w-0">
-                          {/* Circle Mini Avatar */}
-                          <div className="w-6 h-6 rounded-full bg-white border border-zinc-250 flex items-center justify-center font-bold text-[9px] text-zinc-500 uppercase">
-                            {member.avatar}
+                    {activeCommunity.members && activeCommunity.members.length > 0 ? (
+                      activeCommunity.members.map((member, idx) => (
+                        <div key={member._id || idx} className="flex items-center justify-between text-[10px]">
+                          <div className="flex items-center gap-2 min-w-0">
+                            {/* Circle Mini Avatar with avatarColor */}
+                            <div 
+                              className="w-6 h-6 rounded-full flex items-center justify-center font-bold text-[9px] text-white uppercase shrink-0"
+                              style={{ backgroundColor: member.avatarColor || '#f97316' }}
+                            >
+                              {member.username ? member.username.charAt(0).toUpperCase() : '?'}
+                            </div>
+                            <span className="text-zinc-700 font-medium truncate min-w-0">{member.username}</span>
                           </div>
-                          <span className="text-zinc-700 font-medium truncate min-w-0">{member.name}</span>
+                          
+                          <div className="flex items-center gap-1.5 shrink-0">
+                            <span className="text-[7px] font-bold bg-zinc-100 border border-zinc-200 px-1 py-0.5 text-zinc-550 rounded">LVL {member.level || 1}</span>
+                            {/* Online dot — green if they are the current user */}
+                            <span className="w-1.5 h-1.5 rounded-full bg-zinc-300 border border-white" />
+                          </div>
                         </div>
-                        
-                        <div className="flex items-center gap-1.5 shrink-0">
-                          <span className="text-[7px] font-bold bg-zinc-100 border border-zinc-200 px-1 py-0.5 text-zinc-550 rounded">LVL {member.level}</span>
-                          <span className={cn(
-                            "w-1.5 h-1.5 rounded-full border border-white",
-                            member.active ? "bg-emerald-500 shadow shadow-emerald-500/50" : "bg-zinc-300"
-                          )} />
-                        </div>
-                      </div>
-                    ))}
+                      ))
+                    ) : (
+                      <div className="text-[9px] text-zinc-400 font-mono uppercase">No members found.</div>
+                    )}
                   </div>
                 </div>
 

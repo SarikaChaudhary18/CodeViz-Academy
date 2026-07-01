@@ -75,6 +75,108 @@ export const socketService = {
     return () => socket?.off('error', callback);
   },
 
+  // --- NOTIFICATION LISTENERS ---
+  onNotification: (callback) => {
+    if (socket) {
+      socket.on('notification', callback);
+    }
+    return () => socket?.off('notification', callback);
+  },
+
+  // --- WebRTC VIDEO CALL SIGNALING ---
+  requestCall: (targetUserId, callerName, callerId) => {
+    if (socket?.connected) {
+      socket.emit('call_request', { targetUserId, callerName, callerId });
+    }
+  },
+
+  acceptCall: (callerSocketId) => {
+    if (socket?.connected) {
+      socket.emit('call_accept', { callerSocketId });
+    }
+  },
+
+  rejectCall: (callerSocketId) => {
+    if (socket?.connected) {
+      socket.emit('call_reject', { callerSocketId });
+    }
+  },
+
+  endCall: (peerSocketId) => {
+    if (socket?.connected) {
+      socket.emit('call_end', { peerSocketId });
+    }
+  },
+
+  sendOffer: (targetSocketId, offer) => {
+    if (socket?.connected) {
+      socket.emit('webrtc_offer', { targetSocketId, offer });
+    }
+  },
+
+  sendAnswer: (targetSocketId, answer) => {
+    if (socket?.connected) {
+      socket.emit('webrtc_answer', { targetSocketId, answer });
+    }
+  },
+
+  sendIceCandidate: (targetSocketId, candidate) => {
+    if (socket?.connected) {
+      socket.emit('webrtc_ice_candidate', { targetSocketId, candidate });
+    }
+  },
+
+  onIncomingCall: (callback) => {
+    if (socket) {
+      socket.on('incoming_call', callback);
+    }
+    return () => socket?.off('incoming_call', callback);
+  },
+
+  onCallAccepted: (callback) => {
+    if (socket) {
+      socket.on('call_accepted', callback);
+    }
+    return () => socket?.off('call_accepted', callback);
+  },
+
+  onCallRejected: (callback) => {
+    if (socket) {
+      socket.on('call_rejected', callback);
+    }
+    return () => socket?.off('call_rejected', callback);
+  },
+
+  onCallEnded: (callback) => {
+    if (socket) {
+      socket.on('call_ended', callback);
+    }
+    return () => socket?.off('call_ended', callback);
+  },
+
+  onWebRTCOffer: (callback) => {
+    if (socket) {
+      socket.on('webrtc_offer', callback);
+    }
+    return () => socket?.off('webrtc_offer', callback);
+  },
+
+  onWebRTCAnswer: (callback) => {
+    if (socket) {
+      socket.on('webrtc_answer', callback);
+    }
+    return () => socket?.off('webrtc_answer', callback);
+  },
+
+  onIceCandidate: (callback) => {
+    if (socket) {
+      socket.on('webrtc_ice_candidate', callback);
+    }
+    return () => socket?.off('webrtc_ice_candidate', callback);
+  },
+
+  getSocketId: () => socket?.id || null,
+
   // --- COLLABORATIVE WORKSPACE ACTIONS ---
   emitCollabCodeChange: (roomId, code) => {
     if (socket?.connected) {
