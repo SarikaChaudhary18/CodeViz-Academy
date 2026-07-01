@@ -372,7 +372,7 @@ export default function DsaSandbox() {
   };
 
   return (
-    <div className="h-screen bg-[#07080a] flex flex-col overflow-hidden text-white" style={{ background: '#07080a' }}>
+    <div className="h-screen bg-white flex flex-col overflow-hidden text-zinc-900" style={{ background: '#ffffff', color: '#09090b' }}>
 
       {/* ── Party Popper Confetti Celebration ── */}
       {showConfetti && <ConfettiCelebration />}
@@ -384,7 +384,7 @@ export default function DsaSandbox() {
             initial={{ opacity: 0, y: -30, x: '-50%' }}
             animate={{ opacity: 1, y: 0, x: '-50%' }}
             exit={{ opacity: 0, y: -30, x: '-50%' }}
-            className="fixed top-6 left-1/2 z-50 bg-gradient-to-r from-violet-600 to-cyan-500 text-white font-bold font-mono text-sm px-6 py-3 rounded-2xl shadow-2xl flex items-center gap-2"
+            className="fixed top-6 left-1/2 z-50 bg-gradient-to-r from-orange-500 to-amber-500 text-white font-bold font-mono text-sm px-6 py-3 rounded-2xl shadow-xl flex items-center gap-2"
           >
             <Zap size={16} className="fill-current" /> {xpToast} Awarded!
           </motion.div>
@@ -392,20 +392,20 @@ export default function DsaSandbox() {
       </AnimatePresence>
 
       {/* ── Top Nav Bar ── */}
-      <div className="flex items-center justify-between px-4 py-2.5 border-b border-white/5 shrink-0" style={{ background: '#09090e' }}>
+      <div className="flex items-center justify-between px-4 py-2.5 border-b border-zinc-200 shrink-0 bg-white" style={{ background: '#ffffff' }}>
         <div className="flex items-center gap-4">
           <button
             onClick={() => navigate('/dsa-sheets')}
-            className="flex items-center gap-1.5 text-gray-400 hover:text-white transition-colors text-xs font-mono"
+            className="flex items-center gap-1.5 text-zinc-500 hover:text-zinc-900 transition-colors text-xs font-mono"
           >
             <ArrowLeft size={14} /> Sheets
           </button>
-          <div className="w-px h-4 bg-white/10" />
+          <div className="w-px h-4 bg-zinc-200" />
           <div className="flex items-center gap-1">
             <button
               onClick={() => prevProblem && navigate(`/dsa-sheets/solve/${prevProblem.problemId}`)}
               disabled={!prevProblem}
-              className="p-1 rounded-md border border-white/5 bg-white/[0.02] text-gray-400 hover:text-white disabled:opacity-20 disabled:hover:text-gray-400 disabled:cursor-not-allowed transition-all"
+              className="p-1 rounded-md border border-zinc-200 bg-zinc-50 text-zinc-500 hover:text-zinc-900 disabled:opacity-20 disabled:cursor-not-allowed transition-all"
               title="Previous Problem"
             >
               <ChevronLeft size={14} />
@@ -413,20 +413,20 @@ export default function DsaSandbox() {
             <button
               onClick={() => nextProblem && navigate(`/dsa-sheets/solve/${nextProblem.problemId}`)}
               disabled={!nextProblem}
-              className="p-1 rounded-md border border-white/5 bg-white/[0.02] text-gray-400 hover:text-white disabled:opacity-20 disabled:hover:text-gray-400 disabled:cursor-not-allowed transition-all"
+              className="p-1 rounded-md border border-zinc-200 bg-zinc-50 text-zinc-500 hover:text-zinc-900 disabled:opacity-20 disabled:cursor-not-allowed transition-all"
               title="Next Problem"
             >
               <ChevronRight size={14} />
             </button>
           </div>
-          <div className="w-px h-4 bg-white/10" />
+          <div className="w-px h-4 bg-zinc-200" />
           <div className="flex items-center gap-2">
-            <span className="text-white font-semibold text-sm truncate max-w-[240px]" style={{ color: '#ffffff' }}>{activeProblem.title}</span>
+            <span className="text-zinc-900 font-semibold text-sm truncate max-w-[240px]" style={{ color: '#09090b' }}>{activeProblem.title}</span>
             {isCompleted && (
-              <CheckCircle2 size={14} className="text-emerald-400 shrink-0" />
+              <CheckCircle2 size={14} className="text-green-600 shrink-0" />
             )}
           </div>
-          <span className={`px-2 py-0.5 rounded-md text-[10px] font-bold border font-mono uppercase ${DIFFICULTY_COLOR[activeProblem.difficulty] || DIFFICULTY_COLOR.Medium}`}>
+          <span className={`px-2 py-0.5 rounded-md text-[10px] font-bold border font-mono uppercase bg-zinc-100 text-zinc-700 border-zinc-200`}>
             {activeProblem.difficulty}
           </span>
         </div>
@@ -434,7 +434,7 @@ export default function DsaSandbox() {
         <div className="flex items-center gap-3">
           {/* Timer */}
           <div className={`flex items-center gap-1.5 font-mono text-xs px-3 py-1.5 rounded-lg border cursor-pointer transition-all
-            ${timerActive ? 'text-cyan-400 border-cyan-400/30 bg-cyan-400/5' : 'text-gray-500 border-white/10'}`}
+            ${timerActive ? 'text-orange-600 border-orange-200 bg-orange-50' : 'text-zinc-500 border-zinc-200'}`}
             onClick={() => setTimerActive(t => !t)}
           >
             <Clock size={12} />
@@ -447,7 +447,7 @@ export default function DsaSandbox() {
               href={activeProblem.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 text-[10px] font-mono text-gray-500 hover:text-violet-400 transition-colors border border-white/5 rounded-lg px-2.5 py-1.5"
+              className="flex items-center gap-1.5 text-[10px] font-mono text-zinc-500 hover:text-orange-600 transition-colors border border-zinc-200 rounded-lg px-2.5 py-1.5"
             >
               {activeProblem.link.includes('leetcode.com') ? (
                 <>
@@ -468,7 +468,7 @@ export default function DsaSandbox() {
               href={activeProblem.youtube}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1 text-[10px] font-mono text-gray-500 hover:text-red-400 transition-colors border border-white/5 rounded-lg px-2.5 py-1.5"
+              className="flex items-center gap-1 text-[10px] font-mono text-zinc-500 hover:text-red-500 transition-colors border border-zinc-200 rounded-lg px-2.5 py-1.5"
             >
               <Youtube size={11} /> Video
             </a>
@@ -479,8 +479,8 @@ export default function DsaSandbox() {
             onClick={() => setShowTutor(!showTutor)}
             className={`flex items-center gap-1.5 px-4 py-1.5 rounded-lg border text-xs font-mono font-bold transition-all cursor-pointer ${
               showTutor
-                ? 'bg-cyan-500/10 border-cyan-500/30 text-cyan-400 font-extrabold shadow-[0_0_15px_rgba(6,182,212,0.15)]'
-                : 'bg-white/5 border-white/10 hover:border-white/20 text-white'
+                ? 'bg-orange-500/10 border-orange-500/30 text-orange-600 font-extrabold shadow-sm'
+                : 'bg-zinc-50 border-zinc-200 hover:border-zinc-300 text-zinc-800'
             }`}
           >
             <Brain size={13} className={showTutor ? 'animate-pulse' : ''} />
@@ -491,7 +491,7 @@ export default function DsaSandbox() {
           <button
             onClick={handleRun}
             disabled={isRunning || isSubmitting}
-            className="flex items-center gap-1.5 px-4 py-1.5 rounded-lg bg-white/5 border border-white/10 hover:border-white/20 text-white text-xs font-mono font-bold transition-all disabled:opacity-50"
+            className="flex items-center gap-1.5 px-4 py-1.5 rounded-lg bg-zinc-50 border border-zinc-200 hover:border-zinc-300 text-zinc-800 text-xs font-mono font-bold transition-all disabled:opacity-50"
           >
             {isRunning ? <Loader2 size={13} className="animate-spin" /> : <Play size={13} className="fill-current" />}
             Run
@@ -499,7 +499,7 @@ export default function DsaSandbox() {
           <button
             onClick={handleSubmit}
             disabled={isRunning || isSubmitting}
-            className="flex items-center gap-1.5 px-4 py-1.5 rounded-lg bg-gradient-to-r from-violet-600 to-cyan-500 text-white text-xs font-mono font-bold transition-all hover:opacity-90 disabled:opacity-50"
+            className="flex items-center gap-1.5 px-4 py-1.5 rounded-lg bg-orange-600 text-white text-xs font-mono font-bold transition-all hover:opacity-90 disabled:opacity-50"
           >
             {isSubmitting ? <Loader2 size={13} className="animate-spin" /> : <Send size={13} />}
             Submit
@@ -511,10 +511,10 @@ export default function DsaSandbox() {
       <div className="flex flex-1 overflow-hidden">
 
         {/* ── LEFT PANEL: Problem Description ── */}
-        <div className="w-[42%] min-w-[320px] flex flex-col border-r border-white/5 overflow-hidden">
+        <div className="w-[42%] min-w-[320px] flex flex-col border-r border-zinc-200 overflow-hidden bg-white" style={{ background: '#ffffff' }}>
 
           {/* Description Tabs */}
-          <div className="flex gap-0 border-b border-white/5 shrink-0 bg-[#09090e]">
+          <div className="flex gap-0 border-b border-zinc-200 shrink-0 bg-zinc-50">
             {[
               { key: 'problem', icon: FileText, label: 'Problem' },
               { key: 'editorial', icon: Brain, label: 'Editorial' },
@@ -524,8 +524,8 @@ export default function DsaSandbox() {
                 key={tab.key}
                 onClick={() => setActiveDescTab(tab.key)}
                 className={`flex items-center gap-1.5 px-5 py-3 text-xs font-mono font-bold uppercase tracking-wider transition-all border-b-2 ${activeDescTab === tab.key
-                    ? 'text-white border-violet-500'
-                    : 'text-gray-600 border-transparent hover:text-gray-400'
+                    ? 'text-zinc-950 border-orange-600 bg-white'
+                    : 'text-zinc-500 border-transparent hover:text-zinc-800'
                   }`}
               >
                 <tab.icon size={12} />
@@ -537,7 +537,7 @@ export default function DsaSandbox() {
           {/* Description Content */}
           <div 
             className="flex-1 overflow-y-auto p-6 space-y-5" 
-            style={{ scrollbarWidth: 'thin', scrollbarColor: 'rgba(255,255,255,0.1) transparent' }}
+            style={{ scrollbarWidth: 'thin', scrollbarColor: 'rgba(0,0,0,0.1) transparent', background: '#ffffff', color: '#09090b' }}
           >
 
             {activeDescTab === 'problem' && (
@@ -652,10 +652,10 @@ export default function DsaSandbox() {
         </div>
 
         {/* ── RIGHT PANEL: Editor + Output ── */}
-        <div className="flex-1 flex flex-col overflow-hidden">
+        <div className="flex-1 flex flex-col overflow-hidden bg-white">
 
           {/* Editor Toolbar */}
-          <div className="flex items-center justify-between px-4 py-2 border-b border-white/5 bg-[#09090e] shrink-0">
+          <div className="flex items-center justify-between px-4 py-2 border-b border-zinc-200 bg-zinc-50 shrink-0">
             {/* Language Selector */}
             <div className="flex gap-1">
               {LANGUAGES.map(lang => (
@@ -663,8 +663,8 @@ export default function DsaSandbox() {
                   key={lang.key}
                   onClick={() => setSelectedLang(lang.key)}
                   className={`px-3 py-1 rounded-lg text-[10px] font-mono font-bold uppercase tracking-wider transition-all border ${selectedLang === lang.key
-                      ? 'bg-violet-600/25 border-violet-500/40 text-violet-300'
-                      : 'border-transparent text-gray-600 hover:text-gray-400'
+                      ? 'bg-orange-100 border-orange-200 text-orange-600'
+                      : 'border-transparent text-zinc-500 hover:text-zinc-800'
                     }`}
                 >
                   {lang.label}
@@ -675,14 +675,14 @@ export default function DsaSandbox() {
             <div className="flex items-center gap-2">
               <button
                 onClick={handleCopyCode}
-                className="flex items-center gap-1 text-[10px] font-mono text-gray-500 hover:text-white border border-white/5 rounded-lg px-2.5 py-1.5 transition-all"
+                className="flex items-center gap-1 text-[10px] font-mono text-zinc-500 hover:text-zinc-800 border border-zinc-200 rounded-lg px-2.5 py-1.5 transition-all bg-white"
               >
-                {copied ? <CheckCircle2 size={11} className="text-emerald-400" /> : <Copy size={11} />}
+                {copied ? <CheckCircle2 size={11} className="text-green-600" /> : <Copy size={11} />}
                 {copied ? 'Copied' : 'Copy'}
               </button>
               <button
                 onClick={handleResetCode}
-                className="flex items-center gap-1 text-[10px] font-mono text-gray-500 hover:text-white border border-white/5 rounded-lg px-2.5 py-1.5 transition-all"
+                className="flex items-center gap-1 text-[10px] font-mono text-zinc-500 hover:text-zinc-800 border border-zinc-200 rounded-lg px-2.5 py-1.5 transition-all bg-white"
               >
                 <RotateCcw size={11} /> Reset
               </button>
@@ -690,47 +690,47 @@ export default function DsaSandbox() {
           </div>
 
           {/* Monaco Editor */}
-          <div className="flex-1 overflow-hidden" style={{ minHeight: 0 }}>
+          <div className="flex-1 overflow-hidden border-b border-zinc-200" style={{ minHeight: 0 }}>
             <Editor
               height="100%"
               language={LANGUAGES.find(l => l.key === selectedLang)?.monaco || 'javascript'}
               value={code}
               onChange={(val) => setCode(val || '')}
-              theme="vs-dark"
+              theme="vs"
               options={MONACO_OPTIONS}
               beforeMount={(monaco) => {
-                monaco.editor.defineTheme('sandbox-dark', {
-                  base: 'vs-dark',
+                monaco.editor.defineTheme('sandbox-light', {
+                  base: 'vs',
                   inherit: true,
                   rules: [
-                    { token: 'comment', foreground: '4b5563', fontStyle: 'italic' },
-                    { token: 'keyword', foreground: 'a78bfa' },
-                    { token: 'string', foreground: '34d399' },
-                    { token: 'number', foreground: 'f9a8d4' },
-                    { token: 'type', foreground: '67e8f9' },
+                    { token: 'comment', foreground: '71717a', fontStyle: 'italic' },
+                    { token: 'keyword', foreground: 'ea580c', fontStyle: 'bold' },
+                    { token: 'string', foreground: '16a34a' },
+                    { token: 'number', foreground: 'd97706' },
+                    { token: 'type', foreground: '2563eb' },
                   ],
                   colors: {
-                    'editor.background': '#07080a',
-                    'editor.lineHighlightBackground': '#ffffff08',
-                    'editorLineNumber.foreground': '#2d3748',
-                    'editorLineNumber.activeForeground': '#6b7280',
-                    'editor.selectionBackground': '#7c3aed40',
-                    'editorCursor.foreground': '#a78bfa',
-                    'scrollbarSlider.background': '#ffffff10',
-                    'scrollbarSlider.hoverBackground': '#ffffff18',
+                    'editor.background': '#ffffff',
+                    'editor.lineHighlightBackground': '#f4f4f5',
+                    'editorLineNumber.foreground': '#a1a1aa',
+                    'editorLineNumber.activeForeground': '#71717a',
+                    'editor.selectionBackground': '#fed7aa80',
+                    'editorCursor.foreground': '#ea580c',
+                    'scrollbarSlider.background': '#e4e4e7',
+                    'scrollbarSlider.hoverBackground': '#d4d4d8',
                   }
                 });
               }}
               onMount={(editor, monaco) => {
-                monaco.editor.setTheme('sandbox-dark');
+                monaco.editor.setTheme('sandbox-light');
               }}
             />
           </div>
 
           {/* ── Output Drawer ── */}
-          <div className="border-t border-white/5 shrink-0">
+          <div className="border-t border-zinc-200 shrink-0 bg-white">
             {/* Output Tabs */}
-            <div className="flex items-center justify-between px-4 bg-[#09090e]">
+            <div className="flex items-center justify-between px-4 bg-zinc-50 border-b border-zinc-200">
               <div className="flex">
                 {[
                   { key: 'output', icon: Terminal, label: 'Output' },
@@ -741,8 +741,8 @@ export default function DsaSandbox() {
                     key={tab.key}
                     onClick={() => setOutputPanel(p => p === tab.key ? 'hidden' : tab.key)}
                     className={`flex items-center gap-1.5 px-4 py-2.5 text-[10px] font-mono font-bold uppercase tracking-wider transition-all border-b-2 ${outputPanel === tab.key
-                        ? 'text-white border-cyan-500'
-                        : 'text-gray-600 border-transparent hover:text-gray-400'
+                        ? 'text-zinc-900 border-orange-600 bg-white'
+                        : 'text-zinc-500 border-transparent hover:text-zinc-800'
                       }`}
                   >
                     <tab.icon size={11} />
@@ -752,7 +752,7 @@ export default function DsaSandbox() {
               </div>
               <button
                 onClick={() => setOutputPanel(p => p === 'hidden' ? 'output' : 'hidden')}
-                className="text-gray-600 hover:text-white transition-colors"
+                className="text-zinc-500 hover:text-zinc-900 transition-colors"
               >
                 {outputPanel === 'hidden' ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
               </button>
@@ -766,9 +766,9 @@ export default function DsaSandbox() {
                   animate={{ height: 220, opacity: 1 }}
                   exit={{ height: 0, opacity: 0 }}
                   transition={{ duration: 0.2 }}
-                  className="overflow-hidden bg-[#07080a]"
+                  className="overflow-hidden bg-white"
                 >
-                  <div className="h-full p-4 overflow-y-auto" style={{ scrollbarWidth: 'thin', scrollbarColor: 'rgba(255,255,255,0.1) transparent' }}>
+                  <div className="h-full p-4 overflow-y-auto" style={{ scrollbarWidth: 'thin', scrollbarColor: 'rgba(0,0,0,0.1) transparent', background: '#ffffff', color: '#09090b' }}>
 
                     {/* Output Tab */}
                     {outputPanel === 'output' && (
@@ -800,14 +800,14 @@ export default function DsaSandbox() {
 
                             {/* Compiler Output */}
                             {currentResult.compilerOutput && (
-                              <pre className="font-mono text-xs text-gray-400 bg-white/[0.02] border border-white/5 rounded-xl p-3 overflow-x-auto whitespace-pre-wrap leading-relaxed">
+                              <pre className="font-mono text-xs text-zinc-700 bg-zinc-50 border border-zinc-250 rounded-xl p-3 overflow-x-auto whitespace-pre-wrap leading-relaxed">
                                 {currentResult.compilerOutput}
                               </pre>
                             )}
 
                             {/* Error details */}
                             {currentResult.errorMessage && !currentResult.success && !/^(none|no errors|no error|no errors found|null|undefined)$/i.test(currentResult.errorMessage.trim()) && (
-                              <div className="flex gap-2 text-xs font-mono text-red-400 bg-red-500/5 border border-red-500/15 rounded-xl p-3">
+                              <div className="flex gap-2 text-xs font-mono text-red-650 bg-red-50 border border-red-200 rounded-xl p-3">
                                 <AlertTriangle size={12} className="shrink-0 mt-0.5" />
                                 <span className="whitespace-pre-wrap">{currentResult.errorMessage}</span>
                               </div>
@@ -816,7 +816,7 @@ export default function DsaSandbox() {
                         )}
 
                         {!currentResult && !isRunning && !isSubmitting && (
-                          <div className="flex flex-col items-center justify-center h-full text-gray-600 gap-2">
+                          <div className="flex flex-col items-center justify-center h-full text-zinc-400 gap-2">
                             <Terminal size={24} />
                             <p className="text-xs font-mono">Click Run to execute your code</p>
                           </div>
@@ -831,7 +831,6 @@ export default function DsaSandbox() {
                           activeProblem.testCases.map((tc, i) => {
                             const tr = currentResult?.testResults?.[i];
                             const hasResult = tr !== undefined && tr.yourOutput !== undefined;
-                            // Compute passed from actual output comparison, not AI's passed field
                             const normalize = (s) => String(s ?? '').trim().replace(/\r\n/g, '\n').replace(/\r/g, '\n');
                             const passed = hasResult
                               ? normalize(tr.yourOutput) === normalize(tc.expectedOutput)
@@ -840,16 +839,16 @@ export default function DsaSandbox() {
                               <div key={i} className={`border rounded-xl p-3 text-xs font-mono transition-colors ${
                                 hasResult
                                   ? passed
-                                    ? 'bg-emerald-500/5 border-emerald-500/25'
-                                    : 'bg-red-500/5 border-red-500/25'
-                                  : 'bg-white/[0.02] border-white/5'
+                                    ? 'bg-green-50 border-green-200 text-green-800'
+                                    : 'bg-red-50 border-red-200 text-red-800'
+                                  : 'bg-zinc-50 border-zinc-200 text-zinc-700'
                               }`}>
                                 {/* Header row with test number and badge */}
                                 <div className="flex items-center gap-2 mb-2">
-                                  <span className="text-[9px] text-gray-500 uppercase tracking-wider font-mono">Test {i + 1}</span>
+                                  <span className="text-[9px] text-zinc-500 uppercase tracking-wider font-mono">Test {i + 1}</span>
                                   {hasResult && (
                                     <span className={`text-[8px] font-bold uppercase tracking-widest px-1.5 py-0.5 rounded-full ${
-                                      passed ? 'bg-emerald-500/20 text-emerald-400' : 'bg-red-500/20 text-red-400'
+                                      passed ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
                                     }`}>
                                       {passed ? '✓ Passed' : '✗ Failed'}
                                     </span>
@@ -857,21 +856,21 @@ export default function DsaSandbox() {
                                 </div>
                                 <div className="grid grid-cols-3 gap-3">
                                   <div>
-                                    <span className="text-[9px] text-gray-500 uppercase tracking-wider">Input</span>
-                                    <pre className="mt-1 text-cyan-300 whitespace-pre-wrap break-all">{tc.input}</pre>
+                                    <span className="text-[9px] text-zinc-550 uppercase tracking-wider">Input</span>
+                                    <pre className="mt-1 text-zinc-950 whitespace-pre-wrap break-all bg-white border border-zinc-150 p-2 rounded">{tc.input}</pre>
                                   </div>
                                   <div>
-                                    <span className="text-[9px] text-gray-500 uppercase tracking-wider">Expected</span>
-                                    <pre className="mt-1 text-emerald-300 whitespace-pre-wrap break-all">{tc.expectedOutput}</pre>
+                                    <span className="text-[9px] text-zinc-555 uppercase tracking-wider">Expected</span>
+                                    <pre className="mt-1 text-zinc-950 whitespace-pre-wrap break-all bg-white border border-zinc-150 p-2 rounded">{tc.expectedOutput}</pre>
                                   </div>
                                   <div>
-                                    <span className="text-[9px] text-gray-500 uppercase tracking-wider">Your Output</span>
+                                    <span className="text-[9px] text-zinc-550 uppercase tracking-wider">Your Output</span>
                                     {hasResult ? (
-                                      <pre className={`mt-1 whitespace-pre-wrap break-all ${passed ? 'text-emerald-300' : 'text-red-400'}`}>
+                                      <pre className={`mt-1 whitespace-pre-wrap break-all bg-white border border-zinc-150 p-2 rounded ${passed ? 'text-zinc-950' : 'text-red-650'}`}>
                                         {tr.yourOutput ?? '—'}
                                       </pre>
                                     ) : (
-                                      <p className="mt-1 text-gray-600">— run to see</p>
+                                      <p className="mt-1 text-zinc-400">— run to see</p>
                                     )}
                                   </div>
                                 </div>
@@ -879,7 +878,7 @@ export default function DsaSandbox() {
                             );
                           })
                         ) : (
-                          <p className="text-gray-500 text-xs font-mono text-center py-4">
+                          <p className="text-zinc-400 text-xs font-mono text-center py-4">
                             Test cases will load after AI hydration...
                           </p>
                         )}
@@ -889,12 +888,12 @@ export default function DsaSandbox() {
                     {/* Custom Input Tab */}
                     {outputPanel === 'custom' && (
                       <div className="h-full flex flex-col gap-2">
-                        <p className="text-[10px] font-mono text-gray-500 uppercase">Custom Test Input</p>
+                        <p className="text-[10px] font-mono text-zinc-500 uppercase">Custom Test Input</p>
                         <textarea
                           value={customInput}
                           onChange={e => setCustomInput(e.target.value)}
                           placeholder="Enter custom input here..."
-                          className="flex-1 w-full bg-white/[0.02] border border-white/10 rounded-xl p-3 text-xs font-mono text-white placeholder-gray-600 resize-none focus:outline-none focus:border-violet-500/40 transition-colors"
+                          className="flex-1 w-full bg-zinc-50 border border-zinc-200 rounded-xl p-3 text-xs font-mono text-zinc-900 placeholder-zinc-400 resize-none focus:outline-none focus:border-orange-500 transition-colors"
                         />
                       </div>
                     )}
