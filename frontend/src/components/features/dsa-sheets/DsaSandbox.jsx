@@ -352,17 +352,20 @@ export default function DsaSandbox() {
       <div className="min-h-screen bg-[#07080a] flex items-center justify-center flex-col gap-4">
         <XCircle size={40} className="text-red-400" />
         <p className="text-white font-mono">Problem not found.</p>
-        <button onClick={() => navigate('/dsa-sheets')} className="text-cyan-400 font-mono text-sm hover:underline flex items-center gap-1">
-          <ArrowLeft size={14} /> Back to Sheets
-        </button>
-      </div>
-    );
-  }
-
-  const currentResult = submitResult || runResult;
+        <button onClick={() => na  // Helper to remove duplicate title from AI generated description
+  const cleanDescription = (desc = '') => {
+    let clean = desc.trim();
+    const titleEscaped = activeProblem?.title ? activeProblem.title.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&') : '';
+    if (titleEscaped) {
+      // Matches heading style title like '# Basic Hashing' or '**Basic Hashing**' case-insensitively at the start
+      const regex = new RegExp(`^(?:#|##|###|\\*\\*)\\s*${titleEscaped}\\s*(?:#|##|###|\\*\\*|\\n)*`, 'i');
+      clean = clean.replace(regex, '');
+    }
+    return clean;
+  };
 
   return (
-    <div className="h-screen bg-[#07080a] flex flex-col overflow-hidden text-white">
+    <div className="h-screen bg-[#07080a] flex flex-col overflow-hidden text-white" style={{ background: '#07080a' }}>
 
       {/* ── Party Popper Confetti Celebration ── */}
       {showConfetti && <ConfettiCelebration />}
@@ -382,7 +385,7 @@ export default function DsaSandbox() {
       </AnimatePresence>
 
       {/* ── Top Nav Bar ── */}
-      <div className="flex items-center justify-between px-4 py-2.5 border-b border-white/5 bg-[#09090e] shrink-0">
+      <div className="flex items-center justify-between px-4 py-2.5 border-b border-white/5 shrink-0" style={{ background: '#09090e' }}>
         <div className="flex items-center gap-4">
           <button
             onClick={() => navigate('/dsa-sheets')}
@@ -411,7 +414,7 @@ export default function DsaSandbox() {
           </div>
           <div className="w-px h-4 bg-white/10" />
           <div className="flex items-center gap-2">
-            <span className="text-white font-semibold text-sm truncate max-w-[240px]">{activeProblem.title}</span>
+            <span className="text-white font-semibold text-sm truncate max-w-[240px]" style={{ color: '#ffffff' }}>{activeProblem.title}</span>
             {isCompleted && (
               <CheckCircle2 size={14} className="text-emerald-400 shrink-0" />
             )}
@@ -501,10 +504,13 @@ export default function DsaSandbox() {
       <div className="flex flex-1 overflow-hidden">
 
         {/* ── LEFT PANEL: Problem Description ── */}
-        <div className="w-[42%] min-w-[320px] flex flex-col border-r border-white/5 overflow-hidden">
+        <div 
+          className="w-[42%] min-w-[320px] flex flex-col border-r border-white/5 overflow-hidden"
+          style={{ background: '#0a0a0f', color: '#cbd5e1' }}
+        >
 
           {/* Description Tabs */}
-          <div className="flex gap-0 border-b border-white/5 shrink-0 bg-[#09090e]">
+          <div className="flex gap-0 border-b border-white/5 shrink-0" style={{ background: '#07070b' }}>
             {[
               { key: 'problem', icon: FileText, label: 'Problem' },
               { key: 'editorial', icon: Brain, label: 'Editorial' },
@@ -525,12 +531,15 @@ export default function DsaSandbox() {
           </div>
 
           {/* Description Content */}
-          <div className="flex-1 overflow-y-auto p-6 space-y-5" style={{ scrollbarWidth: 'thin', scrollbarColor: 'rgba(255,255,255,0.1) transparent' }}>
+          <div 
+            className="flex-1 overflow-y-auto p-6 space-y-5" 
+            style={{ scrollbarWidth: 'thin', scrollbarColor: 'rgba(255,255,255,0.1) transparent', background: '#0a0a0f', color: '#cbd5e1' }}
+          >
 
             {activeDescTab === 'problem' && (
               <>
                 <div>
-                  <h1 className="text-xl font-bold text-white mb-1">{activeProblem.title}</h1>
+                  <h1 className="text-xl font-bold text-white mb-1" style={{ color: '#ffffff' }}>{activeProblem.title}</h1>
                   <div className="flex items-center gap-2 text-[10px] font-mono text-gray-500 uppercase">
                     <Hash size={10} />
                     <span>{activeProblem.category}</span>
@@ -547,7 +556,7 @@ export default function DsaSandbox() {
                     className="text-gray-300 text-sm leading-relaxed"
                     dangerouslySetInnerHTML={{
                       __html: activeProblem.description
-                        ? renderMarkdown(activeProblem.description)
+                        ? renderMarkdown(cleanDescription(activeProblem.description))
                         : `<em class="text-gray-500">Loading problem description...</em>`
                     }}
                   />

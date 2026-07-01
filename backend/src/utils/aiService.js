@@ -361,6 +361,17 @@ async function generateCopilotResponse(prompt, imageBase64 = null, mimeType = nu
   for (const candidate of candidates) {
     try {
       const responseText = await candidate.callFn(candidate.key, prompt);
+      if (typeof responseText === 'string') {
+        const trimmed = responseText.trim();
+        if (trimmed.startsWith('{') || trimmed.startsWith('[')) {
+          try {
+            const parsed = JSON.parse(trimmed);
+            return parsed.reply || parsed.response || parsed.text || parsed.message || parsed.content || responseText;
+          } catch (e) {
+            // Not valid JSON, return raw responseText
+          }
+        }
+      }
       return responseText;
     } catch (err) {
       const errMsg = err.response && err.response.data && err.response.data.error 

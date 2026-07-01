@@ -22,7 +22,7 @@ exports.processAiTool = async (req, res, next) => {
       try {
         if (typeof responseText === 'string' && (responseText.trim().startsWith('{') || responseText.trim().startsWith('['))) {
           const parsed = JSON.parse(responseText);
-          cleanedText = parsed.response || parsed.text || responseText;
+          cleanedText = parsed.reply || parsed.response || parsed.text || parsed.message || parsed.content || responseText;
         }
       } catch (e) {
         logger.error(`Error parsing socratic text: ${e.message}`);
