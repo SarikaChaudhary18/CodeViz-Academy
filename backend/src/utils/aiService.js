@@ -139,7 +139,8 @@ async function callNvidia(key, prompt) {
  * Call NVIDIA Nemotron Ultra (reasoning model) — non-streaming, returns full response
  */
 async function callNemotron(prompt) {
-  const NEMOTRON_KEY = '***REMOVED***';
+  const NEMOTRON_KEY = process.env.NVIDIA_NEMOTRON_KEY;
+  if (!NEMOTRON_KEY) throw new Error('NVIDIA_NEMOTRON_KEY not set in environment');
   const url = 'https://integrate.api.nvidia.com/v1/chat/completions';
 
   logger.info('AI Service: Calling NVIDIA Nemotron Ultra reasoning model');
