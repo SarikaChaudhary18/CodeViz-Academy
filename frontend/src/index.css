@@ -174,20 +174,20 @@
   animation: infinite-loading 1.5s infinite linear;
 }
 
-/* ==================== GLOBAL LIGHT MODE (WHITE & BLACK) OVERRIDES ==================== */
+/* ==================== GLOBAL LIGHT MODE (WHITE, ORANGE & BLACK) OVERRIDES ==================== */
 
 html.light {
   --color-cyber-bg: #ffffff;
   --color-cyber-card: rgba(255, 255, 255, 0.95);
-  --color-cyber-panel: rgba(245, 245, 245, 0.95);
+  --color-cyber-panel: rgba(249, 250, 251, 0.95);
   --color-cyber-border: rgba(0, 0, 0, 0.08);
   --color-cyber-border-glow: rgba(234, 88, 12, 0.15);
   
-  --color-neon-violet: #ea580c; /* Orange-600 */
-  --color-neon-cyan: #f97316; /* Orange-500 */
-  --color-neon-rose: #c2410c; /* Orange-700 */
-  --color-neon-green: #10b981;
-  --color-neon-yellow: #f59e0b;
+  --color-neon-violet: #ea580c;
+  --color-neon-cyan: #f97316;
+  --color-neon-rose: #dc2626;
+  --color-neon-green: #16a34a;
+  --color-neon-yellow: #ca8a04;
 
   --color-popover: rgba(255, 255, 255, 0.98);
   --color-popover-foreground: #000000;
@@ -209,22 +209,13 @@ html.light .absolute[class*="bg-cyan-400/"] {
   display: none !important;
 }
 
+/* Force container backgrounds to pure white/light gray */
 html.light .bg-\[\#020617\],
 html.light .bg-\[\#07080a\],
-html.light .bg-\[\#030712\],
 html.light .bg-\[\#07080c\]\/50,
 html.light .bg-\[\#0c0e14\]\/50,
 html.light .bg-\[\#070b19\]\/80,
 html.light .bg-\[\#070b19\]\/25,
-html.light .bg-\[\#090d16\]\/80,
-html.light .bg-\[\#090d16\]\/60,
-html.light .bg-\[\#090d16\]\/40,
-html.light .bg-\[\#090d16\]\/30,
-html.light .bg-\[\#0e1322\],
-html.light .bg-\[\#0c101d\],
-html.light .bg-\[\#06080d\]\/60,
-html.light .bg-\[\#02050b\]\/40,
-html.light .bg-\[\#04060b\],
 html.light .bg-zinc-950,
 html.light .bg-zinc-950\/40,
 html.light .bg-zinc-900,
@@ -232,8 +223,6 @@ html.light .bg-slate-950,
 html.light .bg-slate-900,
 html.light .bg-slate-900\/50,
 html.light .bg-black,
-html.light .bg-slate-955,
-html.light .bg-slate-905,
 html.light .bg-slate-950\/95,
 html.light .bg-zinc-950\/70,
 html.light .bg-zinc-900\/30,
@@ -245,17 +234,6 @@ html.light .bg-slate-900\/90 {
   background-color: #ffffff !important;
   background-image: none !important;
   color: #000000 !important;
-  border-color: rgba(0, 0, 0, 0.08) !important;
-}
-
-/* For secondary sub-wrappers, use a subtle light zinc/slate background for depth */
-html.light .bg-\[\#04060b\],
-html.light .bg-\[\#06080d\]\/60,
-html.light .bg-\[\#02050b\]\/40,
-html.light .bg-slate-905 {
-  background-color: #f4f4f5 !important;
-  color: #000000 !important;
-  border-color: rgba(0, 0, 0, 0.08) !important;
 }
 
 /* AppLayout Overrides */
@@ -273,36 +251,6 @@ html.light header {
 
 html.light main {
   background-color: #ffffff !important;
-}
-
-/* Footer light mode overrides */
-html.light footer {
-  background-color: #ffffff !important;
-  background-image: none !important;
-  border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
-  color: #09090b !important;
-}
-
-html.light footer p,
-html.light footer span,
-html.light footer a {
-  color: #52525b !important;
-}
-
-html.light footer a:hover,
-html.light footer span a:hover,
-html.light footer span:hover {
-  color: #ea580c !important;
-}
-
-html.light footer div,
-html.light footer p.flex,
-html.light footer img {
-  border-color: rgba(0, 0, 0, 0.08) !important;
-}
-
-html.light footer .hover\:bg-slate-900\/40:hover {
-  background-color: #f4f4f5 !important;
 }
 
 /* Glassmorphism maps to clean white boxes with shadow */
@@ -337,53 +285,82 @@ html.light .text-gray-200,
 html.light .text-slate-100,
 html.light .text-slate-200,
 html.light .text-zinc-100,
-html.light .text-zinc-200,
-html.light p,
-html.light span:not(.text-orange-500):not(.text-orange-600):not(.text-cyan-400):not(.text-violet-400),
-html.light div:not(.bg-orange-500) {
-  color: #000000;
-}
-
-/* Make sure paragraphs are specifically black */
-html.light p,
-html.light .text-gray-400,
-html.light .text-slate-400,
-html.light .text-zinc-400 {
-  color: #000000 !important;
+html.light .text-zinc-200 {
+  color: #1f2937 !important;
 }
 
 html.light .text-transparent {
-  color: #ea580c !important;
-  -webkit-text-fill-color: #ea580c !important;
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
   background-clip: border-box !important;
   -webkit-background-clip: border-box !important;
   background-image: none !important;
 }
 
 html.light .text-gray-300,
+html.light .text-gray-400,
 html.light .text-gray-500,
 html.light .text-slate-300,
+html.light .text-slate-400,
 html.light .text-slate-500,
 html.light .text-zinc-300,
+html.light .text-zinc-400,
 html.light .text-zinc-500,
 html.light .text-slate-400\/70,
 html.light .text-slate-400\/80 {
-  color: #27272a !important;
+  color: #4b5563 !important;
 }
 
-/* Map neon text colors to orange accents */
+/* Map neon text colors to vibrant orange */
 html.light .text-cyan-400,
 html.light .text-cyan-300,
 html.light .text-violet-400,
 html.light .text-violet-300,
-html.light .text-violet-500,
 html.light .text-neon-cyan,
 html.light .text-neon-violet,
 html.light .text-indigo-400,
 html.light .text-indigo-500,
+html.light .text-emerald-400,
+html.light .text-emerald-500,
+html.light .text-rose-400,
+html.light .text-rose-500,
 html.light .text-amber-500,
 html.light .text-amber-400 {
   color: #ea580c !important;
+}
+
+/* Force interactive elements to use orange accents in light mode */
+html.light .bg-violet-600,
+html.light .bg-cyan-500,
+html.light .bg-indigo-600,
+html.light .bg-violet-500,
+html.light .bg-violet-700,
+html.light .bg-cyan-600,
+html.light .bg-emerald-600,
+html.light .bg-rose-600 {
+  background-color: #ea580c !important;
+  color: #ffffff !important;
+}
+
+html.light .hover\:bg-violet-700:hover,
+html.light .hover\:bg-cyan-600:hover,
+html.light .hover\:bg-indigo-700:hover,
+html.light .hover\:bg-violet-600:hover,
+html.light .hover\:bg-cyan-500:hover {
+  background-color: #c2410c !important;
+}
+
+/* Keep text white on buttons, links and wrappers that have active backgrounds */
+html.light button.text-white,
+html.light a.text-white,
+html.light .bg-violet-600 .text-white,
+html.light .bg-cyan-500 .text-white,
+html.light .bg-indigo-600 .text-white,
+html.light .bg-emerald-600 .text-white,
+html.light .bg-rose-600 .text-white,
+html.light button.text-gray-100,
+html.light a.text-gray-100 {
+  color: #ffffff !important;
 }
 
 /* Invert transparent white backgrounds to light gray tints */
@@ -395,20 +372,17 @@ html.light .bg-white\/\[0\.04\],
 html.light .bg-white\/\[0\.05\],
 html.light .bg-white\/\[0\.06\] {
   background-color: rgba(0, 0, 0, 0.02) !important;
-  color: #000000 !important;
 }
 
 html.light .bg-white\/10,
 html.light .bg-white\/\[0\.08\],
 html.light .bg-white\/\[0\.1\] {
   background-color: rgba(0, 0, 0, 0.04) !important;
-  color: #000000 !important;
 }
 
 html.light .bg-white\/20,
 html.light .bg-white\/30 {
   background-color: rgba(0, 0, 0, 0.08) !important;
-  color: #000000 !important;
 }
 
 /* Invert borders */
@@ -424,13 +398,12 @@ html.light .border-slate-700 {
 
 html.light .border-violet-500,
 html.light .border-cyan-500,
-html.light .border-indigo-500,
 html.light .border-emerald-500,
 html.light .border-violet-500\/10,
 html.light .border-violet-500\/20,
 html.light .border-cyan-500\/20,
 html.light .border-cyan-500\/10 {
-  border-color: #f97316 !important;
+  border-color: rgba(234, 88, 12, 0.15) !important;
 }
 
 /* Invert solid white and black */
@@ -444,21 +417,6 @@ html.light .bg-black {
   color: #000000 !important;
 }
 
-/* Specific buttons / highlights styled with orange background and white text */
-html.light .bg-violet-600,
-html.light .bg-indigo-600,
-html.light .bg-cyan-500 {
-  background-color: #f97316 !important;
-  color: #ffffff !important;
-}
-
-html.light .hover\:bg-violet-500:hover,
-html.light .hover\:bg-indigo-500:hover,
-html.light .hover\:bg-cyan-400:hover {
-  background-color: #ea580c !important;
-  color: #ffffff !important;
-}
-
 html.light svg {
   stroke: currentColor;
 }
@@ -469,7 +427,7 @@ html.light select,
 html.light textarea {
   color: #000000 !important;
   background-color: rgba(0, 0, 0, 0.015) !important;
-  border-color: rgba(0, 0, 0, 0.08) !important;
+  border-color: rgba(0, 0, 0, 0.12) !important;
 }
 
 html.light input::placeholder {
@@ -478,7 +436,7 @@ html.light input::placeholder {
 
 html.light .border-violet-500\/25,
 html.light .bg-violet-900\/10 {
-  border-color: rgba(0, 0, 0, 0.08) !important;
+  border-color: rgba(0, 0, 0, 0.12) !important;
   background-color: rgba(0, 0, 0, 0.015) !important;
 }
 
@@ -515,7 +473,7 @@ html.light ::-webkit-scrollbar-thumb:hover {
     background-color: rgba(255, 255, 255, 0.01);
   }
   50% {
-    background-color: rgba(249, 115, 22, 0.1);
+    background-color: rgba(72, 213, 93, 0.1);
   }
 }
 
