@@ -511,13 +511,10 @@ export default function DsaSandbox() {
       <div className="flex flex-1 overflow-hidden">
 
         {/* ── LEFT PANEL: Problem Description ── */}
-        <div 
-          className="w-[42%] min-w-[320px] flex flex-col border-r border-white/5 overflow-hidden"
-          style={{ background: '#0a0a0f', color: '#cbd5e1' }}
-        >
+        <div className="w-[42%] min-w-[320px] flex flex-col border-r border-white/5 overflow-hidden">
 
           {/* Description Tabs */}
-          <div className="flex gap-0 border-b border-white/5 shrink-0" style={{ background: '#07070b' }}>
+          <div className="flex gap-0 border-b border-white/5 shrink-0 bg-[#09090e]">
             {[
               { key: 'problem', icon: FileText, label: 'Problem' },
               { key: 'editorial', icon: Brain, label: 'Editorial' },
@@ -540,13 +537,13 @@ export default function DsaSandbox() {
           {/* Description Content */}
           <div 
             className="flex-1 overflow-y-auto p-6 space-y-5" 
-            style={{ scrollbarWidth: 'thin', scrollbarColor: 'rgba(255,255,255,0.1) transparent', background: '#0a0a0f', color: '#cbd5e1' }}
+            style={{ scrollbarWidth: 'thin', scrollbarColor: 'rgba(255,255,255,0.1) transparent' }}
           >
 
             {activeDescTab === 'problem' && (
               <>
                 <div>
-                  <h1 className="text-xl font-bold text-white mb-1" style={{ color: '#ffffff' }}>{activeProblem.title}</h1>
+                  <h1 className="text-xl font-bold text-white mb-1">{activeProblem.title}</h1>
                   <div className="flex items-center gap-2 text-[10px] font-mono text-gray-500 uppercase">
                     <Hash size={10} />
                     <span>{activeProblem.category}</span>
