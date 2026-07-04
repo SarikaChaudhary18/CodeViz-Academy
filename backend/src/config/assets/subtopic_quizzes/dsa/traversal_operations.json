@@ -1,0 +1,185 @@
+{
+  "topic": "Arrays - Traversal & Operations",
+  "questions": [
+    {
+      "question": "What is the time complexity of a standard single-pass traversal to inspect or print every element in a 1D array of size N?",
+      "options": {
+        "A": "O(1)",
+        "B": "O(log N)",
+        "C": "O(N)",
+        "D": "O(N^2)"
+      },
+      "correctAnswer": "C",
+      "explanation": "To inspect each element in an array of size N exactly once, the loop must execute N times. Thus, the time complexity is linear, O(N).",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "In a 0-indexed array of size N, what is the valid index range for elements?",
+      "options": {
+        "A": "1 to N",
+        "B": "0 to N",
+        "C": "0 to N-1",
+        "D": "1 to N-1"
+      },
+      "correctAnswer": "C",
+      "explanation": "Because array indexing starts at 0, the first element is at index 0 and the N-th (last) element is at index N-1.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following processes correctly describes reversing a 1D array in-place?",
+      "options": {
+        "A": "Allocating a new array of same size and copy elements backwards.",
+        "B": "Using two pointers at the outer boundaries and swapping elements while moving towards the center.",
+        "C": "Sorting the array in descending order using selection sort.",
+        "D": "Repeatedly shifting all elements to the right by N steps."
+      },
+      "correctAnswer": "B",
+      "explanation": "An in-place reversal does not use extra memory. By maintaining a left pointer (starting at 0) and a right pointer (starting at N-1), you swap their elements and increment/decrement the pointers until they meet in the middle.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the auxiliary space complexity of reversing an array of size N in-place?",
+      "options": {
+        "A": "O(1)",
+        "B": "O(log N)",
+        "C": "O(N)",
+        "D": "O(N^2)"
+      },
+      "correctAnswer": "A",
+      "explanation": "An in-place algorithm modifies the input array directly without allocating extra space that scales with the input size. Only a few temporary pointer variables are needed, which takes O(1) auxiliary space.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the worst-case time complexity of searching for an element in an unsorted array of size N using a linear scan?",
+      "options": {
+        "A": "O(1)",
+        "B": "O(log N)",
+        "C": "O(N)",
+        "D": "O(N log N)"
+      },
+      "correctAnswer": "C",
+      "explanation": "In an unsorted array, the target element could be at the very end or not present at all. In the worst case, the algorithm must check all N elements, leading to O(N) time complexity.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Why does deleting an element at index k (where 0 <= k < N-1) in an array of size N require O(N) time complexity?",
+      "options": {
+        "A": "The element must be overwritten with garbage values.",
+        "B": "All subsequent (N-1-k) elements must be shifted one position to the left to maintain contiguity.",
+        "C": "The array's capacity is halved automatically by the OS runtime.",
+        "D": "The memory block must be re-allocated and aligned."
+      },
+      "correctAnswer": "B",
+      "explanation": "Arrays require contiguous storage. When an element is deleted, a hole is left in the memory layout. To keep the array contiguous, all elements situated to the right of index k must be shifted one slot to the left, which takes linear time on average.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Why does iterating row-by-row (Row-Major traversal) through a 2D array typically run faster than column-by-column in languages like C/C++?",
+      "options": {
+        "A": "Row-major traversal uses fewer pointers in CPU registers.",
+        "B": "Row-major layout matches how the array is stored sequentially in memory, maximizing CPU cache locality and hits.",
+        "C": "Column-major traversal triggers OS page faults on every index operation.",
+        "D": "C/C++ compilers disable loops optimizations for columns traversal."
+      },
+      "correctAnswer": "B",
+      "explanation": "In C/C++, 2D arrays are stored row by row. Iterating row-by-row accesses memory addresses sequentially. This triggers CPU cache spatial locality, pre-loading adjacent elements into high-speed cache. Column-by-column traversal jumps addresses by row widths, causing cache misses.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the worst-case time complexity of inserting an element into a dynamic array that has reached its capacity, assuming geometric resizing is used?",
+      "options": {
+        "A": "O(1)",
+        "B": "O(log N)",
+        "C": "O(N)",
+        "D": "O(N log N)"
+      },
+      "correctAnswer": "C",
+      "explanation": "When a dynamic array is full, the specific insertion that triggers a resize must allocate a new larger block of memory and copy all N existing elements to the new block. This makes that particular operation take O(N) worst-case time, even though the amortized cost remains O(1).",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Which of the following algorithm strategies is optimal to find a duplicate element in a read-only array of size N+1 containing integers from 1 to N, using O(1) extra space and O(N) time?",
+      "options": {
+        "A": "Sort the array and scan for duplicates.",
+        "B": "Use a hash map to keep count of seen elements.",
+        "C": "Floyd's Cycle Detection (Tortoise and Hare) algorithm by treating the array values as node pointers.",
+        "D": "Iterative nested binary searches for each element."
+      },
+      "correctAnswer": "C",
+      "explanation": "Since values are in the range 1 to N, we can view the array as a directed graph where index i links to index array[i]. The duplicate creates a cycle. Floyd's Cycle Detection finds the intersection of slow and fast pointers to identify the duplicate in O(N) time and O(1) auxiliary space.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "In a circular array implementation of size N, if your current read index is at i, which expression computes the index of the next element when moving forward?",
+      "options": {
+        "A": "(i + 1) / N",
+        "B": "(i + 1) * N",
+        "C": "(i + 1) % N",
+        "D": "(i - 1 + N) % N"
+      },
+      "correctAnswer": "C",
+      "explanation": "To wrap around to the beginning (index 0) after reaching the end (index N-1), we use modulo arithmetic: (i + 1) % N. When i = N-1, (N - 1 + 1) % N = 0.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Which approach rotates an array of size N to the right by k steps in O(N) time and O(1) auxiliary space?",
+      "options": {
+        "A": "Reverse the entire array, reverse the first k elements, then reverse the remaining N-k elements.",
+        "B": "Shift all elements right by one step, repeating this k times.",
+        "C": "Copy the last k elements to a temp array, shift the rest, and copy back.",
+        "D": "Use a temporary stack to push elements and pop them into shifted positions."
+      },
+      "correctAnswer": "A",
+      "explanation": "This is the classic three-step reversal algorithm. Reversing the entire array places elements roughly in their target regions. Reversing the first k and remaining N-k subsets restores their original relative order. It requires no extra space and runs in linear time.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "When traversing a large 2D grid/matrix using Breadth-First Search (BFS), why is it critical to mark cells as visited *when pushing* into the queue rather than *when popping*?",
+      "options": {
+        "A": "Marking on pop causes incorrect shortest path calculations.",
+        "B": "Marking on pop allows cells to be pushed into the queue multiple times from different neighbors, leading to redundant work and potential memory exhaustion.",
+        "C": "Marking on push enables faster bitwise address calculations.",
+        "D": "Queue data structures in C++ throw exceptions if unvisited items are added."
+      },
+      "correctAnswer": "B",
+      "explanation": "If a cell is not marked visited when pushed, adjacent cells can push that same cell into the queue repeatedly before it gets popped. In a grid, this causes exponential growth of duplicate entries in the queue, resulting in high memory overhead and redundant processing.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "If you perform an in-place array compaction (shifting all non-zero elements to the left and zeroing out the rest) in a single pass, what is the minimum pointer configuration needed?",
+      "options": {
+        "A": "One pointer tracking the current element.",
+        "B": "Two pointers: one reading/scanning the array, and another tracking the write position for non-zero elements.",
+        "C": "Three pointers: one reader, one writer, and one tracker for zeros.",
+        "D": "It is mathematically impossible to compact an array in-place in a single pass."
+      },
+      "correctAnswer": "B",
+      "explanation": "Using a two-pointer approach, the read pointer scans the array. Whenever a non-zero value is encountered, it is written to the position of the write pointer, and the write pointer is incremented. At the end, all indices from the write pointer to N-1 are filled with zeros.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "In multi-threaded array operations where threads write concurrently to adjacent indices of a shared array (e.g., thread 1 writes to index 0, thread 2 to index 1), what performance issue can arise on multi-core processors?",
+      "options": {
+        "A": "Memory leaks due to thread stack overlap.",
+        "B": "False sharing (cache ping-ponging), where cores invalidate each other's cache lines because the adjacent indices reside in the same cache line.",
+        "C": "Deadlock, as both threads compete for the array's base pointer lock.",
+        "D": "Array structure corruption, as the base address shifts dynamically."
+      },
+      "correctAnswer": "B",
+      "explanation": "False sharing occurs when threads on different cores modify variables residing on the same cache line (usually 64 bytes). Even though the threads write to independent array indices, the hardware must sync the entire cache line across cores, causing cache invalidations and severe performance degradation.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "For a three-dimensional array declared as A[L][M][N] stored in Row-Major order, what is the formula to calculate the offset of element A[x][y][z] from the base address, assuming each element occupies S bytes?",
+      "options": {
+        "A": "Offset = (x * M * N + y * N + z) * S",
+        "B": "Offset = (x + y * L + z * M) * S",
+        "C": "Offset = (x * L * M + y * M + z) * S",
+        "D": "Offset = (x * M + y * N + z) * S"
+      },
+      "correctAnswer": "A",
+      "explanation": "To access A[x][y][z], you skip x 2D slices of size M * N, then skip y rows of size N within the current slice, and finally add index z. This yields the formula: (x * M * N + y * N + z) * S.",
+      "difficulty": "Hard"
+    }
+  ]
+}

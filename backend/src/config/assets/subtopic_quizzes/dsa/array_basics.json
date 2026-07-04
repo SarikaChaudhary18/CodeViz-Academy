@@ -1,0 +1,185 @@
+{
+  "topic": "Arrays - Array Basics",
+  "questions": [
+    {
+      "question": "What is the time complexity of accessing an element at a specific index in a contiguous static array of size N?",
+      "options": {
+        "A": "O(1)",
+        "B": "O(log N)",
+        "C": "O(N)",
+        "D": "O(N log N)"
+      },
+      "correctAnswer": "A",
+      "explanation": "Arrays store elements in contiguous memory locations. Using the base address, the index, and the element size, the computer can directly calculate the exact memory address of any element in constant time, O(1).",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following characteristics best defines the physical layout of a standard static array in memory?",
+      "options": {
+        "A": "A collection of nodes linked via pointers scattered across the heap.",
+        "B": "A contiguous block of memory where elements are stored sequentially.",
+        "C": "A key-value hash table layout with collision resolution buckets.",
+        "D": "A hierarchical node structure representing a balanced binary tree."
+      },
+      "correctAnswer": "B",
+      "explanation": "Static arrays are allocated as a single, uninterrupted contiguous block of memory. This physical arrangement allows direct offset arithmetic and excellent cache performance.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "If a static array starts at base memory address 1000 and each integer element occupies 4 bytes, what is the memory address of the element at index 3 (using 0-based indexing)?",
+      "options": {
+        "A": "1003",
+        "B": "1004",
+        "C": "1012",
+        "D": "1016"
+      },
+      "correctAnswer": "C",
+      "explanation": "The memory address of an element at index i is calculated using the formula: Address = Base + i * ElementSize. For index 3, this is 1000 + 3 * 4 = 1012.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the primary risk or behavior when attempting to write data beyond the allocated bounds of a static array in low-level languages like C/C++?",
+      "options": {
+        "A": "The compiler automatically extends the array's capacity.",
+        "B": "The program safely throws an IndexOutOfBoundsException at runtime.",
+        "C": "Undefined behavior occurs, which can lead to memory corruption or crashes.",
+        "D": "The write operation is silently ignored without altering any memory."
+      },
+      "correctAnswer": "C",
+      "explanation": "Low-level languages like C and C++ do not perform automatic runtime bounds checking on arrays. Writing beyond the bounds results in undefined behavior, which often corrupts neighboring stack or heap data and can lead to security vulnerabilities.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the space complexity of a static array of size N that stores N elements?",
+      "options": {
+        "A": "O(1)",
+        "B": "O(log N)",
+        "C": "O(N)",
+        "D": "O(N^2)"
+      },
+      "correctAnswer": "C",
+      "explanation": "The memory consumed by a static array scales linearly with the number of elements it is defined to hold. Hence, the space complexity is O(N).",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Why does inserting an element at the beginning (index 0) of an array of size N require O(N) time complexity in the worst/average case?",
+      "options": {
+        "A": "The array must be sorted after insertion.",
+        "B": "All existing N elements must be shifted one position to the right to clear index 0.",
+        "C": "A hash collision occurs, requiring chaining list traversals.",
+        "D": "A new memory block must be allocated and garbage collected."
+      },
+      "correctAnswer": "B",
+      "explanation": "Because arrays are stored contiguously, inserting an element at the beginning requires making room for it. This forces the algorithm to shift all N elements currently in the array one slot to the right, which takes linear time.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the key difference between a dynamic array (e.g., std::vector in C++ or ArrayList in Java) and a static array?",
+      "options": {
+        "A": "Dynamic arrays support O(1) random access while static arrays do not.",
+        "B": "Dynamic arrays automatically resize their capacity when they become full, whereas static arrays have a fixed size.",
+        "C": "Dynamic arrays store elements non-contiguously in memory.",
+        "D": "Static arrays are stored in heap memory while dynamic arrays are always on the stack."
+      },
+      "correctAnswer": "B",
+      "explanation": "Static arrays have their size fixed at compile time. Dynamic arrays wrap a static array and handle dynamic resizing behind the scenes by allocating a larger array, copying elements, and deallocating the old array when capacity is exceeded.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "When a dynamic array resize operation triggers geometric doubling (growth factor of 2), what is the amortized time complexity of a single push/insert operation at the end?",
+      "options": {
+        "A": "O(1)",
+        "B": "O(log N)",
+        "C": "O(N)",
+        "D": "O(N^2)"
+      },
+      "correctAnswer": "A",
+      "explanation": "Although a single resize operation takes O(N) time to copy elements, resizing occurs very infrequently (only when capacity is reached). The cost of these copies distributed over all insertions yields an amortized complexity of O(1) per insert.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "During a resize event in a dynamic array where capacity is doubled, what happens to the original memory block?",
+      "options": {
+        "A": "It remains allocated and is linked to the new block as a linked list.",
+        "B": "It is deallocated/freed back to the operating system to prevent memory leaks.",
+        "C": "It is compressed in place using standard virtual memory page swapping.",
+        "D": "It is flagged as read-only and reserved for future rollback states."
+      },
+      "correctAnswer": "B",
+      "explanation": "When resizing, a new contiguous memory block of double capacity is allocated elsewhere. The existing elements are copied to the new block, and the old block is freed or deallocated to avoid wasting system resources.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Which of the following best describes the cache locality benefit of arrays over linked lists?",
+      "options": {
+        "A": "Array elements are accessed via pointers, allowing cache bypassing.",
+        "B": "Array elements are stored contiguously, allowing CPU cache pre-fetching to load adjacent elements together.",
+        "C": "Linked lists use less memory per element, leaving more room in CPU cache.",
+        "D": "Arrays use virtual indexes that map directly to the high-speed L1 cache register."
+      },
+      "correctAnswer": "B",
+      "explanation": "Modern CPUs fetch blocks of memory (cache lines) into cache rather than single bytes. Because arrays are contiguous, loading one element automatically loads its neighbors, resulting in high cache hit rates compared to linked lists, which may have nodes scattered throughout memory.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "In a dynamic array using a growth factor of 2, if the current size and capacity are both N, you perform N/2 push_back operations sequentially. How many element copy operations (due to resizing and appends) occur in total during these N/2 pushes?",
+      "options": {
+        "A": "N/2",
+        "B": "N",
+        "C": "1.5 * N",
+        "D": "2.5 * N"
+      },
+      "correctAnswer": "C",
+      "explanation": "The very first push_back triggers a resize because size equals capacity (N). This resize allocates a block of size 2N and copies the existing N elements (N copies). The subsequent pushes (including the first one) just append elements to the new block, taking N/2 operations. Thus, total operations = N (copies) + N/2 (appends) = 1.5 * N.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Why do dynamic arrays use a geometric scaling factor (e.g., doubling capacity) instead of a constant linear increment (e.g., adding 100 slots every time capacity is reached)?",
+      "options": {
+        "A": "Geometric scaling ensures the array remains page-aligned in virtual memory.",
+        "B": "Constant linear increments would result in an amortized insertion time of O(N), whereas geometric scaling achieves O(1) amortized time.",
+        "C": "Linear increments force the garbage collector to trigger full sweeps on every resize.",
+        "D": "Geometric scaling prevents external memory fragmentation completely."
+      },
+      "correctAnswer": "B",
+      "explanation": "With a constant linear increment, inserting N elements requires O(N/C) resizes. The total work for copying elements scales as N^2, resulting in O(N) amortized time per insertion. Geometric scaling reduces the number of resizes to O(log N), keeping the total copy work linear and the amortized cost at O(1).",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "How does an operating system with lazy memory allocation handle the initialization of a very large array on the heap?",
+      "options": {
+        "A": "It immediately maps physical page frames to the entire address space of the array.",
+        "B": "It allocates virtual address space immediately but maps physical pages only when individual array slots are written to (handling page faults).",
+        "C": "It stores the array in the CPU L2 cache until it is accessed by the application.",
+        "D": "It throws an OutOfMemory exception unless the array is explicitly declared volatile."
+      },
+      "correctAnswer": "B",
+      "explanation": "Modern operating systems use lazy allocation. When memory is requested for a huge array, the OS allocates the virtual addresses but doesn't back them with physical RAM. Physical pages are mapped on demand when the application tries to write to or read from a page that has not yet been backed by physical memory, triggering a soft page fault.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Which of the following describes how a buffer overflow vulnerability can exploit array bounds lack of checking to hijack program flow?",
+      "options": {
+        "A": "By reading memory locations before the array to access restricted constants.",
+        "B": "By writing past the end of a stack-allocated array to overwrite the function's return address pointer.",
+        "C": "By forcing the array size to double repeatedly, causing memory exhaustion.",
+        "D": "By converting the array elements into executable pointer arrays in heap memory."
+      },
+      "correctAnswer": "B",
+      "explanation": "On a call stack, local variables (including arrays) sit close to the saved frame pointers and function return addresses. Writing past the end of a stack-allocated buffer allows an attacker to overwrite the return address, redirection execution to arbitrary or malicious code when the function returns.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "For a two-dimensional array declared as A[M][N] and stored in Row-Major order, which formula computes the offset of element A[i][j] from the base address, assuming each element occupies S bytes?",
+      "options": {
+        "A": "Offset = (i * M + j) * S",
+        "B": "Offset = (i + j * N) * S",
+        "C": "Offset = (i * N + j) * S",
+        "D": "Offset = (i * N + j * M) * S"
+      },
+      "correctAnswer": "C",
+      "explanation": "In row-major order, rows are stored sequentially in memory. To reach element A[i][j], you must skip i complete rows of size N (i * N elements) and then add the column index j. The total elements to skip is (i * N + j), which is multiplied by the element size S to get the byte offset.",
+      "difficulty": "Hard"
+    }
+  ]
+}

@@ -93,13 +93,65 @@ const seedQuizzes = async () => {
   try {
     const Quiz = require('../models/Quiz');
     const quizzesAsset = require('./assets/quizzes.json');
+    const fs = require('fs');
+    const path = require('path');
     
     for (const quizData of quizzesAsset) {
       const existing = await Quiz.findOne({ topic: quizData.topic });
       if (!existing) {
         quizData.questionsCount = quizData.questions ? quizData.questions.length : 0;
         await Quiz.create(quizData);
-        logger.info(`Seeded Quiz topic: ${quizData.topic} (${quizData.questionsCount} questions)`);
+        logger.info(`Seeded default Quiz topic: ${quizData.topic} (${quizData.questionsCount} questions)`);
+      }
+    }
+
+    // Seed subtopic quizzes recursively from config/assets/subtopic_quizzes/
+    const subtopicDir = path.join(__dirname, 'assets', 'subtopic_quizzes');
+    if (fs.existsSync(subtopicDir)) {
+      const categories = fs.readdirSync(subtopicDir);
+      for (const cat of categories) {
+        const catPath = path.join(subtopicDir, cat);
+        if (!fs.statSync(catPath).isDirectory()) continue;
+        
+        const files = fs.readdirSync(catPath);
+        for (const file of files) {
+          if (!file.endsWith('.json')) continue;
+          
+          const filePath = path.join(catPath, file);
+          try {
+            const fileContent = fs.readFileSync(filePath, 'utf-8');
+            const rawQuiz = JSON.parse(fileContent);
+            
+            if (!rawQuiz.topic || !rawQuiz.questions) continue;
+            
+            // Create a safe, unique URL slug for the topic
+            const slug = rawQuiz.topic
+              .toLowerCase()
+              .replace(/[^a-z0-9]+/g, '_')
+              .replace(/(^_+|_+$)/g, '');
+              
+            const existing = await Quiz.findOne({ topic: slug });
+            if (!existing) {
+              const answerMap = { 'A': 0, 'B': 1, 'C': 2, 'D': 3 };
+              const mappedQuestions = rawQuiz.questions.map(q => ({
+                q: q.question,
+                options: [q.options.A, q.options.B, q.options.C, q.options.D],
+                answer: answerMap[q.correctAnswer.trim().toUpperCase()] ?? 0
+              }));
+              
+              await Quiz.create({
+                title: rawQuiz.topic,
+                topic: slug,
+                questionsCount: mappedQuestions.length,
+                difficulty: 'Medium',
+                questions: mappedQuestions
+              });
+              logger.info(`Seeded Subtopic Quiz: ${rawQuiz.topic} (${mappedQuestions.length} questions)`);
+            }
+          } catch (err) {
+            logger.error(`Failed to seed subtopic quiz from file ${file}: ${err.message}`);
+          }
+        }
       }
     }
   } catch (err) {
