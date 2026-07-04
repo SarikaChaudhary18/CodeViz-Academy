@@ -62,6 +62,126 @@
       "difficulty": "Easy"
     },
     {
+      "question": "If you access an array element at index 5 in a loop, how many memory locations are skipped relative to index 0?",
+      "options": {
+        "A": "5 memory slots",
+        "B": "6 memory slots",
+        "C": "1 memory slot",
+        "D": "0 memory slots"
+      },
+      "correctAnswer": "A",
+      "explanation": "The offset calculation skips exactly 5 elements (index 0, 1, 2, 3, and 4) to directly address the 6th element at index 5.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the time complexity of printing all elements of a square 2D matrix of dimensions N x N?",
+      "options": {
+        "A": "O(N)",
+        "B": "O(N log N)",
+        "C": "O(N^2)",
+        "D": "O(2^N)"
+      },
+      "correctAnswer": "C",
+      "explanation": "A square matrix of dimensions N x N contains N^2 elements. Printing each element once requires traversing all of them, which yields a time complexity of O(N^2).",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which array operation is characterized by copy-free, pointer-only reassignment in languages with automatic garbage collection?",
+      "options": {
+        "A": "Array slicing",
+        "B": "Array assignment (e.g. `arrB = arrA;`)",
+        "C": "In-place reversal",
+        "D": "Array concatenation"
+      },
+      "correctAnswer": "B",
+      "explanation": "Assigning one array variable to another copy-assigns the reference pointer, meaning both variables point to the same array object in heap. This takes O(1) time and space.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the result of applying a standard prefix sum operation to the array `[1, 2, 3, 4]`?",
+      "options": {
+        "A": "[4, 3, 2, 1]",
+        "B": "[1, 3, 6, 10]",
+        "C": "[10, 9, 7, 4]",
+        "D": "[1, 2, 6, 24]"
+      },
+      "correctAnswer": "B",
+      "explanation": "A prefix sum array stores cumulative sums: `prefix[i] = prefix[i-1] + arr[i]`. For `[1, 2, 3, 4]`, prefix sums are: 1, 1+2=3, 3+3=6, 6+4=10.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which traversal pattern scans a 2D array row-by-row?",
+      "options": {
+        "A": "Column-Major Order",
+        "B": "Row-Major Order",
+        "C": "Diagonal Order",
+        "D": "Spiral Order"
+      },
+      "correctAnswer": "B",
+      "explanation": "Row-major order traverses all columns of the first row, then all columns of the second row, and so on.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the time complexity of searching an element in a sorted array of size N using binary search?",
+      "options": {
+        "A": "O(1)",
+        "B": "O(log N)",
+        "C": "O(N)",
+        "D": "O(N log N)"
+      },
+      "correctAnswer": "B",
+      "explanation": "Binary search repeatedly cuts the search domain in half, taking O(log N) operations to narrow down the target location.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which pointer operation moves a pointer to the next consecutive element in a C++ pointer array?",
+      "options": {
+        "A": "Pointer increment (e.g. `ptr++`)",
+        "B": "Pointer addition by base size",
+        "C": "Pointer dereferencing",
+        "D": "Both A and B"
+      },
+      "correctAnswer": "D",
+      "explanation": "Incrementing a pointer (`ptr++`) automatically increments its value by the size of the type it points to. Adding 1 to the pointer address achieves the same type-scaled jump.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the time complexity of finding the maximum difference between any two elements in an unsorted array of size N?",
+      "options": {
+        "A": "O(1)",
+        "B": "O(log N)",
+        "C": "O(N)",
+        "D": "O(N log N)"
+      },
+      "correctAnswer": "C",
+      "explanation": "The maximum difference in an unsorted array is given by (MaxElement - MinElement). Both can be found in a single pass of O(N) operations.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "If you reverse an array of size N using an auxiliary array, what is the space complexity?",
+      "options": {
+        "A": "O(1)",
+        "B": "O(log N)",
+        "C": "O(N)",
+        "D": "O(N^2)"
+      },
+      "correctAnswer": "C",
+      "explanation": "Using an auxiliary array means allocating extra memory slots proportional to N, which yields O(N) auxiliary space complexity.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the time complexity of copying all elements from one array of size N to another?",
+      "options": {
+        "A": "O(1)",
+        "B": "O(log N)",
+        "C": "O(N)",
+        "D": "O(N^2)"
+      },
+      "correctAnswer": "C",
+      "explanation": "Copying requires visiting all N elements and writing them to the new locations, which scales as linear time, O(N).",
+      "difficulty": "Easy"
+    },
+    {
       "question": "Why does deleting an element at index k (where 0 <= k < N-1) in an array of size N require O(N) time complexity?",
       "options": {
         "A": "The element must be overwritten with garbage values.",
@@ -122,6 +242,126 @@
       "difficulty": "Medium"
     },
     {
+      "question": "What is the time complexity of merging two sorted arrays of size N and M into a single sorted array?",
+      "options": {
+        "A": "O(N log N)",
+        "B": "O(M log M)",
+        "C": "O(N + M)",
+        "D": "O(N * M)"
+      },
+      "correctAnswer": "C",
+      "explanation": "Using a two-pointer approach, we can compare elements of both arrays sequentially and write the smaller one to the output array. This requires traversing both arrays exactly once, taking linear time O(N + M).",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Which of the following array operations is commonly used to find the maximum sum of a contiguous subarray of size K?",
+      "options": {
+        "A": "Binary Search",
+        "B": "Two Pointers with binary bounds",
+        "C": "Sliding Window",
+        "D": "Kadane's Algorithm"
+      },
+      "correctAnswer": "C",
+      "explanation": "To find the maximum sum of a contiguous subarray of fixed size K, a sliding window maintains a running sum of K elements, adding the next element and subtracting the leftmost element as it slides, completing in O(N) time.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the time complexity of Kadane's algorithm to find the maximum subarray sum in a 1D array of size N?",
+      "options": {
+        "A": "O(1)",
+        "B": "O(log N)",
+        "C": "O(N)",
+        "D": "O(N log N)"
+      },
+      "correctAnswer": "C",
+      "explanation": "Kadane's algorithm iterates through the array once, maintaining the maximum sum ending at the current position. It completes in a single pass, yielding O(N) time complexity.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "In C++, what is the function `std::rotate` used for?",
+      "options": {
+        "A": "To transpose a 2D matrix.",
+        "B": "To shift elements left or right such that the element at a given middle pointer becomes the first element.",
+        "C": "To reverse the order of elements.",
+        "D": "To sort the array in circular ascending order."
+      },
+      "correctAnswer": "B",
+      "explanation": "`std::rotate` performs a left rotation, shifting elements so that the element at the specified pivot becomes the new first element, while the former head wraps to the tail.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the space complexity of transposing an N x N matrix in-place?",
+      "options": {
+        "A": "O(1)",
+        "B": "O(N)",
+        "C": "O(N^2)",
+        "D": "O(log N)"
+      },
+      "correctAnswer": "A",
+      "explanation": "Transposing in-place only swaps elements across the main diagonal: `swap(matrix[i][j], matrix[j][i])` for `j > i`. This requires no extra arrays, taking O(1) auxiliary space.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the primary advantage of storing a sparse matrix using Coordinate List (COO) or Compressed Sparse Row (CSR) formats?",
+      "options": {
+        "A": "Allows faster random access by index than a standard 2D array.",
+        "B": "Significantly reduces memory footprint by only storing non-zero values and their coordinate indices.",
+        "C": "Simplifies implementation logic.",
+        "D": "Accelerates transpose operations by O(1)."
+      },
+      "correctAnswer": "B",
+      "explanation": "Sparse matrices contain mostly zeroes. COO and CSR formats avoid storing these zeros, saving substantial memory and speeding up matrix multiplication on sparse datasets.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "In a 2D matrix representing an image, what operation is performed when a kernel filter matrix of size K x K is slid across the matrix to compute sum-products?",
+      "options": {
+        "A": "Matrix transposition",
+        "B": "2D Convolution",
+        "C": "Matrix inversion",
+        "D": "Diagonalization"
+      },
+      "correctAnswer": "B",
+      "explanation": "Sliding a kernel filter and calculating cumulative sum-products at each position is the definition of a 2D convolution, which is widely used in image processing and CNNs.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the time complexity of the Dutch National Flag algorithm (3-way partitioning) to sort an array containing only 0s, 1s, and 2s?",
+      "options": {
+        "A": "O(log N)",
+        "B": "O(N)",
+        "C": "O(N log N)",
+        "D": "O(N^2)"
+      },
+      "correctAnswer": "B",
+      "explanation": "The Dutch National Flag algorithm uses three pointers to group elements in a single pass. Thus, the time complexity is linear, O(N).",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Which of the following problems can be resolved efficiently using the Two-Pointer approach on a sorted array?",
+      "options": {
+        "A": "Finding a pair of elements that sum up to a target value.",
+        "B": "Finding the longest substring without repeating characters.",
+        "C": "Determining if the array has duplicate values.",
+        "D": "Both A and C."
+      },
+      "correctAnswer": "D",
+      "explanation": "On a sorted array, Two Pointers (left at start, right at end) can find pairs summing to a target in O(N) by shrinking bounds. Detecting duplicates is also trivial by comparing adjacent elements.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the time complexity of updating a range sum query `update(L, R, val)` in an array of size N using a simple difference array?",
+      "options": {
+        "A": "O(1)",
+        "B": "O(log N)",
+        "C": "O(R - L)",
+        "D": "O(N)"
+      },
+      "correctAnswer": "A",
+      "explanation": "A difference array `D` allows updating a range by setting `D[L] += val` and `D[R+1] -= val`. This takes constant time, O(1), with the actual values rebuilt via prefix sum in O(N) later.",
+      "difficulty": "Medium"
+    },
+    {
       "question": "Which approach rotates an array of size N to the right by k steps in O(N) time and O(1) auxiliary space?",
       "options": {
         "A": "Reverse the entire array, reverse the first k elements, then reverse the remaining N-k elements.",
@@ -179,6 +419,126 @@
       },
       "correctAnswer": "A",
       "explanation": "To access A[x][y][z], you skip x 2D slices of size M * N, then skip y rows of size N within the current slice, and finally add index z. This yields the formula: (x * M * N + y * N + z) * S.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Which of the following describes the most cache-efficient way to transpose a large matrix of dimensions 10000 x 10000 that does not fit in cache?",
+      "options": {
+        "A": "Naive transpose with nested loops scanning row by row.",
+        "B": "Blocked (cache-oblivious) transposition, which divides the matrix into sub-matrices (blocks) that fit within cache and transposes block by block.",
+        "C": "Column-major naive transpose.",
+        "D": "Converting the matrix to a coordinate list and sorting it."
+      },
+      "correctAnswer": "B",
+      "explanation": "A naive transpose on large matrices leads to high cache miss rates. By dividing the matrix into small blocks (e.g. 64x64) that fit in cache, we ensure that elements read contiguously from one block are written to another block before their cache lines are evicted.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "When scanning a matrix spirally (outer boundary to inner center), which of the following details the most clean index boundary control strategy?",
+      "options": {
+        "A": "Recursive depth scanning checking coordinates history.",
+        "B": "Using four boundary trackers (`rowStart`, `rowEnd`, `colStart`, `colEnd`) and adjusting them inward after completing each border traversal.",
+        "C": "Checking index modulo offsets.",
+        "D": "Using a DFS traversal marking visited cells in a separate matrix."
+      },
+      "correctAnswer": "B",
+      "explanation": "Boundary tracking is the most efficient spiral matrix scan strategy. We maintain four boundary bounds. After traversing the top row, we increment `rowStart`. After the right column, we decrement `colEnd`, and so on, terminating when boundaries overlap.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Which algorithm finds the longest contiguous subarray having an equal number of 0s and 1s in O(N) time and O(N) space?",
+      "options": {
+        "A": "Two Pointers with binary bounds",
+        "B": "Replacing 0s with -1s and using a Hash Map to store the first occurrence of each prefix sum.",
+        "C": "Standard Sliding Window of size N/2",
+        "D": "Kadane's Algorithm with dynamic pivots"
+      },
+      "correctAnswer": "B",
+      "explanation": "By replacing 0s with -1s, the problem reduces to finding the longest subarray with a sum of 0. We compute prefix sums. If a prefix sum value is seen again at index `j` (originally seen at `i`), it means the subarray from `i+1` to `j` has a sum of 0. We track the first occurrence of each sum to compute lengths.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the time and space complexity of querying the sum of any submatrix of size R x C in an N x M matrix in O(1) time after O(N * M) pre-processing?",
+      "options": {
+        "A": "O(N * M) query time, O(1) space",
+        "B": "O(1) query time, O(N * M) auxiliary space for a 2D Prefix Sum array",
+        "C": "O(R + C) query time, O(N + M) space",
+        "D": "O(log(N * M)) query time, O(N * M) space"
+      },
+      "correctAnswer": "B",
+      "explanation": "By pre-computing a 2D prefix sum array where `prefix[i][j]` is the sum of the submatrix from (0,0) to (i,j), we can query any submatrix sum in constant time using the formula: `prefix[x2][y2] - prefix[x1-1][y2] - prefix[x2][y1-1] + prefix[x1-1][y1-1]`.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "In high-performance vector processing, what compiler loop transformation technique merges nested loops traversing 2D arrays to improve parallel execution efficiency?",
+      "options": {
+        "A": "Loop Unrolling",
+        "B": "Loop Collapsing (e.g. OpenMP collapse clause)",
+        "C": "Loop Inversion",
+        "D": "Loop Fission"
+      },
+      "correctAnswer": "B",
+      "explanation": "Loop collapsing merges nested loops (like rows and columns) into a single large 1D loop. This creates a larger iteration space, making it easier for the scheduler to distribute work evenly across multiple parallel threads or SIMD channels.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "If you are processing a data stream of size N and want to maintain the maximum element of all sliding windows of size K in O(N) time and O(K) auxiliary space, which data structure is optimal?",
+      "options": {
+        "A": "Max-Heap",
+        "B": "Balanced BST",
+        "C": "Monotonic Deque (double-ended queue)",
+        "D": "Segment Tree"
+      },
+      "correctAnswer": "C",
+      "explanation": "A monotonic deque stores array indices in decreasing order of their corresponding values. For each new element, we remove indices of smaller elements from the back and indices outside the window from the front. The head of the deque always stores the index of the maximum element in O(1) amortized time per step.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Which algorithm partitions an array of size N around a pivot in-place in O(N) time and O(1) space, but is unstable?",
+      "options": {
+        "A": "Hoare's Partitioning Scheme (used in Quick Sort)",
+        "B": "Merge Sort Partitioning",
+        "C": "Lomuto's Partitioning Scheme",
+        "D": "Both A and C"
+      },
+      "correctAnswer": "D",
+      "explanation": "Both Hoare's and Lomuto's schemes partition an array in-place in linear time using pointers. However, because they swap elements across long distances without preserving their relative input order, both schemes are unstable.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the time complexity of the best known algorithm to search for a target value in a sorted 2D matrix of size N x M (where rows and columns are sorted)?",
+      "options": {
+        "A": "O(N * M)",
+        "B": "O(N + M)",
+        "C": "O(log(N * M))",
+        "D": "O(N log M)"
+      },
+      "correctAnswer": "B",
+      "explanation": "By starting at the top-right corner (0, M-1), we can compare the cell to target. If cell > target, we move left (decrement column). If cell < target, we move down (increment row). This reduces search boundaries linearly, completing in O(N + M) worst-case time.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Why is the classic 2D array matrix multiplication naive algorithm O(N^3) time complexity?",
+      "options": {
+        "A": "It requires traversing columns recursively.",
+        "B": "For each of the N^2 cells in the output matrix, we must perform a dot product of a row and column of length N (N operations).",
+        "C": "It creates N^2 temporary matrices in memory.",
+        "D": "None of the above."
+      },
+      "correctAnswer": "B",
+      "explanation": "Matrix multiplication of two N x N matrices produces an N x N output. To calculate each of the N^2 elements, we iterate through N pairs of elements to compute their sum of products, leading to a total of N * N^2 = N^3 multiplications.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Which matrix multiplication algorithm reduces the time complexity from O(N^3) to O(N^2.807) using divide and conquer?",
+      "options": {
+        "A": "Floyd-Warshall Algorithm",
+        "B": "Strassen's Algorithm",
+        "C": "Coppersmith-Winograd Algorithm",
+        "D": "Kruskal's Matrix Factorization"
+      },
+      "correctAnswer": "B",
+      "explanation": "Strassen's algorithm uses algebraic formulas to compute the product of two 2x2 matrices using 7 multiplications instead of the standard 8. When applied recursively to blocks, it achieves O(N^log2(7)) = O(N^2.807) complexity.",
       "difficulty": "Hard"
     }
   ]

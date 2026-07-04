@@ -1,0 +1,545 @@
+{
+  "topic": "Arrays - Searching",
+  "questions": [
+    {
+      "question": "What is the worst-case time complexity of searching a target value in an unsorted array of size N using Linear Search?",
+      "options": {
+        "A": "O(1)",
+        "B": "O(log N)",
+        "C": "O(N)",
+        "D": "O(N log N)"
+      },
+      "correctAnswer": "C",
+      "explanation": "In an unsorted array, the target could be at the last index or absent entirely. Thus, Linear Search must check all N elements in the worst case.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following is a mandatory prerequisite before applying Binary Search to an array?",
+      "options": {
+        "A": "The array must be empty.",
+        "B": "The elements of the array must be sorted in a defined order.",
+        "C": "The array must not contain duplicate elements.",
+        "D": "The size of the array must be a power of two."
+      },
+      "correctAnswer": "B",
+      "explanation": "Binary Search relies on interval division based on comparisons at the midpoint. This strategy only works if the array elements are sorted.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the average and worst-case time complexity of Binary Search on a sorted array of size N?",
+      "options": {
+        "A": "O(1)",
+        "B": "O(log N)",
+        "C": "O(N)",
+        "D": "O(N log N)"
+      },
+      "correctAnswer": "B",
+      "explanation": "At each step, Binary Search divides the search space in half. The number of splits required for N elements scales logarithmically, O(log N).",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which formula is preferred for calculating the midpoint `mid` of an interval `[low, high]` in Binary Search to prevent integer overflow in languages like Java/C++?",
+      "options": {
+        "A": "mid = (low + high) / 2",
+        "B": "mid = low + (high - low) / 2",
+        "C": "mid = high - (low + high) / 2",
+        "D": "mid = (low + high) >> 2"
+      },
+      "correctAnswer": "B",
+      "explanation": "In languages with fixed-size integers, `low + high` can exceed the maximum integer limit and overflow to a negative value. Using `low + (high - low) / 2` avoids addition overflow.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "In the best-case scenario, what is the time complexity of locating a target using Linear Search?",
+      "options": {
+        "A": "O(1)",
+        "B": "O(log N)",
+        "C": "O(N)",
+        "D": "O(N log N)"
+      },
+      "correctAnswer": "A",
+      "explanation": "If the target element is located at the very first index of the array, the search terminates on the first comparison, taking constant time, O(1).",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the best-case time complexity of Binary Search?",
+      "options": {
+        "A": "O(1)",
+        "B": "O(log N)",
+        "C": "O(N)",
+        "D": "O(N log N)"
+      },
+      "correctAnswer": "A",
+      "explanation": "If the target is located exactly at the calculated midpoint of the initial search interval, the algorithm terminates immediately, taking constant time O(1).",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "In a standard iterative Binary Search implementation, what are the updates to `low` and `high` pointers when the target is greater than the element at `mid`?",
+      "options": {
+        "A": "high = mid - 1",
+        "B": "low = mid + 1",
+        "C": "low = mid",
+        "D": "high = mid"
+      },
+      "correctAnswer": "B",
+      "explanation": "If the target is larger than `arr[mid]`, it must lie in the right half of the sorted array. Hence, the `low` boundary is moved to `mid + 1`.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "In a standard iterative Binary Search implementation, what are the updates to the pointers when the target is smaller than the element at `mid`?",
+      "options": {
+        "A": "high = mid - 1",
+        "B": "low = mid + 1",
+        "C": "low = mid",
+        "D": "high = mid"
+      },
+      "correctAnswer": "A",
+      "explanation": "If the target is smaller than `arr[mid]`, it must lie in the left half of the sorted array. Hence, the `high` boundary is moved to `mid - 1`.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the space complexity of an iterative implementation of Binary Search?",
+      "options": {
+        "A": "O(1)",
+        "B": "O(log N)",
+        "C": "O(N)",
+        "D": "O(N log N)"
+      },
+      "correctAnswer": "A",
+      "explanation": "Iterative binary search only uses a few pointers/variables (`low`, `high`, `mid`), consuming constant space O(1) regardless of the input size.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the space complexity of a recursive implementation of Binary Search due to call stack overhead?",
+      "options": {
+        "A": "O(1)",
+        "B": "O(log N)",
+        "C": "O(N)",
+        "D": "O(N log N)"
+      },
+      "correctAnswer": "B",
+      "explanation": "Each recursive call adds a stack frame. Since the depth of recursion matches the number of splits, which is log2 N, the space complexity is O(log N).",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following checks is the terminating condition for a Binary Search loop to avoid an infinite loop when the target is absent?",
+      "options": {
+        "A": "while (low < high)",
+        "B": "while (low <= high)",
+        "C": "while (low != high)",
+        "D": "while (low > 0)"
+      },
+      "correctAnswer": "B",
+      "explanation": "To correctly check intervals of size 1 (where `low == high`), the loop condition must be `low <= high`. If the element is not found, the boundaries cross, terminating the loop.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which search algorithm checks elements sequentially but terminates early if it encounters an element greater than the target in a sorted array?",
+      "options": {
+        "A": "Binary Search",
+        "B": "Linear Search on Sorted Array",
+        "C": "Ternary Search",
+        "D": "Exponential Search"
+      },
+      "correctAnswer": "B",
+      "explanation": "Linear search on a sorted array can terminate early as soon as the scanned element is larger than the target, because all subsequent elements will also be larger.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What index does a search function usually return in C++/Java when a target value is not present in the array?",
+      "options": {
+        "A": "0",
+        "B": "-1",
+        "C": "N",
+        "D": "null"
+      },
+      "correctAnswer": "B",
+      "explanation": "Since 0 and positive numbers are valid array indices, -1 is commonly returned to indicate that the search target was not found.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "If an array has size 0, what does a linear search immediately return?",
+      "options": {
+        "A": "0",
+        "B": "-1",
+        "C": "Error",
+        "D": "undefined"
+      },
+      "correctAnswer": "B",
+      "explanation": "An empty array contains no elements, so the target cannot be found, and the search immediately returns -1.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which search is best suited for a singly linked list where random access is not supported?",
+      "options": {
+        "A": "Binary Search",
+        "B": "Linear Search",
+        "C": "Interpolation Search",
+        "D": "Fibonacci Search"
+      },
+      "correctAnswer": "B",
+      "explanation": "Since singly linked lists do not support constant-time random access, algorithms like Binary Search that jump to midpoints run in O(N) anyway. Linear Search is the standard method.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is Ternary Search and what is its worst-case time complexity?",
+      "options": {
+        "A": "It splits the array into three parts and runs in O(log3 N) time.",
+        "B": "It splits the array into two parts and runs in O(N log N) time.",
+        "C": "It searches three indices simultaneously in O(1) time.",
+        "D": "It runs in O(3^N) exponential time."
+      },
+      "correctAnswer": "A",
+      "explanation": "Ternary search divides the sorted array into three equal segments using two midpoints (`mid1`, `mid2`). The search space is reduced to 1/3 at each step, running in O(log3 N) time.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Why is Binary Search generally preferred over Ternary Search in practice on modern computers, despite Ternary Search having a smaller logarithmic base?",
+      "options": {
+        "A": "Ternary Search has a worse space complexity.",
+        "B": "Ternary Search requires more comparisons per step (up to 4 comparisons), which makes its constant factors larger than Binary Search.",
+        "C": "Ternary Search only works on floating-point arrays.",
+        "D": "Ternary Search cannot be implemented iteratively."
+      },
+      "correctAnswer": "B",
+      "explanation": "While Ternary Search reduces the search space faster, it does more work at each step (computing two midpoints and making more comparisons). This extra overhead makes it slower than Binary Search in practice.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the key optimization behind Sentinel Linear Search compared to standard Linear Search?",
+      "options": {
+        "A": "It sorts the array first.",
+        "B": "It reduces the number of loop boundary comparisons by placing the target value at the end of the array as a sentinel.",
+        "C": "It searches from both ends of the array simultaneously.",
+        "D": "It uses bitwise operations to scan memory blocks."
+      },
+      "correctAnswer": "B",
+      "explanation": "Standard linear search checks `i < N` and `arr[i] == target` in each iteration. By placing the target at the last slot, we guarantee the target is found. This eliminates the `i < N` check inside the loop, improving performance.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Which searching algorithm is optimal for finding the position of an element in a sorted array of infinite/unbounded size?",
+      "options": {
+        "A": "Linear Search",
+        "B": "Exponential Search (or Doubling Search)",
+        "C": "Interpolation Search",
+        "D": "Ternary Search"
+      },
+      "correctAnswer": "B",
+      "explanation": "Exponential Search finds the range containing the target by doubling the index step (1, 2, 4, 8...) until the element at the index is larger than the target, then applies Binary Search on that range in O(log N) time.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the average-case time complexity of Interpolation Search on a sorted array of size N where elements are uniformly distributed?",
+      "options": {
+        "A": "O(log N)",
+        "B": "O(log log N)",
+        "C": "O(1)",
+        "D": "O(N)"
+      },
+      "correctAnswer": "B",
+      "explanation": "Interpolation search estimates the position of the target element based on its value relative to the range bounds. On uniformly distributed data, this achieves an extremely fast average time complexity of O(log log N).",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "In which case does Interpolation Search degrade to its worst-case time complexity of O(N)?",
+      "options": {
+        "A": "When the target element is at index 0.",
+        "B": "When the array size is extremely small.",
+        "C": "When the array elements grow exponentially (non-uniform distribution).",
+        "D": "When the array contains only floating point numbers."
+      },
+      "correctAnswer": "C",
+      "explanation": "If the data is highly non-uniform (e.g. `[1, 2, 4, 8, 16, 10000]`), the interpolation formula makes poor position estimates, causing the search interval to decrease by only 1 element at a time, resulting in O(N) worst-case time.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is Meta Binary Search (also known as One-Sided Binary Search)?",
+      "options": {
+        "A": "A search that queries metadata of DB partitions.",
+        "B": "An alternative binary search that constructs the index of the target bit-by-bit from the most significant bit to the least significant bit.",
+        "C": "A binary search that works on non-sorted arrays.",
+        "D": "A search that uses machine learning heuristics to guess indices."
+      },
+      "correctAnswer": "B",
+      "explanation": "Meta Binary Search determines the target index by testing increments of powers of 2 (starting from the largest power of 2 less than N). This avoids divisions and is highly efficient for hardware assembly implementations.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "If you need to find the first occurrence of a duplicate element in a sorted array, how should you modify standard Binary Search?",
+      "options": {
+        "A": "Terminate immediately when `arr[mid] == target`.",
+        "B": "If `arr[mid] == target`, record the index and continue searching in the left subarray by setting `high = mid - 1`.",
+        "C": "If `arr[mid] == target`, scan left linearly until a different value is found.",
+        "D": "Binary search cannot be modified for this; linear search must be used."
+      },
+      "correctAnswer": "B",
+      "explanation": "To find the first occurrence, we must not stop when the target is found. Instead, we record `mid` as a candidate and restrict the search to the left half (`high = mid - 1`) to see if there is an even earlier occurrence.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the time complexity of finding the peak element (an element that is greater than or equal to its neighbors) in an array of size N using binary search?",
+      "options": {
+        "A": "O(1)",
+        "B": "O(log N)",
+        "C": "O(N)",
+        "D": "O(N log N)"
+      },
+      "correctAnswer": "B",
+      "explanation": "By comparing the midpoint to its neighbors, we can determine the direction of the peak. If the element to the right is larger, a peak must exist in the right half. This allows O(log N) binary search on unsorted peak problems.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "In a sorted, rotated array (e.g. `[4, 5, 6, 7, 0, 1, 2]`), how do we apply Binary Search to find a target value in O(log N) time?",
+      "options": {
+        "A": "We cannot; we must find the pivot first, taking O(N) time.",
+        "B": "At `mid`, identify which half of the array is normally sorted, check if the target lies within its bounds, and discard the other half.",
+        "C": "Perform two parallel binary searches from both ends.",
+        "D": "Sort the array back to standard order first in O(N) time."
+      },
+      "correctAnswer": "B",
+      "explanation": "In a rotated sorted array, at least one half of the array (left of `mid` or right of `mid`) is guaranteed to be sorted. By checking which half is sorted, we can determine if the target lies within its range and adjust pointers accordingly in O(log N) time.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the time complexity of finding the square root of a positive integer N using binary search over the range `[1, N]`?",
+      "options": {
+        "A": "O(1)",
+        "B": "O(log N)",
+        "C": "O(sqrt(N))",
+        "D": "O(N)"
+      },
+      "correctAnswer": "B",
+      "explanation": "We can search the space of values from 1 to N. For any candidate `x`, if `x * x <= N`, we move the low bound right; otherwise, we move high left. This binary search completes in O(log N) time.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Which of the following algorithms searches for a value in a sorted 2D grid of size N x M by treating the grid as a flat 1D array of size N * M?",
+      "options": {
+        "A": "Saddleback Search",
+        "B": "Standard Binary Search using coordinates conversion `row = index / M` and `col = index % M`.",
+        "C": "2D Linear Scan",
+        "D": "None of the above."
+      },
+      "correctAnswer": "B",
+      "explanation": "If the 2D matrix is fully sorted (the first element of a row is larger than the last of the previous row), we can run binary search from 0 to N*M - 1, converting indices to 2D coordinates on the fly in O(log(N * M)) time.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What does the function `std::binary_search` in C++ STL return?",
+      "options": {
+        "A": "The index of the target element.",
+        "B": "A boolean indicating whether the target exists in the range.",
+        "C": "An iterator pointing to the target element.",
+        "D": "The lower bound index."
+      },
+      "correctAnswer": "B",
+      "explanation": "`std::binary_search` returns a boolean (`true`/`false`). To get iterators/indices, C++ provides `std::lower_bound` or `std::upper_bound`.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "In a sorted array, what is the lower bound of a target value?",
+      "options": {
+        "A": "The first index where the element is strictly less than target.",
+        "B": "The first index where the element is greater than or equal to target.",
+        "C": "The last index containing the target.",
+        "D": "None of the above."
+      },
+      "correctAnswer": "B",
+      "explanation": "The lower bound is the index of the first element in the range that does not compare less than the target value (i.e. `>= target`).",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "In a sorted array, what is the upper bound of a target value?",
+      "options": {
+        "A": "The first index where the element is strictly greater than target.",
+        "B": "The first index where the element is less than or equal to target.",
+        "C": "The last index containing the target.",
+        "D": "None of the above."
+      },
+      "correctAnswer": "A",
+      "explanation": "The upper bound is the index of the first element in the range that compares strictly greater than the target value (i.e. `> target`).",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is Fibonacci Search and what is its main advantage over standard Binary Search in low-level systems?",
+      "options": {
+        "A": "It is faster on unsorted arrays.",
+        "B": "It uses Fibonacci numbers to divide the array, requiring only addition and subtraction operations (no division or bit-shifting) to compute indices.",
+        "C": "It has an O(1) space complexity.",
+        "D": "It divides the search space into Fibonacci proportions to reduce memory fragmentation."
+      },
+      "correctAnswer": "B",
+      "explanation": "Fibonacci search divides the array into segments defined by Fibonacci numbers. Calculating midpoints only requires simple subtraction and addition from the Fibonacci series. On older processors where division operations are slow, this division-free index calculation was a major optimization.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Which of the following outlines the Saddleback Search algorithm for searching in a 2D matrix where each row is sorted left-to-right and each column is sorted top-to-bottom?",
+      "options": {
+        "A": "Flatten the matrix to 1D and perform binary search.",
+        "B": "Start at the top-right corner; if target is smaller, move left; if target is larger, move down. Repeat until found or out of bounds.",
+        "C": "Search each row sequentially using binary search.",
+        "D": "Search diagonal elements first, then search quadrant sectors recursively."
+      },
+      "correctAnswer": "B",
+      "explanation": "Saddleback Search starts at (0, M-1). Since rows and columns are sorted, moving left decreases the value, and moving down increases it. This allows locating the target in O(N + M) time and O(1) auxiliary space.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Suppose you are searching for a target in a sorted array of size N where the target is extremely close to the beginning. Which search strategy minimizes index comparisons?",
+      "options": {
+        "A": "Binary Search starting at N/2",
+        "B": "Exponential Search (starts at index 1 and doubles steps, restricting the binary search interval early)",
+        "C": "Standard Linear Search",
+        "D": "Interpolation Search"
+      },
+      "correctAnswer": "B",
+      "explanation": "Exponential search checks index 1, 2, 4, 8... until it finds a value larger than the target. If the target is located at index `i`, it narrows the search space to `[2^(k-1), 2^k]` where `2^k >= i` in O(log i) steps, which is much faster than O(log N) when `i << N`.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "How does Fractional Cascading optimize binary search across multiple sorted arrays (e.g. searching the same target in k different sorted arrays of size N)?",
+      "options": {
+        "A": "It merges all arrays into one massive array.",
+        "B": "It creates pointers from elements in one array to their corresponding successor elements in the next array, reducing subsequent search steps to O(1) after the first O(log N) search.",
+        "C": "It runs k binary searches concurrently in threads.",
+        "D": "It builds a segment tree over all arrays."
+      },
+      "correctAnswer": "B",
+      "explanation": "Fractional Cascading links adjacent sorted lists by copying a fraction of elements from the next list to the current one, along with pointers. Finding the target in the first list gives a pointer directly to its position in the next list, reducing search complexity from O(k log N) to O(k + log N).",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the worst-case time complexity of finding the median of an unsorted array of size N using the Median-of-Medians (BFPRT) selection algorithm?",
+      "options": {
+        "A": "O(N log N)",
+        "B": "O(N)",
+        "C": "O(N^2)",
+        "D": "O(log N)"
+      },
+      "correctAnswer": "B",
+      "explanation": "BFPRT is a deterministic selection algorithm that chooses a near-optimal pivot by taking the median of medians of groups of 5. This guarantees a balanced partition step, achieving a deterministic worst-case time complexity of O(N).",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Which of the following describes the difference in peak finding in a 1D array vs a 2D matrix of size N x M using binary search?",
+      "options": {
+        "A": "Peak finding in 1D is O(log N); Peak finding in 2D can be completed in O(N log M) or O(M log N) by running binary search on column midpoints.",
+        "B": "Peak finding in 2D is O(log(N * M)).",
+        "C": "There is no peak finding algorithm in 2D.",
+        "D": "Peak finding in 2D degrades to O(N * M) linear scan."
+      },
+      "correctAnswer": "A",
+      "explanation": "For a 2D matrix, we select the middle column, find its maximum element at row `r` (taking O(N)), and compare it to its horizontal neighbors. If a neighbor is larger, we recursively search that half of the matrix. This reduces the columns logarithmically, yielding O(N log M) time.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "In a sorted array with many duplicates, you want to count the occurrences of target `x`. What is the most optimal binary search approach?",
+      "options": {
+        "A": "Find an occurrence of `x` and count left and right linearly.",
+        "B": "Find the lower bound index and the upper bound index of `x`. The count is given by `upper_bound - lower_bound`.",
+        "C": "Use a hash map to pre-compute frequencies.",
+        "D": "Binary search is not optimal here; linear scan is faster."
+      },
+      "correctAnswer": "B",
+      "explanation": "Linear expansion from a single match can degrade to O(N) if the target is duplicated N times. By running two binary searches to find the first (`lower_bound`) and last (`upper_bound`) indices of target, the count is found in O(log N) time.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Suppose we have a non-decreasing array of size N. We want to find the smallest index `i` such that `arr[i] * arr[i] >= target`. How should the binary search condition be written?",
+      "options": {
+        "A": "if (arr[mid] >= target) high = mid; else low = mid + 1;",
+        "B": "if (arr[mid] * arr[mid] >= target) high = mid; else low = mid + 1;",
+        "C": "if (arr[mid] * arr[mid] > target) high = mid - 1; else low = mid;",
+        "D": "if (arr[mid] == target) return mid; else low = mid + 1;"
+      },
+      "correctAnswer": "B",
+      "explanation": "Since the array is sorted and non-negative, its squared values are also sorted. If `arr[mid] * arr[mid] >= target`, index `mid` is a valid candidate. We move the `high` boundary to `mid` to see if there is a smaller valid index. If not, we search the right half.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the time complexity of the Ternary Search algorithm when finding the maximum/minimum of a unimodal function (a function that increases then decreases) over a continuous range [L, R] with precision epsilon?",
+      "options": {
+        "A": "O(log(1/epsilon))",
+        "B": "O(log3((R - L)/epsilon))",
+        "C": "O((R - L)/epsilon)",
+        "D": "O(1)"
+      },
+      "correctAnswer": "B",
+      "explanation": "Each step of Ternary Search reduces the continuous search range to 2/3 of its previous size. The search terminates when the range is smaller than epsilon, requiring O(log3((R-L)/epsilon)) iterations.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Which of the following problems can be resolved using Binary Search on the Answer (also known as binary search over a monotonic search space of candidate solutions)?",
+      "options": {
+        "A": "Aggressive Cows / Allocate Books / Painter's Partition problem.",
+        "B": "Finding the shortest path in a graph.",
+        "C": "Sorting a linked list in-place.",
+        "D": "Detecting cycles in a directed graph."
+      },
+      "correctAnswer": "A",
+      "explanation": "If a problem requires finding the minimum possible maximum value (or vice versa), and we can write a helper function `isValid(x)` that checks in O(N) if a candidate answer `x` is feasible, we can binary search over the monotonic range of possible values `[min_ans, max_ans]` in O(N log(Range)) time.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "In a lock-free multi-threaded system, if multiple readers need to search a shared sorted array that is occasionally appended to, which binary search implementation avoids locking?",
+      "options": {
+        "A": "Iterative binary search using atomic loads for the array size and index reads, ensuring readers do not read past the atomic size limit.",
+        "B": "Mutex locked binary search.",
+        "C": "Recursive binary search on local copies.",
+        "D": "It is impossible; writers always corrupt reader offsets."
+      },
+      "correctAnswer": "A",
+      "explanation": "Since appends only add elements to the end and do not change existing elements or base pointers, readers can safely binary search the active range. By using an atomic load to read the current size, readers are guaranteed to only access indices that are already fully initialized.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the worst-case complexity of binary search when applied to find a target in a sorted array containing N elements where 90% of the elements are duplicates of a single value?",
+      "options": {
+        "A": "O(log N)",
+        "B": "O(N)",
+        "C": "O(1)",
+        "D": "O(N log N)"
+      },
+      "correctAnswer": "A",
+      "explanation": "Even if the array contains mostly duplicate values, the array remains sorted, and the binary search split logic is unaffected. The worst-case lookup time remains O(log N).",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Which of the following is a drawback of using standard Binary Search on a disk-based database where array elements span across slow-seek hard drive sectors?",
+      "options": {
+        "A": "Binary search requires too many comparisons.",
+        "B": "Binary search makes random index accesses across distant disk addresses, leading to high disk read head seek times. Database engines prefer B+ Trees to minimize node reads.",
+        "C": "Binary search is unstable on disks.",
+        "D": "Disk sectors do not support integers comparisons."
+      },
+      "correctAnswer": "B",
+      "explanation": "Binary search jumps from index N/2 to N/4, etc. On disk, this triggers random reads across sectors, which is very slow. B+ Trees have a high branching factor (e.g. 100+ children), keeping the tree height low and requiring only 3-4 disk seeks to locate keys.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "If you are searching for a target in a sorted array of size N where the elements are distributed according to a normal distribution (bell curve), which search is most optimal on average?",
+      "options": {
+        "A": "Linear Search",
+        "B": "Interpolation Search modified with a cumulative distribution function (CDF) to map normal distribution bounds to uniform index estimates.",
+        "C": "Standard Binary Search",
+        "D": "Ternary Search"
+      },
+      "correctAnswer": "B",
+      "explanation": "Interpolation search works best on uniform distributions. If the distribution is known (like normal/bell curve), we can apply the CDF to map the values to a uniform space, allowing the interpolation formula to make highly accurate index estimates in O(log log N) average time.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "In a parallel computing environment, how can Binary Search be parallelized across P processors to search a sorted array of size N?",
+      "options": {
+        "A": "Divide the array into P segments and have each processor binary search its segment in parallel.",
+        "B": "Split the search interval into P+1 equal parts using P pivots. Have all P processors evaluate the pivots in parallel to reduce the search interval to 1/(P+1) in one step, running in O(log_(P+1) N) time.",
+        "C": "Have P processors perform linear searches from different offsets.",
+        "D": "None of the above."
+      },
+      "correctAnswer": "B",
+      "explanation": "This is called Parallel k-ary Search. By evaluating P pivots simultaneously, the range is reduced by a factor of P+1 in each step. This achieves a parallel time complexity of O(log_(P+1) N).",
+      "difficulty": "Hard"
+    }
+  ]
+}

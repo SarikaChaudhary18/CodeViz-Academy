@@ -145,7 +145,7 @@ function slugify(text) {
     .replace(/(^_+|_+$)/g, '');
 }
 
-async function generateQuizForTopic(categoryKey, topicName) {
+async function generateQuizForTopic(categoryKey, topicName, overwrite = false) {
   const slug = slugify(topicName.replace(new RegExp(`^${categoryKey}\\s*-\\s*`, 'i'), ''));
   const folderPath = path.join(__dirname, '..', 'config', 'assets', 'subtopic_quizzes', categoryKey);
   const filePath = path.join(folderPath, `${slug}.json`);
@@ -156,7 +156,7 @@ async function generateQuizForTopic(categoryKey, topicName) {
   }
 
   // Check if already exists
-  if (fs.existsSync(filePath)) {
+  if (fs.existsSync(filePath) && !overwrite) {
     console.log(`[SKIP] Quiz already exists at: ${filePath}`);
     return;
   }
@@ -170,11 +170,11 @@ Generate a complete quiz for the following topic.
 Topic: "${topicName}"
 
 Requirements:
-- Generate exactly 15 high-quality MCQs.
+- Generate exactly 45 high-quality MCQs.
 - Difficulty:
-  - 5 Easy
-  - 5 Medium
-  - 5 Hard
+  - 15 Easy
+  - 15 Medium
+  - 15 Hard
 - Four options (A, B, C, D).
 - Only one correct answer.
 - Include:
@@ -227,6 +227,7 @@ async function main() {
   const allIndex = args.indexOf('--all') !== -1;
   const topicIndex = args.indexOf('--topic');
   const catIndex = args.indexOf('--category');
+  const overwrite = args.indexOf('--overwrite') !== -1 || args.indexOf('-o') !== -1;
 
   if (helpIndex || args.length === 0) {
     console.log(`
@@ -237,6 +238,7 @@ Options:
   --all                     Generate quizzes for all 105 subtopics sequentially.
   --category <dsa|ai|dev>   Generate quizzes for a specific category.
   --topic "<topicName>"     Generate quiz for a specific subtopic name.
+  --overwrite, -o           Overwrite existing quiz files if they exist.
   -h, --help                Show this help screen.
 
 Note:
@@ -259,7 +261,7 @@ Please configure GEMINI_API_KEY, GROQ_API_KEY, or NVIDIA_API_KEY.`);
     for (const catKey of Object.keys(CATEGORIES)) {
       const category = CATEGORIES[catKey];
       for (const topic of category.topics) {
-        await generateQuizForTopic(catKey, topic);
+        await generateQuizForTopic(catKey, topic, overwrite);
         // Add a slight delay to avoid rate limiting
         await new Promise(resolve => setTimeout(resolve, 1000));
       }
@@ -273,7 +275,7 @@ Please configure GEMINI_API_KEY, GROQ_API_KEY, or NVIDIA_API_KEY.`);
     }
     console.log(`Generating quizzes for category: ${category.name}...`);
     for (const topic of category.topics) {
-      await generateQuizForTopic(catKey === 'dev' ? 'development' : catKey, topic);
+      await generateQuizForTopic(catKey === 'dev' ? 'development' : catKey, topic, overwrite);
       await new Promise(resolve => setTimeout(resolve, 1000));
     }
   } else if (topicIndex !== -1 && args[topicIndex + 1]) {
@@ -284,7 +286,7 @@ Please configure GEMINI_API_KEY, GROQ_API_KEY, or NVIDIA_API_KEY.`);
       const match = category.topics.find(t => t.toLowerCase() === targetTopic.toLowerCase() || t.toLowerCase().includes(targetTopic.toLowerCase()));
       if (match) {
         found = true;
-        await generateQuizForTopic(catKey, match);
+        await generateQuizForTopic(catKey, match, overwrite);
         break;
       }
     }

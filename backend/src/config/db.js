@@ -131,14 +131,14 @@ const seedQuizzes = async () => {
               .replace(/(^_+|_+$)/g, '');
               
             const existing = await Quiz.findOne({ topic: slug });
+            const answerMap = { 'A': 0, 'B': 1, 'C': 2, 'D': 3 };
+            const mappedQuestions = rawQuiz.questions.map(q => ({
+              q: q.question,
+              options: [q.options.A, q.options.B, q.options.C, q.options.D],
+              answer: answerMap[q.correctAnswer.trim().toUpperCase()] ?? 0
+            }));
+            
             if (!existing) {
-              const answerMap = { 'A': 0, 'B': 1, 'C': 2, 'D': 3 };
-              const mappedQuestions = rawQuiz.questions.map(q => ({
-                q: q.question,
-                options: [q.options.A, q.options.B, q.options.C, q.options.D],
-                answer: answerMap[q.correctAnswer.trim().toUpperCase()] ?? 0
-              }));
-              
               await Quiz.create({
                 title: rawQuiz.topic,
                 topic: slug,
@@ -147,6 +147,11 @@ const seedQuizzes = async () => {
                 questions: mappedQuestions
               });
               logger.info(`Seeded Subtopic Quiz: ${rawQuiz.topic} (${mappedQuestions.length} questions)`);
+            } else if (existing.questionsCount !== mappedQuestions.length) {
+              existing.questions = mappedQuestions;
+              existing.questionsCount = mappedQuestions.length;
+              await existing.save();
+              logger.info(`Updated Subtopic Quiz: ${rawQuiz.topic} to ${mappedQuestions.length} questions`);
             }
           } catch (err) {
             logger.error(`Failed to seed subtopic quiz from file ${file}: ${err.message}`);

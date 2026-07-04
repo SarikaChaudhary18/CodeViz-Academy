@@ -10,7 +10,7 @@
         "D": "O(N log N)"
       },
       "correctAnswer": "A",
-      "explanation": "Arrays store elements in contiguous memory locations. Using the base address, the index, and the element size, the computer can directly calculate the exact memory address of any element in constant time, O(1).",
+      "explanation": "Arrays store elements in contiguous memory locations. Using the base address, index, and element size, the computer can directly calculate the memory address of any element in constant time.",
       "difficulty": "Easy"
     },
     {
@@ -59,6 +59,126 @@
       },
       "correctAnswer": "C",
       "explanation": "The memory consumed by a static array scales linearly with the number of elements it is defined to hold. Hence, the space complexity is O(N).",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "In Java, what value is automatically assigned to array elements when instantiating a new integer array of size N using `int[] arr = new int[N]`?",
+      "options": {
+        "A": "Garbage values from previous heap allocation",
+        "B": "-1",
+        "C": "0",
+        "D": "null"
+      },
+      "correctAnswer": "C",
+      "explanation": "Java guarantees safety by zero-initializing primitive arrays on instantiation. Integers default to 0, floats/doubles to 0.0, booleans to false, and objects to null.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the primary drawback of using a static array instead of a dynamic data structure?",
+      "options": {
+        "A": "Lack of support for random access by index.",
+        "B": "Fixed size determined at allocation time that cannot be changed.",
+        "C": "Higher lookup overhead than a linked list.",
+        "D": "Memory is allocated dynamically on every element update."
+      },
+      "correctAnswer": "B",
+      "explanation": "Static arrays require their size to be known and fixed at allocation time. If the number of elements grows beyond the limit, the array cannot expand, leading to potential overflow or requiring manual relocation.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which index corresponds to the last element of an array of size N?",
+      "options": {
+        "A": "N",
+        "B": "N-1",
+        "C": "N+1",
+        "D": "0"
+      },
+      "correctAnswer": "B",
+      "explanation": "Using 0-based indexing, indices range from 0 to N-1 for an array of size N.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "In Python, which built-in data type behaves most similarly to a dynamic array?",
+      "options": {
+        "A": "tuple",
+        "B": "dict",
+        "C": "list",
+        "D": "set"
+      },
+      "correctAnswer": "C",
+      "explanation": "A Python list is implemented under the hood as a contiguous dynamic array of references, allowing O(1) index lookups and amortized O(1) additions at the end.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the time complexity of updating the value of an existing element at index `i` in an array of size N?",
+      "options": {
+        "A": "O(1)",
+        "B": "O(log N)",
+        "C": "O(N)",
+        "D": "O(N log N)"
+      },
+      "correctAnswer": "A",
+      "explanation": "Similar to lookup, updating an element only requires locating the target memory offset using base + index * size and writing the new value, which takes constant time O(1).",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which memory segment is a local array variable normally allocated to in languages like C++ when declared as `int arr[10];` inside a function?",
+      "options": {
+        "A": "Heap",
+        "B": "Stack",
+        "C": "Static/Global Memory Data segment",
+        "D": "Code segment"
+      },
+      "correctAnswer": "B",
+      "explanation": "Local variables declared inside functions are allocated on the call stack frame of that function. Their memory is automatically deallocated when the function returns.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What type of array elements reference model does Python use for its list objects?",
+      "options": {
+        "A": "Direct value model, storing primitive structs consecutively.",
+        "B": "Referential model, storing pointers to memory blocks representing python objects.",
+        "C": "Hierarchical reference model, storing tree nodes pointer indexes.",
+        "D": "None of the above."
+      },
+      "correctAnswer": "B",
+      "explanation": "Python lists store references (pointers) to Python objects contiguously, rather than storing raw primitive values. This allows a list to store elements of heterogeneous types.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the time complexity of checking if an array of size N contains a specific target value using linear search?",
+      "options": {
+        "A": "O(1)",
+        "B": "O(log N)",
+        "C": "O(N)",
+        "D": "O(N^2)"
+      },
+      "correctAnswer": "C",
+      "explanation": "In an unsorted array, we must scan the elements sequentially from the first to the last. In the worst case, we check all N elements, taking O(N) time.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following array operations can be completed in O(1) time complexity?",
+      "options": {
+        "A": "Deleting an element from the middle of the array.",
+        "B": "Finding the minimum element in an unsorted array.",
+        "C": "Appending an element to a dynamic array that has free capacity.",
+        "D": "Inserting an element at index 0."
+      },
+      "correctAnswer": "C",
+      "explanation": "Appending to an array with free slots simply updates the index at size and increments size, taking O(1) time. Shifting elements is not required.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the time complexity of initializing a static array of size N to all zeroes?",
+      "options": {
+        "A": "O(1)",
+        "B": "O(log N)",
+        "C": "O(N)",
+        "D": "O(N log N)"
+      },
+      "correctAnswer": "C",
+      "explanation": "Initializing all elements of size N requires traversing each element to set it to 0, which requires N operations, scaling as O(N) linear time.",
       "difficulty": "Easy"
     },
     {
@@ -122,6 +242,126 @@
       "difficulty": "Medium"
     },
     {
+      "question": "What happens when you delete an element from the end of a dynamic array (like popping from a vector)?",
+      "options": {
+        "A": "The capacity immediately shrinks to release memory.",
+        "B": "The size decreases by 1, but the capacity usually remains unchanged to avoid resize costs.",
+        "C": "The array shifts all elements to the left by one position.",
+        "D": "The memory block is deallocated and reallocated with N-1 size."
+      },
+      "correctAnswer": "B",
+      "explanation": "Popping an element from the end is O(1). The array simply updates its active size pointer. Memory is kept allocated under the same capacity to accommodate future insertions without reallocation overhead.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "In a dynamic array with capacity C and size N, what is the memory utilization efficiency when N = C/2 + 1?",
+      "options": {
+        "A": "100%",
+        "B": "50%",
+        "C": "Approximately 50%",
+        "D": "Approximately 25%"
+      },
+      "correctAnswer": "C",
+      "explanation": "Memory efficiency is given by Size/Capacity. When N = C/2 + 1, memory efficiency is slightly above 50%, with the remaining half of the allocated space reserved for future growth.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How do referential arrays (like in Python or Java Object arrays) compare to value arrays (like in C++ or C# Struct arrays) in terms of cache locality?",
+      "options": {
+        "A": "Referential arrays have superior cache locality because objects are larger.",
+        "B": "Value arrays have superior cache locality because the raw data objects are stored contiguously, whereas referential arrays store pointers to objects that can be scattered in the heap.",
+        "C": "Both have identical cache locality because both store pointers.",
+        "D": "Referential arrays bypass the L1 cache entirely, writing directly to RAM."
+      },
+      "correctAnswer": "B",
+      "explanation": "Value arrays store objects directly in contiguous slots. Accessing value arrays sequentially fetches actual data. Referential arrays store pointers contiguously, but dereferencing each pointer to read object properties can result in cache misses because objects are scattered across the heap.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the time complexity of deleting an element at index i in a dynamic array of size N?",
+      "options": {
+        "A": "O(1)",
+        "B": "O(N - i)",
+        "C": "O(N)",
+        "D": "O(i)"
+      },
+      "correctAnswer": "B",
+      "explanation": "Deleting an element at index i requires shifting all subsequent elements left. The number of elements to shift is (N - 1 - i). Thus, the exact time complexity scales as O(N - i), which is O(N) in the worst case (when i = 0).",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "In C++, if you instantiate a vector with `std::vector<int> v(100);` and then call `v.reserve(200);`, what does the capacity and size of the vector become?",
+      "options": {
+        "A": "Size = 200, Capacity = 200",
+        "B": "Size = 100, Capacity = 200",
+        "C": "Size = 100, Capacity = 100",
+        "D": "Size = 200, Capacity = 100"
+      },
+      "correctAnswer": "B",
+      "explanation": "`v.reserve(C)` allocates memory block for at least C elements, updating capacity without altering the active size. So size remains 100, and capacity increases to 200.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "When a dynamic array shrinks, some implementations deallocate memory to release it. To avoid thrashing (frequent resizes when size fluctuates around threshold), when should the capacity be halved?",
+      "options": {
+        "A": "As soon as size < capacity",
+        "B": "When size reaches capacity / 2",
+        "C": "When size drops to capacity / 4 (or less)",
+        "D": "On every delete operation"
+      },
+      "correctAnswer": "C",
+      "explanation": "If capacity is halved at 50% utilization, inserting a new element immediately forces a double-size reallocation. By delaying halving until utilization drops to 25% (or 1/4), we ensure that the costs of insertion and deletion do not trigger back-to-back reallocations.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Which of the following array initialization operations has an O(1) auxiliary space complexity?",
+      "options": {
+        "A": "Creating a shallow copy of an array of size N.",
+        "B": "Creating a deep copy of an array of size N.",
+        "C": "Passing an array reference to a function as a parameter.",
+        "D": "Splitting an array into two halves of size N/2."
+      },
+      "correctAnswer": "C",
+      "explanation": "Passing an array reference only copies the address pointer (usually 8 bytes), which takes O(1) space. Copying or splitting elements creates new arrays, taking O(N) space.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the time complexity of checking if a sorted array contains a target value using Binary Search?",
+      "options": {
+        "A": "O(1)",
+        "B": "O(log N)",
+        "C": "O(N)",
+        "D": "O(N log N)"
+      },
+      "correctAnswer": "B",
+      "explanation": "Binary search repeatedly divides the search interval in half. The number of steps required to reduce size N to 1 scales logarithmically, O(log N).",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Which of the following describes the difference between shallow copy and deep copy of referential arrays?",
+      "options": {
+        "A": "Shallow copy creates new objects; Deep copy only copies references.",
+        "B": "Shallow copy copies the references to the same objects; Deep copy recursively clones the elements, creating entirely new objects.",
+        "C": "Shallow copy is faster but consumes more memory.",
+        "D": "There is no difference in referential arrays."
+      },
+      "correctAnswer": "B",
+      "explanation": "A shallow copy replicates the array of references, so both arrays point to the same objects in heap memory. A deep copy creates new objects for all elements, duplicating memory space completely.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "In standard dynamic array implementations, what happens if size equals capacity and you invoke a push operation?",
+      "options": {
+        "A": "An error is thrown because the array is full.",
+        "B": "The OS dynamically inserts an empty slot between the array and adjacent heap block.",
+        "C": "The array triggers a resize: allocates double memory, copies existing elements, frees old memory, and inserts the new element.",
+        "D": "The oldest element at index 0 is overwritten to save space."
+      },
+      "correctAnswer": "C",
+      "explanation": "Dynamic arrays automatically handle size limits by running a resize routine, ensuring the programmer doesn't have to manually manage memory allocations.",
+      "difficulty": "Medium"
+    },
+    {
       "question": "In a dynamic array using a growth factor of 2, if the current size and capacity are both N, you perform N/2 push_back operations sequentially. How many element copy operations (due to resizing and appends) occur in total during these N/2 pushes?",
       "options": {
         "A": "N/2",
@@ -179,6 +419,126 @@
       },
       "correctAnswer": "C",
       "explanation": "In row-major order, rows are stored sequentially in memory. To reach element A[i][j], you must skip i complete rows of size N (i * N elements) and then add the column index j. The total elements to skip is (i * N + j), which is multiplied by the element size S to get the byte offset.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "In multi-threaded array operations where threads write concurrently to adjacent indices of a shared array (e.g., thread 1 writes to index 0, thread 2 to index 1), what performance issue can arise on multi-core processors?",
+      "options": {
+        "A": "Memory leaks due to thread stack overlap.",
+        "B": "False sharing (cache ping-ponging), where cores invalidate each other's cache lines because the adjacent indices reside in the same cache line.",
+        "C": "Deadlock, as both threads compete for the array's base pointer lock.",
+        "D": "Array structure corruption, as the base address shifts dynamically."
+      },
+      "correctAnswer": "B",
+      "explanation": "False sharing occurs when threads on different cores modify variables residing on the same cache line (usually 64 bytes). Even though the threads write to independent array indices, the hardware must sync the entire cache line across cores, causing cache invalidations and severe performance degradation.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What mathematical proof determines that the optimal growth factor for a dynamic array should be less than 2 (e.g., 1.5 or the Golden Ratio ~1.618) rather than exactly 2?",
+      "options": {
+        "A": "A growth factor < 2 allows the memory allocator to reuse previously deallocated memory blocks for subsequent resizes, preventing heap fragmentation.",
+        "B": "A growth factor of 2 results in exponential waste of memory slots.",
+        "C": "Resizing with a factor of 1.5 matches the cache pre-fetch line width.",
+        "D": "Golden Ratio guarantees prime indexing distribution."
+      },
+      "correctAnswer": "A",
+      "explanation": "With a growth factor of 2, the memory required for the next resize (2^k) is always greater than the sum of all previously allocated blocks (2^0 + 2^1 + ... + 2^(k-1) = 2^k - 1). Thus, previous blocks can never be coalesced and reused for the new allocation. A factor of 1.5 or 1.618 eventually allows reuse of deallocated memory blocks.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "For a row-major 3D array declared as A[L][M][N], which formula calculates the byte offset of element A[x][y][z] relative to the base address, assuming element size S?",
+      "options": {
+        "A": "Offset = (x * M * N + y * N + z) * S",
+        "B": "Offset = (x + y * L + z * M) * S",
+        "C": "Offset = (x * L * M + y * M + z) * S",
+        "D": "Offset = (x * M + y * N + z) * S"
+      },
+      "correctAnswer": "A",
+      "explanation": "To access A[x][y][z], you skip x 2D slices of size M * N, then skip y rows of size N within the current slice, and finally add index z. This yields the formula: (x * M * N + y * N + z) * S.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "If a system uses 4KB memory pages, and you instantiate a contiguous array of size 1,000,000 double elements (8 bytes each), what is the minimum number of page faults triggered if you write to the array sequentially from index 0?",
+      "options": {
+        "A": "0 (pages are loaded on compile time)",
+        "B": "1954",
+        "C": "1953",
+        "D": "1,000,000"
+      },
+      "correctAnswer": "B",
+      "explanation": "Total size = 1,000,000 * 8 bytes = 8,000,000 bytes. With 4KB pages (4096 bytes), the array spans 8,000,000 / 4096 = 1953.125 pages. Writing sequentially triggers a demand paging fault at each page boundary, requiring at least ceil(1953.125) = 1954 page faults to map physical frames.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Which of the following describes the difference in heap fragmentation when allocating a single huge array of size N vs N individual objects of size 1 in heap memory?",
+      "options": {
+        "A": "A single huge array causes higher internal fragmentation.",
+        "B": "Allocating N individual objects creates high external fragmentation and pointer overhead, whereas a single array allocation preserves contiguous heap segments.",
+        "C": "Heap fragmentation is identical in both cases.",
+        "D": "Allocating individual objects is faster because they fit in L1 cache."
+      },
+      "correctAnswer": "B",
+      "explanation": "Allocating N objects scattered on the heap leaves empty gaps between them when they are individually freed, leading to high external fragmentation. A single large contiguous array block minimizes allocation bookkeeping overhead and keeps memory compact.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "When designing a high-throughput lock-free ring buffer (circular array) for multi-producer single-consumer thread communication, which CPU instruction or concept is crucial to avoid hardware-level memory re-ordering bugs?",
+      "options": {
+        "A": "Mutual exclusion mutex locks",
+        "B": "Memory Barriers (Fences) or atomic acquire-release memory ordering instructions",
+        "C": "Compiler optimization switches",
+        "D": "Volatile keyword in all variables"
+      },
+      "correctAnswer": "B",
+      "explanation": "Modern CPUs and compilers re-order memory read/write instructions to optimize pipeline execution. In concurrent lock-free structures, memory barriers/fences must be used to guarantee that writes to data slots are visible to other threads before updating the head/tail index pointers.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Why is the time complexity of checking if a dynamic array is full considered O(1) instead of O(N)?",
+      "options": {
+        "A": "It scans the array to search for null slots.",
+        "B": "It simply compares the values of two cached integer properties: size and capacity.",
+        "C": "It queries the OS page frame allocation tables.",
+        "D": "Dynamic arrays are never full because they resize."
+      },
+      "correctAnswer": "B",
+      "explanation": "The wrapper class of a dynamic array maintains size and capacity properties in memory. Checking if the array is full is a simple integer comparison (size == capacity), which runs in constant O(1) time.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "If you access a 2D array of size N x N in column-major order (iterating column index first, then row index) in C, what is the exact cache miss performance behavior as N becomes much larger than cache line size?",
+      "options": {
+        "A": "Cache miss rate drops to 0% because the loop is nested.",
+        "B": "Cache miss rate approaches 100% for each element load because every step jumps to a different row, loading a new cache line and evicting the previous one.",
+        "C": "The compiler transforms the loops to row-major automatically.",
+        "D": "Performance is identical because the overall memory accesses remain N^2."
+      },
+      "correctAnswer": "B",
+      "explanation": "Because C stores arrays in row-major order, column elements reside at memory steps of N * size bytes. When N is large, adjacent column slots span distinct cache lines. Accessing column-by-column means every step jumps lines, causing cache misses on almost every element.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "In lower-level systems, if a hardware DMA (Direct Memory Access) controller needs to transfer data from a network card directly into an array, what constraint must the array satisfy?",
+      "options": {
+        "A": "It must be declared inside a stack frame.",
+        "B": "It must occupy a contiguous block of physical RAM (often requiring pinned/locked memory pages) to allow the DMA controller to write directly without CPU virtual memory translation.",
+        "C": "It must contain only floating point data.",
+        "D": "It must be encrypted in L3 cache."
+      },
+      "correctAnswer": "B",
+      "explanation": "DMA controllers bypass the CPU to write directly to RAM. They work with physical addresses, not virtual ones. The memory buffer must be contiguous in physical memory and pinned (locked in RAM) to prevent the OS from swapping the pages out to disk during transfer.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "How does vectorization (SIMD - Single Instruction Multiple Data) exploit array structures for high-performance numeric computations?",
+      "options": {
+        "A": "By executing loops in parallel threads.",
+        "B": "By packing contiguous array elements into wide CPU registers (e.g. AVX 512-bit registers) to execute a single mathematical operation on multiple elements concurrently.",
+        "C": "By converting arrays to linked trees dynamically.",
+        "D": "By caching array offsets in CPU registers."
+      },
+      "correctAnswer": "B",
+      "explanation": "SIMD instructions perform operations on arrays of data elements in parallel. Because arrays are contiguous in memory, the CPU can load large chunks of elements into vector registers in one cycle and perform operations (like additions) on all of them at once, boosting throughput.",
       "difficulty": "Hard"
     }
   ]
