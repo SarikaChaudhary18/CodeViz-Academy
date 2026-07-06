@@ -1,0 +1,254 @@
+{
+  "topic": "Strings - Rabin-Karp",
+  "questions": [
+    {
+      "question": "What is the primary purpose of the Rabin-Karp algorithm?",
+      "options": {
+        "A": "To sort a list of strings",
+        "B": "To search for a substring within a larger string",
+        "C": "To compare the similarity between two strings",
+        "D": "To generate a random string"
+      },
+      "correctAnswer": "B",
+      "explanation": "The Rabin-Karp algorithm is used for string searching, where it efficiently locates any substring within a larger string. This is particularly useful in text processing and information retrieval applications. By calculating a hash value for both the substring and parts of the larger string, it can quickly identify potential matches. The primary purpose of the Rabin-Karp algorithm is thus to enable fast substring searching.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What type of hash function does the Rabin-Karp algorithm utilize?",
+      "options": {
+        "A": "Division method",
+        "B": "Multiplication method",
+        "C": "Rolling hash",
+        "D": "Folding method"
+      },
+      "correctAnswer": "C",
+      "explanation": "The Rabin-Karp algorithm employs a rolling hash function, which allows it to efficiently calculate the hash value of substrings of a larger string without needing to rehash the entire substring from scratch. This is critical for its performance, enabling it to search for a pattern in a text efficiently by only updating the hash value based on the difference between the old and new substrings.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is an advantage of using the Rabin-Karp algorithm over other string searching algorithms?",
+      "options": {
+        "A": "It can only handle strings of fixed lengths",
+        "B": "It always results in a higher number of collisions",
+        "C": "It has an average case time complexity of O(n + m)",
+        "D": "It can only search for a single substring at a time"
+      },
+      "correctAnswer": "C",
+      "explanation": "One of the advantages of the Rabin-Karp algorithm is its average-case time complexity of O(n + m), where n is the length of the text and m is the length of the pattern. This is particularly efficient for searching within large texts for short patterns. While it can have a worst-case scenario of O(nm) if the hash values collide for every substring, the average case efficiency makes it appealing for many practical applications.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What happens when the hash value of the pattern matches the hash value of a substring in the Rabin-Karp algorithm?",
+      "options": {
+        "A": "The algorithm immediately returns the matched substring",
+        "B": "The algorithm ignores the match and continues searching",
+        "C": "The algorithm checks the actual characters of the substring against the pattern",
+        "D": "The algorithm recalculates the hash value for the pattern"
+      },
+      "correctAnswer": "C",
+      "explanation": "When the hash value of the pattern matches the hash value of a substring, the Rabin-Karp algorithm does not immediately confirm a match. Instead, it proceeds to compare the characters of the pattern against the characters of the substring to confirm the match. This is because hashing collisions can occur, where two different strings produce the same hash value, so a character-by-character comparison is necessary to verify the match.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Why do collisions affect the performance of the Rabin-Karp algorithm?",
+      "options": {
+        "A": "They improve the algorithm's efficiency by reducing comparisons",
+        "B": "They have no impact on the algorithm's performance",
+        "C": "They decrease the algorithm's efficiency by requiring additional comparisons",
+        "D": "They only occur when searching for patterns in very short strings"
+      },
+      "correctAnswer": "C",
+      "explanation": "Collisions, where the hash value of the pattern matches the hash value of a substring but the strings are not identical, decrease the efficiency of the Rabin-Karp algorithm. This is because when a collision is detected, the algorithm must then perform a character-by-character comparison to verify if it is a true match, which can add to the overall time complexity of the search. Frequent collisions can significantly impact performance, especially in the worst-case scenario.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How does the Rabin-Karp algorithm handle the search for multiple patterns within a single text?",
+      "options": {
+        "A": "It can only search for one pattern at a time",
+        "B": "It uses a separate hash table for each pattern",
+        "C": "It calculates a single hash value that represents all patterns",
+        "D": "It extends the basic algorithm to compute and compare hash values for each pattern"
+      },
+      "correctAnswer": "D",
+      "explanation": "The Rabin-Karp algorithm can be extended to handle the search for multiple patterns within a single text. This involves computing the hash value for each pattern and then comparing these hash values against the hash values of substrings within the text. By maintaining multiple hash values for the different patterns and iteratively updating and comparing them as the algorithm scans the text, it efficiently identifies locations where any of the patterns occur.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is a common application of the Rabin-Karp algorithm?",
+      "options": {
+        "A": "Data compression",
+        "B": "Text editors for finding and replacing substrings",
+        "C": "Compilers for parsing source code",
+        "D": "Network protocols for packet routing"
+      },
+      "correctAnswer": "B",
+      "explanation": "A common and practical application of the Rabin-Karp algorithm is in text editors for the function of finding and replacing substrings within documents. This algorithm's efficiency in searching for a pattern within a larger text makes it suitable for such applications, where speed and accuracy are crucial. By integrating the Rabin-Karp algorithm, text editors can enhance the user experience by quickly locating specified substrings, even in large documents.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How does the choice of hash function affect the Rabin-Karp algorithm's performance?",
+      "options": {
+        "A": "A good hash function has no impact on performance",
+        "B": "A good hash function reduces the likelihood of collisions",
+        "C": "A poor hash function always results in collisions",
+        "D": "The choice of hash function is irrelevant for string searching"
+      },
+      "correctAnswer": "B",
+      "explanation": "The choice of hash function significantly affects the performance of the Rabin-Karp algorithm. A good hash function is one that minimizes the number of collisions, where two different strings produce the same hash value. By reducing collisions, a good hash function ensures that the algorithm spends less time on unnecessary character-by-character comparisons, leading to better average-case performance. Therefore, selecting an appropriate hash function is crucial for optimizing the algorithm's efficiency.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Can the Rabin-Karp algorithm be used for searching in multidimensional strings or arrays?",
+      "options": {
+        "A": "Yes, it can directly handle multidimensional data",
+        "B": "No, it is strictly limited to one-dimensional strings",
+        "C": "Yes, but it requires significant modifications to handle multidimensional data",
+        "D": "It can handle two-dimensional strings but not higher dimensions"
+      },
+      "correctAnswer": "C",
+      "explanation": "While the Rabin-Karp algorithm is primarily designed for searching one-dimensional strings, it can be modified and extended to handle multidimensional strings or arrays. This would involve adapting the hash function and the search logic to accommodate the additional dimensions. Such modifications enable the application of the algorithm to more complex data structures, expanding its utility in various domains.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "How does the Rabin-Karp algorithm compare to the Knuth-Morris-Pratt (KMP) algorithm in terms of efficiency?",
+      "options": {
+        "A": "Rabin-Karp is always more efficient than KMP",
+        "B": "KMP is always more efficient than Rabin-Karp",
+        "C": "The efficiency depends on the specific use case and input",
+        "D": "Both algorithms have the same efficiency for all inputs"
+      },
+      "correctAnswer": "C",
+      "explanation": "The efficiency of the Rabin-Karp algorithm compared to the Knuth-Morris-Pratt (KMP) algorithm depends on the specific use case and input. The KMP algorithm preprocesses the pattern to create a lookup table that enables it to skip unnecessary comparisons in the text, resulting in a linear time complexity for the search. The Rabin-Karp algorithm's efficiency, on the other hand, can be affected by the number of collisions, which determines how often it must resort to character-by-character comparisons. Therefore, the choice between these algorithms should be based on the characteristics of the input data and the specific requirements of the application.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is a key challenge in implementing the Rabin-Karp algorithm for very large texts or patterns?",
+      "options": {
+        "A": "Managing the algorithm's time complexity",
+        "B": "Dealing with the potential for a large number of collisions",
+        "C": "Handling the memory requirements for the text and pattern",
+        "D": "Optimizing the choice of hash function"
+      },
+      "correctAnswer": "B",
+      "explanation": "One key challenge in implementing the Rabin-Karp algorithm, especially for very large texts or patterns, is dealing with the potential for a large number of collisions. As the size of the text or pattern increases, the likelihood of hash collisions also increases, which can lead to a significant decrease in the algorithm's efficiency due to the need for additional character-by-character comparisons. Managing and minimizing collisions is thus crucial for maintaining the algorithm's performance in such scenarios.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Can the Rabin-Karp algorithm be parallelized to take advantage of multi-core processors?",
+      "options": {
+        "A": "No, the algorithm is inherently sequential",
+        "B": "Yes, the algorithm can be parallelized by dividing the text into segments",
+        "C": "Only the hash calculation can be parallelized",
+        "D": "Parallelization is not beneficial due to synchronization overhead"
+      },
+      "correctAnswer": "B",
+      "explanation": "The Rabin-Karp algorithm can indeed be parallelized to leverage the capabilities of multi-core processors. One approach is to divide the text into segments and assign each segment to a different core for parallel processing. Each core can independently calculate hash values for its segment and search for the pattern, significantly speeding up the overall search process. This parallelization can lead to substantial performance gains, especially for very large texts.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "How does the Rabin-Karp algorithm's performance change with the size of the alphabet used in the strings?",
+      "options": {
+        "A": "The performance improves with a larger alphabet size",
+        "B": "The performance remains unaffected by the alphabet size",
+        "C": "The performance degrades with a larger alphabet size due to increased collision likelihood",
+        "D": "The performance is optimal with a binary alphabet"
+      },
+      "correctAnswer": "C",
+      "explanation": "The Rabin-Karp algorithm's performance can degrade with a larger alphabet size because the likelihood of hash collisions increases. A larger alphabet means more possible characters, which can lead to a higher chance of different strings producing the same hash value, thus requiring more character-by-character comparisons. This can negatively impact the algorithm's efficiency, especially in cases where the alphabet size is significantly large.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What role does the modulo operation play in the Rabin-Karp algorithm's hash function?",
+      "options": {
+        "A": "It ensures the hash value is always positive",
+        "B": "It reduces the size of the hash value to prevent overflow",
+        "C": "It eliminates the possibility of hash collisions",
+        "D": "It has no effect on the algorithm's performance"
+      },
+      "correctAnswer": "B",
+      "explanation": "The modulo operation in the Rabin-Karp algorithm's hash function is crucial for reducing the size of the hash value. By taking the modulo of the hash value with a prime number, the algorithm prevents the hash value from becoming too large and potentially causing overflow. This operation also helps in distributing the hash values more uniformly, which can reduce the likelihood of collisions. However, it does not eliminate collisions altogether.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How does preprocessing the pattern affect the Rabin-Karp algorithm's performance?",
+      "options": {
+        "A": "It has no impact on performance",
+        "B": "It can slightly improve performance by allowing for quicker hash calculations",
+        "C": "It significantly improves performance by enabling the algorithm to skip unnecessary comparisons",
+        "D": "It degrades performance due to the overhead of preprocessing"
+      },
+      "correctAnswer": "C",
+      "explanation": "Preprocessing the pattern can significantly improve the Rabin-Karp algorithm's performance. By calculating and storing certain values related to the pattern (such as its initial hash value and the value of the polynomial for the pattern length minus one), the algorithm can avoid redundant calculations during the search. This preprocessing step enables the algorithm to efficiently update hash values as it slides the pattern over the text, thereby reducing the overall number of hash calculations and comparisons required.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the worst-case time complexity of the Rabin-Karp algorithm?",
+      "options": {
+        "A": "O(n + m)",
+        "B": "O(n*m)",
+        "C": "O(n log m)",
+        "D": "O(m log n)"
+      },
+      "correctAnswer": "B",
+      "explanation": "The worst-case time complexity of the Rabin-Karp algorithm occurs when every substring of the text has the same hash value as the pattern, leading to a situation where the algorithm must perform a character-by-character comparison for every substring. In this scenario, the time complexity becomes O(n*m), where n is the length of the text and m is the length of the pattern. This worst-case scenario, although rare, highlights the importance of choosing a good hash function to minimize collisions.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Can the Rabin-Karp algorithm be used for searching in compressed texts or files?",
+      "options": {
+        "A": "Yes, it can directly search within compressed data",
+        "B": "No, it requires the text to be uncompressed before searching",
+        "C": "It depends on the compression algorithm used",
+        "D": "Only for certain types of compression"
+      },
+      "correctAnswer": "B",
+      "explanation": "The Rabin-Karp algorithm, in its basic form, is designed to search within uncompressed texts. To apply this algorithm to compressed texts or files, the data first needs to be decompressed. The reason is that the algorithm relies on direct access to the characters of the text and the ability to calculate hash values based on these characters, which is not straightforward with compressed data without first decompressing it.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How does the Rabin-Karp algorithm handle strings that contain non-ASCII characters?",
+      "options": {
+        "A": "It treats them the same as ASCII characters",
+        "B": "It ignores non-ASCII characters during the search",
+        "C": "It requires a different hash function for non-ASCII characters",
+        "D": "It can handle them but may require additional processing steps"
+      },
+      "correctAnswer": "D",
+      "explanation": "The Rabin-Karp algorithm can handle strings that contain non-ASCII characters, but it may require additional processing steps. Non-ASCII characters can be represented using Unicode, which may involve multiple bytes per character. The algorithm needs to account for this when calculating hash values to ensure accurate comparisons. Depending on the implementation, this might involve using a Unicode-aware hash function or converting the text to a consistent encoding before applying the algorithm.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the significance of the prime number used in the Rabin-Karp algorithm's hash function?",
+      "options": {
+        "A": "It ensures the hash function is injective",
+        "B": "It minimizes the number of collisions",
+        "C": "It has no impact on the algorithm's performance",
+        "D": "It prevents overflow by keeping hash values within a specific range"
+      },
+      "correctAnswer": "B",
+      "explanation": "The prime number used in the Rabin-Karp algorithm's hash function plays a crucial role in minimizing the number of collisions. A good choice of prime number helps in distributing the hash values more uniformly across the possible range, thereby reducing the likelihood of different strings producing the same hash value. This is vital for maintaining the algorithm's efficiency, as fewer collisions mean fewer unnecessary character-by-character comparisons.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How does the Rabin-Karp algorithm compare to the Boyer-Moore algorithm in terms of preprocessing requirements?",
+      "options": {
+        "A": "Both algorithms require extensive preprocessing",
+        "B": "The Rabin-Karp algorithm requires more preprocessing than Boyer-Moore",
+        "C": "The Boyer-Moore algorithm requires more preprocessing than Rabin-Karp",
+        "D": "Neither algorithm requires significant preprocessing"
+      },
+      "correctAnswer": "C",
+      "explanation": "The Boyer-Moore algorithm typically requires more preprocessing than the Rabin-Karp algorithm. The Boyer-Moore algorithm preprocesses the pattern to create lookup tables that help in skipping characters during the search, which can be computationally intensive for large patterns. In contrast, the Rabin-Karp algorithm's preprocessing is relatively simpler, involving the calculation of the initial hash value of the pattern and possibly other constants. Therefore, in terms of preprocessing requirements, the Boyer-Moore algorithm generally has a higher overhead.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Can the Rabin-Karp algorithm be adapted for use in real-time string matching applications?",
+      "options": {
+        "A": "Yes, it can be used without modifications",
+        "B": "Yes, but it requires adjustments for handling streaming data",
+        "C": "No, it is not suitable for real-time applications due to its average-case complexity",
+        "D": "Only for offline processing of logged data"
+      }
+    }
+  ]
+}

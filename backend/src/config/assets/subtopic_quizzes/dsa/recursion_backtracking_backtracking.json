@@ -1,0 +1,197 @@
+{
+  "topic": "Recursion & Backtracking - Backtracking",
+  "questions": [
+    {
+      "question": "What is backtracking in computer science?",
+      "options": {
+        "A": "A problem-solving technique used in linear programming.",
+        "B": "A problem-solving technique used in dynamic programming.",
+        "C": "A problem-solving technique used to explore all possible solutions of a problem.",
+        "D": "A problem-solving technique used in artificial intelligence."
+      },
+      "correctAnswer": "C",
+      "explanation": "Backtracking is a problem-solving technique used to explore all possible solutions of a problem by trying different possibilities and reconsidering previous steps when a dead end is encountered.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following is a characteristic of backtracking algorithms?",
+      "options": {
+        "A": "They always return the optimal solution.",
+        "B": "They explore all possible solutions.",
+        "C": "They only consider one solution at a time.",
+        "D": "They are always fast."
+      },
+      "correctAnswer": "B",
+      "explanation": "Backtracking algorithms typically explore all possible solutions by trying different possibilities and reconsidering previous steps when a dead end is encountered.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the key idea behind backtracking?",
+      "options": {
+        "A": "To find a single solution to a problem.",
+        "B": "To explore all possible solutions to a problem.",
+        "C": "To use recursion to build up a solution.",
+        "D": "To use dynamic programming to solve a problem."
+      },
+      "correctAnswer": "B",
+      "explanation": "The key idea behind backtracking is to explore all possible solutions to a problem by trying different possibilities and reconsidering previous steps when a dead end is encountered.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following is a common application of backtracking?",
+      "options": {
+        "A": "Solving linear equations.",
+        "B": "Solving constraint satisfaction problems.",
+        "C": "Solving linear programming problems.",
+        "D": "Solving game theory problems."
+      },
+      "correctAnswer": "B",
+      "explanation": "Backtracking is commonly used to solve constraint satisfaction problems, such as Sudoku, crosswords, and other puzzle games.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the main difference between backtracking and depth-first search (DFS)?",
+      "options": {
+        "A": "Backtracking explores only one branch of a tree, while DFS explores all branches.",
+        "B": "Backtracking is used to solve only optimization problems, while DFS is used to solve only search problems.",
+        "C": "Backtracking is used to explore all possible solutions, while DFS is used to explore one path.",
+        "D": "Backtracking is used to solve problems with cycles, while DFS is used to solve problems without cycles."
+      },
+      "correctAnswer": "C",
+      "explanation": "Backtracking explores all possible solutions, while DFS explores one path in the search space.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Which of the following is a common challenge when implementing backtracking algorithms?",
+      "options": {
+        "A": "Avoiding infinite loops.",
+        "B": "Increasing memory usage.",
+        "C": "Handling duplicate solutions.",
+        "D": "Optimizing the search space."
+      },
+      "correctAnswer": "C",
+      "explanation": "Handling duplicate solutions can be a common challenge when implementing backtracking algorithms, as it requires careful consideration of pruning and caching strategies.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the role of recursion in backtracking algorithms?",
+      "options": {
+        "A": "Recursion is used to build up a solution from a single node.",
+        "B": "Recursion is used to explore all possible solutions by trying different possibilities.",
+        "C": "Recursion is used to prune the search space by eliminating dead ends.",
+        "D": "Recursion is not used in backtracking algorithms."
+      },
+      "correctAnswer": "B",
+      "explanation": "Recursion is used to explore all possible solutions by trying different possibilities, which is a key feature of backtracking algorithms.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Which of the following is a data structure commonly used in backtracking algorithms?",
+      "options": {
+        "A": "Linked lists.",
+        "B": "Stacks.",
+        "C": "Queues.",
+        "D": "Trees."
+      },
+      "correctAnswer": "B",
+      "explanation": "Stacks are commonly used in backtracking algorithms to store and retrieve intermediate solutions and dead ends.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the main advantage of using backtracking algorithms?",
+      "options": {
+        "A": "They are always fast.",
+        "B": "They are always efficient.",
+        "C": "They explore all possible solutions.",
+        "D": "They can be easily parallelized."
+      },
+      "correctAnswer": "C",
+      "explanation": "The main advantage of using backtracking algorithms is that they can explore all possible solutions to a problem, even if there are many possible solutions.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following is a common use case for backtracking algorithms?",
+      "options": {
+        "A": "Solving linear equations.",
+        "B": "Solving constraint satisfaction problems.",
+        "C": "Solving linear programming problems.",
+        "D": "Solving game theory problems."
+      },
+      "correctAnswer": "B",
+      "explanation": "Backtracking algorithms are commonly used to solve constraint satisfaction problems, such as Sudoku, crosswords, and other puzzle games.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the key idea behind depth-first search (DFS) that makes it different from backtracking?",
+      "options": {
+        "A": "DFS explores only one branch of the search space.",
+        "B": "DFS uses recursion to build up a solution.",
+        "C": "DFS uses dynamic programming to solve the problem.",
+        "D": "DFS explores all possible solutions by trying different possibilities."
+      },
+      "correctAnswer": "A",
+      "explanation": "DFS explores only one branch of the search space, making it different from backtracking that explores all possible solutions by trying different possibilities.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Why is prune and un-prune strategy used in backtracking algorithms?",
+      "options": {
+        "A": "To increase the execution time.",
+        "B": "To reduce memory usage.",
+        "C": "To avoid infinite loops.",
+        "D": "To avoid duplicate solutions."
+      },
+      "correctAnswer": "D",
+      "explanation": "The prune and un-prune strategy is used to avoid duplicate solutions in backtracking algorithms.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the key difference between backtracking and other search algorithms?",
+      "options": {
+        "A": "Backtracking uses recursion.",
+        "B": "Backtracking explores all branches of the search space.",
+        "C": "Backtracking uses pruning and caching to avoid duplicate solutions.",
+        "D": "Backtracking is only used for search problems."
+      },
+      "correctAnswer": "C",
+      "explanation": "The key difference between backtracking and other search algorithms is that backtracking uses pruning and caching to avoid duplicate solutions.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Which of the following is a common challenge when using backtracking algorithms?",
+      "options": {
+        "A": "Finding the optimal solution.",
+        "B": "Avoiding infinite loops.",
+        "C": "Handling duplicate solutions.",
+        "D": "Increasing memory usage."
+      },
+      "correctAnswer": "C",
+      "explanation": "Handling duplicate solutions can be a common challenge when using backtracking algorithms.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the main advantage of using backtracking algorithms over other search algorithms?",
+      "options": {
+        "A": "They are always fast.",
+        "B": "They are always efficient.",
+        "C": "They explore all possible solutions.",
+        "D": "They can be easily parallelized."
+      },
+      "correctAnswer": "C",
+      "explanation": "The main advantage of using backtracking algorithms is that they can explore all possible solutions to a problem.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Which of the following is not a characteristic of backtracking algorithms?",
+      "options": {
+        "A": "They always return the optimal solution.",
+        "B": "They explore all possible solutions.",
+        "C": "They use recursion to build up a solution.",
+        "D": "They only consider one solution at a time."
+      },
+      "correctAnswer": "A",
+      "explanation": "Backtracking algorithms do not always return the optimal solution.",
+      "difficulty": "Medium"
+    }
+  ]
+}

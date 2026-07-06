@@ -1,0 +1,302 @@
+{
+  "topic": "Recursion & Backtracking - Recursion Basics",
+  "questions": [
+    {
+      "question": "What is the primary characteristic of a recursive function?",
+      "options": {
+        "A": "It uses a loop to repeat a task",
+        "B": "It calls itself to solve a problem",
+        "C": "It uses conditional statements to make decisions",
+        "D": "It modifies external state to track progress"
+      },
+      "correctAnswer": "B",
+      "explanation": "A recursive function is defined as a function that calls itself during its execution. The process of recursion has two main components: a base case and a recursive case. The base case is a trivial case that provides a stopping condition for the recursion, while the recursive case is where the function calls itself to solve a smaller version of the same problem.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following is an example of a recursive data structure?",
+      "options": {
+        "A": "Array",
+        "B": "Linked List",
+        "C": "Tree",
+        "D": "Stack"
+      },
+      "correctAnswer": "C",
+      "explanation": "A tree is a recursive data structure because it can be defined recursively. A tree is either empty or it consists of a node with some value and a list of child trees. This recursive definition is the key characteristic of a tree data structure.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the purpose of a base case in a recursive function?",
+      "options": {
+        "A": "To start the recursion process",
+        "B": "To stop the recursion process",
+        "C": "To modify external state",
+        "D": "To return an error message"
+      },
+      "correctAnswer": "B",
+      "explanation": "The base case is a critical component of a recursive function, as it provides a stopping condition for the recursion. Without a base case, the function would continue to call itself indefinitely, leading to a stack overflow error. The base case is typically a simple case that can be solved directly, without the need for further recursive calls.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How does recursion differ from iteration?",
+      "options": {
+        "A": "Recursion uses a loop, while iteration uses function calls",
+        "B": "Recursion uses function calls, while iteration uses a loop",
+        "C": "Recursion is faster, while iteration is slower",
+        "D": "Recursion uses more memory, while iteration uses less"
+      },
+      "correctAnswer": "B",
+      "explanation": "Recursion and iteration are two different approaches to solving problems that require repetition. Recursion uses function calls to repeat a task, while iteration uses a loop to achieve the same result. While both approaches can be used to solve the same problem, they have different characteristics and use cases.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the maximum recursion depth in Python?",
+      "options": {
+        "A": "1000",
+        "B": "5000",
+        "C": "10000",
+        "D": "It depends on the available stack size"
+      },
+      "correctAnswer": "D",
+      "explanation": "The maximum recursion depth in Python is not fixed and depends on the available stack size. Python has a built-in limit to prevent a stack overflow, but this limit can be changed using the sys.setrecursionlimit() function. However, it's generally not recommended to increase the recursion limit, as it can lead to a crash or other unexpected behavior.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following problems can be solved using recursion?",
+      "options": {
+        "A": "Finding the maximum value in an array",
+        "B": "Sorting a list of numbers",
+        "C": "Calculating the factorial of a number",
+        "D": "All of the above"
+      },
+      "correctAnswer": "D",
+      "explanation": "Recursion can be used to solve a wide range of problems, including finding the maximum value in an array, sorting a list of numbers, and calculating the factorial of a number. In fact, many problems that can be solved using iteration can also be solved using recursion.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the time complexity of a recursive function that solves the Fibonacci sequence?",
+      "options": {
+        "A": "O(n)",
+        "B": "O(n^2)",
+        "C": "O(2^n)",
+        "D": "O(log n)"
+      },
+      "correctAnswer": "C",
+      "explanation": "The time complexity of a recursive function that solves the Fibonacci sequence is O(2^n), because each call to the function results in two more calls, leading to an exponential number of operations. This makes the recursive solution inefficient for large values of n.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How can you improve the performance of a recursive function that solves the Fibonacci sequence?",
+      "options": {
+        "A": "By using memoization",
+        "B": "By using dynamic programming",
+        "C": "By using a loop instead of recursion",
+        "D": "All of the above"
+      },
+      "correctAnswer": "D",
+      "explanation": "There are several ways to improve the performance of a recursive function that solves the Fibonacci sequence. Memoization involves storing the results of expensive function calls and reusing them when the same inputs occur again. Dynamic programming involves breaking down the problem into smaller sub-problems and solving each sub-problem only once. Using a loop instead of recursion can also improve performance, because it avoids the overhead of function calls.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the term for the process of storing the results of expensive function calls and reusing them when the same inputs occur again?",
+      "options": {
+        "A": "Memoization",
+        "B": "Dynamic programming",
+        "C": "Caching",
+        "D": "Lazy evaluation"
+      },
+      "correctAnswer": "A",
+      "explanation": "Memoization is an optimization technique that stores the results of expensive function calls and reuses them when the same inputs occur again. This technique is particularly useful for recursive functions, where the same sub-problems may be solved multiple times. By storing the results of previous function calls, memoization can avoid redundant computation and improve performance.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Which of the following data structures is well-suited for recursive algorithms?",
+      "options": {
+        "A": "Array",
+        "B": "Linked List",
+        "C": "Tree",
+        "D": "Graph"
+      },
+      "correctAnswer": "C",
+      "explanation": "Trees are a recursive data structure, meaning that they can be defined recursively. A tree is either empty or it consists of a node with some value and a list of child trees. This recursive definition makes trees well-suited for recursive algorithms, because recursive functions can easily traverse and manipulate the tree structure.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the purpose of the 'return' statement in a recursive function?",
+      "options": {
+        "A": "To start the recursion process",
+        "B": "To stop the recursion process",
+        "C": "To pass values back up the call stack",
+        "D": "To modify external state"
+      },
+      "correctAnswer": "C",
+      "explanation": "The 'return' statement in a recursive function is used to pass values back up the call stack. When a recursive function calls itself, it creates a new stack frame for each call. The 'return' statement is used to return a value from the current stack frame to the previous stack frame, allowing the function to propagate values back up the call stack.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How does a recursive function handle errors and exceptions?",
+      "options": {
+        "A": "By using try-except blocks to catch and handle exceptions",
+        "B": "By using error codes to propagate errors up the call stack",
+        "C": "By using a combination of try-except blocks and error codes",
+        "D": "By ignoring errors and exceptions"
+      },
+      "correctAnswer": "C",
+      "explanation": "A recursive function can handle errors and exceptions using a combination of try-except blocks and error codes. Try-except blocks can be used to catch and handle exceptions at the point where they occur, while error codes can be used to propagate errors up the call stack. This allows the function to handle errors and exceptions in a robust and reliable way.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the difference between a recursive function and an iterative function?",
+      "options": {
+        "A": "A recursive function uses a loop, while an iterative function uses function calls",
+        "B": "A recursive function uses function calls, while an iterative function uses a loop",
+        "C": "A recursive function is faster, while an iterative function is slower",
+        "D": "A recursive function uses more memory, while an iterative function uses less"
+      },
+      "correctAnswer": "B",
+      "explanation": "The main difference between a recursive function and an iterative function is the way they repeat a task. A recursive function uses function calls to repeat a task, while an iterative function uses a loop to achieve the same result. While both approaches can be used to solve the same problem, they have different characteristics and use cases.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Which of the following is a characteristic of a recursive function?",
+      "options": {
+        "A": "It uses a loop to repeat a task",
+        "B": "It calls itself to solve a problem",
+        "C": "It uses conditional statements to make decisions",
+        "D": "It modifies external state to track progress"
+      },
+      "correctAnswer": "B",
+      "explanation": "A recursive function is defined as a function that calls itself during its execution. The process of recursion has two main components: a base case and a recursive case. The base case is a trivial case that provides a stopping condition for the recursion, while the recursive case is where the function calls itself to solve a smaller version of the same problem.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How can you optimize a recursive function to reduce its time complexity?",
+      "options": {
+        "A": "By using memoization to store the results of expensive function calls",
+        "B": "By using dynamic programming to break down the problem into smaller sub-problems",
+        "C": "By using a loop instead of recursion",
+        "D": "All of the above"
+      },
+      "correctAnswer": "D",
+      "explanation": "There are several ways to optimize a recursive function to reduce its time complexity. Memoization involves storing the results of expensive function calls and reusing them when the same inputs occur again. Dynamic programming involves breaking down the problem into smaller sub-problems and solving each sub-problem only once. Using a loop instead of recursion can also improve performance, because it avoids the overhead of function calls.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the term for the process of breaking down a problem into smaller sub-problems and solving each sub-problem only once?",
+      "options": {
+        "A": "Memoization",
+        "B": "Dynamic programming",
+        "C": "Caching",
+        "D": "Lazy evaluation"
+      },
+      "correctAnswer": "B",
+      "explanation": "Dynamic programming is an optimization technique that involves breaking down a problem into smaller sub-problems and solving each sub-problem only once. This approach is particularly useful for recursive functions, where the same sub-problems may be solved multiple times. By solving each sub-problem only once, dynamic programming can avoid redundant computation and improve performance.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Which of the following data structures is well-suited for dynamic programming?",
+      "options": {
+        "A": "Array",
+        "B": "Linked List",
+        "C": "Tree",
+        "D": "Graph"
+      },
+      "correctAnswer": "A",
+      "explanation": "Arrays are a suitable data structure for dynamic programming, because they can be used to store the results of sub-problems and reuse them when needed. Dynamic programming typically involves filling up a table with solutions to sub-problems, and arrays can be used to implement this table.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the purpose of the 'base case' in a recursive function?",
+      "options": {
+        "A": "To start the recursion process",
+        "B": "To stop the recursion process",
+        "C": "To pass values back up the call stack",
+        "D": "To modify external state"
+      },
+      "correctAnswer": "B",
+      "explanation": "The base case is a critical component of a recursive function, as it provides a stopping condition for the recursion. Without a base case, the function would continue to call itself indefinitely, leading to a stack overflow error. The base case is typically a simple case that can be solved directly, without the need for further recursive calls.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "How can you handle errors and exceptions in a recursive function?",
+      "options": {
+        "A": "By using try-except blocks to catch and handle exceptions",
+        "B": "By using error codes to propagate errors up the call stack",
+        "C": "By using a combination of try-except blocks and error codes",
+        "D": "By ignoring errors and exceptions"
+      },
+      "correctAnswer": "C",
+      "explanation": "A recursive function can handle errors and exceptions using a combination of try-except blocks and error codes. Try-except blocks can be used to catch and handle exceptions at the point where they occur, while error codes can be used to propagate errors up the call stack. This allows the function to handle errors and exceptions in a robust and reliable way.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the difference between a recursive function and a recursive data structure?",
+      "options": {
+        "A": "A recursive function uses a loop, while a recursive data structure uses function calls",
+        "B": "A recursive function uses function calls, while a recursive data structure uses a loop",
+        "C": "A recursive function is used to solve a problem, while a recursive data structure is used to store data",
+        "D": "A recursive function is faster, while a recursive data structure is slower"
+      },
+      "correctAnswer": "C",
+      "explanation": "A recursive function is a function that calls itself during its execution, while a recursive data structure is a data structure that is defined recursively. A recursive data structure, such as a tree or a graph, can be defined in terms of smaller instances of the same data structure. Recursive functions and recursive data structures are both used to solve problems and store data, but they serve different purposes.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Which of the following is a characteristic of a recursive algorithm?",
+      "options": {
+        "A": "It uses a loop to repeat a task",
+        "B": "It calls itself to solve a problem",
+        "C": "It uses conditional statements to make decisions",
+        "D": "It modifies external state to track progress"
+      },
+      "correctAnswer": "B",
+      "explanation": "A recursive algorithm is defined as an algorithm that calls itself during its execution. The process of recursion has two main components: a base case and a recursive case. The base case is a trivial case that provides a stopping condition for the recursion, while the recursive case is where the algorithm calls itself to solve a smaller version of the same problem.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "How can you optimize a recursive algorithm to reduce its space complexity?",
+      "options": {
+        "A": "By using memoization to store the results of expensive function calls",
+        "B": "By using dynamic programming to break down the problem into smaller sub-problems",
+        "C": "By using a loop instead of recursion",
+        "D": "All of the above"
+      },
+      "correctAnswer": "D",
+      "explanation": "There are several ways to optimize a recursive algorithm to reduce its space complexity. Memoization involves storing the results of expensive function calls and reusing them when the same inputs occur again. Dynamic programming involves breaking down the problem into smaller sub-problems and solving each sub-problem only once. Using a loop instead of recursion can also improve performance, because it avoids the overhead of function calls.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the term for the process of filling up a table with solutions to sub-problems and reusing them when needed?",
+      "options": {
+        "A": "Memoization",
+        "B": "Dynamic programming",
+        "C": "Caching",
+        "D": "Lazy evaluation"
+      },
+      "correctAnswer": "B",
+      "explanation": "Dynamic programming is an optimization technique that involves filling up a table with solutions to sub-problems and reusing them when needed. This approach is particularly useful for recursive algorithms, where the same sub-problems may be solved multiple times. By filling up a table with solutions to sub-problems, dynamic programming can avoid redundant computation and improve performance.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Which of the following data structures is well-suited for memoization?",
+      "options": {
+        "A": "Array",
+        "B": "Linked List",
+        "C": "Tree",
+        "D": "Graph"
+      },
+      "correctAnswer": "A",
+      "explanation": "Arrays are a suitable data structure for memoization, because they can be used to store the results of sub-problems and reuse them when needed. Memoization typically involves storing the results of expensive function calls in a table, and arrays can be used to implement this table.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the purpose of the 'recursive case' in a recursive function?",
+      "options": {
+        "A": "To start the recursion process",
+        "B": "To stop the recursion process",
+        "C": "To pass values back up the call stack",
+        "D": "To call itself to solve a smaller version of the same problem"
+      }
+    }
+  ]
+}

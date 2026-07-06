@@ -1,0 +1,161 @@
+{
+  "topic": "Recursion & Backtracking - Recursion Trees",
+  "questions": [
+    {
+      "question": "What is the primary purpose of a recursion tree in understanding algorithms?",
+      "options": {
+        "A": "To visualize the time complexity of an algorithm",
+        "B": "To understand the order of operations in an algorithm",
+        "C": "To identify the base case and recursive case",
+        "D": "To optimize the time complexity of an algorithm"
+      },
+      "correctAnswer": "C",
+      "explanation": "A recursion tree is used to understand the structure of an algorithm, identifying the base case and recursive case. It helps in visualizing the recursive function calls and their order.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following is an example of a recursive tree?",
+      "options": {
+        "A": "A binary search tree",
+        "B": "A heap data structure",
+        "C": "A tree of function calls in a recursive function",
+        "D": "A queue data structure"
+      },
+      "correctAnswer": "C",
+      "explanation": "A recursion tree represents the tree of function calls in a recursive function, showing the recursive calls and their branches.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Recursion trees are useful for analyzing algorithms because they",
+      "options": {
+        "A": "Help in understanding the time complexity of an algorithm",
+        "B": "Are used to identify the base case and recursive case",
+        "C": "Can only be used for optimization purposes",
+        "D": "Only apply to recursive algorithms"
+      },
+      "correctAnswer": "A",
+      "explanation": "Recursion trees are used to understand the time and space complexity of an algorithm by visualizing the number of function calls and recursions.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Consider the following recursive function: `int factorial(int n) { if (n == 1) return 1; return n * factorial(n-1); }`. What is the root node of the recursion tree for `factorial(3)`?",
+      "options": {
+        "A": "The current function call to `factorial(3)`",
+        "B": "The function call to `factorial(2)`",
+        "C": "The function call to `factorial(1)`",
+        "D": "The base case in the recursive function"
+      },
+      "correctAnswer": "A",
+      "explanation": "The root node of the recursion tree represents the current function call, which in this case is `factorial(3)`. Each recursive call adds a new node in the tree.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which recursion technique is often represented in a recursion tree as a sequence of 'expansion' or 'contraction' of nodes?",
+      "options": {
+        "A": "Depth-first search (DFS) traversal",
+        "B": "Breadth-first search (BFS) traversal",
+        "C": "Binary search traversal",
+        "D": "Pre-order traversal"
+      },
+      "correctAnswer": "A",
+      "explanation": "In a recursion tree, depth-first search (DFS) traversal is represented as a sequence of 'expansion' or 'contraction' of nodes, showing the recursive calls and their branches.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Consider the following recursion tree: `Root->A->B->C->C`. What is the order of operations in the tree?",
+      "options": {
+        "A": "A -> B -> C -> C -> D -> A",
+        "B": "A -> B -> C -> D -> A",
+        "C": "A -> B -> C -> C",
+        "D": "C -> B -> A -> C"
+      },
+      "correctAnswer": "C",
+      "explanation": "The order of operations in the tree starts from the root, then moves down to the left branch `A -> B -> C` and to the right branch `C`. Then it returns from `C` to `B` back up to `A`. There is no operation in 'D' or 'D' doesn't actually exist here.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How would you describe the shape of a recursion tree for a binary search tree?",
+      "options": {
+        "A": "A full binary tree",
+        "B": "An incomplete binary tree",
+        "C": "A tree with branches that split into smaller subtrees",
+        "D": "A tree with branches that merge into larger subtrees"
+      },
+      "correctAnswer": "B",
+      "explanation": "A binary search tree can be incomplete as it only adds a new node when the key is larger than or smaller than the parent key.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the term for the 'shrinking' of a recursion tree in a DFS traversal, where the same node appears multiple times in the sequence?",
+      "options": {
+        "A": "Repetition",
+        "B": "Cycles",
+        "C": "Reduction",
+        "D": "Iteration"
+      },
+      "correctAnswer": "D",
+      "explanation": "Iteration in DFS traversal can cause the same node to appear multiple times in the recursion tree sequence, indicating 'shrinking' effect.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Consider the following scenario: you are analyzing a recursive function that uses a stack to store the function calls. If the stack is empty, how would the recursion tree represent this state?",
+      "options": {
+        "A": "The root node is removed from the tree",
+        "B": "The tree is reduced to a single node",
+        "C": "The tree becomes a chain of nodes, with each node representing a function call",
+        "D": "The stack is not represented in the recursion tree"
+      },
+      "correctAnswer": "C",
+      "explanation": "When the stack is empty, the recursion tree becomes a chain of nodes, representing each function call. The root node remains, but its branches are removed, indicating the end of the recursion.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Which of the following is an example of an infinite recursion tree?",
+      "options": {
+        "A": "A binary search tree with nodes containing only integers",
+        "B": "A recursive function `int factorial(int n) { return n * factorial(n); }`",
+        "C": "A tree with nodes containing strings",
+        "D": "A tree with nodes containing floating-point numbers"
+      },
+      "correctAnswer": "B",
+      "explanation": "The recursive function `int factorial(int n) { return n * factorial(n); }` causes an infinite recursion tree, as the function calls itself repeatedly without any termination condition.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Recursion trees can be used to analyze algorithms with a specific time and space complexity. Which complexity class is often represented by an exponentially growing recursion tree?",
+      "options": {
+        "A": "O(1) - constant time",
+        "B": "O(log n) - logarithmic time",
+        "C": "O(n) - linear time",
+        "D": "O(2^n) - exponential time"
+      },
+      "correctAnswer": "D",
+      "explanation": "A recursion tree that grows exponentially (O(2^n)) represents an algorithm with exponential time complexity.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Consider the following scenario: you are analyzing a recursive function that uses memoization to optimize its performance. How would the recursion tree represent this optimization?",
+      "options": {
+        "A": "The recursion tree would be reduced to a single node",
+        "B": "The tree would become a chain of nodes, with each node representing a function call",
+        "C": "The tree would contain 'memoized' nodes, representing the stored values",
+        "D": "The recursion tree would remain the same"
+      },
+      "correctAnswer": "C",
+      "explanation": "With memoization, the recursion tree would contain 'memoized' nodes, representing the stored values that can be reused instead of recomputed.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Which of the following is an example of a recursive function with a 'cycle' in its recursion tree?",
+      "options": {
+        "A": "A binary search tree with nodes containing only integers",
+        "B": "A recursive function `int f(x) { return f(f(x)); }`",
+        "C": "A tree with nodes containing strings",
+        "D": "A tree with nodes containing floating-point numbers"
+      },
+      "correctAnswer": "B",
+      "explanation": "The recursive function `int f(x) { return f(f(x)); }` has a cycle in its recursion tree, as the function calls itself repeatedly without any termination condition.",
+      "difficulty": "Hard"
+    }
+  ]
+}

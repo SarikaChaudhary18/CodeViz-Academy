@@ -213,7 +213,7 @@ JSON Format:
 }`;
 
   try {
-    const result = await aiService.generateContentJSON(prompt);
+    const result = await aiService.generateWithNemotron(prompt);
     
     if (!result || !result.questions || !Array.isArray(result.questions)) {
       throw new Error("Invalid output format returned from AI Service.");

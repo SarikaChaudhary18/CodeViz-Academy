@@ -1,0 +1,293 @@
+{
+  "topic": "Strings - Palindrome Problems",
+  "questions": [
+    {
+      "question": "What is a palindrome in the context of strings?",
+      "options": {
+        "A": "A string that is the same when reversed",
+        "B": "A string that contains all unique characters",
+        "C": "A string that is a subset of another string",
+        "D": "A string that is a rotation of another string"
+      },
+      "correctAnswer": "A",
+      "explanation": "A palindrome is a string that reads the same backward as forward. For example, 'madam' or 'radar' are palindromes because they are spelled the same way when their letters are reversed.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following strings is a palindrome?",
+      "options": {
+        "A": "hello",
+        "B": "level",
+        "C": "java",
+        "D": "python"
+      },
+      "correctAnswer": "B",
+      "explanation": "The string 'level' is a palindrome because it reads the same way when its letters are reversed: 'l-e-v-e-l' spelled backwards is still 'l-e-v-e-l'.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How would you check if a string is a palindrome in a programming language?",
+      "options": {
+        "A": "By comparing the string with its reverse",
+        "B": "By checking if the string contains all unique characters",
+        "C": "By verifying if the string is a subset of another string",
+        "D": "By determining if the string is a rotation of another string"
+      },
+      "correctAnswer": "A",
+      "explanation": "To check if a string is a palindrome, you can compare the original string with its reverse. If they are the same, then the string is a palindrome.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the most efficient algorithm to check for a palindrome in a string of length n?",
+      "options": {
+        "A": "Compare the string with its reverse",
+        "B": "Use dynamic programming to store intermediate results",
+        "C": "Use a two-pointer approach from both ends of the string",
+        "D": "Iterate through the string and check each character individually"
+      },
+      "correctAnswer": "C",
+      "explanation": "The two-pointer approach is the most efficient way to check for a palindrome in a string of length n. It involves starting from both ends of the string and comparing characters as you move towards the center.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Given a string of length n, what is the time complexity of checking if it is a palindrome using a two-pointer approach?",
+      "options": {
+        "A": "O(n^2)",
+        "B": "O(n)",
+        "C": "O(log n)",
+        "D": "O(1)"
+      },
+      "correctAnswer": "B",
+      "explanation": "The time complexity of checking if a string of length n is a palindrome using a two-pointer approach is O(n) because you potentially need to compare n/2 pairs of characters.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Write a high-level algorithm to find the longest palindromic substring within a given string.",
+      "options": {
+        "A": "Expand around the center and compare with the reverse of the string",
+        "B": "Use dynamic programming to store the lengths of all possible substrings",
+        "C": "Apply a two-pointer technique to find the longest palindromic substring",
+        "D": "Brute force by checking every possible substring"
+      },
+      "correctAnswer": "B",
+      "explanation": "A high-level algorithm to find the longest palindromic substring involves using dynamic programming to store the lengths of all possible substrings and then identifying the longest one that is a palindrome.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the purpose of expanding around the center in the context of palindrome problems?",
+      "options": {
+        "A": "To find the longest palindromic substring",
+        "B": "To check if a string is a palindrome",
+        "C": "To find all possible palindromic substrings",
+        "D": "To count the number of palindromes in a string"
+      },
+      "correctAnswer": "A",
+      "explanation": "Expanding around the center is a technique used to find the longest palindromic substring. It involves treating each character in the string as the center of a potential palindrome and expanding outwards to find the longest palindrome centered at that character.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Given a string, how would you determine all unique palindromic substrings?",
+      "options": {
+        "A": "By expanding around each character and checking for palindromes",
+        "B": "By iterating through the string and checking every possible substring",
+        "C": "By using dynamic programming to store the lengths of all possible substrings",
+        "D": "By applying a two-pointer technique"
+      },
+      "correctAnswer": "A",
+      "explanation": "To determine all unique palindromic substrings in a string, you can expand around each character in the string, treating it as the center of a potential palindrome, and then check each substring to see if it is a palindrome.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the time complexity of finding all unique palindromic substrings in a string of length n?",
+      "options": {
+        "A": "O(n^2)",
+        "B": "O(n^3)",
+        "C": "O(n)",
+        "D": "O(1)"
+      },
+      "correctAnswer": "B",
+      "explanation": "Finding all unique palindromic substrings in a string of length n can have a time complexity of O(n^3) in the worst case, because for each of the n characters, you might expand around it up to n times and verify each substring, which itself can take up to n time.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How would you approach a problem that requires finding the minimum number of operations to make a string a palindrome?",
+      "options": {
+        "A": "Use dynamic programming to compare the string with its reverse",
+        "B": "Expand around the center to find the longest palindromic substring",
+        "C": "Apply a two-pointer technique to identify mismatched characters",
+        "D": "Use a greedy algorithm to add or remove characters"
+      },
+      "correctAnswer": "A",
+      "explanation": "To find the minimum number of operations required to make a string a palindrome, you can use dynamic programming to compare the string with its reverse and calculate the minimum edits (insertions, deletions, substitutions) needed to make the string a palindrome.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the time complexity of the Longest Common Subsequence (LCS) problem, which can be used to determine the minimum edits needed to make a string a palindrome?",
+      "options": {
+        "A": "O(n^2)",
+        "B": "O(n^3)",
+        "C": "O(n)",
+        "D": "O(1)"
+      },
+      "correctAnswer": "A",
+      "explanation": "The time complexity of the Longest Common Subsequence (LCS) problem, which can be applied to find the minimum edits needed to make a string a palindrome, is O(n^2), where n is the length of the string. This involves creating a 2D array of size n x n and filling it based on the similarity between the string and its reverse.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Given two strings, how would you determine if one is a sub-palindrome of the other?",
+      "options": {
+        "A": "By checking if one string is a substring of the reverse of the other",
+        "B": "By expanding around the center of the potential sub-palindrome",
+        "C": "By using dynamic programming to compare substrings",
+        "D": "By applying the KMP algorithm"
+      },
+      "correctAnswer": "C",
+      "explanation": "To determine if one string is a sub-palindrome of another, you can use dynamic programming to compare all substrings of the potential super-string and identify if any of them are the same when reversed, thus being a palindrome.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "How would you optimize the process of checking for palindromic substrings within a large text?",
+      "options": {
+        "A": "By using a suffix tree to efficiently compare substrings",
+        "B": "By applying dynamic programming to reduce redundant calculations",
+        "C": "By expanding around each character to find all palindromic substrings",
+        "D": "By iterating through the string and checking every possible substring"
+      },
+      "correctAnswer": "B",
+      "explanation": "Dynamic programming can optimize the process of checking for palindromic substrings by storing the results of sub-problems (i.e., whether a substring is a palindrome) and reusing them to avoid redundant calculations.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the purpose of Manacher's algorithm in the context of palindrome problems?",
+      "options": {
+        "A": "To find the longest palindromic substring in linear time",
+        "B": "To check if a string is a palindrome",
+        "C": "To find all unique palindromic substrings",
+        "D": "To determine the minimum edits needed to make a string a palindrome"
+      },
+      "correctAnswer": "A",
+      "explanation": "Manacher's algorithm is used to find the longest palindromic substring in linear time. It preprocesses the string by inserting special characters between each character and at the ends, treating each character as the center of a potential palindrome and expanding outwards.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "How does Manacher's algorithm achieve linear time complexity for finding the longest palindromic substring?",
+      "options": {
+        "A": "By using dynamic programming to store intermediate results",
+        "B": "By expanding around each character and comparing with the reverse",
+        "C": "By using a two-pointer technique from both ends of the string",
+        "D": "By preprocessing the string and using a linear scan"
+      },
+      "correctAnswer": "D",
+      "explanation": "Manacher's algorithm achieves linear time complexity by preprocessing the input string and then performing a single linear scan. The preprocessing involves modifying the string to handle even-length palindromes and then the algorithm iterates through this modified string, keeping track of the maximum right boundary of a palindrome centered at each position.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Given a string and a limit on the number of operations (insertions, deletions), how would you find the longest palindromic substring that can be achieved within this limit?",
+      "options": {
+        "A": "By using dynamic programming to compare the string with its reverse",
+        "B": "By expanding around the center to find all palindromic substrings",
+        "C": "By applying a greedy algorithm to add or remove characters",
+        "D": "By using a breadth-first search to explore all possible edits"
+      },
+      "explanation": "To find the longest palindromic substring achievable within a certain limit of operations, you can use dynamic programming, similar to the approach for the edit distance problem. This involves comparing the string with its reverse, considering the operations allowed, and finding the longest sequence that can be made into a palindrome within the given limit.",
+      "correctAnswer": "A",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What data structure would you use to efficiently store and retrieve palindromic substrings from a large text?",
+      "options": {
+        "A": "A hash table to store substrings as keys",
+        "B": "A suffix tree to facilitate substring matching",
+        "C": "A trie to store all substrings",
+        "D": "A linked list to store the substrings in order"
+      },
+      "correctAnswer": "B",
+      "explanation": "A suffix tree is the most efficient data structure for storing and retrieving palindromic substrings from a large text. It allows for fast substring matching and can be used to find all occurrences of a pattern within the text.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "How would you approach the problem of finding the minimum window that contains a palindromic substring of a certain length?",
+      "options": {
+        "A": "By using a sliding window approach to scan the string",
+        "B": "By expanding around the center of potential palindromes",
+        "C": "By applying dynamic programming to store the lengths of substrings",
+        "D": "By iterating through all substrings and checking their length and if they are palindromes"
+      },
+      "correctAnswer": "A",
+      "explanation": "To find the minimum window that contains a palindromic substring of a certain length, you can use a sliding window approach. This involves scanning the string with a window of varying size, checking each substring within the window to see if it is a palindrome of the desired length, and adjusting the window size accordingly.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the time complexity of the minimum window problem for finding a palindromic substring of length k?",
+      "options": {
+        "A": "O(n^2)",
+        "B": "O(n*k)",
+        "C": "O(n)",
+        "D": "O(k)"
+      },
+      "correctAnswer": "B",
+      "explanation": "The time complexity of the minimum window problem for finding a palindromic substring of length k is O(n*k), where n is the length of the string. This is because for each position in the string, you potentially need to check a substring of length k to verify if it is a palindrome.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "In what scenario would you prioritize the use of Manacher's algorithm over a straightforward dynamic programming approach for palindrome-related problems?",
+      "options": {
+        "A": "When the string is very short",
+        "B": "When the string is very long and performance is critical",
+        "C": "When the problem requires finding all palindromic substrings",
+        "D": "When the problem involves checking if a string is a palindrome"
+      },
+      "correctAnswer": "B",
+      "explanation": "Manacher's algorithm is particularly useful when dealing with very long strings and performance is critical. It provides a linear time complexity solution for finding the longest palindromic substring, making it more efficient than dynamic programming for very large inputs.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What are some common applications of palindrome detection algorithms?",
+      "options": {
+        "A": "Text analysis, data compression, and bioinformatics",
+        "B": "Network security, machine learning, and web development",
+        "C": "Database management, computer vision, and natural language processing",
+        "D": "All of the above"
+      },
+      "correctAnswer": "D",
+      "explanation": "Palindromes and palindrome detection algorithms have applications across various fields, including but not limited to text analysis, data compression, bioinformatics, network security, machine learning, web development, database management, computer vision, and natural language processing. Their versatility stems from their ability to identify symmetry and patterns, which is useful in a wide range of computational tasks.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How would you handle case sensitivity when checking for palindromes in a string?",
+      "options": {
+        "A": "By converting the entire string to lowercase before checking",
+        "B": "By treating uppercase and lowercase letters as distinct characters",
+        "C": "By ignoring non-alphabetic characters",
+        "D": "By using a case-insensitive comparison function"
+      },
+      "correctAnswer": "A",
+      "explanation": "To handle case sensitivity when checking for palindromes, one common approach is to convert the entire string to lowercase (or uppercase) before performing the check. This ensures that the comparison is case-insensitive, treating 'A' and 'a' as the same character.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the role of ignoring non-alphabetic characters in palindrome detection?",
+      "options": {
+        "A": "To improve performance by reducing the string length",
+        "B": "To handle punctuation and spaces within the palindrome",
+        "C": "To make the palindrome detection case-insensitive",
+        "D": "To find the longest palindromic substring"
+      },
+      "correctAnswer": "B",
+      "explanation": "Ignoring non-alphabetic characters (such as punctuation and spaces) allows the palindrome detection algorithm to handle strings that contain these characters. It effectively treats the string as if these characters were not present, enabling the identification of palindromic sequences that are interrupted by non-alphabetic characters.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How would you approach a problem that asks for the smallest possible palindrome that can be formed using all characters of a given string exactly once?",
+      "options": {
+        "A": "By sorting the characters and checking for pairs",
+        "B": "By using dynamic programming to find the optimal arrangement",
+        "C": "By applying a greedy algorithm to construct the palindrome",
+        "D": "By iterating through all permutations of the string"
+      },
+      "correctAnswer": "A",
+      "explanation": "To find the smallest possible palindrome using all characters of a string exactly once, you would first identify characters that appear an odd number of times, as these will be the middle characters of the palindrome. Then, you arrange the remaining characters in ascending order on either side of the central character(s) to form the smallest palindrome.",
+      "difficulty": "Medium"
+    }
+  ]
+}

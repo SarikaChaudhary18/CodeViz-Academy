@@ -1,0 +1,134 @@
+{
+  "topic": "Recursion & Backtracking - N Queens",
+  "questions": [
+    {
+      "question": "What is the base case for the N Queens problem?",
+      "options": {
+        "A": "The board is full and all queens are placed safely.",
+        "B": "The board is empty, no queens have been placed yet.",
+        "C": "All rows have been filled with at least one queen.",
+        "D": "The column is filled with the current queen."
+      },
+      "correctAnswer": "A",
+      "explanation": "The base case for the N Queens problem is when the board is full and all queens are placed safely. At this point, the recursive function can stop exploring further possibilities. This is because there is no need to place more queens or remove any, which are the main actions of the recursive and backtracking processes.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is backtracking in the context of the N Queens problem?",
+      "options": {
+        "A": "The process of placing a queen in the current open column.",
+        "B": "The process of removing queens from the board to start new solutions.",
+        "C": "The process of exploring all possible solutions before making a move.",
+        "D": "The process of undoing a move to explore different possibilities."
+      },
+      "correctAnswer": "D",
+      "explanation": "Backtracking is the process of undoing a move to explore different possibilities in the N Queens problem. This is typically implemented using recursion, where each call to the recursive function represents a new solution being explored. When a solution is found, the function returns, and when a dead-end is reached, the function unwinds, or backtracks, to try a different path.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How do you handle the case where the current row is invalid in the N Queens problem?",
+      "options": {
+        "A": "You ignore this row and move on to the next row.",
+        "B": "You skip this function call and return to the previous row.",
+        "C": "You mark this row as invalid and skip it in the next iteration.",
+        "D": "You return from this function call, effectively backtracking."
+      },
+      "correctAnswer": "D",
+      "explanation": "When handling the case where the current row is invalid in the N Queens problem, the best approach is to return from this function call, effectively backtracking to the previous row. This is because the current row is not valid, which means this branch of the recursion tree did not lead to a solution, and we should unwind and try another path.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the time complexity of a standard implementation of the N Queens problem?",
+      "options": {
+        "A": "O(n^2) where n is the number of rows.",
+        "B": "O(n^3) where n is the number of rows.",
+        "C": "O(2^n) where n is the number of rows.",
+        "D": "O(n!) where n is the number of rows."
+      },
+      "correctAnswer": "D",
+      "explanation": "The time complexity of a standard implementation of the N Queens problem is O(n!) where n is the number of rows. This is because each row has n possible columns to place the queen, and each placement leads to the consideration of n rows for the next placement. This creates a factorial number of possible combinations, hence the O(n!) time complexity.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "A problem instance is given, with 6 queens to be placed on a 6x6 board. What is the purpose of the base case in this context?",
+      "options": {
+        "A": "To determine if the current row is the last row.",
+        "B": "To determine if all queens have been placed safely.",
+        "C": "To check if the column can accommodate a new queen.",
+        "D": "To check if the row is valid and can be used."
+      },
+      "correctAnswer": "B",
+      "explanation": "In the context of the 6 Queens problem, the base case is used to determine if all queens have been placed safely. This is a critical check, as it allows the algorithm to stop exploring further possibilities and return to the calling function, thus terminating the recursion. This ensures the algorithm does not run indefinitely or enter an infinite loop.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Why is the N Queens problem considered NP-complete?",
+      "options": {
+        "A": "Because the time complexity of the brute-force solution is exponential.",
+        "B": "Because the time complexity of the recursive solution is linear.",
+        "C": "Because the problem involves determining the solution in the optimal number of moves.",
+        "D": "Because the problem involves finding a solution that meets specific criteria."
+      },
+      "correctAnswer": "A",
+      "explanation": "The N Queens problem is considered NP-complete due to the exponential time complexity of the brute-force solution. The number of possible placements grows factorially, which makes it impractical to solve the problem using a simple brute-force approach. NP-completeness is a hallmark of hard computational problems, indicating that the problem is difficult to approximate and requires clever algorithms for efficient solution.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Can the N Queens problem be solved using dynamic programming?",
+      "options": {
+        "A": "Yes, dynamic programming can solve this problem efficiently.",
+        "B": "No, it is not possible to solve this problem using dynamic programming.",
+        "C": "Maybe, dynamic programming might work well if the board is small.",
+        "D": "Only if you add constraints to the problem."
+      },
+      "correctAnswer": "A",
+      "explanation": "Yes, the N Queens problem can be solved using dynamic programming. This involves breaking down the problem into smaller sub-problems, solving each sub-problem only once, and storing the solutions to sub-problems to avoid redundant computation. Dynamic programming can solve this problem efficiently due to its inherent structure, allowing for memoization and caching of intermediate results.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the primary reason for using memoization in the N Queens problem?",
+      "options": {
+        "A": "To reduce the time complexity of the algorithm.",
+        "B": "To improve the space complexity of the algorithm.",
+        "C": "To avoid the overhead of recursive function calls.",
+        "D": "None of the above."
+      },
+      "correctAnswer": "A",
+      "explanation": "The primary reason for using memoization in the N Queens problem is to reduce the time complexity of the algorithm. Memoization involves storing solutions to sub-problems to avoid redundant computation, allowing the algorithm to skip exploring previously considered solutions. This technique significantly improves the efficiency of the algorithm and makes it feasible to solve large instances of the problem.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How can we improve the performance of the N Queens algorithm?",
+      "options": {
+        "A": "By using a brute-force search without any optimization.",
+        "B": "By using a depth-first search without memoization.",
+        "C": "By sorting the rows and columns to reduce conflicts.",
+        "D": "By using memoization and backtracking techniques."
+      },
+      "correctAnswer": "D",
+      "explanation": "Improving the performance of the N Queens algorithm involves using a combination of techniques, particularly memoization and backtracking. Memoization allows for efficient storage and reuse of solutions to sub-problems, while backtracking enables the algorithm to unwind and try different paths. These techniques significantly improve the efficiency of the algorithm and make it feasible to solve large instances of the problem.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Can the N Queens problem be solved using a simple backtracking search without recursion?",
+      "options": {
+        "A": "Yes, it is possible to solve this problem using a simple backtracking search without recursion.",
+        "B": "No, recursion is necessary for this problem.",
+        "C": "Yes, but it would be inefficient.",
+        "D": "Only if you add constraints to the problem."
+      },
+      "correctAnswer": "A",
+      "explanation": "Yes, it is possible to solve the N Queens problem using a simple backtracking search without recursion. This approach involves using an iterative algorithm that explores the solution space without using function calls or recursion. By maintaining a stack or a queue of open columns, the algorithm can efficiently explore the solution space and find a valid solution.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the key challenge in solving the N Queens problem?",
+      "options": {
+        "A": "To find a solution that minimizes the number of conflicts.",
+        "B": "To determine whether a given board is valid.",
+        "C": "To find all possible solutions in the most efficient way.",
+        "D": "To prove the NP-completeness of this problem."
+      }
+    }
+  ]
+}
