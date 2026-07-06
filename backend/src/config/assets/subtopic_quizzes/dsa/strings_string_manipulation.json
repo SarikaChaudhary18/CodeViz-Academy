@@ -1,0 +1,326 @@
+{
+  "topic": "Strings - String Manipulation",
+  "questions": [
+    {
+      "question": "What is the primary function of the strlen() function in string manipulation?",
+      "options": {
+        "A": "To concatenate two strings",
+        "B": "To compare two strings",
+        "C": "To get the length of a string",
+        "D": "To reverse a string"
+      },
+      "correctAnswer": "C",
+      "explanation": "The strlen() function is used to calculate the length of a given string. This function does not count the null character at the end of the string. It is often used in loops to iterate over each character in a string.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following string methods in Python is used to remove leading and trailing whitespace from a string?",
+      "options": {
+        "A": "strip()",
+        "B": "split()",
+        "C": "join()",
+        "D": "replace()"
+      },
+      "correctAnswer": "A",
+      "explanation": "The strip() method in Python is used to remove leading and trailing whitespace from a string. By default, it removes all types of whitespace characters, including spaces, tabs, and newline characters.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the purpose of the substr() function in JavaScript?",
+      "options": {
+        "A": "To extract a subset of characters from a string",
+        "B": "To replace a subset of characters in a string",
+        "C": "To insert a new string into an existing string",
+        "D": "To remove a subset of characters from a string"
+      },
+      "correctAnswer": "A",
+      "explanation": "The substr() function in JavaScript is used to extract a subset of characters from a string, starting from a specified index and with a specified length. It returns a new string that contains the extracted characters.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "In Java, which method is used to convert a string to uppercase?",
+      "options": {
+        "A": "toLowerCase()",
+        "B": "toUpperCase()",
+        "C": "substring()",
+        "D": "concat()"
+      },
+      "correctAnswer": "B",
+      "explanation": "The toUpperCase() method in Java is used to convert a string to uppercase. This method does not modify the original string but returns a new string that contains the uppercase equivalent of the original string.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the function of the find() method in Python strings?",
+      "options": {
+        "A": "To find the index of the first occurrence of a substring",
+        "B": "To find the index of the last occurrence of a substring",
+        "C": "To replace a substring with another string",
+        "D": "To insert a new string into an existing string"
+      },
+      "correctAnswer": "A",
+      "explanation": "The find() method in Python strings is used to find the index of the first occurrence of a specified substring. If the substring is not found, it returns -1. This method is case-sensitive and can also take an optional start and end index to search within a subset of the string.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "In C++, how do you concatenate two strings using the + operator?",
+      "options": {
+        "A": "Using the + operator with the std::string class",
+        "B": "Using the + operator with the char* data type",
+        "C": "Using the == operator with the std::string class",
+        "D": "Using the == operator with the char* data type"
+      },
+      "correctAnswer": "A",
+      "explanation": "In C++, you can concatenate two strings using the + operator with the std::string class. This is because the std::string class has an overloaded + operator that allows you to concatenate two strings. You cannot use the + operator directly with char* data types without using string functions like strcat().",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which JavaScript function is used to split a string into an array of substrings?",
+      "options": {
+        "A": "split()",
+        "B": "join()",
+        "C": "replace()",
+        "D": "search()"
+      },
+      "correctAnswer": "A",
+      "explanation": "The split() function in JavaScript is used to split a string into an array of substrings. You can specify a separator string to split the string at each occurrence of that separator. If no separator is specified, the string is split at each space character by default.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "In Python, what is the purpose of the rstrip() method?",
+      "options": {
+        "A": "To remove leading whitespace from a string",
+        "B": "To remove trailing whitespace from a string",
+        "C": "To remove both leading and trailing whitespace from a string",
+        "D": "To remove all whitespace from a string"
+      },
+      "correctAnswer": "B",
+      "explanation": "The rstrip() method in Python is used to remove trailing whitespace from a string. By default, it removes all types of whitespace characters, including spaces, tabs, and newline characters, but only from the end of the string.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the function of the index() method in Python strings?",
+      "options": {
+        "A": "To find the index of the first occurrence of a substring",
+        "B": "To find the index of the last occurrence of a substring",
+        "C": "To replace a substring with another string",
+        "D": "To insert a new string into an existing string"
+      },
+      "correctAnswer": "A",
+      "explanation": "The index() method in Python strings is used to find the index of the first occurrence of a specified substring. If the substring is not found, it raises a ValueError. This method is case-sensitive and can also take an optional start and end index to search within a subset of the string.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "In Java, which method is used to check if a string is empty?",
+      "options": {
+        "A": "isEmpty()",
+        "B": "isBlank()",
+        "C": "length()",
+        "D": "size()"
+      },
+      "correctAnswer": "A",
+      "explanation": "The isEmpty() method in Java is used to check if a string is empty. It returns true if the string is empty (i.e., its length is 0), and false otherwise.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the purpose of the startswith() method in Python strings?",
+      "options": {
+        "A": "To check if a string starts with a specified substring",
+        "B": "To check if a string ends with a specified substring",
+        "C": "To replace a substring with another string",
+        "D": "To insert a new string into an existing string"
+      },
+      "correctAnswer": "A",
+      "explanation": "The startswith() method in Python strings is used to check if a string starts with a specified substring. It returns True if the string starts with the substring, and False otherwise. This method is case-sensitive.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "In C++, what is the difference between the sizeof() operator and the length() method for strings?",
+      "options": {
+        "A": "sizeof() gives the length of the string, while length() gives the size of the string object",
+        "B": "sizeof() gives the size of the string object, while length() gives the length of the string",
+        "C": "sizeof() is used for arrays, while length() is used for std::string",
+        "D": "sizeof() is used for std::string, while length() is used for arrays"
+      },
+      "correctAnswer": "B",
+      "explanation": "In C++, the sizeof() operator gives the size of the string object in bytes, while the length() method gives the length of the string, which is the number of characters in the string. The sizeof() operator is typically used with arrays to get the total size of the array in bytes, while the length() method is used with the std::string class to get the number of characters in the string.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the purpose of the trim() function in JavaScript strings?",
+      "options": {
+        "A": "To remove leading and trailing whitespace from a string",
+        "B": "To remove leading whitespace from a string",
+        "C": "To remove trailing whitespace from a string",
+        "D": "To remove all whitespace from a string"
+      },
+      "correctAnswer": "A",
+      "explanation": "The trim() function in JavaScript is used to remove leading and trailing whitespace from a string. This includes spaces, tabs, and newline characters. It does not remove whitespace from the middle of the string.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "In Python, how do you replace a substring with another string using the replace() method?",
+      "options": {
+        "A": "str.replace(old, new)",
+        "B": "str.replace(new, old)",
+        "C": "str.replace(old, new, count)",
+        "D": "All of the above"
+      },
+      "correctAnswer": "D",
+      "explanation": "In Python, the replace() method of a string is used to replace a substring with another string. The basic syntax is str.replace(old, new), where old is the substring to be replaced and new is the substring to replace with. You can also specify an optional count parameter to limit the number of replacements.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following is a valid way to concatenate two strings in Java?",
+      "options": {
+        "A": "Using the + operator with the String class",
+        "B": "Using the + operator with the char[] data type",
+        "C": "Using the concat() method with the String class",
+        "D": "All of the above"
+      },
+      "correctAnswer": "D",
+      "explanation": "In Java, you can concatenate two strings using the + operator with the String class, or by using the concat() method provided by the String class. The + operator is overloaded for the String class to allow concatenation.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the purpose of the endsWith() method in Python strings?",
+      "options": {
+        "A": "To check if a string starts with a specified substring",
+        "B": "To check if a string ends with a specified substring",
+        "C": "To replace a substring with another string",
+        "D": "To insert a new string into an existing string"
+      },
+      "correctAnswer": "B",
+      "explanation": "The endsWith() method in Python strings is used to check if a string ends with a specified substring. It returns True if the string ends with the substring, and False otherwise. This method is case-sensitive.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "In C++, how do you compare two strings for equality?",
+      "options": {
+        "A": "Using the == operator with the std::string class",
+        "B": "Using the == operator with the char* data type",
+        "C": "Using the strcmp() function with the char* data type",
+        "D": "Using the compare() method with the std::string class"
+      },
+      "correctAnswer": "A",
+      "explanation": "In C++, the == operator is overloaded for the std::string class to compare two strings for equality. This is the most straightforward way to compare two std::string objects. For char* (C-style strings), you would typically use the strcmp() function from the cstring library.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the difference between the split() and join() methods in Python strings?",
+      "options": {
+        "A": "split() is used to split a string into a list, while join() is used to join a list into a string",
+        "B": "split() is used to join a list into a string, while join() is used to split a string into a list",
+        "C": "split() is used to remove whitespace from a string, while join() is used to add whitespace to a string",
+        "D": "split() is used to convert a string to uppercase, while join() is used to convert a string to lowercase"
+      },
+      "correctAnswer": "A",
+      "explanation": "In Python, the split() method is used to split a string into a list of substrings based on a specified separator, while the join() method is used to join a list of strings into a single string with a specified separator between each string.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "In Java, how do you check if a string contains a specified substring?",
+      "options": {
+        "A": "Using the contains() method with the String class",
+        "B": "Using the indexOf() method with the String class",
+        "C": "Using the lastIndexOf() method with the String class",
+        "D": "All of the above"
+      },
+      "correctAnswer": "D",
+      "explanation": "In Java, you can check if a string contains a specified substring using the contains() method, the indexOf() method, or the lastIndexOf() method of the String class. The contains() method directly returns a boolean indicating whether the substring is found, while indexOf() and lastIndexOf() return the index of the first or last occurrence of the substring, respectively, or -1 if not found.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the purpose of the partition() method in Python strings?",
+      "options": {
+        "A": "To split a string into three parts at the first occurrence of a separator",
+        "B": "To split a string into three parts at the last occurrence of a separator",
+        "C": "To replace a substring with another string",
+        "D": "To insert a new string into an existing string"
+      },
+      "correctAnswer": "A",
+      "explanation": "The partition() method in Python strings is used to split a string into three parts at the first occurrence of a specified separator. It returns a tuple containing the part before the separator, the separator itself, and the part after the separator.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "In C++, what is the difference between the c_str() and data() methods of the std::string class?",
+      "options": {
+        "A": "c_str() returns a const char* pointer to the string data, while data() returns a non-const char* pointer to the string data",
+        "B": "c_str() returns a non-const char* pointer to the string data, while data() returns a const char* pointer to the string data",
+        "C": "c_str() is used for reading the string data, while data() is used for modifying the string data",
+        "D": "c_str() and data() are the same and can be used interchangeably"
+      },
+      "correctAnswer": "A",
+      "explanation": "In C++, the c_str() method of the std::string class returns a const char* pointer to the string data, which can be used to pass the string to functions that expect C-style strings. The data() method, introduced in C++17, also returns a pointer to the string data but is non-const, allowing for modification of the string contents directly through the returned pointer.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Which of the following methods in Python strings is used to format a string?",
+      "options": {
+        "A": "format()",
+        "B": "replace()",
+        "C": "split()",
+        "D": "join()"
+      },
+      "correctAnswer": "A",
+      "explanation": "The format() method in Python strings is used to format a string. It allows you to insert values into a string using placeholders and to format those values in various ways.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "In Java, what is the purpose of the toCharArray() method in the String class?",
+      "options": {
+        "A": "To convert a string to a character array",
+        "B": "To convert a character array to a string",
+        "C": "To get the length of a string",
+        "D": "To check if a string is empty"
+      },
+      "correctAnswer": "A",
+      "explanation": "The toCharArray() method in the Java String class is used to convert a string to a character array. This method returns a new character array that contains the characters of the string.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the difference between 'is' and '==' operators when comparing strings in Python?",
+      "options": {
+        "A": "'is' checks for object identity, while '==' checks for object equality",
+        "B": "'is' checks for object equality, while '==' checks for object identity",
+        "C": "'is' is used for integer comparisons, while '==' is used for string comparisons",
+        "D": "'is' is used for string comparisons, while '==' is used for integer comparisons"
+      },
+      "correctAnswer": "A",
+      "explanation": "In Python, the 'is' operator checks if both variables point to the same object in memory, whereas the '==' operator checks if the values of the variables are equal. For strings, using '==' is generally what you want because it checks if the contents of the strings are the same, regardless of whether they are stored in the same object.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "In C++, how do you iterate over each character in a std::string?",
+      "options": {
+        "A": "Using a for loop and the at() method",
+        "B": "Using a range-based for loop",
+        "C": "Using an iterator",
+        "D": "All of the above"
+      },
+      "correctAnswer": "D",
+      "explanation": "In C++, you can iterate over each character in a std::string using a for loop and the at() method, a range-based for loop, or by using an iterator. The choice of method depends on personal preference, the specific requirements of your program, and the version of the C++ standard you are using.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the purpose of the lower() method in Python strings?",
+      "options": {
+        "A": "To convert a string to uppercase",
+        "B": "To convert a string to lowercase",
+        "C": "To remove leading and trailing whitespace from a string",
+        "D": "To replace a substring with another string"
+      },
+      "correctAnswer": "B",
+      "explanation": "The lower() method in Python strings is used to convert a string to lowercase. This method returns a new string where all uppercase characters are converted to lowercase.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "In Java, which method is used to get the substring starting from a specified index?",
+      "options": {
+        "A": "substring(int beginIndex)",
+        "B": "substring(int beginIndex, int endIndex)",
+        "C": "startsWith(String prefix)",
+        "D": "endsWith(String suffix)"
+      }
+    }
+  ]
+}

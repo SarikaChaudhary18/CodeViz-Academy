@@ -1,0 +1,293 @@
+{
+  "topic": "Strings - Character Arrays",
+  "questions": [
+    {
+      "question": "What is the primary difference between a string and a character array?",
+      "options": {
+        "A": "A string is immutable, while a character array is mutable.",
+        "B": "A string is mutable, while a character array is immutable.",
+        "C": "A string is an object, while a character array is a primitive data type.",
+        "D": "A string is a primitive data type, while a character array is an object."
+      },
+      "correctAnswer": "A",
+      "explanation": "In most programming languages, strings are immutable, meaning their contents cannot be modified after creation. Character arrays, on the other hand, are mutable, allowing for modification of their elements. This fundamental difference affects how and when to use each.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How do you initialize a character array in Java?",
+      "options": {
+        "A": "char[] myArray = new char[10];",
+        "B": "char myArray[] = new char[10];",
+        "C": "char myArray[] = { 'a', 'b', 'c' };",
+        "D": "All of the above"
+      },
+      "correctAnswer": "D",
+      "explanation": "In Java, you can initialize a character array using the new keyword followed by the size of the array in square brackets, or by directly specifying the elements in curly brackets. Both methods are valid and can be used depending on the context.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the purpose of the null character ('\\0') in C-style strings?",
+      "options": {
+        "A": "It indicates the start of the string.",
+        "B": "It indicates the end of the string.",
+        "C": "It is used for string concatenation.",
+        "D": "It is used for string comparison."
+      },
+      "correctAnswer": "B",
+      "explanation": "In C-style strings, the null character ('\\0') serves as a sentinel to mark the end of the string. This is crucial for functions that operate on strings, such as strlen() or printf(), to know where the string ends.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How do you convert a string to a character array in Python?",
+      "options": {
+        "A": "Using the list() function.",
+        "B": "Using the tuple() function.",
+        "C": "Using the array() function from the numpy library.",
+        "D": "Using the str.split() method."
+      },
+      "correctAnswer": "A",
+      "explanation": "In Python, you can convert a string to a list of characters (which behaves similarly to a character array in other languages) using the list() function. This is because strings in Python are iterable, and list() can convert any iterable into a list.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the difference between '==' and '.equals()' when comparing strings in Java?",
+      "options": {
+        "A": "'==' compares the memory locations, while '.equals()' compares the actual string values.",
+        "B": "'==' compares the actual string values, while '.equals()' compares the memory locations.",
+        "C": "'==' is used for primitive types, while '.equals()' is used for objects.",
+        "D": "'==' is used for objects, while '.equals()' is used for primitive types."
+      },
+      "correctAnswer": "A",
+      "explanation": "In Java, '==' is used to compare the memory locations of two objects, which means it checks if both objects point to the same location in memory. On the other hand, '.equals()' is a method that compares the actual values of the strings, character by character, making it the correct method to use when comparing string contents.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What happens when you try to access an index of a character array that is out of bounds?",
+      "options": {
+        "A": "It returns the character at that index.",
+        "B": "It throws an ArrayIndexOutOfBoundsException.",
+        "C": "It returns a null character.",
+        "D": "It ignores the operation and continues execution."
+      },
+      "correctAnswer": "B",
+      "explanation": "When trying to access an index of a character array that is out of bounds, the program throws an ArrayIndexOutOfBoundsException. This is because arrays have a fixed size, and accessing an index outside this range is undefined behavior and dangerous.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How do you sort a character array in ascending order in C++?",
+      "options": {
+        "A": "Using the std::sort() function from the algorithm library.",
+        "B": "Using the qsort() function from the cstdlib library.",
+        "C": "Using a manual implementation of a sorting algorithm like Bubble Sort.",
+        "D": "All of the above"
+      },
+      "correctAnswer": "D",
+      "explanation": "In C++, you can sort a character array in ascending order using the std::sort() function from the algorithm library, the qsort() function from the cstdlib library, or by manually implementing a sorting algorithm like Bubble Sort. Each method has its own advantages and use cases.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the most efficient way to find the first occurrence of a character in a string in Java?",
+      "options": {
+        "A": "Using the indexOf() method of the String class.",
+        "B": "Using the lastIndexOf() method of the String class.",
+        "C": "Manually looping through the string.",
+        "D": "Using regular expressions."
+      },
+      "correctAnswer": "A",
+      "explanation": "The most efficient way to find the first occurrence of a character in a string in Java is by using the indexOf() method of the String class. This method returns the index of the first occurrence of the specified character, or -1 if the character is not found.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the purpose of the strncpy() function in C?",
+      "options": {
+        "A": "To copy a specified number of characters from one string to another.",
+        "B": "To concatenate two strings.",
+        "C": "To compare two strings.",
+        "D": "To find the length of a string."
+      },
+      "correctAnswer": "A",
+      "explanation": "The strncpy() function in C is used to copy a specified number of characters from one string to another. It is useful for preventing buffer overflows by limiting the number of characters copied.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How do you handle string encoding when working with character arrays in Python?",
+      "options": {
+        "A": "By using the encode() method to specify the encoding.",
+        "B": "By using the decode() method to specify the encoding.",
+        "C": "By using the ascii() function to ensure ASCII encoding.",
+        "D": "Python handles encoding automatically."
+      },
+      "correctAnswer": "A",
+      "explanation": "In Python, when working with character arrays or strings, encoding can be handled by using the encode() method to specify the encoding of the string. This is particularly important when working with text data that may contain characters outside the ASCII range.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the difference between a StringBuffer and a StringBuilder in Java?",
+      "options": {
+        "A": "A StringBuffer is thread-safe, while a StringBuilder is not.",
+        "B": "A StringBuilder is thread-safe, while a StringBuffer is not.",
+        "C": "A StringBuffer is used for immutable strings, while a StringBuilder is used for mutable strings.",
+        "D": "A StringBuilder is used for immutable strings, while a StringBuffer is used for mutable strings."
+      },
+      "correctAnswer": "A",
+      "explanation": "In Java, a StringBuffer is a thread-safe class used for mutable string operations, whereas a StringBuilder is not thread-safe. This means that if you're working in a multithreaded environment, StringBuffer should be used to prevent data corruption.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the purpose of the memset() function in C?",
+      "options": {
+        "A": "To set all elements of a character array to a specified character.",
+        "B": "To copy a string from one location to another.",
+        "C": "To compare two strings.",
+        "D": "To find the length of a string."
+      },
+      "correctAnswer": "A",
+      "explanation": "The memset() function in C is used to set all elements of a character array (or any other type of array) to a specified value, which can be a character. This is often used for initialization purposes.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How do you implement a string reversal algorithm in JavaScript?",
+      "options": {
+        "A": "Using the split(), reverse(), and join() methods.",
+        "B": "Using a for loop to iterate through the characters and build a new string.",
+        "C": "Using the Array.prototype.reverse() method.",
+        "D": "All of the above"
+      },
+      "correctAnswer": "D",
+      "explanation": "In JavaScript, you can implement a string reversal algorithm by using the split(), reverse(), and join() methods together, by manually iterating through the characters with a for loop, or even by converting the string to an array and using Array.prototype.reverse(). Each method has its own efficiency and readability trade-offs.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the time complexity of the std::string::find() method in C++?",
+      "options": {
+        "A": "O(1)",
+        "B": "O(log n)",
+        "C": "O(n)",
+        "D": "O(n^2)"
+      },
+      "correctAnswer": "C",
+      "explanation": "The time complexity of the std::string::find() method in C++ is O(n), where n is the length of the string. This is because in the worst case, it might have to search through the entire string to find the specified substring or character.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "How do you optimize the concatenation of many strings in a loop in Python?",
+      "options": {
+        "A": "By using the += operator for string concatenation.",
+        "B": "By using the join() method with a list of strings.",
+        "C": "By using a StringBuilder class from a third-party library.",
+        "D": "By converting each string to a list and then joining them."
+      },
+      "correctAnswer": "B",
+      "explanation": "In Python, the most efficient way to concatenate many strings in a loop is by using the join() method with a list of strings. This method is more efficient than using the += operator because it avoids creating temporary strings in each iteration, thus reducing memory allocation and deallocation.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the purpose of the StringBuilder class in Java?",
+      "options": {
+        "A": "To provide a mutable sequence of characters.",
+        "B": "To provide an immutable sequence of characters.",
+        "C": "To parse strings into integers.",
+        "D": "To compare two strings lexicographically."
+      },
+      "correctAnswer": "A",
+      "explanation": "The StringBuilder class in Java is designed to represent a mutable sequence of characters. It is similar to a StringBuffer but is not thread-safe, making it more efficient for single-threaded applications where string concatenation or manipulation is frequent.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "How do you handle Unicode characters when working with character arrays in C#?",
+      "options": {
+        "A": "By using the char data type, which is Unicode-aware.",
+        "B": "By using the byte data type and manually handling Unicode.",
+        "C": "By using the string class and its Unicode-aware methods.",
+        "D": "C# does not support Unicode characters."
+      },
+      "correctAnswer": "A",
+      "explanation": "In C#, the char data type is Unicode-aware, meaning it can represent any Unicode character. This makes working with character arrays that contain Unicode characters straightforward, as the language and its standard library provide built-in support.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the difference between ASCII and Unicode character encoding?",
+      "options": {
+        "A": "ASCII is a subset of Unicode and includes characters from many languages.",
+        "B": "Unicode is a subset of ASCII and includes only English characters.",
+        "C": "ASCII includes characters from many languages, while Unicode only includes English characters.",
+        "D": "ASCII is an older standard that has been replaced by Unicode."
+      },
+      "correctAnswer": "A",
+      "explanation": "ASCII (American Standard Code for Information Interchange) is a character encoding standard that includes 128 characters, mostly English letters, digits, and symbols. Unicode, on the other hand, is a much larger character set that includes most characters from all languages. ASCII is indeed a subset of Unicode, as the first 128 Unicode characters are the same as the ASCII characters.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "How do you convert a character array to a hexadecimal string in JavaScript?",
+      "options": {
+        "A": "Using the toString(16) method on each character.",
+        "B": "Using the ArrayBuffer and DataView APIs.",
+        "C": "Using a library like crypto-js.",
+        "D": "Using the Buffer class in Node.js."
+      },
+      "correctAnswer": "D",
+      "explanation": "In JavaScript, particularly in a Node.js environment, you can convert a character array (or more accurately, a string or an array of characters) to a hexadecimal string by using the Buffer class. The Buffer class provides methods to convert between strings and binary data, including hexadecimal representation.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the purpose of the strcpy() function in C?",
+      "options": {
+        "A": "To copy a string from one location to another.",
+        "B": "To compare two strings.",
+        "C": "To find the length of a string.",
+        "D": "To allocate memory for a string."
+      },
+      "correctAnswer": "A",
+      "explanation": "The strcpy() function in C is used to copy a string from one location (the source) to another (the destination). It is a part of the C standard library and is often used for string manipulation.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How do you check if a character is a digit in Java?",
+      "options": {
+        "A": "Using the isDigit() method of the Character class.",
+        "B": "Using the isLetter() method of the Character class.",
+        "C": "Using a regular expression.",
+        "D": "By manually checking the ASCII value."
+      },
+      "correctAnswer": "A",
+      "explanation": "In Java, you can check if a character is a digit by using the isDigit() method of the Character class. This method returns true if the character is a digit, and false otherwise.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the purpose of the strlen() function in C?",
+      "options": {
+        "A": "To find the length of a string.",
+        "B": "To copy a string from one location to another.",
+        "C": "To compare two strings.",
+        "D": "To allocate memory for a string."
+      },
+      "correctAnswer": "A",
+      "explanation": "The strlen() function in C is used to find the length of a string. It counts the number of characters in the string until it encounters the null character ('\\0') that marks the end of the string.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How do you implement a case-insensitive string comparison in Python?",
+      "options": {
+        "A": "By using the lower() method on both strings.",
+        "B": "By using the upper() method on both strings.",
+        "C": "By using the casefold() method on both strings.",
+        "D": "All of the above"
+      },
+      "correctAnswer": "D",
+      "explanation": "In Python, you can implement a case-insensitive string comparison by using the lower(), upper(), or casefold() methods on both strings before comparing them. The casefold() method is the most aggressive in removing case distinctions and is recommended for caseless string matching.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the difference between the strcpy() and strncpy() functions in C?",
+      "options": {
+        "A": "strcpy() copies the entire string, while strncpy() copies a specified number of characters.",
+        "B": "strcpy() copies a specified number of characters, while strncpy() copies the entire string.",
+        "C": "strcpy() is thread-safe, while strncpy() is not.",
+        "D": "strcpy() is used for wide characters, while strncpy() is used for narrow characters."
+      },
+      "correctAnswer": "A",
+      "explanation": "The main difference between strcpy() and strncpy() in C is that strcpy() copies the entire source string to the destination, while strncpy() copies a specified maximum number of characters. This makes strncpy() safer to use when the destination buffer's size is known and limited.",
+      "difficulty": "Medium"
+    }
+  ]
+}

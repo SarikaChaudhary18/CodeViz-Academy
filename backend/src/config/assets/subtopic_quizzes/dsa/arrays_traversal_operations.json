@@ -1,0 +1,329 @@
+{
+  "topic": "Arrays - Traversal & Operations",
+  "questions": [
+    {
+      "question": "What is the primary purpose of traversing an array?",
+      "options": {
+        "A": "To sort the elements",
+        "B": "To search for a specific element",
+        "C": "To access each element in the array",
+        "D": "To delete all elements"
+      },
+      "correctAnswer": "C",
+      "explanation": "Traversing an array allows you to access each element in the array, performing operations such as reading, writing, or modifying the elements. This is a fundamental concept in programming, as it enables you to work with the data stored in the array. Traversal can be done using loops or recursive functions. The primary purpose of traversal is to access each element, making option C the correct answer.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the time complexity of traversing an array of size n using a for loop?",
+      "options": {
+        "A": "O(n log n)",
+        "B": "O(n)",
+        "C": "O(1)",
+        "D": "O(2^n)"
+      },
+      "correctAnswer": "B",
+      "explanation": "The time complexity of traversing an array of size n using a for loop is O(n) because the loop iterates over each element in the array exactly once. This means the time taken to traverse the array grows linearly with the size of the array, making option B the correct answer.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the difference between a linear search and a binary search in an array?",
+      "options": {
+        "A": "Linear search is faster for small arrays, while binary search is faster for large arrays",
+        "B": "Linear search is used for sorted arrays, while binary search is used for unsorted arrays",
+        "C": "Linear search checks each element one by one, while binary search divides the array in half at each step",
+        "D": "Linear search is used for searching in linked lists, while binary search is used for arrays"
+      },
+      "correctAnswer": "C",
+      "explanation": "The key difference between linear search and binary search is the approach used to find an element in the array. Linear search checks each element one by one, whereas binary search divides the array in half at each step, significantly reducing the number of comparisons needed to find the target element. This makes option C the correct answer.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How would you describe the operation of inserting an element at the beginning of an array?",
+      "options": {
+        "A": "Shift all elements to the right and add the new element at the end",
+        "B": "Shift all elements to the left and add the new element at the beginning",
+        "C": "Overwrite the first element with the new element",
+        "D": "Add the new element at the end of the array"
+      },
+      "correctAnswer": "B",
+      "explanation": "To insert an element at the beginning of an array, you need to shift all existing elements to the right (towards the end of the array) to make space for the new element at the beginning. This operation requires updating the indices of all elements in the array, making option B the correct answer.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the term for the process of arranging the elements of an array in a specific order, such as ascending or descending?",
+      "options": {
+        "A": "Sorting",
+        "B": "Searching",
+        "C": "Traversing",
+        "D": "Merging"
+      },
+      "correctAnswer": "A",
+      "explanation": "Sorting refers to the process of rearranging the elements of an array in a specific order, such as ascending (from smallest to largest) or descending (from largest to smallest). This is a fundamental operation in programming and data analysis, making option A the correct answer.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What data structure is suitable for efficient insertion and deletion of elements at any position?",
+      "options": {
+        "A": "Array",
+        "B": "Linked List",
+        "C": "Stack",
+        "D": "Queue"
+      },
+      "correctAnswer": "B",
+      "explanation": "A linked list is a data structure that consists of nodes, each containing data and a reference (or link) to the next node in the sequence. This structure allows for efficient insertion and deletion of elements at any position, as it only requires updating the links between nodes, making option B the correct answer.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following operations has a time complexity of O(1) in an array?",
+      "options": {
+        "A": "Accessing an element by its index",
+        "B": "Searching for an element",
+        "C": "Inserting an element at the beginning",
+        "D": "Deleting an element from the end"
+      },
+      "correctAnswer": "A",
+      "explanation": "Accessing an element by its index in an array is a constant-time operation, denoted as O(1), because it involves a direct calculation to determine the memory location of the desired element, regardless of the array's size. This makes option A the correct answer.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the purpose of using a sentinel value in an array?",
+      "options": {
+        "A": "To mark the beginning of the array",
+        "B": "To mark the end of the array",
+        "C": "To indicate an error condition",
+        "D": "To improve the efficiency of sorting algorithms"
+      },
+      "correctAnswer": "B",
+      "explanation": "A sentinel value is a special value placed at the end of an array to mark its boundary. This value is used to prevent accessing memory outside the bounds of the array, which can lead to runtime errors or unexpected behavior. The sentinel value serves as a guard, making option B the correct answer.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following array traversal techniques involves visiting each element in a specific order, such as row by row or column by column?",
+      "options": {
+        "A": "Linear traversal",
+        "B": "Row-major traversal",
+        "C": "Column-major traversal",
+        "D": "All of the above"
+      },
+      "correctAnswer": "D",
+      "explanation": "Linear traversal involves visiting each element in a single sequence, while row-major and column-major traversals are techniques used for multi-dimensional arrays, where elements are visited in a specific order, such as row by row or column by column. All of these techniques are used for array traversal, making option D the correct answer.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the term for the process of combining two or more arrays into a single array?",
+      "options": {
+        "A": "Merging",
+        "B": "Concatenation",
+        "C": "Sorting",
+        "D": "Searching"
+      },
+      "correctAnswer": "B",
+      "explanation": "Concatenation is the process of combining two or more arrays into a single array. This operation involves creating a new array that contains all the elements from the original arrays, making option B the correct answer.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following is a common operation performed on arrays?",
+      "options": {
+        "A": "Reversing the order of elements",
+        "B": "Rotating the elements",
+        "C": "Both A and B",
+        "D": "Neither A nor B"
+      },
+      "correctAnswer": "C",
+      "explanation": "Reversing the order of elements and rotating the elements are both common operations performed on arrays. Reversing involves changing the order of elements from ascending to descending or vice versa, while rotation involves shifting elements in a circular manner, making option C the correct answer.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the purpose of using a prefix sum array?",
+      "options": {
+        "A": "To improve the efficiency of searching algorithms",
+        "B": "To reduce the time complexity of range sum queries",
+        "C": "To sort the elements of the array",
+        "D": "To insert elements at the beginning of the array"
+      },
+      "correctAnswer": "B",
+      "explanation": "A prefix sum array is used to store the cumulative sum of elements in an array. This allows for efficient calculation of range sum queries, where the sum of elements within a specific range can be calculated in constant time, making option B the correct answer.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Which of the following algorithms has a time complexity of O(n log n) for sorting an array of n elements?",
+      "options": {
+        "A": "Bubble sort",
+        "B": "Selection sort",
+        "C": "Merge sort",
+        "D": "Insertion sort"
+      },
+      "correctAnswer": "C",
+      "explanation": "Merge sort is a sorting algorithm that uses a divide-and-conquer approach to sort an array of elements. It has a time complexity of O(n log n), which is more efficient than other sorting algorithms like bubble sort, selection sort, and insertion sort for large datasets, making option C the correct answer.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the term for the process of reducing the size of an array by removing duplicate elements?",
+      "options": {
+        "A": "Filtering",
+        "B": "Mapping",
+        "C": "Reducing",
+        "D": "Deduplication"
+      },
+      "correctAnswer": "D",
+      "explanation": "Deduplication is the process of removing duplicate elements from an array, resulting in an array with unique elements. This operation is useful for data processing and analysis, making option D the correct answer.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Which of the following data structures is suitable for implementing a queue using an array?",
+      "options": {
+        "A": "Circular array",
+        "B": "Linear array",
+        "C": "Linked list",
+        "D": "Stack"
+      },
+      "correctAnswer": "A",
+      "explanation": "A circular array is a data structure that uses an array to implement a queue. It allows for efficient enqueue and dequeue operations by using the array in a circular manner, making option A the correct answer.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the term for the process of transforming an array into a different format, such as converting a 1D array to a 2D array?",
+      "options": {
+        "A": "Reshaping",
+        "B": "Transposing",
+        "C": "Flattening",
+        "D": "Pivoting"
+      },
+      "correctAnswer": "A",
+      "explanation": "Reshaping is the process of transforming an array into a different format, such as converting a 1D array to a 2D array or changing the dimensions of a multi-dimensional array. This operation is useful for data analysis and processing, making option A the correct answer.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Which of the following operations has a time complexity of O(n) for an array of n elements?",
+      "options": {
+        "A": "Finding the maximum element",
+        "B": "Finding the minimum element",
+        "C": "Finding the median element",
+        "D": "All of the above"
+      },
+      "correctAnswer": "D",
+      "explanation": "Finding the maximum element, finding the minimum element, and finding the median element all have a time complexity of O(n) for an array of n elements. These operations involve scanning the entire array to find the desired element, making option D the correct answer.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the purpose of using a sparse array?",
+      "options": {
+        "A": "To improve the efficiency of searching algorithms",
+        "B": "To reduce memory usage for arrays with many zero elements",
+        "C": "To increase the speed of array operations",
+        "D": "To simplify the implementation of sorting algorithms"
+      },
+      "correctAnswer": "B",
+      "explanation": "A sparse array is a data structure that stores only the non-zero elements of an array, along with their indices. This approach reduces memory usage for arrays with many zero elements, making option B the correct answer.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Which of the following algorithms is used for finding the closest pair of points in an array of 2D points?",
+      "options": {
+        "A": "K-means clustering",
+        "B": "Hierarchical clustering",
+        "C": "Closest pair algorithm",
+        "D": "Convex hull algorithm"
+      },
+      "correctAnswer": "C",
+      "explanation": "The closest pair algorithm is used to find the closest pair of points in an array of 2D points. This algorithm has a time complexity of O(n log n) and is useful in various applications, such as computer graphics and geographic information systems, making option C the correct answer.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the term for the process of rearranging the elements of an array to satisfy a specific condition, such as sorting or partial sorting?",
+      "options": {
+        "A": "Permutation",
+        "B": "Combination",
+        "C": "Partitioning",
+        "D": "Transformation"
+      },
+      "correctAnswer": "A",
+      "explanation": "Permutation refers to the process of rearranging the elements of an array to satisfy a specific condition, such as sorting or partial sorting. This operation is useful in various applications, such as data analysis and algorithm design, making option A the correct answer.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Which of the following data structures is suitable for implementing a priority queue using an array?",
+      "options": {
+        "A": "Binary heap",
+        "B": "Fibonacci heap",
+        "C": "Hash table",
+        "D": "Graph"
+      },
+      "correctAnswer": "A",
+      "explanation": "A binary heap is a data structure that can be used to implement a priority queue using an array. It allows for efficient insertion and deletion of elements based on their priority, making option A the correct answer.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the purpose of using a segment tree?",
+      "options": {
+        "A": "To improve the efficiency of range sum queries",
+        "B": "To reduce the time complexity of searching algorithms",
+        "C": "To increase the speed of sorting algorithms",
+        "D": "To simplify the implementation of graph algorithms"
+      },
+      "correctAnswer": "A",
+      "explanation": "A segment tree is a data structure used to improve the efficiency of range sum queries. It allows for efficient calculation of sum, minimum, or maximum values within a range of elements, making option A the correct answer.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Which of the following algorithms has a time complexity of O(n log log n) for sorting an array of n elements?",
+      "options": {
+        "A": "Quick sort",
+        "B": "Merge sort",
+        "C": "Heap sort",
+        "D": "Radix sort"
+      },
+      "correctAnswer": "D",
+      "explanation": "Radix sort is a non-comparative sorting algorithm that sorts integers or strings based on their digits. It has a time complexity of O(n log log n) for sorting an array of n elements, making option D the correct answer.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the term for the process of dividing an array into smaller sub-arrays and solving each sub-array recursively?",
+      "options": {
+        "A": "Divide and conquer",
+        "B": "Dynamic programming",
+        "C": "Greedy algorithm",
+        "D": "Backtracking"
+      },
+      "correctAnswer": "A",
+      "explanation": "Divide and conquer is a problem-solving strategy that involves dividing an array into smaller sub-arrays and solving each sub-array recursively. This approach is useful for solving complex problems, such as sorting, searching, and merging, making option A the correct answer.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Which of the following data structures is suitable for implementing a suffix tree using an array?",
+      "options": {
+        "A": "Trie",
+        "B": "Suffix array",
+        "C": "LZW compression",
+        "D": "Huffman coding"
+      },
+      "correctAnswer": "B",
+      "explanation": "A suffix array is a data structure that stores the suffixes of a string in an array. It can be used to implement a suffix tree, which is a tree-like data structure that presents the suffixes of a string in a way that allows for efficient searching and matching, making option B the correct answer.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the purpose of using a Bloom filter?",
+      "options": {
+        "A": "To improve the efficiency of searching algorithms",
+        "B": "To reduce the time complexity of sorting algorithms",
+        "C": "To increase the speed of array operations",
+        "D": "To test membership in a set"
+      },
+      "correctAnswer": "D",
+      "explanation": "A Bloom filter is a space-efficient probabilistic data structure that is used to test membership in a set. It can be used to determine whether an element is a member of a set, with a small probability of false positives, making option D the correct answer.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Which of the following algorithms is used for finding the maximum sub-array sum?",
+      "options": {
+        "A": "Kadane's algorithm",
+        "B": "Manacher's algorithm",
+        "C": "Rabin-Karp algorithm",
+        "D": "Longest increasing subsequence"
+      },
+      "correctAnswer": "A",
+      "explanation": "Kadane's algorithm is a linear-time algorithm used for finding the maximum sub-array sum. It scans the entire array and keeps track of the maximum sum of a sub-array ending at each position, making option A the correct answer.",
+      "difficulty": "Hard"
+    }
+  ]
+}

@@ -1,0 +1,269 @@
+{
+  "topic": "Strings - KMP",
+  "questions": [
+    {
+      "question": "What does KMP stand for in the context of string algorithms?",
+      "options": {
+        "A": "Knuth-Morris-Pratt",
+        "B": "Kleinberg-Mishra-Prasad",
+        "C": "Kolmogorov-Moses-Pratt",
+        "D": "Krohn-Moser-Pratt"
+      },
+      "correctAnswer": "A",
+      "explanation": "KMP stands for Knuth-Morris-Pratt, named after the authors who developed this string searching algorithm. The KMP algorithm is used for searching a substring within a larger string. It is an improvement over the naive string searching algorithm. The KMP algorithm works by precomputing information about the substring that allows it to skip characters in the string, making it more efficient.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the primary advantage of using the KMP algorithm over a naive approach for string searching?",
+      "options": {
+        "A": "It is simpler to implement",
+        "B": "It has a lower time complexity",
+        "C": "It only works for specific types of strings",
+        "D": "It requires more memory"
+      },
+      "correctAnswer": "B",
+      "explanation": "The primary advantage of using the KMP algorithm is its lower time complexity compared to the naive string searching approach. The KMP algorithm precomputes a lookup table that allows it to skip characters in the text, reducing the number of comparisons needed. This makes it particularly efficient for searching large texts or when the pattern is long.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How does the KMP algorithm handle cases where the substring is not found in the main string?",
+      "options": {
+        "A": "It returns an error message",
+        "B": "It returns a special value indicating the substring was not found",
+        "C": "It continues searching indefinitely",
+        "D": "It always finds a match, even if it's not correct"
+      },
+      "correctAnswer": "B",
+      "explanation": "When the KMP algorithm is unable to find the substring within the main string, it typically returns a special value or index to indicate that the substring was not found. This could be -1, NULL, or another convention depending on the implementation and programming language. This allows the calling code to handle the case where the substring is not present.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the purpose of the 'lps' (longest proper prefix which is also a proper suffix) array in the KMP algorithm?",
+      "options": {
+        "A": "To store the characters of the substring",
+        "B": "To keep track of the current position in the string",
+        "C": "To store the lengths of the longest proper prefixes that are also suffixes",
+        "D": "To count the occurrences of the substring"
+      },
+      "correctAnswer": "C",
+      "explanation": "The 'lps' array is crucial in the KMP algorithm as it stores the lengths of the longest proper prefixes that are also suffixes for each substring ending at each position. This array is used to determine how many characters can be safely skipped in the string when a mismatch occurs, thus optimizing the search process.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How does the KMP algorithm decide the next character to compare in the string after a mismatch?",
+      "options": {
+        "A": "It always moves one character forward",
+        "B": "It uses the lps array to decide how many characters to skip",
+        "C": "It resets to the beginning of the string",
+        "D": "It moves backward in the string"
+      },
+      "correctAnswer": "B",
+      "explanation": "The KMP algorithm utilizes the 'lps' array to decide how many characters can be skipped in the string after a mismatch. By looking at the value in the 'lps' array corresponding to the current position in the substring, it determines the next position in the substring to compare, effectively skipping characters in the string that cannot possibly match the current prefix of the substring.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Can the KMP algorithm be used for searching multiple substrings in a single pass through the main string?",
+      "options": {
+        "A": "Yes, it is optimized for multiple substrings",
+        "B": "No, it is designed for a single substring",
+        "C": "Only if the substrings are identical",
+        "D": "Only if the substrings are disjoint"
+      },
+      "correctAnswer": "B",
+      "explanation": "The standard KMP algorithm is designed to search for a single substring within a main string. While it could be adapted or combined with other algorithms to search for multiple substrings, the basic KMP algorithm is not optimized for this purpose and would need to be run separately for each substring.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Is the KMP algorithm sensitive to the case of characters in the string and substring?",
+      "options": {
+        "A": "Yes, it treats 'A' and 'a' differently by default",
+        "B": "No, it ignores case differences",
+        "C": "It can be either case-sensitive or case-insensitive depending on implementation",
+        "D": "It only works with uppercase letters"
+      },
+      "correctAnswer": "A",
+      "explanation": "By default, the KMP algorithm is case-sensitive, meaning it treats 'A' and 'a' as different characters. This is because it directly compares the ASCII values of characters, and uppercase and lowercase letters have different ASCII values. However, the algorithm can be easily modified to be case-insensitive by converting both the string and the substring to the same case before the search.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the average time complexity of the KMP algorithm for searching a substring of length 'm' in a string of length 'n'?",
+      "options": {
+        "A": "O(n^2)",
+        "B": "O(n+m)",
+        "C": "O(m*n)",
+        "D": "O(2^n)"
+      },
+      "correctAnswer": "B",
+      "explanation": "The average time complexity of the KMP algorithm is O(n+m), where 'n' is the length of the main string and 'm' is the length of the substring. This is because the algorithm makes a single pass through the string and the substring, with some additional time spent on preprocessing the substring to build the 'lps' array.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How does the KMP algorithm compare to the Rabin-Karp algorithm in terms of string searching?",
+      "options": {
+        "A": "KMP is faster but more complex",
+        "B": "Rabin-Karp is faster but less complex",
+        "C": "KMP is used for exact matching, Rabin-Karp for approximate matching",
+        "D": "KMP and Rabin-Karp have similar performance but different applications"
+      },
+      "correctAnswer": "A",
+      "explanation": "The KMP algorithm and the Rabin-Karp algorithm are both used for string searching, but they differ in their approach and application. The KMP algorithm is generally faster and more efficient for searching single patterns in a text, especially when the pattern is long or the text is very large. However, it can be more complex to implement than the Rabin-Karp algorithm, which uses hashing for string matching and is typically used for searching multiple patterns or in situations where the pattern is short.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Can the KMP algorithm be used in parallel computing environments to speed up string searching?",
+      "options": {
+        "A": "Yes, it is inherently parallelizable",
+        "B": "No, it is sequential by nature",
+        "C": "It depends on the specific parallel architecture",
+        "D": "Only for very large strings"
+      },
+      "correctAnswer": "B",
+      "explanation": "The KMP algorithm is inherently sequential because it relies on the previous comparisons to decide the next steps, especially in how it uses the 'lps' array to skip characters. While some parts of the preprocessing can be parallelized, the core string searching process in KMP does not easily lend itself to parallelization due to its dependency on previous matches.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How does the KMP algorithm's efficiency change with the length of the substring being searched?",
+      "options": {
+        "A": "It becomes less efficient for longer substrings",
+        "B": "It becomes more efficient for longer substrings",
+        "C": "The length of the substring has no impact on efficiency",
+        "D": "It is most efficient for substrings of a specific length"
+      },
+      "correctAnswer": "B",
+      "explanation": "The KMP algorithm becomes more efficient for longer substrings because it can skip more characters in the string when a mismatch occurs, thanks to the information stored in the 'lps' array. Longer substrings often have more repeating patterns or longer prefixes that are also suffixes, which the KMP algorithm can exploit to skip more characters in the string, thus reducing the number of comparisons needed.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What happens if the 'lps' array in the KMP algorithm is not computed correctly?",
+      "options": {
+        "A": "The algorithm will be slower but still correct",
+        "B": "The algorithm may produce incorrect results",
+        "C": "The algorithm will always find the first occurrence of the substring",
+        "D": "The algorithm will never terminate"
+      },
+      "correctAnswer": "B",
+      "explanation": "If the 'lps' array is not computed correctly, the KMP algorithm may produce incorrect results. This is because the 'lps' array is crucial for determining how many characters can be skipped in the string after a mismatch. Incorrect values in this array can lead to missing the actual occurrence of the substring or falsely identifying a match.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Can the KMP algorithm be modified to search for substrings in a circular string (i.e., a string connected end-to-end)?",
+      "options": {
+        "A": "Yes, with minor modifications to handle wrap-around",
+        "B": "No, it is not possible without a completely different algorithm",
+        "C": "Only for substrings that do not cross the boundary",
+        "D": "It requires duplicating the string to simulate circular behavior"
+      },
+      "correctAnswer": "A",
+      "explanation": "The KMP algorithm can be modified to search for substrings in a circular string. This involves handling the wrap-around case when the substring crosses the boundary from the end of the string to the beginning. By adjusting the algorithm to consider the string as circular and using the 'lps' array appropriately, it can efficiently search for substrings in such a scenario.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How does the KMP algorithm compare to the Boyer-Moore algorithm in terms of efficiency for large strings?",
+      "options": {
+        "A": "KMP is generally more efficient for large strings",
+        "B": "Boyer-Moore is generally more efficient for large strings",
+        "C": "Their efficiencies are comparable for large strings",
+        "D": "It depends on the specific hardware architecture"
+      },
+      "correctAnswer": "B",
+      "explanation": "The Boyer-Moore algorithm is generally more efficient than the KMP algorithm for large strings. This is because Boyer-Moore uses a combination of techniques, including bad character shifting and good suffix shifting, to skip characters in the string, which can be more effective than KMP's approach for very large strings or when the alphabet size is large.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is a common use case for the KMP algorithm in real-world applications?",
+      "options": {
+        "A": "Image processing",
+        "B": "Network packet inspection",
+        "C": "Text editors for finding and replacing strings",
+        "D": "Compilers for syntax analysis"
+      },
+      "correctAnswer": "C",
+      "explanation": "A common use case for the KMP algorithm is in text editors for finding and replacing strings. The KMP algorithm is efficient for searching a substring within a larger string, making it suitable for applications where a user needs to find a specific word or phrase within a document. This application benefits from the KMP algorithm's ability to efficiently search strings without having to examine every character in the document.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How does preprocessing in the KMP algorithm affect its overall efficiency?",
+      "options": {
+        "A": "It significantly increases the overall time complexity",
+        "B": "It has a negligible impact on the overall efficiency",
+        "C": "It allows the algorithm to skip more characters during the search",
+        "D": "It is only beneficial for very short substrings"
+      },
+      "correctAnswer": "C",
+      "explanation": "The preprocessing step in the KMP algorithm, which involves computing the 'lps' array, allows the algorithm to skip more characters during the search. This preprocessing step has a linear time complexity with respect to the length of the substring and enables the algorithm to achieve an overall efficient search process.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Can the KMP algorithm be used for searching strings in a database?",
+      "options": {
+        "A": "Yes, it is commonly used for database string searching",
+        "B": "No, databases use specialized indexing for string searching",
+        "C": "It depends on the size of the database",
+        "D": "Only for databases that store text documents"
+      },
+      "correctAnswer": "B",
+      "explanation": "While the KMP algorithm can be used for searching strings in a database, databases typically use more specialized indexing techniques and algorithms optimized for their specific use cases. These might include full-text indexing or other methods that allow for efficient querying and retrieval of data based on string matches.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How does the choice of programming language affect the implementation of the KMP algorithm?",
+      "options": {
+        "A": "The choice of language significantly affects the algorithm's efficiency",
+        "B": "The choice of language has a minor impact on the algorithm's efficiency",
+        "C": "The choice of language does not affect the algorithm's efficiency",
+        "D": "It only affects the development time, not the efficiency"
+      },
+      "correctAnswer": "B",
+      "explanation": "The choice of programming language can have a minor impact on the efficiency of the KMP algorithm implementation. Languages that are closer to the hardware (like C or C++) may provide more direct access to memory and thus potentially faster execution, whereas higher-level languages might introduce additional overhead. However, for most practical purposes, the difference in efficiency due to the choice of language is not significant enough to outweigh other considerations like development time and maintainability.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Is the KMP algorithm suitable for searching strings in real-time data streams?",
+      "options": {
+        "A": "Yes, it is highly suitable due to its efficiency",
+        "B": "No, it is not suitable because it requires the entire string to be buffered",
+        "C": "It depends on the rate of the data stream",
+        "D": "Only if the data stream is slower than the processing speed"
+      },
+      "correctAnswer": "B",
+      "explanation": "The KMP algorithm is not inherently suitable for searching strings in real-time data streams because it is designed to operate on a buffered string. For real-time data streams, algorithms that can process the stream in an online fashion, without requiring the entire string to be buffered, are more appropriate. However, adaptations or modifications of the KMP algorithm could potentially be used in such scenarios.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the space complexity of the KMP algorithm?",
+      "options": {
+        "A": "O(1)",
+        "B": "O(m)",
+        "C": "O(n)",
+        "D": "O(n+m)"
+      },
+      "correctAnswer": "B",
+      "explanation": "The space complexity of the KMP algorithm is O(m), where 'm' is the length of the substring. This is because the algorithm requires additional space to store the 'lps' array, which has a length of 'm'. The space needed does not grow with the size of the main string 'n', making it relatively space-efficient for large texts.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Can the KMP algorithm be used to find all occurrences of a substring within a main string?",
+      "options": {
+        "A": "Yes, it can find all occurrences",
+        "B": "No, it only finds the first occurrence",
+        "C": "It finds all occurrences but requires modifications",
+        "D": "It depends on the length of the substring"
+      },
+      "correctAnswer": "A",
+      "explanation": "The KMP algorithm can indeed be used to find all occurrences of a substring within a main string. By continuing the search process from the position right after a match is found, the algorithm can locate all instances of the substring in the string. This involves a simple loop that continues until the entire string has been searched.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How does the KMP algorithm handle strings that contain special characters or non-printable characters?",
+      "options": {
+        "A": "It treats them the same as any other character",
+        "B": "It ignores them during the search process",
+        "C": "It fails when encountering such characters",
+        "D": "It requires a special encoding to handle them"
+      },
+      "correctAnswer": "A",
+      "explanation": "The KMP algorithm treats special characters or non-printable characters the same as any other character. It performs comparisons based on the ASCII values (or Unicode values in the case of Unicode strings) of the characters, without distinguishing between printable and non-printable characters. This means the algorithm will correctly match substrings containing special characters, provided the comparison is done correctly at the character level.",
+      "difficulty": "Hard"
+    }
+  ]
+}

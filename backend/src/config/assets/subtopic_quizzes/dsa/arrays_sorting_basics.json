@@ -1,0 +1,353 @@
+{
+  "topic": "Arrays - Sorting Basics",
+  "questions": [
+    {
+      "question": "What is the primary purpose of sorting an array?",
+      "options": {
+        "A": "To search for an element",
+        "B": "To remove duplicate elements",
+        "C": "To arrange elements in a specific order",
+        "D": "To insert a new element"
+      },
+      "correctAnswer": "C",
+      "explanation": "The primary purpose of sorting an array is to arrange its elements in a specific order, either ascending or descending, which makes it easier to perform other operations such as searching, inserting, or deleting elements.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following sorting algorithms has an average time complexity of O(n log n)?",
+      "options": {
+        "A": "Bubble sort",
+        "B": "Selection sort",
+        "C": "Merge sort",
+        "D": "Insertion sort"
+      },
+      "correctAnswer": "C",
+      "explanation": "Merge sort is a divide-and-conquer algorithm that has an average time complexity of O(n log n), making it one of the most efficient sorting algorithms.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the difference between a stable and unstable sorting algorithm?",
+      "options": {
+        "A": "Stable algorithms are faster, while unstable algorithms are slower",
+        "B": "Stable algorithms maintain the relative order of equal elements, while unstable algorithms do not",
+        "C": "Stable algorithms are used for small datasets, while unstable algorithms are used for large datasets",
+        "D": "Stable algorithms are used for descending order, while unstable algorithms are used for ascending order"
+      },
+      "correctAnswer": "B",
+      "explanation": "A stable sorting algorithm maintains the relative order of equal elements, whereas an unstable sorting algorithm does not guarantee this property.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following is a characteristic of the bubble sort algorithm?",
+      "options": {
+        "A": "It is a divide-and-conquer algorithm",
+        "B": "It has a time complexity of O(n log n)",
+        "C": "It is a simple comparison-based sorting algorithm",
+        "D": "It is an adaptive sorting algorithm"
+      },
+      "correctAnswer": "C",
+      "explanation": "Bubble sort is a simple comparison-based sorting algorithm that repeatedly steps through the list, compares adjacent elements, and swaps them if they are in the wrong order.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the purpose of the pivot element in the quicksort algorithm?",
+      "options": {
+        "A": "To divide the array into two subarrays",
+        "B": "To swap two elements",
+        "C": "To compare two elements",
+        "D": "To insert a new element"
+      },
+      "correctAnswer": "A",
+      "explanation": "The pivot element in the quicksort algorithm is used to divide the array into two subarrays, one containing elements less than the pivot and the other containing elements greater than the pivot.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following sorting algorithms is suitable for sorting a large dataset of integers?",
+      "options": {
+        "A": "Bubble sort",
+        "B": "Selection sort",
+        "C": "Radix sort",
+        "D": "Insertion sort"
+      },
+      "correctAnswer": "C",
+      "explanation": "Radix sort is a non-comparison sorting algorithm that is particularly useful for sorting large datasets of integers, as it can take advantage of the properties of integers to achieve high performance.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the time complexity of the insertion sort algorithm in the best case?",
+      "options": {
+        "A": "O(n^2)",
+        "B": "O(n log n)",
+        "C": "O(n)",
+        "D": "O(1)"
+      },
+      "correctAnswer": "C",
+      "explanation": "The time complexity of the insertion sort algorithm in the best case, when the input is already sorted, is O(n), as it only needs to compare each element with its predecessor.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following is a type of sorting algorithm?",
+      "options": {
+        "A": "Searching",
+        "B": "Insertion",
+        "C": "Deletion",
+        "D": "Traversal"
+      },
+      "correctAnswer": "B",
+      "explanation": "Insertion sort is a type of sorting algorithm that works by dividing the input into a sorted and an unsorted region, and then inserting each element from the unsorted region into the sorted region in its correct position.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the primary advantage of using a hybrid sorting algorithm?",
+      "options": {
+        "A": "It is simple to implement",
+        "B": "It has a high time complexity",
+        "C": "It can take advantage of the properties of the input data",
+        "D": "It is only suitable for small datasets"
+      },
+      "correctAnswer": "C",
+      "explanation": "A hybrid sorting algorithm can take advantage of the properties of the input data to achieve high performance, by combining different sorting algorithms or techniques to adapt to the specific characteristics of the data.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How does the merge sort algorithm handle duplicate elements?",
+      "options": {
+        "A": "It removes duplicate elements",
+        "B": "It ignores duplicate elements",
+        "C": "It maintains the relative order of duplicate elements",
+        "D": "It swaps duplicate elements"
+      },
+      "correctAnswer": "C",
+      "explanation": "The merge sort algorithm is a stable sorting algorithm, which means that it maintains the relative order of duplicate elements, preserving their original order in the sorted output.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the purpose of the partition step in the quicksort algorithm?",
+      "options": {
+        "A": "To divide the array into two subarrays",
+        "B": "To swap two elements",
+        "C": "To compare two elements",
+        "D": "To insert a new element"
+      },
+      "correctAnswer": "A",
+      "explanation": "The partition step in the quicksort algorithm is used to divide the array into two subarrays, one containing elements less than the pivot and the other containing elements greater than the pivot, which helps to recursively sort the array.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Which of the following sorting algorithms has a worst-case time complexity of O(n^2)?",
+      "options": {
+        "A": "Merge sort",
+        "B": "Quicksort",
+        "C": "Bubble sort",
+        "D": "All of the above"
+      },
+      "correctAnswer": "D",
+      "explanation": "Many sorting algorithms, including bubble sort, insertion sort, and quicksort, have a worst-case time complexity of O(n^2), which occurs when the input array is in a specific order that maximizes the number of comparisons required.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the benefit of using a sorting algorithm with a low overhead in terms of extra memory?",
+      "options": {
+        "A": "It is faster",
+        "B": "It is more stable",
+        "C": "It is more efficient in terms of memory usage",
+        "D": "It is more scalable"
+      },
+      "correctAnswer": "C",
+      "explanation": "A sorting algorithm with a low overhead in terms of extra memory is more efficient in terms of memory usage, as it requires less additional memory to perform the sorting operation, which can be beneficial for systems with limited memory resources.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How does the heapsort algorithm work?",
+      "options": {
+        "A": "It uses a divide-and-conquer approach",
+        "B": "It uses a comparison-based approach",
+        "C": "It uses a heap data structure",
+        "D": "It uses a recursive approach"
+      },
+      "correctAnswer": "C",
+      "explanation": "The heapsort algorithm works by using a heap data structure to sort the array, where the heap is a specialized tree-based data structure that satisfies the heap property, which allows for efficient sorting.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the time complexity of the radix sort algorithm in the best case?",
+      "options": {
+        "A": "O(n log n)",
+        "B": "O(n)",
+        "C": "O(nk)",
+        "D": "O(1)"
+      },
+      "correctAnswer": "C",
+      "explanation": "The time complexity of the radix sort algorithm in the best case is O(nk), where n is the number of elements and k is the number of digits in the radix sort, as it performs a constant amount of work for each digit.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Which of the following is a type of adaptive sorting algorithm?",
+      "options": {
+        "A": "Quicksort",
+        "B": "Merge sort",
+        "C": "Insertion sort",
+        "D": "All of the above"
+      },
+      "correctAnswer": "C",
+      "explanation": "Insertion sort is an adaptive sorting algorithm, as it takes advantage of the existing order in the input array to reduce the number of comparisons and swaps required, making it more efficient for partially sorted or nearly sorted data.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the primary advantage of using a recursive sorting algorithm?",
+      "options": {
+        "A": "It is more efficient in terms of memory usage",
+        "B": "It is faster",
+        "C": "It is more stable",
+        "D": "It is easier to implement"
+      },
+      "correctAnswer": "D",
+      "explanation": "Recursive sorting algorithms, such as merge sort and quicksort, can be easier to implement, as they break down the sorting problem into smaller sub-problems that can be solved recursively, which can simplify the implementation.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How does the timsort algorithm work?",
+      "options": {
+        "A": "It uses a divide-and-conquer approach",
+        "B": "It uses a comparison-based approach",
+        "C": "It uses a hybrid approach",
+        "D": "It uses a recursive approach"
+      },
+      "correctAnswer": "C",
+      "explanation": "The timsort algorithm is a hybrid sorting algorithm that combines elements of merge sort and insertion sort to achieve high performance and stability, by using a divide-and-conquer approach to break down the array into smaller chunks and then using insertion sort to sort each chunk.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the benefit of using a sorting algorithm with a good cache performance?",
+      "options": {
+        "A": "It is faster",
+        "B": "It is more stable",
+        "C": "It is more efficient in terms of memory usage",
+        "D": "It is more scalable"
+      },
+      "correctAnswer": "A",
+      "explanation": "A sorting algorithm with good cache performance can be faster, as it minimizes the number of cache misses, which can significantly improve the performance of the sorting operation, especially for large datasets.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "How does the dual-pivot quicksort algorithm work?",
+      "options": {
+        "A": "It uses a single pivot element",
+        "B": "It uses two pivot elements",
+        "C": "It uses a divide-and-conquer approach",
+        "D": "It uses a comparison-based approach"
+      },
+      "correctAnswer": "B",
+      "explanation": "The dual-pivot quicksort algorithm is a variation of the quicksort algorithm that uses two pivot elements to partition the array, which can improve the performance of the sorting operation by reducing the number of comparisons required.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the time complexity of the smoothsort algorithm in the worst case?",
+      "options": {
+        "A": "O(n log n)",
+        "B": "O(n)",
+        "C": "O(n^2)",
+        "D": "O(1)"
+      },
+      "correctAnswer": "A",
+      "explanation": "The smoothsort algorithm has a time complexity of O(n log n) in the worst case, which makes it suitable for sorting large datasets, as it can efficiently handle a wide range of input sizes.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Which of the following is a characteristic of the introsort algorithm?",
+      "options": {
+        "A": "It is a comparison-based sorting algorithm",
+        "B": "It is a non-comparison sorting algorithm",
+        "C": "It is a hybrid sorting algorithm",
+        "D": "It is a recursive sorting algorithm"
+      },
+      "correctAnswer": "C",
+      "explanation": "The introsort algorithm is a hybrid sorting algorithm that combines elements of quicksort and heapsort to achieve high performance and stability, by using a divide-and-conquer approach to break down the array into smaller chunks and then using heapsort to sort each chunk.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "How does the block sort algorithm work?",
+      "options": {
+        "A": "It uses a divide-and-conquer approach",
+        "B": "It uses a comparison-based approach",
+        "C": "It uses a block-based approach",
+        "D": "It uses a recursive approach"
+      },
+      "correctAnswer": "C",
+      "explanation": "The block sort algorithm is a sorting algorithm that works by dividing the input array into smaller blocks, sorting each block using a simple sorting algorithm, and then merging the sorted blocks to produce the final sorted array.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the benefit of using a sorting algorithm with a low overhead in terms of function calls?",
+      "options": {
+        "A": "It is faster",
+        "B": "It is more stable",
+        "C": "It is more efficient in terms of memory usage",
+        "D": "It is more scalable"
+      },
+      "correctAnswer": "A",
+      "explanation": "A sorting algorithm with a low overhead in terms of function calls can be faster, as it reduces the number of function calls, which can improve the performance of the sorting operation, especially for large datasets.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Which of the following sorting algorithms is suitable for sorting a large dataset of strings?",
+      "options": {
+        "A": "Quicksort",
+        "B": "Merge sort",
+        "C": "Radix sort",
+        "D": "Timsort"
+      },
+      "correctAnswer": "C",
+      "explanation": "Radix sort is a non-comparison sorting algorithm that is particularly useful for sorting large datasets of strings, as it can take advantage of the properties of strings to achieve high performance.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the primary advantage of using a parallel sorting algorithm?",
+      "options": {
+        "A": "It is faster",
+        "B": "It is more stable",
+        "C": "It is more efficient in terms of memory usage",
+        "D": "It is more scalable"
+      },
+      "correctAnswer": "A",
+      "explanation": "A parallel sorting algorithm can be faster, as it can take advantage of multiple processing units to perform the sorting operation, which can significantly improve the performance of the sorting operation, especially for large datasets.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "How does the flashsort algorithm work?",
+      "options": {
+        "A": "It uses a divide-and-conquer approach",
+        "B": "It uses a comparison-based approach",
+        "C": "It uses a histogram-based approach",
+        "D": "It uses a recursive approach"
+      },
+      "correctAnswer": "C",
+      "explanation": "The flashsort algorithm is a sorting algorithm that works by using a histogram to count the occurrences of each value in the input array, and then using this information to sort the array.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the time complexity of the spreadsort algorithm in the worst case?",
+      "options": {
+        "A": "O(n log n)",
+        "B": "O(n)",
+        "C": "O(n^2)",
+        "D": "O(1)"
+      },
+      "correctAnswer": "A",
+      "explanation": "The spreadsort algorithm has a time complexity of O(n log n) in the worst case, which makes it suitable for sorting large datasets, as it can efficiently handle a wide range of input sizes.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Which of the following is a characteristic of the dual-pivot quicksort algorithm?",
+      "options": {
+        "A": "It is a comparison-based sorting algorithm",
+        "B": "It is a non-comparison sorting algorithm",
+        "C": "It is a hybrid sorting algorithm",
+        "D": "It uses two pivot elements"
+      },
+      "correctAnswer": "D",
+      "explanation": "The dual-pivot quicksort algorithm is a variation of the quicksort algorithm that uses two pivot elements to partition the array, which can improve the performance of the sorting operation by reducing the number of comparisons required.",
+      "difficulty": "Hard"
+    }
+  ]
+}

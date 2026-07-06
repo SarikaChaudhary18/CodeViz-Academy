@@ -175,11 +175,11 @@ Generate a complete quiz for the following topic.
 Topic: "${topicName}"
 
 Requirements:
-- Generate exactly 45 high-quality MCQs.
+- Generate exactly 30 high-quality MCQs.
 - Difficulty:
-  - 15 Easy
-  - 15 Medium
-  - 15 Hard
+  - 10 Easy
+  - 10 Medium
+  - 10 Hard
 - Four options (A, B, C, D).
 - Only one correct answer.
 - Include:

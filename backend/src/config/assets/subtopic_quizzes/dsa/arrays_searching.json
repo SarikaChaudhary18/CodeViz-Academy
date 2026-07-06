@@ -1,0 +1,290 @@
+{
+  "topic": "Arrays - Searching",
+  "questions": [
+    {
+      "question": "What is the primary purpose of using a searching algorithm in arrays?",
+      "options": {
+        "A": "To sort the array elements",
+        "B": "To insert new elements into the array",
+        "C": "To find a specific element within the array",
+        "D": "To delete elements from the array"
+      },
+      "correctAnswer": "C",
+      "explanation": "The primary purpose of using a searching algorithm in arrays is to find a specific element within the array. Searching algorithms help in locating a particular element by iterating through the array and comparing each element with the target element. This process enables efficient retrieval of data from the array. The correct answer is option C, as it accurately describes the primary purpose of searching algorithms.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following searching algorithms is most suitable for unsorted arrays?",
+      "options": {
+        "A": "Linear Search",
+        "B": "Binary Search",
+        "C": "Depth-First Search",
+        "D": "Breadth-First Search"
+      },
+      "correctAnswer": "A",
+      "explanation": "Linear Search is the most suitable searching algorithm for unsorted arrays, as it involves checking each element in the array one by one until the target element is found. This approach is efficient for unsorted arrays because it does not require any specific ordering of elements. Binary Search, on the other hand, requires the array to be sorted, which is not the case for unsorted arrays.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the average-case time complexity of Linear Search?",
+      "options": {
+        "A": "O(1)",
+        "B": "O(log n)",
+        "C": "O(n)",
+        "D": "O(n^2)"
+      },
+      "correctAnswer": "C",
+      "explanation": "The average-case time complexity of Linear Search is O(n), where n is the number of elements in the array. This is because, on average, Linear Search has to check half of the elements in the array to find the target element. In the worst-case scenario, it may have to check all elements, resulting in a time complexity of O(n).",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which data structure is most suitable for implementing a Binary Search?",
+      "options": {
+        "A": "Linked List",
+        "B": "Stack",
+        "C": "Queue",
+        "D": "Array"
+      },
+      "correctAnswer": "D",
+      "explanation": "An array is the most suitable data structure for implementing a Binary Search. This is because Binary Search requires random access to elements in the data structure, which is efficiently provided by arrays. Linked Lists, on the other hand, do not support random access, making them less suitable for Binary Search.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the primary advantage of using Binary Search over Linear Search?",
+      "options": {
+        "A": "Binary Search is simpler to implement",
+        "B": "Binary Search has a lower time complexity",
+        "C": "Binary Search can handle unsorted arrays",
+        "D": "Binary Search requires less memory"
+      },
+      "correctAnswer": "B",
+      "explanation": "The primary advantage of using Binary Search over Linear Search is its lower time complexity. Binary Search has a time complexity of O(log n), whereas Linear Search has a time complexity of O(n). This makes Binary Search more efficient for large datasets, as it significantly reduces the number of comparisons required to find the target element.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following statements is true about Binary Search?",
+      "options": {
+        "A": "It can be used on unsorted arrays",
+        "B": "It has a time complexity of O(n)",
+        "C": "It requires the array to be sorted",
+        "D": "It is less efficient than Linear Search for small arrays"
+      },
+      "correctAnswer": "C",
+      "explanation": "Binary Search requires the array to be sorted. This is because Binary Search works by repeatedly dividing the search interval in half and searching for the target element in one of the two halves. If the array is not sorted, Binary Search may not be able to find the target element correctly.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the worst-case time complexity of Binary Search?",
+      "options": {
+        "A": "O(1)",
+        "B": "O(log n)",
+        "C": "O(n)",
+        "D": "O(n^2)"
+      },
+      "correctAnswer": "B",
+      "explanation": "The worst-case time complexity of Binary Search is O(log n), where n is the number of elements in the array. This occurs when the target element is not present in the array, and Binary Search has to repeatedly divide the search interval in half until it is empty.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following searching algorithms has a time complexity of O(n^2)?",
+      "options": {
+        "A": "Linear Search",
+        "B": "Binary Search",
+        "C": "Depth-First Search",
+        "D": "None of the above"
+      },
+      "correctAnswer": "D",
+      "explanation": "None of the above searching algorithms have a time complexity of O(n^2). Linear Search has a time complexity of O(n), and Binary Search has a time complexity of O(log n). Depth-First Search can have a time complexity of O(n) or O(b^d) depending on the graph or tree being searched, but not O(n^2).",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the purpose of the low and high indices in Binary Search?",
+      "options": {
+        "A": "To keep track of the target element's position",
+        "B": "To store the values of the array elements",
+        "C": "To define the search interval",
+        "D": "To implement recursion"
+      },
+      "correctAnswer": "C",
+      "explanation": "The purpose of the low and high indices in Binary Search is to define the search interval. The low index represents the starting point of the search interval, and the high index represents the ending point. By adjusting these indices, Binary Search can efficiently narrow down the search space and find the target element.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following is a potential application of Binary Search?",
+      "options": {
+        "A": "Finding a specific book in a library",
+        "B": "Sorting a list of names",
+        "C": "Deleting a record from a database",
+        "D": "Inserting a new element into a sorted array"
+      },
+      "correctAnswer": "A",
+      "explanation": "Finding a specific book in a library is a potential application of Binary Search. By organizing the books in a sorted order, Binary Search can be used to efficiently locate a specific book by its title or author. This approach can significantly reduce the time spent searching for a book, especially in large libraries.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How does the efficiency of Binary Search compare to Linear Search for large datasets?",
+      "options": {
+        "A": "Binary Search is less efficient than Linear Search",
+        "B": "Binary Search is equally efficient as Linear Search",
+        "C": "Binary Search is more efficient than Linear Search",
+        "D": "The efficiency depends on the specific implementation"
+      },
+      "correctAnswer": "C",
+      "explanation": "Binary Search is more efficient than Linear Search for large datasets. This is because Binary Search has a time complexity of O(log n), whereas Linear Search has a time complexity of O(n). As the size of the dataset increases, the difference in efficiency between the two searching algorithms becomes more pronounced, making Binary Search the better choice for large datasets.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What are the necessary conditions for using Binary Search on an array?",
+      "options": {
+        "A": "The array must be unsorted, and the elements must be unique",
+        "B": "The array must be sorted, and the elements can be duplicate",
+        "C": "The array must be sorted, and the elements must be unique",
+        "D": "The array can be unsorted, and the elements can be duplicate"
+      },
+      "correctAnswer": "B",
+      "explanation": "The necessary conditions for using Binary Search on an array are that the array must be sorted, and the elements can be duplicate. Binary Search requires the array to be sorted so that it can efficiently divide the search interval in half and locate the target element. However, Binary Search can handle duplicate elements, as it only requires the array to be sorted, not the elements to be unique.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How does the number of comparisons in Binary Search change as the size of the array increases?",
+      "options": {
+        "A": "The number of comparisons increases linearly with the size of the array",
+        "B": "The number of comparisons decreases exponentially with the size of the array",
+        "C": "The number of comparisons increases logarithmically with the size of the array",
+        "D": "The number of comparisons remains constant regardless of the size of the array"
+      },
+      "correctAnswer": "C",
+      "explanation": "The number of comparisons in Binary Search increases logarithmically with the size of the array. This is because Binary Search divides the search interval in half with each comparison, resulting in a logarithmic increase in the number of comparisons as the size of the array increases. This makes Binary Search more efficient than Linear Search for large datasets.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the advantage of using a recursive implementation of Binary Search?",
+      "options": {
+        "A": "It reduces the time complexity of the algorithm",
+        "B": "It increases the space complexity of the algorithm",
+        "C": "It makes the code more readable and easier to understand",
+        "D": "It eliminates the need for a base case"
+      },
+      "correctAnswer": "C",
+      "explanation": "The advantage of using a recursive implementation of Binary Search is that it makes the code more readable and easier to understand. Recursive implementations can be more intuitive and easier to visualize, especially for problems that have a natural recursive structure. However, recursive implementations can also increase the space complexity of the algorithm due to the overhead of recursive function calls.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How does the choice of pivot element affect the performance of Binary Search?",
+      "options": {
+        "A": "The choice of pivot element has no effect on the performance of Binary Search",
+        "B": "The choice of pivot element can significantly improve the performance of Binary Search",
+        "C": "The choice of pivot element can slightly improve the performance of Binary Search",
+        "D": "The choice of pivot element can degrade the performance of Binary Search"
+      },
+      "correctAnswer": "A",
+      "explanation": "The choice of pivot element has no effect on the performance of Binary Search. In Binary Search, the pivot element is typically the middle element of the current search interval. The choice of pivot element does not affect the overall time complexity of the algorithm, which remains O(log n). However, in other searching algorithms like QuickSearch, the choice of pivot element can significantly affect the performance.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the difference between a successful search and an unsuccessful search in Binary Search?",
+      "options": {
+        "A": "A successful search finds the target element, while an unsuccessful search does not",
+        "B": "A successful search has a lower time complexity than an unsuccessful search",
+        "C": "A successful search requires more comparisons than an unsuccessful search",
+        "D": "A successful search is only possible if the array is sorted"
+      },
+      "correctAnswer": "A",
+      "explanation": "The difference between a successful search and an unsuccessful search in Binary Search is that a successful search finds the target element, while an unsuccessful search does not. In a successful search, Binary Search is able to locate the target element within the array, whereas in an unsuccessful search, Binary Search is unable to find the target element and returns a failure indicator.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How does Binary Search handle duplicate elements in the array?",
+      "options": {
+        "A": "It returns the index of the first occurrence of the target element",
+        "B": "It returns the index of the last occurrence of the target element",
+        "C": "It returns the indices of all occurrences of the target element",
+        "D": "It eliminates duplicate elements from the array"
+      },
+      "correctAnswer": "A",
+      "explanation": "Binary Search returns the index of the first occurrence of the target element when there are duplicate elements in the array. This is because Binary Search typically finds the first occurrence of the target element by dividing the search interval in half and comparing the middle element to the target element. If the middle element matches the target element, Binary Search returns its index, which is the index of the first occurrence of the target element.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Can Binary Search be used to find the maximum or minimum element in a sorted array?",
+      "options": {
+        "A": "Yes, Binary Search can be used to find the maximum or minimum element",
+        "B": "No, Binary Search cannot be used to find the maximum or minimum element",
+        "C": "Only for the maximum element, not the minimum element",
+        "D": "Only for the minimum element, not the maximum element"
+      },
+      "correctAnswer": "B",
+      "explanation": "No, Binary Search cannot be used to find the maximum or minimum element in a sorted array. Binary Search is designed to find a specific target element within the array, not to find the maximum or minimum element. To find the maximum or minimum element, a simple iteration through the array is sufficient, as the maximum element will be at the end of the array and the minimum element will be at the beginning.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the space complexity of Binary Search?",
+      "options": {
+        "A": "O(1)",
+        "B": "O(log n)",
+        "C": "O(n)",
+        "D": "O(n^2)"
+      },
+      "correctAnswer": "A",
+      "explanation": "The space complexity of Binary Search is O(1), which means it uses a constant amount of additional space. Binary Search only requires a few extra variables to store the low and high indices, as well as the target element, and does not allocate any additional arrays or data structures that scale with the input size.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Can Binary Search be parallelized?",
+      "options": {
+        "A": "Yes, Binary Search can be parallelized",
+        "B": "No, Binary Search cannot be parallelized",
+        "C": "Only for certain types of arrays",
+        "D": "Only for certain types of target elements"
+      },
+      "correctAnswer": "B",
+      "explanation": "No, Binary Search cannot be parallelized. Binary Search is an inherently sequential algorithm, as each comparison depends on the result of the previous comparison. This makes it difficult to divide the work among multiple processors or threads, as each thread would need to wait for the previous thread to complete its comparison before proceeding.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the primary disadvantage of using Binary Search?",
+      "options": {
+        "A": "It has a high time complexity",
+        "B": "It requires the array to be sorted",
+        "C": "It uses a lot of extra space",
+        "D": "It is difficult to implement"
+      },
+      "correctAnswer": "B",
+      "explanation": "The primary disadvantage of using Binary Search is that it requires the array to be sorted. This can be a significant limitation, as sorting the array can be an expensive operation, especially for large datasets. Additionally, if the array is not already sorted, the overhead of sorting it may outweigh the benefits of using Binary Search.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Can Binary Search be used to search for an element in a linked list?",
+      "options": {
+        "A": "Yes, Binary Search can be used to search for an element in a linked list",
+        "B": "No, Binary Search cannot be used to search for an element in a linked list",
+        "C": "Only if the linked list is sorted",
+        "D": "Only if the linked list is unsorted"
+      },
+      "correctAnswer": "B",
+      "explanation": "No, Binary Search cannot be used to search for an element in a linked list. Binary Search requires random access to elements in the data structure, which is not possible in a linked list. Linked lists only provide sequential access to elements, making Binary Search impractical for searching linked lists.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the relationship between Binary Search and Interpolation Search?",
+      "options": {
+        "A": "Binary Search is a special case of Interpolation Search",
+        "B": "Interpolation Search is a special case of Binary Search",
+        "C": "Binary Search and Interpolation Search are unrelated algorithms",
+        "D": "Interpolation Search is an optimization of Binary Search"
+      },
+      "correctAnswer": "B",
+      "explanation": "Interpolation Search is a special case of Binary Search. Interpolation Search is an algorithm that estimates the position of the target element based on the values of the elements at the low and high indices, whereas Binary Search simply divides the search interval in half. Interpolation Search can be viewed as an optimization of Binary Search for certain types of data, where the values of the elements are uniformly distributed.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Can Binary Search be used to find the closest match to a target element in an array?",
+      "options": {
+        "A": "Yes, Binary Search can be used to find the closest match",
+        "B": "No, Binary Search cannot be used to find the closest match",
+        "C": "Only if the array is sorted",
+        "D": "Only if the target element is present in the array"
+      }
+    }
+  ]
+}

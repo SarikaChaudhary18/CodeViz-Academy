@@ -1,0 +1,314 @@
+{
+  "topic": "Arrays - Matrix Problems",
+  "questions": [
+    {
+      "question": "What is a matrix in the context of arrays?",
+      "options": {
+        "A": "A one-dimensional array",
+        "B": "A two-dimensional array",
+        "C": "A three-dimensional array",
+        "D": "A four-dimensional array"
+      },
+      "correctAnswer": "B",
+      "explanation": "A matrix is a two-dimensional array, meaning it has rows and columns. It is used to represent data that has two dimensions. In programming, matrices are often used to solve problems related to linear algebra, image processing, and more. Understanding matrices is essential in computer science.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the purpose of using matrices in computer science?",
+      "options": {
+        "A": "To reduce memory usage",
+        "B": "To improve code readability",
+        "C": "To solve complex mathematical problems",
+        "D": "To increase computational speed"
+      },
+      "correctAnswer": "C",
+      "explanation": "Matrices are used in computer science to solve complex mathematical problems, such as linear equations, Markov chains, and more. They provide a powerful tool for representing and solving systems of equations. Matrices are also used in machine learning, data analysis, and image processing.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How do you declare a matrix in Python?",
+      "options": {
+        "A": "matrix = []",
+        "B": "matrix = [[]]",
+        "C": "matrix = [[1, 2], [3, 4]]",
+        "D": "matrix = (1, 2, 3, 4)"
+      },
+      "correctAnswer": "C",
+      "explanation": "In Python, you can declare a matrix by using a list of lists. Each inner list represents a row in the matrix. For example, matrix = [[1, 2], [3, 4]] declares a 2x2 matrix with values 1, 2, 3, and 4.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is matrix multiplication?",
+      "options": {
+        "A": "Element-wise multiplication of two matrices",
+        "B": "Row-wise multiplication of two matrices",
+        "C": "Column-wise multiplication of two matrices",
+        "D": "Multiplication of corresponding elements of two matrices"
+      },
+      "correctAnswer": "D",
+      "explanation": "Matrix multiplication is a binary operation that takes two matrices and produces another matrix. It is defined as the multiplication of corresponding elements of two matrices. The resulting matrix has the same number of rows as the first matrix and the same number of columns as the second matrix.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the time complexity of matrix multiplication?",
+      "options": {
+        "A": "O(n^2)",
+        "B": "O(n^3)",
+        "C": "O(n^4)",
+        "D": "O(2^n)"
+      },
+      "correctAnswer": "B",
+      "explanation": "The time complexity of matrix multiplication is O(n^3), where n is the number of rows (or columns) of the matrices. This is because we need to iterate over each element of the matrices three times to perform the multiplication.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the purpose of using transpose in matrices?",
+      "options": {
+        "A": "To invert the matrix",
+        "B": "To find the determinant of the matrix",
+        "C": "To swap the rows with columns",
+        "D": "To multiply the matrix by a scalar"
+      },
+      "correctAnswer": "C",
+      "explanation": "The transpose of a matrix is an operator which can be thought of as 'swapping' the rows and columns for a matrix. It is used in many linear algebra applications, such as finding the inverse of a matrix, solving systems of equations, and more.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How do you find the determinant of a 2x2 matrix?",
+      "options": {
+        "A": "By adding the diagonal elements",
+        "B": "By subtracting the diagonal elements",
+        "C": "By multiplying the diagonal elements and subtracting the product of the other two elements",
+        "D": "By dividing the diagonal elements"
+      },
+      "correctAnswer": "C",
+      "explanation": "The determinant of a 2x2 matrix [[a, b], [c, d]] is calculated as ad - bc. This is a fundamental concept in linear algebra and is used to solve systems of equations, find the inverse of a matrix, and more.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is a sparse matrix?",
+      "options": {
+        "A": "A matrix with all elements filled",
+        "B": "A matrix with most elements filled",
+        "C": "A matrix with most elements as zero",
+        "D": "A matrix with all elements as zero"
+      },
+      "correctAnswer": "C",
+      "explanation": "A sparse matrix is a matrix that has most of its elements as zero. These matrices are common in many applications, such as network analysis, image processing, and more. They are stored in a compact form to save memory and improve computational efficiency.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How do you represent a sparse matrix in Python?",
+      "options": {
+        "A": "Using a list of lists",
+        "B": "Using a dictionary",
+        "C": "Using a set",
+        "D": "Using a tuple"
+      },
+      "correctAnswer": "B",
+      "explanation": "In Python, you can represent a sparse matrix using a dictionary, where the keys are the indices of the non-zero elements and the values are the corresponding elements. This is a compact way to store sparse matrices and improves memory efficiency.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is matrix factorization?",
+      "options": {
+        "A": "The process of finding the inverse of a matrix",
+        "B": "The process of finding the determinant of a matrix",
+        "C": "The process of decomposing a matrix into a product of simpler matrices",
+        "D": "The process of solving a system of linear equations"
+      },
+      "correctAnswer": "C",
+      "explanation": "Matrix factorization is the process of decomposing a matrix into a product of simpler matrices. This is a powerful technique used in many applications, such as data analysis, machine learning, and more. It helps to reduce the dimensionality of the data and improve computational efficiency.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the purpose of using eigenvalues and eigenvectors in matrices?",
+      "options": {
+        "A": "To find the determinant of a matrix",
+        "B": "To find the inverse of a matrix",
+        "C": "To solve systems of linear equations",
+        "D": "To analyze the stability of a system"
+      },
+      "correctAnswer": "D",
+      "explanation": "Eigenvalues and eigenvectors are used to analyze the stability of a system. They help to understand the behavior of a system under different conditions and are used in many applications, such as control theory, signal processing, and more.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How do you find the eigenvalues and eigenvectors of a matrix?",
+      "options": {
+        "A": "By solving the characteristic equation",
+        "B": "By finding the determinant of the matrix",
+        "C": "By finding the inverse of the matrix",
+        "D": "By solving a system of linear equations"
+      },
+      "correctAnswer": "A",
+      "explanation": "The eigenvalues and eigenvectors of a matrix are found by solving the characteristic equation, which is obtained by detaching the diagonal elements of the matrix and setting it equal to zero. The solutions to this equation are the eigenvalues, and the corresponding eigenvectors are found by solving a system of linear equations.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the difference between a symmetric matrix and a skew-symmetric matrix?",
+      "options": {
+        "A": "A symmetric matrix is equal to its transpose, while a skew-symmetric matrix is not",
+        "B": "A symmetric matrix is not equal to its transpose, while a skew-symmetric matrix is",
+        "C": "A symmetric matrix has all elements as zero, while a skew-symmetric matrix has all elements as non-zero",
+        "D": "A symmetric matrix has all elements as non-zero, while a skew-symmetric matrix has all elements as zero"
+      },
+      "correctAnswer": "A",
+      "explanation": "A symmetric matrix is equal to its transpose, while a skew-symmetric matrix is equal to the negative of its transpose. This means that the elements of a symmetric matrix are mirrored across the main diagonal, while the elements of a skew-symmetric matrix are mirrored across the main diagonal but with a change of sign.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How do you check if a matrix is invertible?",
+      "options": {
+        "A": "By finding the determinant of the matrix",
+        "B": "By finding the inverse of the matrix",
+        "C": "By solving a system of linear equations",
+        "D": "By checking if the matrix is symmetric"
+      },
+      "correctAnswer": "A",
+      "explanation": "A matrix is invertible if and only if its determinant is non-zero. If the determinant is zero, the matrix is singular and does not have an inverse. This is a fundamental concept in linear algebra and is used in many applications, such as solving systems of equations and finding the inverse of a matrix.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the purpose of using the singular value decomposition (SVD) of a matrix?",
+      "options": {
+        "A": "To find the inverse of a matrix",
+        "B": "To solve a system of linear equations",
+        "C": "To reduce the dimensionality of a matrix",
+        "D": "To analyze the stability of a system"
+      },
+      "correctAnswer": "C",
+      "explanation": "The SVD of a matrix is used to reduce the dimensionality of the matrix by retaining only the most important features. It is a powerful technique used in many applications, such as image compression, data analysis, and more. The SVD helps to improve the computational efficiency and accuracy of many algorithms.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How do you find the SVD of a matrix?",
+      "options": {
+        "A": "By solving the characteristic equation",
+        "B": "By finding the determinant of the matrix",
+        "C": "By finding the eigenvalues and eigenvectors of the matrix",
+        "D": "By using an iterative algorithm"
+      },
+      "correctAnswer": "D",
+      "explanation": "The SVD of a matrix is found using an iterative algorithm, such as the power method or the QR algorithm. These algorithms are used to find the singular values and singular vectors of the matrix, which are then used to compute the SVD.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the difference between a matrix and a tensor?",
+      "options": {
+        "A": "A matrix is a two-dimensional array, while a tensor is a multi-dimensional array",
+        "B": "A matrix is a multi-dimensional array, while a tensor is a two-dimensional array",
+        "C": "A matrix is used for linear transformations, while a tensor is used for non-linear transformations",
+        "D": "A matrix is used for non-linear transformations, while a tensor is used for linear transformations"
+      },
+      "correctAnswer": "A",
+      "explanation": "A matrix is a two-dimensional array, while a tensor is a multi-dimensional array. Tensors are used to represent complex data structures, such as images, videos, and more. They are used in many applications, such as machine learning, computer vision, and more.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How do you represent a tensor in Python?",
+      "options": {
+        "A": "Using a list of lists",
+        "B": "Using a dictionary",
+        "C": "Using a NumPy array",
+        "D": "Using a Pandas DataFrame"
+      },
+      "correctAnswer": "C",
+      "explanation": "In Python, you can represent a tensor using a NumPy array. NumPy provides a powerful and flexible way to work with multi-dimensional arrays, including tensors. You can use the `numpy.array()` function to create a tensor, and then use various methods to manipulate and transform it.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the purpose of using tensor contractions in linear algebra?",
+      "options": {
+        "A": "To reduce the dimensionality of a tensor",
+        "B": "To increase the dimensionality of a tensor",
+        "C": "To solve a system of linear equations",
+        "D": "To find the eigenvalues and eigenvectors of a tensor"
+      },
+      "correctAnswer": "A",
+      "explanation": "Tensor contractions are used to reduce the dimensionality of a tensor by summing over one or more indices. This is a powerful technique used in many applications, such as machine learning, computer vision, and more. Tensor contractions help to improve the computational efficiency and accuracy of many algorithms.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "How do you compute the tensor contraction of two tensors?",
+      "options": {
+        "A": "By summing over the corresponding elements of the two tensors",
+        "B": "By multiplying the corresponding elements of the two tensors",
+        "C": "By taking the dot product of the two tensors",
+        "D": "By taking the cross product of the two tensors"
+      },
+      "correctAnswer": "A",
+      "explanation": "The tensor contraction of two tensors is computed by summing over the corresponding elements of the two tensors. This is done by iterating over the indices of the two tensors and summing over the corresponding elements. The resulting tensor has a lower dimensionality than the original tensors.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the purpose of using tensor decompositions in linear algebra?",
+      "options": {
+        "A": "To reduce the dimensionality of a tensor",
+        "B": "To increase the dimensionality of a tensor",
+        "C": "To solve a system of linear equations",
+        "D": "To find the eigenvalues and eigenvectors of a tensor"
+      },
+      "correctAnswer": "A",
+      "explanation": "Tensor decompositions are used to reduce the dimensionality of a tensor by representing it as a sum of simpler tensors. This is a powerful technique used in many applications, such as machine learning, computer vision, and more. Tensor decompositions help to improve the computational efficiency and accuracy of many algorithms.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "How do you compute the tensor decomposition of a tensor?",
+      "options": {
+        "A": "By solving a system of linear equations",
+        "B": "By finding the eigenvalues and eigenvectors of the tensor",
+        "C": "By using an iterative algorithm",
+        "D": "By using a closed-form solution"
+      },
+      "correctAnswer": "C",
+      "explanation": "The tensor decomposition of a tensor is computed using an iterative algorithm, such as the alternating least squares (ALS) algorithm or the tensor train (TT) algorithm. These algorithms are used to find the best approximation of the tensor as a sum of simpler tensors.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the difference between a matrix and a graph?",
+      "options": {
+        "A": "A matrix is a two-dimensional array, while a graph is a non-linear data structure",
+        "B": "A matrix is a non-linear data structure, while a graph is a two-dimensional array",
+        "C": "A matrix is used for linear transformations, while a graph is used for non-linear transformations",
+        "D": "A matrix is used for non-linear transformations, while a graph is used for linear transformations"
+      },
+      "correctAnswer": "A",
+      "explanation": "A matrix is a two-dimensional array, while a graph is a non-linear data structure consisting of nodes and edges. Graphs are used to represent complex relationships between objects, while matrices are used to represent linear transformations.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "How do you represent a graph in Python?",
+      "options": {
+        "A": "Using a list of lists",
+        "B": "Using a dictionary",
+        "C": "Using a NumPy array",
+        "D": "Using a NetworkX graph object"
+      },
+      "correctAnswer": "D",
+      "explanation": "In Python, you can represent a graph using a NetworkX graph object. NetworkX is a powerful library for working with graphs, and provides a flexible and efficient way to create, manipulate, and analyze graphs.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the purpose of using graph algorithms in computer science?",
+      "options": {
+        "A": "To solve systems of linear equations",
+        "B": "To find the eigenvalues and eigenvectors of a matrix",
+        "C": "To analyze the structure of a graph",
+        "D": "To optimize the performance of a computer network"
+      },
+      "correctAnswer": "C",
+      "explanation": "Graph algorithms are used to analyze the structure of a graph, including finding the shortest path between nodes, detecting cycles, and finding the minimum spanning tree. These algorithms are used in many applications, such as social network analysis, traffic optimization, and more.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "How do you implement a graph algorithm in Python?",
+      "options": {
+        "A": "Using a recursive function",
+        "B": "Using an iterative algorithm",
+        "C": "Using a library such as NetworkX",
+        "D": "Using a data structure such as a stack or queue"
+      }
+    }
+  ]
+}

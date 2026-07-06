@@ -1,0 +1,281 @@
+{
+  "topic": "Arrays - Prefix Sum",
+  "questions": [
+    {
+      "question": "What is the primary purpose of using prefix sum arrays?",
+      "options": {
+        "A": "To reduce the space complexity of an algorithm",
+        "B": "To improve the time complexity of range sum queries",
+        "C": "To sort the elements of an array",
+        "D": "To find the maximum element in an array"
+      },
+      "correctAnswer": "B",
+      "explanation": "Prefix sum arrays are used to efficiently calculate the sum of elements in a range of an array. By precomputing the cumulative sum of the array elements, we can answer range sum queries in constant time, thus improving the time complexity.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Given an array [1, 2, 3, 4, 5], what is the prefix sum array?",
+      "options": {
+        "A": "[1, 3, 6, 10, 15]",
+        "B": "[1, 2, 3, 4, 5]",
+        "C": "[5, 4, 3, 2, 1]",
+        "D": "[0, 1, 3, 6, 10]"
+      },
+      "correctAnswer": "A",
+      "explanation": "The prefix sum array is calculated by adding each element to the sum of the previous elements. So, for the given array, the prefix sum array would be [1, 1+2=3, 1+2+3=6, 1+2+3+4=10, 1+2+3+4+5=15].",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How does the prefix sum technique handle updates to the original array?",
+      "options": {
+        "A": "It does not support updates to the original array",
+        "B": "It supports updates by recalculating the entire prefix sum array",
+        "C": "It supports updates by updating only the affected elements in the prefix sum array",
+        "D": "It uses a separate data structure to handle updates"
+      },
+      "correctAnswer": "B",
+      "explanation": "When an update occurs in the original array, we need to recalculate the entire prefix sum array to ensure that the cumulative sums remain accurate. This is because the prefix sum array is tightly coupled with the original array.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the time complexity of constructing a prefix sum array?",
+      "options": {
+        "A": "O(1)",
+        "B": "O(log n)",
+        "C": "O(n)",
+        "D": "O(n log n)"
+      },
+      "correctAnswer": "C",
+      "explanation": "Constructing a prefix sum array involves iterating over each element in the original array and calculating the cumulative sum. This operation requires a single pass through the array, resulting in a linear time complexity of O(n).",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Given a prefix sum array, how can we find the sum of elements in a range [i, j]?",
+      "options": {
+        "A": "By calculating the prefix sum from i to j",
+        "B": "By subtracting the prefix sum at index i-1 from the prefix sum at index j",
+        "C": "By adding the prefix sums at indices i and j",
+        "D": "By dividing the prefix sum at index j by the prefix sum at index i"
+      },
+      "correctAnswer": "B",
+      "explanation": "To find the sum of elements in a range [i, j], we can use the prefix sum array to avoid recalculating the sum from scratch. By subtracting the prefix sum at index i-1 from the prefix sum at index j, we get the sum of elements in the range [i, j]. This is because the prefix sum at index i-1 includes all elements before index i, so subtracting it from the prefix sum at index j gives us the sum of elements in the range [i, j].",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the space complexity of a prefix sum array?",
+      "options": {
+        "A": "O(1)",
+        "B": "O(log n)",
+        "C": "O(n)",
+        "D": "O(n log n)"
+      },
+      "correctAnswer": "C",
+      "explanation": "A prefix sum array requires the same amount of space as the original array, as we need to store the cumulative sum for each element. Therefore, the space complexity of a prefix sum array is O(n), where n is the number of elements in the original array.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Given an array of integers, how can we use prefix sums to find the maximum subarray sum?",
+      "options": {
+        "A": "By iterating over the array and keeping track of the maximum prefix sum",
+        "B": "By using a separate data structure to keep track of the maximum subarray sum",
+        "C": "By iterating over the array and using the prefix sum to calculate the sum of each subarray",
+        "D": "By using a recursive approach to find the maximum subarray sum"
+      },
+      "correctAnswer": "C",
+      "explanation": "We can use prefix sums to find the maximum subarray sum by iterating over the array and using the prefix sum to calculate the sum of each subarray. This approach avoids recalculating the sum for each subarray, resulting in a more efficient solution.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How can we use prefix sums to solve the 'Best Time to Buy and Sell Stock' problem?",
+      "options": {
+        "A": "By finding the maximum prefix sum",
+        "B": "By finding the minimum prefix sum",
+        "C": "By using the prefix sum to calculate the maximum possible profit",
+        "D": "By using a recursive approach to find the optimal buy and sell dates"
+      },
+      "correctAnswer": "C",
+      "explanation": "We can use prefix sums to solve the 'Best Time to Buy and Sell Stock' problem by using the prefix sum to calculate the maximum possible profit. By iterating over the array of stock prices and keeping track of the minimum price seen so far, we can use the prefix sum to calculate the maximum possible profit for each day.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Given a 2D array, how can we use prefix sums to efficiently calculate the sum of elements in a submatrix?",
+      "options": {
+        "A": "By using a single prefix sum array for the entire 2D array",
+        "B": "By using separate prefix sum arrays for each row and column",
+        "C": "By using a 2D prefix sum array to store the cumulative sum of each submatrix",
+        "D": "By iterating over the 2D array and recalculating the sum for each submatrix"
+      },
+      "correctAnswer": "C",
+      "explanation": "We can use a 2D prefix sum array to efficiently calculate the sum of elements in a submatrix. By storing the cumulative sum of each submatrix in the 2D prefix sum array, we can calculate the sum of elements in any submatrix in constant time.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the advantage of using prefix sums over other techniques for range sum queries?",
+      "options": {
+        "A": "Prefix sums have a lower time complexity for constructing the data structure",
+        "B": "Prefix sums have a lower space complexity for storing the data structure",
+        "C": "Prefix sums allow for faster range sum queries",
+        "D": "Prefix sums are more flexible and can handle updates to the original array"
+      },
+      "correctAnswer": "C",
+      "explanation": "Prefix sums have the advantage of allowing for fast range sum queries. By precomputing the cumulative sum of the array elements, we can answer range sum queries in constant time, making it an efficient solution for applications that require frequent range sum queries.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Given an array of integers, how can we use prefix sums to find the first duplicate element?",
+      "options": {
+        "A": "By iterating over the array and keeping track of the prefix sum",
+        "B": "By using a separate data structure to keep track of the seen elements",
+        "C": "By using the prefix sum to calculate the sum of each subarray",
+        "D": "By iterating over the array and using the prefix sum to check for duplicates"
+      },
+      "correctAnswer": "B",
+      "explanation": "We can use a separate data structure, such as a hash set, to keep track of the seen elements and find the first duplicate element. This approach allows us to efficiently check for duplicates without using prefix sums.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How can we optimize the construction of a prefix sum array for a sparse array?",
+      "options": {
+        "A": "By using a hash table to store the non-zero elements",
+        "B": "By using a separate data structure to store the zero elements",
+        "C": "By iterating over the array and skipping the zero elements",
+        "D": "By using a recursive approach to construct the prefix sum array"
+      },
+      "correctAnswer": "A",
+      "explanation": "We can optimize the construction of a prefix sum array for a sparse array by using a hash table to store the non-zero elements. This approach allows us to avoid storing the zero elements and reduce the space complexity of the prefix sum array.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Given a dynamic array, how can we efficiently update the prefix sum array when elements are added or removed?",
+      "options": {
+        "A": "By recalculating the entire prefix sum array after each update",
+        "B": "By using a separate data structure to keep track of the updates",
+        "C": "By updating only the affected elements in the prefix sum array",
+        "D": "By using a recursive approach to update the prefix sum array"
+      },
+      "correctAnswer": "C",
+      "explanation": "We can efficiently update the prefix sum array by updating only the affected elements. When an element is added or removed, we only need to update the prefix sum array from the point of insertion or deletion to the end of the array.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "How can we use prefix sums to solve the 'Maximum Subarray Sum' problem for a 2D array?",
+      "options": {
+        "A": "By using a single prefix sum array for the entire 2D array",
+        "B": "By using separate prefix sum arrays for each row and column",
+        "C": "By using a 2D prefix sum array to store the cumulative sum of each submatrix",
+        "D": "By iterating over the 2D array and recalculating the sum for each submatrix"
+      },
+      "correctAnswer": "C",
+      "explanation": "We can use a 2D prefix sum array to solve the 'Maximum Subarray Sum' problem for a 2D array. By storing the cumulative sum of each submatrix in the 2D prefix sum array, we can efficiently calculate the sum of elements in any submatrix and find the maximum subarray sum.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Given an array of integers, how can we use prefix sums to find the longest subarray with a given sum?",
+      "options": {
+        "A": "By iterating over the array and keeping track of the prefix sum",
+        "B": "By using a separate data structure to keep track of the seen sums",
+        "C": "By using the prefix sum to calculate the sum of each subarray",
+        "D": "By iterating over the array and using the prefix sum to check for the given sum"
+      },
+      "correctAnswer": "B",
+      "explanation": "We can use a separate data structure, such as a hash map, to keep track of the seen sums and find the longest subarray with a given sum. This approach allows us to efficiently check for the given sum without using prefix sums.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "How can we optimize the construction of a prefix sum array for a large dataset?",
+      "options": {
+        "A": "By using a parallel algorithm to construct the prefix sum array",
+        "B": "By using a distributed algorithm to construct the prefix sum array",
+        "C": "By using a disk-based storage to store the prefix sum array",
+        "D": "By using a recursive approach to construct the prefix sum array"
+      },
+      "correctAnswer": "A",
+      "explanation": "We can optimize the construction of a prefix sum array for a large dataset by using a parallel algorithm. This approach allows us to take advantage of multiple CPU cores and reduce the construction time of the prefix sum array.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Given a prefix sum array, how can we efficiently calculate the sum of elements in a range [i, j] when the array is very large?",
+      "options": {
+        "A": "By iterating over the array and recalculating the sum",
+        "B": "By using a separate data structure to store the sum of each subarray",
+        "C": "By using the prefix sum array to calculate the sum in constant time",
+        "D": "By using a recursive approach to calculate the sum"
+      },
+      "correctAnswer": "C",
+      "explanation": "We can efficiently calculate the sum of elements in a range [i, j] by using the prefix sum array to calculate the sum in constant time. By storing the cumulative sum of each subarray in the prefix sum array, we can calculate the sum of elements in any subarray in constant time, regardless of the size of the array.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "How can we use prefix sums to solve the 'Range Sum Query' problem in a database?",
+      "options": {
+        "A": "By using a prefix sum array to store the cumulative sum of each column",
+        "B": "By using a separate data structure to store the sum of each row",
+        "C": "By using a 2D prefix sum array to store the cumulative sum of each submatrix",
+        "D": "By iterating over the database and recalculating the sum for each query"
+      },
+      "correctAnswer": "A",
+      "explanation": "We can use a prefix sum array to solve the 'Range Sum Query' problem in a database by storing the cumulative sum of each column. By precomputing the cumulative sum of each column, we can answer range sum queries in constant time, making it an efficient solution for databases that require frequent range sum queries.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Given a dynamic array, how can we efficiently update the prefix sum array when elements are inserted or deleted at arbitrary positions?",
+      "options": {
+        "A": "By recalculating the entire prefix sum array after each update",
+        "B": "By using a separate data structure to keep track of the updates",
+        "C": "By updating only the affected elements in the prefix sum array",
+        "D": "By using a recursive approach to update the prefix sum array"
+      },
+      "correctAnswer": "C",
+      "explanation": "We can efficiently update the prefix sum array by updating only the affected elements. When an element is inserted or deleted at an arbitrary position, we only need to update the prefix sum array from the point of insertion or deletion to the end of the array.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "How can we use prefix sums to solve the 'Maximum Subarray Sum' problem for a circular array?",
+      "options": {
+        "A": "By using a single prefix sum array for the entire circular array",
+        "B": "By using separate prefix sum arrays for each row and column",
+        "C": "By using a 2D prefix sum array to store the cumulative sum of each submatrix",
+        "D": "By iterating over the circular array and recalculating the sum for each subarray"
+      },
+      "correctAnswer": "A",
+      "explanation": "We can use a single prefix sum array to solve the 'Maximum Subarray Sum' problem for a circular array. By storing the cumulative sum of the array elements in the prefix sum array, we can efficiently calculate the sum of elements in any subarray and find the maximum subarray sum.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Given an array of integers, how can we use prefix sums to find the minimum subarray with a given sum?",
+      "options": {
+        "A": "By iterating over the array and keeping track of the prefix sum",
+        "B": "By using a separate data structure to keep track of the seen sums",
+        "C": "By using the prefix sum to calculate the sum of each subarray",
+        "D": "By iterating over the array and using the prefix sum to check for the given sum"
+      },
+      "correctAnswer": "B",
+      "explanation": "We can use a separate data structure, such as a hash map, to keep track of the seen sums and find the minimum subarray with a given sum. This approach allows us to efficiently check for the given sum without using prefix sums.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "How can we optimize the construction of a prefix sum array for a large dataset with frequent updates?",
+      "options": {
+        "A": "By using a parallel algorithm to construct the prefix sum array",
+        "B": "By using a distributed algorithm to construct the prefix sum array",
+        "C": "By using a disk-based storage to store the prefix sum array",
+        "D": "By using a recursive approach to construct the prefix sum array"
+      },
+      "correctAnswer": "A",
+      "explanation": "We can optimize the construction of a prefix sum array for a large dataset with frequent updates by using a parallel algorithm. This approach allows us to take advantage of multiple CPU cores and reduce the construction time of the prefix sum array, making it suitable for large datasets with frequent updates.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Given a prefix sum array, how can we efficiently calculate the sum of elements in a range [i, j] when the array is very large and has frequent updates?",
+      "options": {
+        "A": "By iterating over the array and recalculating the sum",
+        "B": "By using a separate data structure to store the sum of each subarray",
+        "C": "By using the prefix sum array to calculate the sum in constant time",
+        "D": "By using a recursive approach to calculate the sum"
+      },
+      "correctAnswer": "C",
+      "explanation": "We can efficiently calculate the sum of elements in a range [i, j] by using the prefix sum array to calculate the sum in constant time. By storing the cumulative sum of each subarray in the prefix sum array, we can calculate the sum of elements in any subarray in constant time, regardless of the size of the array and the frequency of updates.",
+      "difficulty": "Hard"
+    }
+  ]
+}

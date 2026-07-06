@@ -1,0 +1,314 @@
+{
+  "topic": "Strings - Z Algorithm",
+  "questions": [
+    {
+      "question": "What is the primary purpose of the Z Algorithm in string processing?",
+      "options": {
+        "A": "To find the longest common substring between two strings",
+        "B": "To find all occurrences of a pattern in a text",
+        "C": "To efficiently preprocess a string for faster substring matching",
+        "D": "To sort a list of strings in lexicographical order"
+      },
+      "correctAnswer": "C",
+      "explanation": "The Z Algorithm is used to efficiently preprocess a string for faster substring matching by creating a Z-array that stores the length of the longest substring starting at each position that matches a prefix of the string. This allows for faster matching and searching within the string. It's particularly useful in scenarios where the string is very large and complex pattern matching is required.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How does the Z Algorithm handle strings with repeating patterns?",
+      "options": {
+        "A": "It treats all repeating patterns as unique substrings",
+        "B": "It ignores repeating patterns to reduce computational complexity",
+        "C": "It identifies and efficiently handles repeating patterns to improve matching speed",
+        "D": "It requires a separate preprocessing step for strings with repeating patterns"
+      },
+      "correctAnswer": "C",
+      "explanation": "The Z Algorithm is efficient in handling strings with repeating patterns because it preprocesses the string to identify the longest matching prefixes, which includes handling repetitions. This efficiency is key to its application in real-time string matching tasks.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the time complexity of the Z Algorithm for preprocessing a string of length n?",
+      "options": {
+        "A": "O(n^2)",
+        "B": "O(n log n)",
+        "C": "O(n)",
+        "D": "O(2^n)"
+      },
+      "correctAnswer": "C",
+      "explanation": "The Z Algorithm preprocesses a string in linear time, O(n), where n is the length of the string. This efficiency is crucial for its application in string matching and text processing tasks.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "In the context of the Z Algorithm, what does the Z-array represent?",
+      "options": {
+        "A": "The number of occurrences of each character in the string",
+        "B": "The length of the longest substring starting at each position that matches a prefix of the string",
+        "C": "The frequency of each substring in the string",
+        "D": "The lexicographical order of substrings in the string"
+      },
+      "correctAnswer": "B",
+      "explanation": "The Z-array is a fundamental component of the Z Algorithm, storing the length of the longest substring starting at each position i that matches a prefix of the string. This information is pivotal for efficient substring matching.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following best describes a scenario where the Z Algorithm is particularly useful?",
+      "options": {
+        "A": "Finding the first occurrence of a pattern in a text",
+        "B": "Counting the number of occurrences of a pattern in a text",
+        "C": "Identifying all occurrences of multiple patterns within a large text efficiently",
+        "D": "Sorting a list of strings"
+      },
+      "correctAnswer": "C",
+      "explanation": "The Z Algorithm is especially useful in scenarios where all occurrences of multiple patterns within a large text need to be identified efficiently. Its preprocess-and-match approach allows for fast identification of all pattern occurrences.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How does the Z Algorithm compare to the KMP Algorithm in terms of preprocessing time?",
+      "options": {
+        "A": "The Z Algorithm requires more preprocessing time than the KMP Algorithm",
+        "B": "Both algorithms have the same preprocessing time complexity",
+        "C": "The Z Algorithm requires less preprocessing time than the KMP Algorithm",
+        "D": "The preprocessing time of the Z Algorithm is always linear, unlike the KMP Algorithm"
+      },
+      "correctAnswer": "B",
+      "explanation": "Both the Z Algorithm and the KMP Algorithm have a linear preprocessing time complexity, O(n), where n is the length of the string. However, the Z Algorithm is more versatile and can be used for more complex matching tasks.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the primary advantage of using the Z Algorithm over a naive string matching approach?",
+      "options": {
+        "A": "It can handle strings with non-English characters",
+        "B": "It provides a linear time complexity for preprocessing",
+        "C": "It reduces the number of comparisons needed for matching patterns",
+        "D": "All of the above"
+      },
+      "correctAnswer": "D",
+      "explanation": "The Z Algorithm offers several advantages over naive string matching, including the ability to handle non-English characters, providing a linear time complexity for preprocessing, and reducing the number of comparisons needed for matching patterns. These advantages make it highly efficient for real-world applications.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "In a scenario where you need to frequently search for different patterns within the same large text, which approach would be more efficient?",
+      "options": {
+        "A": "Using the Z Algorithm for each pattern",
+        "B": "Using the KMP Algorithm for each pattern",
+        "C": "Preprocessing the text once with the Z Algorithm and then searching for each pattern",
+        "D": "Sorting the text and then searching for patterns"
+      },
+      "correctAnswer": "C",
+      "explanation": "Preprocessing the text once with the Z Algorithm and then using this preprocessing to search for each pattern is the most efficient approach. This is because the initial preprocessing step allows for subsequent searches to be conducted in linear time, greatly reducing overall computational complexity.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How does the Z Algorithm's efficiency change with the size of the input string?",
+      "options": {
+        "A": "The efficiency decreases as the string size increases",
+        "B": "The efficiency increases as the string size increases",
+        "C": "The efficiency remains constant regardless of the string size",
+        "D": "The algorithm is not suitable for large strings"
+      },
+      "correctAnswer": "B",
+      "explanation": "The Z Algorithm's efficiency actually increases as the string size increases because its linear time complexity, O(n), means that the time taken grows linearly with the size of the input. For very large strings, the efficiency of the Z Algorithm becomes particularly noticeable compared to algorithms with higher time complexities.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is a common application of the Z Algorithm in data processing?",
+      "options": {
+        "A": "Data compression",
+        "B": "Text editing",
+        "C": "Plagiarism detection",
+        "D": "All of the above"
+      },
+      "correctAnswer": "D",
+      "explanation": "The Z Algorithm finds application in various data processing tasks, including data compression, text editing, and plagiarism detection. Its ability to efficiently match patterns makes it particularly useful in these areas.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Can the Z Algorithm be used for matching patterns in binary data?",
+      "options": {
+        "A": "No, it is limited to text strings",
+        "B": "Yes, with modifications to handle binary data",
+        "C": "Yes, it can handle binary data directly",
+        "D": "Only for certain types of binary data"
+      },
+      "correctAnswer": "C",
+      "explanation": "The Z Algorithm can indeed be used for matching patterns in binary data, as its principles apply to any sequence of symbols, not just characters. This makes it versatile for a wide range of data types.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How does the Z Algorithm's performance compare to the Rabin-Karp Algorithm for string matching?",
+      "options": {
+        "A": "The Z Algorithm is always faster",
+        "B": "The Rabin-Karp Algorithm is always faster",
+        "C": "Their performance depends on the specific use case and string characteristics",
+        "D": "They have the same performance characteristics"
+      },
+      "correctAnswer": "C",
+      "explanation": "The performance of the Z Algorithm and the Rabin-Karp Algorithm can vary depending on the specific use case and characteristics of the strings being matched. The Z Algorithm excels in scenarios where preprocessing is beneficial, while the Rabin-Karp Algorithm may perform better in certain cases due to its hashing approach.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the impact of the Z Algorithm on the memory usage of a string matching application?",
+      "options": {
+        "A": "It significantly increases memory usage due to the Z-array",
+        "B": "It has a negligible impact on memory usage",
+        "C": "It reduces memory usage by eliminating the need for additional data structures",
+        "D": "The impact depends on the implementation details"
+      },
+      "correctAnswer": "A",
+      "explanation": "The Z Algorithm does increase memory usage due to the creation of the Z-array, which stores the length of the longest substring starting at each position that matches a prefix of the string. However, this increase in memory usage is often a worthwhile trade-off for the efficiency gained in string matching.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Can the Z Algorithm be parallelized for improved performance on multi-core processors?",
+      "options": {
+        "A": "No, the algorithm is inherently sequential",
+        "B": "Yes, with modifications to distribute the computation across cores",
+        "C": "Yes, it can be parallelized directly without modifications",
+        "D": "Only for certain parts of the algorithm"
+      },
+      "correctAnswer": "B",
+      "explanation": "While the Z Algorithm is inherently sequential, it can be modified to take advantage of parallel processing. By distributing the computation of the Z-array across multiple cores, the preprocessing step can be significantly accelerated on multi-core processors.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "How does the Z Algorithm handle strings containing special characters or whitespace?",
+      "options": {
+        "A": "It ignores special characters and whitespace",
+        "B": "It treats special characters and whitespace as regular characters",
+        "C": "It requires a separate preprocessing step to handle special characters and whitespace",
+        "D": "It cannot handle strings with special characters or whitespace"
+      },
+      "correctAnswer": "B",
+      "explanation": "The Z Algorithm treats special characters and whitespace as regular characters, meaning it does not distinguish between them and alphanumeric characters. This makes it versatile for processing a wide range of text data.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "In what scenarios might the Z Algorithm be less efficient than a naive approach?",
+      "options": {
+        "A": "For very short strings",
+        "B": "For strings with a small number of distinct characters",
+        "C": "For scenarios where the pattern is longer than the text",
+        "D": "For all of the above"
+      },
+      "correctAnswer": "D",
+      "explanation": "The Z Algorithm might be less efficient than a naive approach in scenarios involving very short strings, strings with a small number of distinct characters, or when the pattern is longer than the text. In these cases, the overhead of preprocessing might outweigh the benefits of the Z Algorithm's efficiency.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Can the Z Algorithm be used in conjunction with other string matching algorithms?",
+      "options": {
+        "A": "No, it is a standalone algorithm",
+        "B": "Yes, it can be used as a preprocessing step for other algorithms",
+        "C": "Yes, but only with the KMP Algorithm",
+        "D": "Only for improving the performance of the Rabin-Karp Algorithm"
+      },
+      "correctAnswer": "B",
+      "explanation": "The Z Algorithm can indeed be used in conjunction with other string matching algorithms. Its ability to efficiently preprocess a string can be leveraged as a first step, followed by the application of another algorithm for the actual matching. This hybrid approach can combine the strengths of different algorithms.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the role of the Z-array in facilitating string matching?",
+      "options": {
+        "A": "It stores the actual matched substrings",
+        "B": "It stores the starting positions of all occurrences of a pattern",
+        "C": "It stores the lengths of the longest substrings starting at each position that match a prefix of the string",
+        "D": "It is used to sort the string"
+      },
+      "correctAnswer": "C",
+      "explanation": "The Z-array plays a crucial role in the Z Algorithm by storing the lengths of the longest substrings starting at each position that match a prefix of the string. This information is pivotal for efficiently determining whether a pattern matches a substring of the text.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "In the context of the Z Algorithm, what is meant by 'preprocessing'?",
+      "options": {
+        "A": "The act of searching for a pattern in a text",
+        "B": "The initial step of analyzing the string to create the Z-array",
+        "C": "The process of sorting the string",
+        "D": "The step of replacing a pattern in the text"
+      },
+      "correctAnswer": "B",
+      "explanation": "Preprocessing, in the context of the Z Algorithm, refers to the initial step of analyzing the string to create the Z-array. This step is critical for the algorithm's efficiency, as it allows subsequent matching operations to be conducted in linear time.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Can the Z Algorithm be applied to search for multiple patterns in a single pass?",
+      "options": {
+        "A": "No, it is designed for single-pattern matching",
+        "B": "Yes, with modifications to handle multiple patterns",
+        "C": "Yes, it can naturally handle multiple patterns without modifications",
+        "D": "Only for patterns of the same length"
+      },
+      "correctAnswer": "B",
+      "explanation": "The Z Algorithm can be modified to search for multiple patterns in a single pass. By creating a combined pattern string and applying the Z Algorithm, it's possible to efficiently search for multiple patterns within a text.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How does the choice of programming language affect the implementation of the Z Algorithm?",
+      "options": {
+        "A": "The choice of language does not affect the implementation",
+        "B": "Languages with built-in string matching functions are more efficient",
+        "C": "Languages that support dynamic programming are better suited",
+        "D": "The choice of language can affect the implementation details but not the algorithm's efficiency"
+      },
+      "correctAnswer": "D",
+      "explanation": "The choice of programming language can affect the implementation details of the Z Algorithm, such as the use of specific data structures or syntax for loops and conditional statements. However, the underlying efficiency of the algorithm remains unaffected by the choice of language.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the significance of the Z Algorithm in bioinformatics?",
+      "options": {
+        "A": "It is used for aligning DNA sequences",
+        "B": "It is used for predicting protein structures",
+        "C": "It is used for finding gene regulatory elements",
+        "D": "All of the above"
+      },
+      "correctAnswer": "A",
+      "explanation": "The Z Algorithm finds significant application in bioinformatics, particularly in aligning DNA sequences. Its ability to efficiently match patterns makes it useful for identifying similarities and differences between genetic sequences.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Can the Z Algorithm be used for real-time string matching in streaming data?",
+      "options": {
+        "A": "No, it is not suitable for real-time applications",
+        "B": "Yes, with continuous preprocessing of the streaming data",
+        "C": "Yes, it can handle streaming data directly without modifications",
+        "D": "Only for certain types of streaming data"
+      },
+      "correctAnswer": "B",
+      "explanation": "The Z Algorithm can be used for real-time string matching in streaming data, but it requires continuous preprocessing of the incoming data stream. This can be challenging due to the need for constant updates to the Z-array as new data arrives.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "How does the Z Algorithm's time complexity compare to the Boyer-Moore Algorithm?",
+      "options": {
+        "A": "The Z Algorithm is always faster",
+        "B": "The Boyer-Moore Algorithm is always faster",
+        "C": "Their time complexities are comparable but depend on the scenario",
+        "D": "The Z Algorithm has a higher time complexity"
+      },
+      "correctAnswer": "C",
+      "explanation": "The time complexities of the Z Algorithm and the Boyer-Moore Algorithm are comparable but can vary depending on the specific scenario and characteristics of the strings being matched. Both algorithms have their strengths and are suited for different types of string matching tasks.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What are the implications of the Z Algorithm for text search engines?",
+      "options": {
+        "A": "It increases the index size",
+        "B": "It improves the efficiency of pattern matching",
+        "C": "It is not applicable to text search engines",
+        "D": "It reduces the relevance of search results"
+      },
+      "correctAnswer": "B",
+      "explanation": "The Z Algorithm can significantly improve the efficiency of pattern matching in text search engines. By preprocessing the indexed text, search engines can quickly identify matches for user queries, potentially leading to faster and more accurate search results.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Can the Z Algorithm be applied to non-text data, such as images or audio?",
+      "options": {
+        "A": "No, it is strictly limited to text data",
+        "B": "Yes, with appropriate conversion to a symbolic representation",
+        "C": "Yes, it can be directly applied to any type of data",
+        "D": "Only for certain types of non-text data"
+      }
+    }
+  ]
+}

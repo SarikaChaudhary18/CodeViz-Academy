@@ -66,7 +66,7 @@ async function callGemini(key, prompt) {
         responseMimeType: "application/json"
       }
     },
-    { timeout: 30000 }
+    { timeout: 180000 }
   );
 
   if (!response.data || !response.data.candidates || !response.data.candidates[0]) {
@@ -95,7 +95,7 @@ async function callGroq(key, prompt) {
         'Authorization': `Bearer ${key}`,
         'Content-Type': 'application/json'
       },
-      timeout: 30000
+      timeout: 180000
     }
   );
 
@@ -125,7 +125,7 @@ async function callNvidia(key, prompt) {
         'Authorization': `Bearer ${key}`,
         'Content-Type': 'application/json'
       },
-      timeout: 30000
+      timeout: 180000
     }
   );
 
@@ -204,7 +204,7 @@ async function generateWithNemotron(prompt) {
         const response = await axios.post(
           'https://api.groq.com/openai/v1/chat/completions',
           { model, messages: [{ role: 'user', content: prompt }], response_format: { type: 'json_object' } },
-          { headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' }, timeout: 30000 }
+          { headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' }, timeout: 180000 }
         );
         if (response.data?.choices?.[0]?.message?.content) {
           return cleanAndParseJSON(response.data.choices[0].message.content);

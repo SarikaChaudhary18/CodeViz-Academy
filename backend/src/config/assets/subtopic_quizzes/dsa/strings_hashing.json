@@ -1,0 +1,257 @@
+{
+  "topic": "Strings - Hashing",
+  "questions": [
+    {
+      "question": "What is the primary purpose of hashing in string manipulation?",
+      "options": {
+        "A": "To sort strings alphabetically",
+        "B": "To compare strings for equality",
+        "C": "To map strings to fixed-size indices",
+        "D": "To reverse the order of characters in a string"
+      },
+      "correctAnswer": "C",
+      "explanation": "Hashing is used to map variable-size input strings to fixed-size indices, allowing for efficient storage and retrieval. This is particularly useful in applications such as hash tables and string databases. By converting strings to numerical indices, hashing enables rapid lookup and comparison operations. In this context, the correct answer is C, as hashing primarily serves to map strings to fixed-size indices.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following hashing algorithms is known for its speed and simplicity?",
+      "options": {
+        "A": "SHA-256",
+        "B": "MD5",
+        "C": "MurmurHash",
+        "D": "RC4"
+      },
+      "correctAnswer": "C",
+      "explanation": "MurmurHash is a non-cryptographic hashing algorithm designed for its speed and simplicity, making it suitable for applications where high-performance string hashing is necessary. Unlike cryptographic hash functions such as SHA-256 or MD5, MurmurHash is optimized for fast computation rather than security, which aligns with the requirements of many string hashing use cases.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the term for the process of two different input strings producing the same hash value?",
+      "options": {
+        "A": "Collision",
+        "B": "Hashing",
+        "C": "String comparison",
+        "D": "Index mapping"
+      },
+      "correctAnswer": "A",
+      "explanation": "A collision occurs when two distinct input strings generate the same hash value, which can lead to errors in hash-based data structures if not properly managed. Collision resolution techniques are essential in hashing to handle such occurrences efficiently. Understanding collisions is crucial for developing robust string hashing applications.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "In the context of string hashing, what does 'preimage resistance' refer to?",
+      "options": {
+        "A": "The difficulty of finding an input string that corresponds to a given hash value",
+        "B": "The speed at which a hash function can be computed",
+        "C": "The ability of a hash function to produce unique values for unique strings",
+        "D": "The resistance of a hash function to brute-force attacks"
+      },
+      "correctAnswer": "A",
+      "explanation": "Preimage resistance (or one-wayness) is a property of a hash function that makes it computationally infeasible to find an input string (preimage) that corresponds to a given hash value. This property is crucial for cryptographic applications, where the ability to find a preimage could compromise security. In the context of string hashing, ensuring preimage resistance is vital for cryptographic hash functions.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the name of the hashing algorithm commonly used for data integrity and authenticity verification?",
+      "options": {
+        "A": "MurmurHash",
+        "B": "SHA-256",
+        "C": "MD5",
+        "D": "RC4"
+      },
+      "correctAnswer": "B",
+      "explanation": "SHA-256 (Secure Hash Algorithm 256) is a widely used cryptographic hash function designed to verify data integrity and authenticity. It produces a 256-bit hash value, which makes it highly resistant to collisions and preimage attacks. SHA-256 is commonly used in digital signatures, data integrity checks, and authenticity verification.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following best describes the 'avalanche effect' in hashing?",
+      "options": {
+        "A": "A small change in the input string results in a small change in the hash value",
+        "B": "A small change in the input string results in a significant change in the hash value",
+        "C": "The hash value of a string is always the same as the string itself",
+        "D": "The hash value is always a fixed length, regardless of the input string"
+      },
+      "correctAnswer": "B",
+      "explanation": "The avalanche effect refers to the property of a hash function where a slight modification in the input string leads to a drastically different hash value. This effect ensures that even minor changes in the input result in widely divergent outputs, making it difficult to predict the hash value based on the input. This property is crucial for cryptographic hash functions, enhancing their security.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "When choosing a hashing algorithm for string manipulation, what should be considered to avoid potential security risks?",
+      "options": {
+        "A": "Speed and simplicity alone",
+        "B": "Collision resistance and preimage resistance",
+        "C": "String length and encoding",
+        "D": "Only the size of the hash value"
+      },
+      "correctAnswer": "B",
+      "explanation": "When selecting a hashing algorithm for secure string manipulation, it is essential to consider both collision resistance (the difficulty of finding two different inputs with the same hash value) and preimage resistance (the difficulty of finding an input that corresponds to a given hash value). These properties help ensure the security and integrity of the hashed data, protecting against various attacks and unauthorized access.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the benefit of using a rolling hash in string matching algorithms?",
+      "options": {
+        "A": "Reduced computational complexity for finding all occurrences of a pattern in a text",
+        "B": "Increased space complexity for storing the hash values",
+        "C": "Improved accuracy in matching strings with typos",
+        "D": "Faster computation of hash values for very short strings"
+      },
+      "correctAnswer": "A",
+      "explanation": "A rolling hash is a technique used in string matching algorithms to efficiently compute the hash value of all substrings of a given text, allowing for quick identification of potential matches. The primary benefit of rolling hashes is that they enable the computation of hash values for overlapping substrings in constant time, significantly reducing the overall computational complexity of string matching tasks.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How does the 'Birthday Problem' relate to hashing?",
+      "options": {
+        "A": "It describes the likelihood of two people sharing the same birthday in a group of randomly selected people",
+        "B": "It explains the process of generating hash values for birthdays",
+        "C": "It illustrates the computational complexity of hashing algorithms",
+        "D": "It defines the number of possible hash values a function can produce"
+      },
+      "correctAnswer": "A",
+      "explanation": "The Birthday Problem is a well-known statistical problem that, when applied to hashing, illustrates the probability of collisions. In the context of hashing, it shows that even with a large number of possible hash values, collisions can occur much sooner than expected as the number of input strings (people, in the analogy) increases. This concept is crucial for understanding the limitations of hash functions and the need for collision resolution strategies.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Which data structure is commonly used to efficiently store and retrieve strings using their hash values?",
+      "options": {
+        "A": "Array",
+        "B": "Linked List",
+        "C": "Hash Table",
+        "D": "Stack"
+      },
+      "correctAnswer": "C",
+      "explanation": "A hash table (or hash map) is a data structure that stores key-value pairs in an array using a hash function to map keys to indices of the array. It is particularly useful for efficient storage and retrieval of strings based on their hash values. Hash tables allow for fast lookup, insertion, and deletion operations, making them a fundamental component of many algorithms and applications that involve string manipulation and data retrieval.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the main advantage of using a cryptographically secure pseudorandom number generator (CSPRNG) in hashing applications?",
+      "options": {
+        "A": "Faster computation of hash values",
+        "B": "Reduced risk of predictability and attacks",
+        "C": "Improved performance in multithreaded environments",
+        "D": "Simplified implementation and maintenance"
+      },
+      "correctAnswer": "B",
+      "explanation": "A CSPRNG is designed to generate sequences of numbers that are highly unpredictable and uniformly distributed, making them suitable for cryptographic applications, including hashing. The primary advantage of using a CSPRNG in hashing is that it significantly reduces the risk of predictability and various attacks, such as those exploiting deterministic or weak random number generation. This enhances the overall security and integrity of hash-based systems.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Why is it essential to consider the length of the input string when designing a hashing algorithm?",
+      "options": {
+        "A": "To ensure the hash value is always longer than the input string",
+        "B": "To minimize the risk of collisions for short input strings",
+        "C": "To optimize the algorithm for very long input strings",
+        "D": "To ignore the length and focus solely on the content"
+      },
+      "correctAnswer": "B",
+      "explanation": "Considering the length of the input string is crucial when designing a hashing algorithm because it helps minimize the risk of collisions, especially for short input strings. Short strings have a higher likelihood of producing collisions due to the smaller number of possible input combinations. Accounting for string length in the hash function design can help mitigate this issue and improve the overall robustness of the hashing algorithm.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Which of the following hashing algorithms is considered to be cryptographically secure?",
+      "options": {
+        "A": "MurmurHash",
+        "B": "FNV-1a",
+        "C": "SHA-256",
+        "D": "CRC32"
+      },
+      "correctAnswer": "C",
+      "explanation": "SHA-256 (Secure Hash Algorithm 256) is a cryptographic hash function designed to be cryptographically secure. It is widely used for security-related purposes, such as data integrity, authenticity verification, and digital signatures. SHA-256 is considered secure because it has a large hash value size, is computationally infeasible to invert, and has a low probability of collisions, making it suitable for high-security applications.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "In the Rabin-Karp algorithm, what is the purpose of the rolling hash?",
+      "options": {
+        "A": "To efficiently compute the hash value of all substrings of the text",
+        "B": "To sort the substrings of the text based on their hash values",
+        "C": "To encrypt the text using a cryptographic hash function",
+        "D": "To compress the text into a smaller representation"
+      },
+      "correctAnswer": "A",
+      "explanation": "The Rabin-Karp algorithm is a string searching algorithm that uses hashing to find any substring in a text. The rolling hash in this algorithm is primarily used to efficiently compute the hash value of all substrings of the text, allowing for quick comparison with the hash value of the pattern being searched. This approach enables the algorithm to slide through the text, computing hash values for overlapping substrings in constant time, which significantly enhances the efficiency of the search process.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "How does the choice of the modulus in the Rabin-Karp algorithm affect its performance?",
+      "options": {
+        "A": "A larger modulus reduces the chance of false positives but increases computation time",
+        "B": "A smaller modulus increases the chance of false positives but reduces computation time",
+        "C": "The modulus does not affect the performance of the algorithm",
+        "D": "The modulus only affects the memory usage of the algorithm"
+      },
+      "correctAnswer": "B",
+      "explanation": "In the Rabin-Karp algorithm, the choice of the modulus impacts the performance. A smaller modulus increases the likelihood of false positives (i.e., substrings that are not matches but have the same hash value as the pattern) because it reduces the number of possible hash values. However, using a smaller modulus can also reduce the computation time since the arithmetic operations involved in calculating the hash values are simpler and faster. Conversely, a larger modulus reduces the chance of false positives but may increase computation time due to more complex arithmetic.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the main limitation of using a simple hash function like h(s) = s[0] + s[1] + ... + s[n-1] for string hashing?",
+      "options": {
+        "A": "It is too slow for long strings",
+        "B": "It does not handle non-ASCII characters well",
+        "C": "It can produce many collisions due to its simplicity",
+        "D": "It requires too much memory to store the hash values"
+      },
+      "correctAnswer": "C",
+      "explanation": "The main limitation of using a simple hash function like h(s) = s[0] + s[1] + ... + s[n-1] is that it can produce many collisions. This is because the hash value is simply the sum of the characters' ASCII values, which means that many different strings can have the same sum. For example, strings that are permutations of each other (like 'abc' and 'cab') would have the same hash value under this function, leading to a high probability of collisions and reducing the effectiveness of the hash table.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Which of the following best describes a 'universal hash function'?",
+      "options": {
+        "A": "A hash function that is guaranteed to produce no collisions",
+        "B": "A hash function that is extremely fast but has a high collision rate",
+        "C": "A hash function that is chosen randomly from a family of hash functions",
+        "D": "A hash function that always produces a fixed-size hash value"
+      },
+      "correctAnswer": "C",
+      "explanation": "A universal hash function is chosen randomly from a family of hash functions. This randomness helps in minimizing the probability of collisions when hashing a specific set of strings. Universal hash functions are designed to provide good average-case performance, even when the input data is chosen adversarially, making them particularly useful in applications where the data distribution is unknown or may change.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the primary benefit of using a 'perfect hash function' in string hashing applications?",
+      "options": {
+        "A": "It minimizes the number of collisions",
+        "B": "It maximizes the speed of hashing",
+        "C": "It ensures that each input string maps to a unique index",
+        "D": "It reduces the memory requirements for storing hash values"
+      },
+      "correctAnswer": "C",
+      "explanation": "A perfect hash function is a hash function that maps each input string to a unique index in the output range, without any collisions. The primary benefit of using a perfect hash function in string hashing applications is that it ensures each input string maps to a unique index. This property is particularly useful for applications requiring fast and efficient lookup, insertion, and deletion of strings, as it eliminates the need for collision resolution and allows for direct access to strings based on their hash values.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "In the context of string hashing, what does 'amplification' refer to?",
+      "options": {
+        "A": "The process of increasing the size of the input string",
+        "B": "The process of reducing the size of the hash value",
+        "C": "The process of making small changes in the input string to observe significant changes in the hash value",
+        "D": "The process of using multiple hash functions to combine their outputs"
+      },
+      "correctAnswer": "C",
+      "explanation": "Amplification in the context of string hashing refers to the property where small, incremental changes to the input string lead to significantly different hash values. This property is desirable because it makes predicting the hash value of a modified string based on the hash value of the original string difficult, enhancing the security and unpredictability of the hashing process. Amplification is related to but distinct from the avalanche effect, which specifically refers to the diffusion of changes across the hash value.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Which of the following is a challenge in implementing a string hashing algorithm for very large datasets?",
+      "options": {
+        "A": "Ensuring the algorithm is case-sensitive",
+        "B": "Handling non-ASCII characters in the input strings",
+        "C": "Minimizing the memory footprint of the hash table",
+        "D": "All of the above"
+      },
+      "correctAnswer": "D",
+      "explanation": "Implementing a string hashing algorithm for very large datasets poses several challenges. Ensuring the algorithm is case-sensitive (A) is crucial for maintaining consistency and accuracy in string comparison. Handling non-ASCII characters (B) is necessary to support diverse data sets and ensure compatibility. Minimizing the memory footprint of the hash table (C) is vital for efficient use of system resources, especially when dealing with large datasets. Therefore, all these aspects are challenges that must be addressed in the design and implementation of a string hashing algorithm for large datasets.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the purpose of 'key stretching' in the context of password hashing?",
+      "options": {
+        "A": "To make the hashing process faster and more efficient",
+        "B": "To make the hashed password more readable and understandable",
+        "C": "To increase the computational overhead of the hashing function",
+        "D": "To reduce the memory required to store the hashed passwords"
+      },
+      "correctAnswer": "C",
+      "explanation": "Key stretching is a technique used in password hashing to increase the computational overhead of the hashing function, making it more resistant to brute-force attacks. By slowing down the hashing process, key stretching forces an attacker to spend more computational resources and time when attempting to crack a password, thus providing additional security. This is particularly important for protecting against attacks that rely on rapid iteration through possible passwords.",
+      "difficulty": "Hard"
+    }
+  ]
+}
