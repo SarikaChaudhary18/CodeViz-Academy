@@ -1,0 +1,161 @@
+{
+  "topic": "Recursion & Backtracking - Subsets",
+  "questions": [
+    {
+      "question": "What is recursion, and how does it apply to subset generation?",
+      "options": {
+        "A": "Recursion is a programming concept that involves a function calling itself until it reaches a base case.",
+        "B": "Recursion is useful in subset generation because it eliminates the need for loops.",
+        "C": "Recursion applies to subset generation by generating all possible combinations of elements.",
+        "D": "Recursion does not have an application in subset generation because it is a complex algorithm."
+      },
+      "correctAnswer": "C",
+      "explanation": "Recursion is a programming concept that involves a function calling itself until it reaches a base case. In subset generation, recursion can be used to generate all possible combinations of elements by recursively adding or removing elements from the subset.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following is an example of a recursive function in subset generation?",
+      "options": {
+        "A": "function subsetGeneration(input, currentSubset) {",
+        "B": "function subsetGeneration(input, currentSubset) { return currentSubset; }",
+        "C": "function subsetGeneration(input, currentSubset) { if (input.length == 0) return currentSubset;}",
+        "D": "function subsetGeneration(input, currentSubset) { currentSubset.push(input[0]); return currentSubset; }"
+      },
+      "correctAnswer": "C",
+      "explanation": "A recursive function in subset generation should have a base case where it stops recursing. In this case, the base case is when the input array is empty, at which point it returns the current subset.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is backtracking, and how does it apply to subset generation?",
+      "options": {
+        "A": "Backtracking is a programming concept that involves trying every possible solution and checking if it's correct.",
+        "B": "Backtracking is useful in subset generation because it eliminates the need for recursion.",
+        "C": "Backtracking applies to subset generation by trying to find all possible combinations of elements and checking if they form a valid subset.",
+        "D": "Backtracking does not have an application in subset generation because it is too complex."
+      },
+      "correctAnswer": "C",
+      "explanation": "Backtracking is a programming concept that involves trying every possible solution by exploring different branches and checking if they lead to a valid subset.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "When would you choose to use recursion over backtracking in subset generation?",
+      "options": {
+        "A": "When the input size is small.",
+        "B": "When the input size is large.",
+        "C": "When the input array is sorted.",
+        "D": "When the input array contains duplicates."
+      },
+      "correctAnswer": "A",
+      "explanation": "Recursion is generally preferred over backtracking when dealing with smaller input sizes because it can often lead to faster execution times due to fewer function calls.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How can you optimize the recursion depth in subset generation?",
+      "options": {
+        "A": "By using dynamic programming tomemoize the results of previous calls.",
+        "B": "By using iteration instead of recursion.",
+        "C": "By adding a limit to the recursion depth.",
+        "D": "By sorting the input array."
+      },
+      "correctAnswer": "A",
+      "explanation": "Using dynamic programming can help avoid redundant function calls by memoizing the results of previous calls, which can significantly improve recursion depth.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the trade-off between recursion and backtracking in subset generation?",
+      "options": {
+        "A": "Recursion is faster but uses more memory.",
+        "B": "Backtracking is faster but uses more memory.",
+        "C": "Recursion is more memory-efficient but slower.",
+        "D": "Backtracking is more memory-efficient but slower."
+      },
+      "correctAnswer": "A",
+      "explanation": "In general, recursion can lead to faster execution times but uses more memory due to function call overhead, whereas backtracking can be more memory-efficient at the cost of potentially slower execution times.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following is an example of backtracking in subset generation?",
+      "options": {
+        "A": "function subsetGeneration(input, currentSubset) {",
+        "B": "function subsetGeneration(input, currentSubset) { return currentSubset; }",
+        "C": "function subsetGeneration(input, currentSubset) { if (input.length == 0) return currentSubset;}",
+        "D": "function subsetGeneration(input, currentSubset) { currentSubset.push(input[0]); return currentSubset; }"
+      },
+      "correctAnswer": "D",
+      "explanation": "Backtracking should involve trying different branches of solutions and checking if they form a valid subset. In this case, the currentSubset is pushed onto the stack and later removed when the branch is backtracked.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the key difference between recursion and backtracking in subset generation?",
+      "options": {
+        "A": "Recursion uses function calls, while backtracking uses loops.",
+        "B": "Recursion uses dynamic programming, while backtracking uses memoization.",
+        "C": "Recursion tries all possible combinations simultaneously, while backtracking tries one combination at a time.",
+        "D": "Recursion is more memory-efficient, while backtracking uses more memory."
+      },
+      "correctAnswer": "C",
+      "explanation": "The key difference is that recursion can explore multiple branches of solutions simultaneously, while backtracking explores one branch at a time.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "In subset generation, why might using recursion be more suitable than backtracking?",
+      "options": {
+        "A": "When dealing with large input sizes, recursion can be faster due to parallel processing.",
+        "B": "When dealing with duplicate elements, recursion can avoid redundant calculations.",
+        "C": "When dealing with sorted input arrays, recursion can take advantage of existing ordering.",
+        "D": "When dealing with input arrays containing no duplicates, recursion can simply add or remove elements."
+      },
+      "correctAnswer": "D",
+      "explanation": "When dealing with input arrays containing no duplicates, recursion can be simpler and more efficient than backtracking, as it involves simply adding or removing elements to form the subset.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is a limitation of using recursion in subset generation?",
+      "options": {
+        "A": "Recursion can lead to redundant calculations.",
+        "B": "Recursion can only handle subsets of size 1.",
+        "C": "Recursion can cause stack overflows for large input sizes.",
+        "D": "Recursion can only be used with input arrays containing duplicates."
+      },
+      "correctAnswer": "C",
+      "explanation": "One limitation of recursion in subset generation is the potential for stack overflows when dealing with large input sizes due to the recursion depth.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How can recursion be optimized for use in subset generation?",
+      "options": {
+        "A": "By sorting the input array before recursion.",
+        "B": "By memoizing the results of previous recursive calls.",
+        "C": "By using a different algorithm such as dynamic programming.",
+        "D": "By increasing the stack size limit."
+      },
+      "correctAnswer": "B",
+      "explanation": "Optimizing recursion can involve memoizing the results of previous calculations to avoid redundant calls, which can significantly improve performance.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "When is backtracking a better choice than recursion in subset generation?",
+      "options": {
+        "A": "When dealing with small input sizes.",
+        "B": "When dealing with large input sizes.",
+        "C": "When dealing with duplicate elements.",
+        "D": "When dealing with input arrays containing no duplicates."
+      },
+      "correctAnswer": "B",
+      "explanation": "Backtracking is generally a better choice when dealing with large input sizes because it can potentially explore fewer branches of solutions simultaneously.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the relationship between subset generation and backtracking?",
+      "options": {
+        "A": "Subset generation is a type of backtracking.",
+        "B": "Backtracking is a type of subset generation.",
+        "C": "Subset generation and backtracking are related concepts used in solving recursive and dynamic problems.",
+        "D": "Subset generation is unrelated to backtracking."
+      },
+      "correctAnswer": "C",
+      "explanation": "Subset generation and backtracking are related concepts that can be used interchangeably in solving recursive and dynamic problems.",
+      "difficulty": "Easy"
+    }
+  ]
+}

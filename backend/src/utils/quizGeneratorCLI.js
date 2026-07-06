@@ -163,7 +163,7 @@ async function generateQuizForTopic(categoryKey, topicName, overwrite = false) {
   // Check if already exists
   if (fs.existsSync(filePath) && !overwrite) {
     console.log(`[SKIP] Quiz already exists at: ${filePath}`);
-    return;
+    return 'skipped';
   }
 
   console.log(`[GENERATE] Requesting quiz for topic: "${topicName}" (${categoryKey})...`);
@@ -213,7 +213,7 @@ JSON Format:
 }`;
 
   try {
-    const result = await aiService.generateWithNemotron(prompt);
+    const result = await aiService.generateContentJSON(prompt);
     
     if (!result || !result.questions || !Array.isArray(result.questions)) {
       throw new Error("Invalid output format returned from AI Service.");
@@ -221,8 +221,10 @@ JSON Format:
 
     fs.writeFileSync(filePath, JSON.stringify(result, null, 2), 'utf-8');
     console.log(`[SUCCESS] Saved quiz to: ${filePath}`);
+    return 'success';
   } catch (err) {
     console.error(`[ERROR] Failed to generate quiz for topic "${topicName}":`, err.message);
+    return 'failed';
   }
 }
 
@@ -266,9 +268,11 @@ Please configure GEMINI_API_KEY, GROQ_API_KEY, or NVIDIA_API_KEY.`);
     for (const catKey of Object.keys(CATEGORIES)) {
       const category = CATEGORIES[catKey];
       for (const topic of category.topics) {
-        await generateQuizForTopic(catKey, topic, overwrite);
+        const status = await generateQuizForTopic(catKey, topic, overwrite);
         // Add a slight delay to avoid rate limiting
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        if (status !== 'skipped') {
+          await new Promise(resolve => setTimeout(resolve, 45000));
+        }
       }
     }
   } else if (catIndex !== -1 && args[catIndex + 1]) {
@@ -280,8 +284,10 @@ Please configure GEMINI_API_KEY, GROQ_API_KEY, or NVIDIA_API_KEY.`);
     }
     console.log(`Generating quizzes for category: ${category.name}...`);
     for (const topic of category.topics) {
-      await generateQuizForTopic(catKey === 'dev' ? 'development' : catKey, topic, overwrite);
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      const status = await generateQuizForTopic(catKey === 'dev' ? 'development' : catKey, topic, overwrite);
+      if (status !== 'skipped') {
+        await new Promise(resolve => setTimeout(resolve, 45000));
+      }
     }
   } else if (topicIndex !== -1 && args[topicIndex + 1]) {
     const targetTopic = args[topicIndex + 1];

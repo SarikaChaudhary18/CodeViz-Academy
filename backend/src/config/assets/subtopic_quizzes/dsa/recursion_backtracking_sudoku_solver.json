@@ -1,0 +1,173 @@
+{
+  "topic": "Recursion & Backtracking - Sudoku Solver",
+  "questions": [
+    {
+      "question": "What is the primary concept utilized in backtracking-based Sudoku solvers?",
+      "options": {
+        "A": "Graph algorithms",
+        "B": "Dynamic programming",
+        "C": "Recursion with backtracking",
+        "D": "Heuristics-based methods"
+      },
+      "correctAnswer": "C",
+      "explanation": "Recursion with backtracking is a fundamental approach used in Sudoku solvers, as it allows for the exploration of different solution paths.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the purpose of the recursive function in a backtracking-based Sudoku solver?",
+      "options": {
+        "A": "To explore all possible solution paths",
+        "B": "To prune branches that are guaranteed to result in an unsolvable solution",
+        "C": "To apply constraint propagation on the current board",
+        "D": "To perform a depth-first search on the Sudoku grid"
+      },
+      "correctAnswer": "A",
+      "explanation": "The recursive function in a backtracking-based solver is responsible for exploring all possible solution paths.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is a critical factor in determining the efficiency of a backtracking-based Sudoku solver?",
+      "options": {
+        "A": "Initialization of the recursive function",
+        "B": "The choice of recursion depth limit",
+        "C": "The order in which numbers are tried",
+        "D": "All of the above are critical"
+      },
+      "correctAnswer": "D",
+      "explanation": "The order in which numbers are tried, the choice of recursion depth limit, and initialization of the recursive function are all factors that contribute to the solver's efficiency.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How do you prevent a backtracking-based Sudoku solver from exploring an infinite number of paths if it's not given any initial values?",
+      "options": {
+        "A": "Implement a pruning strategy to remove branches resulting from invalid assignments",
+        "B": "Add an initial value to the grid and adjust the solver accordingly",
+        "C": "Define a recursive function that directly returns a solution",
+        "D": "Use an iterative approach to solve the puzzle"
+      },
+      "correctAnswer": "A",
+      "explanation": "Implementing a pruning strategy to remove branches resulting from invalid assignments is the most effective way to prevent a Sudoku solver from exploring an infinite number of paths.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What does the backtracking algorithm achieve in a Sudoku solver?",
+      "options": {
+        "A": "The backtracking algorithm generates a random Sudoku solution",
+        "B": "The backtracking algorithm verifies if a given Sudoku solution is correct",
+        "C": "The backtracking algorithm systematically explores all possible Sudoku solutions",
+        "D": "The backtracking algorithm solves all Sudoku puzzles"
+      },
+      "correctAnswer": "C",
+      "explanation": "The backtracking algorithm systematically explores all possible solution paths in a Sudoku puzzle until it reaches a valid solution or identifies an unsolvable puzzle.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How does the constraint propagation principle work in a Sudoku solver?",
+      "options": {
+        "A": "Propagating constraints ensures that all possible values for each cell will be tried during backtracking",
+        "B": "Constraint propagation prevents incorrect assignments by reducing the search space",
+        "C": "Constraint propagation helps to prune unpromising branches before they are explored",
+        "D": "Constraint propagation does not impact backtracking performance"
+      },
+      "correctAnswer": "B",
+      "explanation": "The constraint propagation principle restricts the possible values of cells in a Sudoku board, thereby reducing the search space and speeding up the backtracking process.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What technique is often used in Sudoku solvers to enhance the solver's efficiency?",
+      "options": {
+        "A": "Branch and bound",
+        "B": "Forward checking",
+        "C": "Look-ahead pruning",
+        "D": "All of the above are often used to enhance solver efficiency"
+      },
+      "correctAnswer": "D",
+      "explanation": "Branch and bound, forward checking, and look-ahead pruning techniques can significantly enhance the efficiency of a Sudoku solver by reducing the number of potential solutions it needs to explore",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What type of problem is the Sudoku problem, in terms of problem-solving complexity?",
+      "options": {
+        "A": "NP-complete problem",
+        "B": "P-time problem",
+        "C": "NP-hard problem",
+        "D": "Non-deterministic polynomial problem"
+      },
+      "correctAnswer": "A",
+      "explanation": "The Sudoku problem is an example of an NP-complete problem, which is a class of problems for which no efficient solution has been found and is considered computationally difficult to solve.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "When solving a Sudoku puzzle using the backtracking algorithm, what is the primary consideration?",
+      "options": {
+        "A": "Generating a random Sudoku solution",
+        "B": "Finding a solution with a high probability of correctness",
+        "C": "Systematically exploring all possible solution paths",
+        "D": "Finding all distinct, valid Sudoku solutions"
+      },
+      "correctAnswer": "C",
+      "explanation": "The primary consideration in solving a Sudoku puzzle using the backtracking algorithm is to systematically explore all possible solution paths.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "In a backtracking-based Sudoku solver, what is the role of a decision tree?",
+      "options": {
+        "A": "The decision tree represents the search space of all possible solution paths",
+        "B": "The decision tree is used to optimize pruning decisions",
+        "C": "The decision tree is used to represent the possible numbers to be assigned to cells",
+        "D": "The decision tree is not a relevant concept in backtracking-based Sudoku solvers"
+      },
+      "correctAnswer": "A",
+      "explanation": "A decision tree in a backtracking-based Sudoku solver represents the search space of all possible solution paths, with each node and path corresponding to a specific assignment of numbers to cells.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How does the use of constraints affect the decision-making process in a backtracking algorithm?",
+      "options": {
+        "A": "Constraints help to narrow down the choices available to the algorithm",
+        "B": "Constraints lead to premature pruning of branches with no impact on the overall search space",
+        "C": "Constraints introduce a probabilistic element to the decision-making process",
+        "D": "Constraints render the backtracking algorithm unnecessary in Sudoku solving"
+      },
+      "correctAnswer": "A",
+      "explanation": "Using constraints helps to narrow down the number of potential solutions the algorithm must explore by eliminating possibilities based on rules and constraints.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What approach to Sudoku solving is used to determine if the current assignment of numbers to cells is valid?",
+      "options": {
+        "A": "Forward checking",
+        "B": "Look-ahead pruning",
+        "C": "Propagating constraints from the current assignment to neighboring cells",
+        "D": "Verifying constraints through iterative deepening of the backtracking algorithm"
+      },
+      "correctAnswer": "C",
+      "explanation": "Propagating constraints from the current assignment to neighboring cells helps to verify if the current assignment meets the constraints of the Sudoku puzzle.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "How does the Sudoku problem benefit from employing a forward checking strategy in a backtracking algorithm?",
+      "options": {
+        "A": "Forward checking allows the solver to focus on promising solution branches",
+        "B": "Forward checking accelerates the solver through more efficient pruning decisions",
+        "C": "Forward checking provides an opportunity for recursive backtracking to narrow the search space",
+        "D": "All of the above are advantages of using forward checking"
+      },
+      "correctAnswer": "D",
+      "explanation": "Forward checking contributes to improved performance in Sudoku solvers by quickly identifying invalid assignments, pruning the search space, and reducing unnecessary backtracking.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "How can a Sudoku solver make effective use of constraint propagation to prevent invalid assignments?",
+      "options": {
+        "A": "Through the enforcement of a strict order of operations for number assignment",
+        "B": "By systematically propagating constraints for each assignment attempt",
+        "C": "By applying a constraint propagation algorithm to identify inconsistent assignments",
+        "D": "Through an analysis of the impact of constraints on the puzzle's structure"
+      },
+      "correctAnswer": "C",
+      "explanation": "By systematically propagating constraints, a Sudoku solver can effectively identify inconsistent assignments and prevent incorrect solutions from being generated.",
+      "difficulty": "Hard"
+    }
+  ]
+}
