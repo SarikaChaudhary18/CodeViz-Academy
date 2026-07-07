@@ -1,0 +1,182 @@
+{
+  "topic": "Hashing - Frequency Arrays",
+  "questions": [
+    {
+      "question": "What is the primary purpose of using a frequency array in hashing?",
+      "options": {
+        "A": "To store the frequency of each key in the hash table",
+        "B": "To improve the efficiency of collision resolution",
+        "C": "To enhance the security of hashed data",
+        "D": "To simplify the process of hash table resizing"
+      },
+      "correctAnswer": "A",
+      "explanation": "A frequency array is mainly used to store the frequency of each key in the hash table. This helps in identifying the most frequent keys, which can be useful in applications such as data compression.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How do frequency arrays aid in resolving collisions in a hash table?",
+      "options": {
+        "A": "By storing the frequency of each key in a separate data structure",
+        "B": "By rearranging the hash table to minimize collisions",
+        "C": "By using a different hashing function",
+        "D": "By rehashing all keys in the table"
+      },
+      "correctAnswer": "A",
+      "explanation": "Frequency arrays aid in resolving collisions in a hash table by storing the frequency of each key in a separate data structure. This allows collision resolution techniques such as frequency-based splitting or linear probing to be applied.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the time complexity of searching for a key using a frequency array in a hash table?",
+      "options": {
+        "A": "O(1)",
+        "B": "O(n)",
+        "C": "O(log n)",
+        "D": "Amortized O(1)"
+      },
+      "correctAnswer": "D",
+      "explanation": "The time complexity of searching for a key using a frequency array in a hash table is amortized O(1) because the array is typically updated after each search operation. However, in the worst-case scenario (e.g., during resizing or rebuilding the hash table), the time complexity can be O(n).",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How can frequency arrays be used to handle hash collisions?",
+      "options": {
+        "A": "By storing all keys in a single array",
+        "B": "By dividing the hash table into smaller segments based on frequency",
+        "C": "By creating a separate hash table for frequent keys",
+        "D": "By ignoring frequent keys"
+      },
+      "correctAnswer": "B",
+      "explanation": "Frequency arrays can be used to handle hash collisions by dividing the hash table into smaller segments based on frequency. Less frequent keys can be stored in separate arrays or data structures",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What are some common techniques used in frequency array hashing to improve performance?",
+      "options": {
+        "A": "Load Balancing, Chain Hashing",
+        "B": "Linear Probing, Quadratic Probing",
+        "C": "Frequency-Sensitive Hashing, Caching",
+        "D": "Chaining, Open Addressing"
+      },
+      "correctAnswer": "C",
+      "explanation": "Frequency-Sensitive Hashing and caching are techniques used in frequency array hashing to improve performance. Frequency-Sensitive Hashing uses different hash functions for different key frequencies and caching uses a small buffer to store recently accessed elements",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What role does the bucket size play in a frequency array-based hash table?",
+      "options": {
+        "A": "Determining the maximum possible number of keys",
+        "B": "Deciding the frequency of key collisions",
+        "C": "Selecting the number of sub-arrays",
+        "D": "Optimizing memory usage"
+      },
+      "correctAnswer": "C",
+      "explanation": "The bucket size in a frequency array-based hash table determines the number of sub-arrays. Each sub-array represents a range of key values and has a size based on the bucket size",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How can frequency array hashing be used to optimize cache performance?",
+      "options": {
+        "A": "By reducing the number of cache misses",
+        "B": "By minimizing the number of cache replacements",
+        "C": "By reordering cache lines to improve spatial locality",
+        "D": "By utilizing the cache hierarchy effectively"
+      },
+      "correctAnswer": "D",
+      "explanation": "Frequency array hashing can be used to optimize cache performance by utilizing the cache hierarchy effectively. This is achieved by organizing data in a way that minimizes cache misses (e.g., by grouping related items together) and makes the most of the existing cache capacity",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Can frequency array hashing be used in external sorting algorithms?",
+      "options": {
+        "A": "Yes, it is used to create an index of the files",
+        "B": "No, it is not suitable for external sorting",
+        "C": "Yes, it helps with the merging process",
+        "D": "Not commonly applied in external sorting algorithms"
+      },
+      "correctAnswer": "A",
+      "explanation": "Frequency array hashing can indeed be used in external sorting algorithms, primarily to create an index of the files beforehand. This helps with data locality during the sort.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "In frequency array hashing, what happens when a bucket becomes too crowded?",
+      "options": {
+        "A": "The key is re-hashed to a different bucket",
+        "B": "The key is moved to a new, larger bucket",
+        "C": "A more complex collision resolution technique is applied",
+        "D": "The table is resized to increase available space"
+      },
+      "correctAnswer": "C",
+      "explanation": "In frequency array hashing, when a bucket becomes too crowded, various approaches such as linear probing or quadratic probing are employed to manage collisions efficiently. Other techniques like chaining also come into play.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Can frequency array hashing be applied to very large datasets that exceed available memory?",
+      "options": {
+        "A": "By storing the frequency array in secondary storage",
+        "B": "By using a custom-designed data structure that reduces memory usage",
+        "C": "By utilizing more efficient memory allocation algorithms",
+        "D": "Only when combined with a robust caching strategy"
+      },
+      "correctAnswer": "A",
+      "explanation": "When a dataset exceeds available memory, frequency array hashing can be applied by storing the frequency array in secondary storage. This is because the frequency array only needs to track the key frequencies, which generally require less memory.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How can adaptive frequency array hashing address the problem of high collision rates?",
+      "options": {
+        "A": "By increasing the size of the hash table",
+        "B": "By adjusting the frequency array size dynamically",
+        "C": "By rehashing all keys in the table periodically",
+        "D": "By implementing a hybrid approach"
+      },
+      "correctAnswer": "B",
+      "explanation": "Adaptive frequency array hashing addresses the problem of high collision rates by adjusting the frequency array size dynamically. This involves continuously monitoring the collision rate and updating the frequency array to better manage collisions.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Can frequency array hashing be applied to datasets with highly skewed distributions?",
+      "options": {
+        "A": "By using a custom-designed hash function",
+        "B": "By utilizing a more adaptive frequency array",
+        "C": "By combining frequency array hashing with other techniques",
+        "D": "Not efficiently due to the distribution pattern"
+      },
+      "correctAnswer": "C",
+      "explanation": "Frequency array hashing can indeed be applied to datasets with highly skewed distributions by combining it with other techniques like adaptive frequency arrays or bucket rebalancing. These approaches can help manage collisions more effectively in such datasets.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "How can frequency array hashing be optimized for parallel processing?",
+      "options": {
+        "A": "By distributing the hash table across multiple cores",
+        "B": "By assigning tasks to each core based on key frequencies",
+        "C": "By implementing a lock-free design for concurrent access",
+        "D": "By using a load-balanced approach for distributing tasks"
+      },
+      "correctAnswer": "D",
+      "explanation": "Frequency array hashing can be optimized for parallel processing by utilizing a load-balanced approach. This involves distributing tasks and assigning them to each processing core based on the frequency of the keys.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the primary challenge in applying frequency array hashing to very small datasets?",
+      "options": {
+        "A": "Managing collisions more effectively",
+        "B": "Overhead from maintaining the frequency array",
+        "C": "Handling edge cases such as empty buckets",
+        "D": "Optimizing for sequential access patterns"
+      },
+      "correctAnswer": "B",
+      "explanation": "Applying frequency array hashing to very small datasets involves managing the overhead of maintaining the frequency array. In such cases, the frequency array's benefits might not outweigh its own overhead.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Can frequency array hashing be adapted for real-time applications?",
+      "options": {
+        "A": "Yes, it can be optimized for predictable latency",
+        "B": "Only in scenarios with guaranteed high throughput",
+        "C": "Only when combined with a robust predictive model",
+        "D": "Not effectively due to high overhead and potential for latency"
+      }
+    }
+  ]
+}
