@@ -1,0 +1,137 @@
+{
+  "topic": "AI - Deep Learning",
+  "questions": [
+    {
+      "question": "What is the primary goal of a Deep Learning model?",
+      "options": {
+        "A": "To classify inputs into specific categories",
+        "B": "To generate novel, human-like content",
+        "C": "To predict future outcomes based on past data",
+        "D": "To recognize patterns in unstructured data"
+      },
+      "correctAnswer": "D",
+      "explanation": "Deep Learning models are designed to learn complex patterns in data, often from unstructured sources like images, audio, or text. This allows them to recognize and classify inputs in ways that would be difficult or impossible for humans to accomplish.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is overfitting in Deep Learning, and how can it be addressed?",
+      "options": {
+        "A": "Overfitting occurs when a model perfectly fits the training data, then fails to generalize to new inputs",
+        "B": "Regularization is a technique that can help prevent overfitting",
+        "C": "Data augmentation is a method used to increase the size of the training dataset",
+        "D": "Batch normalization is a technique used to normalize the input features"
+      },
+      "correctAnswer": "A",
+      "explanation": "Overfitting is a type of model error where the Deep Learning model fits too closely to the training data, resulting in poor performance on new inputs. Regularization techniques, such as L1 or L2 regularization, dropout, or early stopping, can all help to mitigate overfitting and improve generalization.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is a Convolutional Neural Network (CNN)?",
+      "options": {
+        "A": "A type of Neural Network that uses fully connected layers",
+        "B": "A type of Recurrent Neural Network that uses gates",
+        "C": "A type of Neural Network that uses convolutional and downsampling layers",
+        "D": "A type of Generative model that uses autoencoders"
+      },
+      "correctAnswer": "C",
+      "explanation": "Convolutional Neural Networks (CNNs) are a type of Deep Learning model that use convolutional and downsampling layers to analyze images. These layers take advantage of the spatial hierarchies in image data, reducing the dimensionality of the data and extracting relevant features.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is a Recurrent Neural Network (RNN), and what are some common applications?",
+      "options": {
+        "A": "A type of Neural Network that uses fully connected layers to process sequential data",
+        "B": "A type of Neural Network that uses convolutional and downsampling layers to analyze images",
+        "C": "A type of Neural Network that uses long short-term memory (LSTM) cells to process sequential data",
+        "D": "A type of Generative model that uses variational autoencoders (VAEs)"
+      },
+      "correctAnswer": "C",
+      "explanation": "Recurrent Neural Networks (RNNs) are a type of Deep Learning model that use long short-term memory (LSTM) cells to process sequential data, such as time series data or natural language text. RNNs are commonly used for tasks like speech recognition, sentiment analysis, or time series forecasting.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is Transfer Learning, and how is it used in Deep Learning?",
+      "options": {
+        "A": "Transfer Learning is a training method where a model is trained on multiple related tasks",
+        "B": "Transfer Learning is a technique used to initialize the weights of a model during training",
+        "C": "Transfer Learning is a method used to fine-tune a pre-trained model for a specific task",
+        "D": "Transfer Learning is an optimization algorithm used for large-scale models"
+      },
+      "correctAnswer": "C",
+      "explanation": "Transfer Learning is a technique used to fine-tune a pre-trained model for a specific task. This involves taking a model that has already been trained on a related task and adjusting its weights to fit the new task. Transfer Learning can greatly reduce the amount of training data and computational resources required for a task.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is a Generative Adversarial Network (GAN), and what are its common applications?",
+      "options": {
+        "A": "A type of Neural Network that uses a generator and discriminator to produce new, synthetic data",
+        "B": "A type of Autoencoder that uses a bottleneck layer to compress data",
+        "C": "A type of Recurrent Neural Network that uses an LSTM cell to process sequential data",
+        "D": "A type of Convolutional Neural Network that uses a convolutional and downsampling layer to analyze images"
+      },
+      "correctAnswer": "A",
+      "explanation": "Generative Adversarial Networks (GANs) are a type of Deep Learning model that use a generator and discriminator to produce new, synthetic data that resembles the real data used during training. GANs have many applications, including image generation, data augmentation, and style transfer.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the difference between a supervised and unsupervised learning task?",
+      "options": {
+        "A": "A supervised task uses labeled data to train the model, while an unsupervised task uses unlabeled data",
+        "B": "A supervised task uses unlabeled data to train the model, while an unsupervised task uses labeled data",
+        "C": "A supervised task uses a single output variable, while an unsupervised task uses multiple output variables",
+        "D": "A supervised task uses regression, while an unsupervised task uses classification"
+      },
+      "correctAnswer": "A",
+      "explanation": "Supervised learning tasks use labeled data to train the model, where the goal is to make predictions on the output variable. Unsupervised learning tasks use unlabeled data to train the model, where the goal is to identify patterns or structure in the data.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the purpose of a bias term in a Neural Network?",
+      "options": {
+        "A": "To shift the output values away from zero",
+        "B": "To scale the output values",
+        "C": "To add noise to the input features",
+        "D": "To add a learned parameter to the output activation function"
+      },
+      "correctAnswer": "D",
+      "explanation": "The bias term in a Neural Network is a learned parameter that adds a constant value to the output activation function. This allows the model to shift the output values away from zero, making it easier to learn the relationship between the input and output features.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the difference between a sigmoid and ReLU activation function?",
+      "options": {
+        "A": "Sigmoid produces output values between 0 and 1, while ReLU produces output values between 0 and infinity",
+        "B": "ReLU produces output values between 0 and 1, while sigmoid produces output values between 0 and infinity",
+        "C": "Sigmoid is used for classification problems, while ReLU is used for regression problems",
+        "D": "ReLU is used for classification problems, while sigmoid is used for regression problems"
+      },
+      "correctAnswer": "A",
+      "explanation": "Sigmoid and ReLU are two common activation functions used in Neural Networks. Sigmoid produces output values between 0 and 1, while ReLU produces output values between 0 and infinity. Sigmoid is often used for classification problems, while ReLU is often used for regression problems.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is an example of a Deep Learning model that uses attention mechanisms?",
+      "options": {
+        "A": "Transformer",
+        "B": "Recurrent Neural Network",
+        "C": "Convolutional Neural Network",
+        "D": "Generative Adversarial Network"
+      },
+      "correctAnswer": "A",
+      "explanation": "The Transformer is a type of Deep Learning model that uses attention mechanisms to weigh the importance of different input features. This allows the model to focus on the most relevant features and produce more accurate output.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is an example of a Deep Learning task that requires transfer learning?",
+      "options": {
+        "A": "Image classification",
+        "B": "Speech recognition",
+        "C": "Sentiment analysis",
+        "D": "All of the above"
+      },
+      "correctAnswer": "D",
+      "explanation": "Transfer learning is often used for tasks that require large amounts of labeled training data, such as image classification, speech recognition, and sentiment analysis. By using a pre-trained model and fine-tuning it on the new task, transfer learning can greatly reduce the amount of training data and computational resources required.",
+      "difficulty": "Hard"
+    }
+  ]
+}
