@@ -33,3 +33,7 @@ yarn-error.log*
 *.sln
 *.sw?
 .DS_Store
+.env1
+*.env1
+backend/.env1
+frontend/.env1
