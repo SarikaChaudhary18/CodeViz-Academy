@@ -1,0 +1,170 @@
+{
+  "topic": "Development - Microservices",
+  "questions": [
+    {
+      "question": "What are microservices?",
+      "options": {
+        "A": "Small, independent applications that communicate with each other.",
+        "B": "Large, monolithic applications that run on a single server.",
+        "C": "A type of architecture that requires a load balancer and a reverse proxy.",
+        "D": "A pattern of software design that emphasizes a layered architecture."
+      },
+      "correctAnswer": "A",
+      "explanation": "Microservices are a software development approach where a single application is broken down into smaller, independent services. Each service is responsible for a specific business capability and communicates with other services through APIs.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What are the benefits of using microservices?",
+      "options": {
+        "A": "Faster deployment times, easier maintenance, and better scalability.",
+        "B": "Improved security, reduced costs, and better code reuse.",
+        "C": "Increased coupling between services, slower deployment times, and reduced scalability.",
+        "D": "Better error handling, improved logging, and increased complexity."
+      },
+      "correctAnswer": "A",
+      "explanation": "Microservices offer several benefits, including faster deployment times, easier maintenance, and better scalability. This is because each service has its own lifecycle and can be updated independently without affecting the entire application.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is a service registry in a microservices architecture?",
+      "options": {
+        "A": "A centralized database that stores information about all services in the system.",
+        "B": "A load balancer that distributes incoming traffic across multiple instances of a service.",
+        "C": "A caching layer that stores frequently accessed data.",
+        "D": "A service discovery mechanism that allows services to find and communicate with each other."
+      },
+      "correctAnswer": "D",
+      "explanation": "A service registry is a centralized mechanism that allows services to discover and communicate with each other. It typically uses a protocol like DNS or etcd to manage the registry.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How do microservices handle security?",
+      "options": {
+        "A": "By implementing a single, monolithic security system that covers all services.",
+        "B": "By using a token-based authentication system that verifies identity at each service.",
+        "C": "By deploying a single, centralized firewall that protects all services.",
+        "D": "By using a decentralized approach that relies on each service to handle its own security."
+      },
+      "correctAnswer": "D",
+      "explanation": "In a microservices architecture, security is typically handled on a per-service basis. Each service is responsible for implementing its own security measures, such as authentication and authorization.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the purpose of using APIs in microservices?",
+      "options": {
+        "A": "To enable real-time communication between services.",
+        "B": "To provide a unified interface for interacting with each service.",
+        "C": "To enable asynchronous communication between services.",
+        "D": "To allow for easy service discovery."
+      },
+      "correctAnswer": "B",
+      "explanation": "APIs are used in microservices to provide a unified interface for interacting with each service. This allows services to be developed, deployed, and maintained independently without affecting the entire application.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is an example of a microservices architecture?",
+      "options": {
+        "A": "A monolithic application with multiple layers.",
+        "B": "A service-oriented architecture with multiple services communicating over APIs.",
+        "C": "A cloud-based platform with multiple instances of a single service.",
+        "D": "A centralized database management system."
+      },
+      "correctAnswer": "B",
+      "explanation": "A microservices architecture typically consists of multiple services that communicate over APIs. Each service is responsible for a specific business capability and can be updated independently without affecting the entire application.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the tradeoff between monoliths and microservices?",
+      "options": {
+        "A": "Scalability vs. simplicity.",
+        "B": "Security vs. flexibility.",
+        "C": "Complexity vs. scalability.",
+        "D": "Maintenance vs. development time."
+      },
+      "correctAnswer": "C",
+      "explanation": "The tradeoff between monoliths and microservices is typically complexity vs. scalability. Monolithic architectures are simpler to develop and maintain, but can become complex and difficult to scale. Microservices, on the other hand, offer more flexibility and scalability, but can be more complex to develop and maintain.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is a containerization platform like Docker used for in a microservices architecture?",
+      "options": {
+        "A": "To provide a unified interface for interacting with each service.",
+        "B": "To enable real-time communication between services.",
+        "C": "To package and deploy individual services in a consistent and streamlined manner.",
+        "D": "To manage and orchestrate the lifecycle of multiple services."
+      },
+      "correctAnswer": "C",
+      "explanation": "Containerization platforms like Docker are used to package and deploy individual services in a consistent and streamlined manner. This makes it easier to develop, test, and deploy microservices.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the role of service mesh in a microservices architecture?",
+      "options": {
+        "A": "To manage and orchestrate the lifecycle of multiple services.",
+        "B": "To provide a unified interface for interacting with each service.",
+        "C": "To handle service discovery and load balancing.",
+        "D": "To implement security and monitoring features for services."
+      },
+      "correctAnswer": "C",
+      "explanation": "A service mesh is a software layer that sits between services and manages communication, including service discovery and load balancing. It also provides features like security and monitoring.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is a Circuit Breaker pattern in a microservices architecture?",
+      "options": {
+        "A": "A design pattern that handles error handling and retries in services.",
+        "B": "A fault tolerance mechanism that detects when a service is not responding and falls back to a default implementation.",
+        "C": "A communication mechanism that enables real-time communication between services.",
+        "D": "A security feature that authenticates and authorizes access to services."
+      },
+      "correctAnswer": "B",
+      "explanation": "A Circuit Breaker pattern is a fault tolerance mechanism that detects when a service is not responding and falls back to a default implementation. It prevents cascading failures and makes the system more resilient.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is a Load Balancer used for in a microservices architecture?",
+      "options": {
+        "A": "To manage and orchestrate the lifecycle of multiple services.",
+        "B": "To handle service discovery and load balancing.",
+        "C": "To enable real-time communication between services.",
+        "D": "To distribute incoming traffic across multiple instances of a service."
+      },
+      "correctAnswer": "D",
+      "explanation": "A Load Balancer is used to distribute incoming traffic across multiple instances of a service, ensuring that no single instance is overwhelmed and improving the overall resilience and availability of the system.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is a Service Broker used for in a microservices architecture?",
+      "options": {
+        "A": "To provide a unified interface for interacting with each service.",
+        "B": "To handle service discovery and load balancing.",
+        "C": "To manage and orchestrate the lifecycle of multiple services.",
+        "D": "To enable services to consume services from other providers."
+      },
+      "correctAnswer": "D",
+      "explanation": "A Service Broker is used to enable services to consume services from other providers, providing a standardized interface for service discovery and binding.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is a sidecar pattern in a microservices architecture?",
+      "options": {
+        "A": "A design pattern that handles error handling and retries in services.",
+        "B": "A communication mechanism that enables real-time communication between services.",
+        "C": "A fault tolerance mechanism that detects when a service is not responding and falls back to a default implementation.",
+        "D": "A service mesh pattern that sits between services and manages communication."
+      },
+      "correctAnswer": "D",
+      "explanation": "A sidecar pattern is a service mesh pattern that sits between services and manages communication, handling features like service discovery, load balancing, and security.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How do microservices handle distributed transactions?",
+      "options": {
+        "A": "By using a centralized database to manage transactions across services.",
+        "B": "By using a two-phase commit protocol to ensure atomicity across services.",
+        "C": "By using an event-sourcing approach to manage transactions across services.",
+        "D": "By using a message queue to handle transactions across services."
+      }
+    }
+  ]
+}
