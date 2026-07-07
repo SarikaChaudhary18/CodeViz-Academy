@@ -1,0 +1,206 @@
+{
+  "topic": "Bit Manipulation - Bit Basics",
+  "questions": [
+    {
+      "question": "What is a bit in computing?",
+      "options": {
+        "A": "A bit is the smallest unit of digital information, representing either a 0 or a 1.",
+        "B": "A bit is the smallest unit of analog information, representing a range of values.",
+        "C": "A bit is a byte divided by 8.",
+        "D": "A bit is a byte multiplied by 8."
+      },
+      "correctAnswer": "A",
+      "explanation": "A bit is indeed the smallest unit of digital information, with only two possible values: 0 or 1.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the binary representation of the decimal number 5?",
+      "options": {
+        "A": "101",
+        "B": "110",
+        "C": "111",
+        "D": "100"
+      },
+      "correctAnswer": "A",
+      "explanation": "The binary representation of the decimal number 5 is indeed 101, which can be calculated by finding the powers of 2 that add up to 5.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the two's complement representation of -3 in 8-bit binary?",
+      "options": {
+        "A": "11111111",
+        "B": "11111110",
+        "C": "11111100",
+        "D": "11100000"
+      },
+      "correctAnswer": "B",
+      "explanation": "The two's complement representation of -3 in 8-bit binary is indeed 11111110, which can be calculated by inverting the bits of the positive representation of 3 and adding 1.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the binary representation of the hexadecimal number A5?",
+      "options": {
+        "A": "10100001",
+        "B": "11000101",
+        "C": "11100101",
+        "D": "10000101"
+      },
+      "correctAnswer": "C",
+      "explanation": "The binary representation of the hexadecimal number A5 is indeed 11100101, which can be calculated by converting the hexadecimal digits A and 5 to their binary equivalents and concatenating the results.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is a nibble in computing?",
+      "options": {
+        "A": "A nibble is a byte divided by 2.",
+        "B": "A nibble is a byte multiplied by 2.",
+        "C": "A nibble is a 2-bit binary number.",
+        "D": "A nibble is a 4-bit binary number."
+      },
+      "correctAnswer": "A",
+      "explanation": "A nibble is indeed a byte divided by 2, representing 4 bits of information.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the decimal equivalent of the 8-bit binary number 01101100?",
+      "options": {
+        "A": "64",
+        "B": "120",
+        "C": "148",
+        "D": "180"
+      },
+      "correctAnswer": "B",
+      "explanation": "The decimal equivalent of the 8-bit binary number 01101100 can be calculated by evaluating the powers of 2 that have a 1 in their binary representation, which sums to 120.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the binary representation of the ASCII character '@'?",
+      "options": {
+        "A": "01000001",
+        "B": "01000010",
+        "C": "01000100",
+        "D": "01000101"
+      },
+      "correctAnswer": "A",
+      "explanation": "The binary representation of the ASCII character '@' is indeed 01000001, which is the binary equivalent of its decimal value 64.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How many bits are in a byte?",
+      "options": {
+        "A": "4",
+        "B": "6",
+        "C": "7",
+        "D": "8"
+      },
+      "correctAnswer": "D",
+      "explanation": "A byte is indeed a unit of digital information that consists of 8 bits.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the binary representation of the hexadecimal number F0?",
+      "options": {
+        "A": "11110000",
+        "B": "11110001",
+        "C": "11110010",
+        "D": "11110011"
+      },
+      "correctAnswer": "A",
+      "explanation": "The binary representation of the hexadecimal number F0 is indeed 11110000, which can be calculated by converting the hexadecimal digit F and the zero to their binary equivalents and concatenating the results.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "If you have an 8-bit binary number that has been flipped, and you want to determine its original value, what is the operation you must perform?",
+      "options": {
+        "A": "Add the binary number 1",
+        "B": "Subtract the binary number 1",
+        "C": "Flip all the bits again",
+        "D": "None of the above"
+      },
+      "correctAnswer": "B",
+      "explanation": "To determine the original value of a flipped 8-bit binary number, you must subtract the binary number 1 from the flipped number, which effectively inverts the bits back to their original state.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the binary representation of the decimal number 25?",
+      "options": {
+        "A": "10011",
+        "B": "10001",
+        "C": "10100",
+        "D": "11001"
+      },
+      "correctAnswer": "A",
+      "explanation": "The binary representation of the decimal number 25 can be found by finding the powers of 2 that add up to 25.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the decimal equivalent of the hexadecimal number 3A?",
+      "options": {
+        "A": "58",
+        "B": "59",
+        "C": "60",
+        "D": "61"
+      },
+      "correctAnswer": "B",
+      "explanation": "The decimal equivalent of the hexadecimal number 3A is indeed 58, which can be calculated by interpreting the hexadecimal digits 3 and A as their decimal equivalents and summing the results.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How many unique binary numbers are possible with 3 bits?",
+      "options": {
+        "A": "4",
+        "B": "5",
+        "C": "6",
+        "D": "7"
+      },
+      "correctAnswer": "D",
+      "explanation": "With 3 bits, there are indeed 2^3 = 8 possible binary numbers (000, 001, 010, 011, 100, 101, 110, 111), but only 2^3 = 8 - 2*(number of leading zeroes with value 0) + 2*(number of trailing zeroes with a value of zero) = 4 possible unique binary numbers.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How many bytes are in a kilobyte?",
+      "options": {
+        "A": "4",
+        "B": "8",
+        "C": "10",
+        "D": "1024"
+      },
+      "correctAnswer": "D",
+      "explanation": "A kilobyte is indeed a unit of digital information that consists of 1024 bytes.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the binary representation of the decimal number 9?",
+      "options": {
+        "A": "1001",
+        "B": "1000",
+        "C": "1010",
+        "D": "1101"
+      },
+      "correctAnswer": "A",
+      "explanation": "The binary representation of the decimal number 9 can be found by finding the powers of 2 that add up to 9.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "If you have a hexadecimal number F5, and you want to determine its decimal equivalent, what conversion technique should you use?",
+      "options": {
+        "A": "Multiplication and addition method using base 2",
+        "B": "Division method using base 8",
+        "C": "Multiplication and addition method using base 16",
+        "D": "None of the above"
+      },
+      "correctAnswer": "C",
+      "explanation": "To determine the decimal equivalent of the hexadecimal number F5, you must use the multiplication and addition method using base 16.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the binary representation of the ASCII character 'A'?",
+      "options": {
+        "A": "01000001",
+        "B": "01000010",
+        "C": "01000011",
+        "D": "01000100"
+      }
+    }
+  ]
+}
