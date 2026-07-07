@@ -1,0 +1,197 @@
+{
+  "topic": "Development - REST APIs",
+  "questions": [
+    {
+      "question": "What is the primary advantage of using a RESTful API over a SOAP-based API?",
+      "options": {
+        "A": "Improved security through encryption",
+        "B": "Better performance due to reduced overhead",
+        "C": "Simplified integration with multiple platforms",
+        "D": "Enhanced data validation through XML schema"
+      },
+      "correctAnswer": "C",
+      "explanation": "RESTful APIs use standard HTTP methods, which makes it easier to integrate with multiple platforms and devices.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the purpose of the HTTP 'Accept' header in a REST API request?",
+      "options": {
+        "A": "To specify the request body format",
+        "B": "To indicate the desired response format",
+        "C": "To authenticate the requesting client",
+        "D": "To specify the request method"
+      },
+      "correctAnswer": "B",
+      "explanation": "The HTTP 'Accept' header is used to negotiate the format of the response returned by the server.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is a Content-Type header used for in a REST API request?",
+      "options": {
+        "A": "Specify the request body format",
+        "B": "Specify the response body format",
+        "C": "Authenticate the requesting client",
+        "D": "Specify the request method"
+      },
+      "correctAnswer": "A",
+      "explanation": "The Content-Type header indicates what type of content is included in the request body.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What does the GET method in a REST API typically return?",
+      "options": {
+        "A": "User-created data",
+        "B": "System-generated data",
+        "C": "Data from the server's cache",
+        "D": "A new resource"
+      },
+      "correctAnswer": "A",
+      "explanation": "GET methods typically retrieve or fetch existing data from the server.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the purpose of error handling in a REST API?",
+      "options": {
+        "A": "To detect and prevent security breaches",
+        "B": "To improve user experience",
+        "C": "To specify a custom data format",
+        "D": "To handle and recover from client-side errors"
+      },
+      "correctAnswer": "B",
+      "explanation": "Error handling in a REST API is used to improve the user experience by providing clear and concise error messages.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is HTTP caching in the context of a REST API?",
+      "options": {
+        "A": "A mechanism for authenticating clients",
+        "B": "A technique for storing frequently accessed resources on the client-side",
+        "C": "A method for securing sensitive data",
+        "D": "A process for validating client input"
+      },
+      "correctAnswer": "B",
+      "explanation": "HTTP caching in a REST API is a technique used to store frequently accessed resources on the client-side to improve performance.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the primary difference between PATCH and UPDATE methods in a REST API?",
+      "options": {
+        "A": "PATCH is used for updating multiple resources",
+        "B": "UPDATE is used for updating a single resource",
+        "C": "PATCH is used for adding new properties, UPDATE is used for updating existing ones",
+        "D": "PATCH is used for creating new resources, UPDATE is used for updating existing ones"
+      },
+      "correctAnswer": "C",
+      "explanation": "PATCH is used for adding new properties to a resource, while UPDATE is used for updating existing properties.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is a good practice for versioning resources in a REST API?",
+      "options": {
+        "A": "Using a single version number for all resources",
+        "B": "Using a unique version number for each resource",
+        "C": "Using a timestamp for each resource",
+        "D": "Using a query parameter for versioning"
+      },
+      "correctAnswer": "A",
+      "explanation": "Using a single version number for all resources is a good practice for versioning resources in a REST API.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the meaning of a 404 status code in a REST API?",
+      "options": {
+        "A": "Resource not found",
+        "B": "Resource found but not accessible",
+        "C": "Resource exists but has been moved",
+        "D": "Resource is being updated"
+      },
+      "correctAnswer": "A",
+      "explanation": "A 404 status code indicates that the requested resource was not found on the server.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the benefit of using APIs in a microservices architecture?",
+      "options": {
+        "A": "Better scalability and performance",
+        "B": "Easier integration and communication between services",
+        "C": "Improved data consistency and security",
+        "D": "Reduced complexity and maintenance costs"
+      },
+      "correctAnswer": "B",
+      "explanation": "APIs enable seamless communication between multiple services in a microservices architecture, making it easier to integrate and manage the system.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the role of authentication in a REST API?",
+      "options": {
+        "A": "To verify the client's identity",
+        "B": "To authorize access to resources",
+        "C": "To encrypt data transmission",
+        "D": "To validate user input"
+      },
+      "correctAnswer": "A",
+      "explanation": "Authentication in a REST API ensures that requests come from a trusted client.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the difference between HTTP POST and PUT methods in a REST API?",
+      "options": {
+        "A": "POST creates a new resource, PUT updates an existing one",
+        "B": "POST updates an existing resource, PUT creates a new one",
+        "C": "POST is used for deletion, PUT is used for insertion",
+        "D": "POST is used for querying, PUT is used for caching"
+      },
+      "correctAnswer": "A",
+      "explanation": "POST creates a new resource, while PUT updates an existing one.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How would you handle a situation where a user tries to access a resource that they don't have permission to access?",
+      "options": {
+        "A": "Return a 404 status code to indicate that the resource is not found",
+        "B": "Return a 403 status code to indicate that the user is unauthorized",
+        "C": "Return a 401 status code to indicate that the user is not authenticated",
+        "D": "Return a 200 status code to indicate that the request was successful"
+      },
+      "correctAnswer": "B",
+      "explanation": "The correct response to this situation is to return a 403 status code to indicate that the user is unauthorized.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How do you implement rate limiting in a REST API to prevent abuse?",
+      "options": {
+        "A": "Use a fixed quota per second for all clients",
+        "B": "Use a sliding window algorithm to track client behavior",
+        "C": "Implement a token bucket system to regulate traffic",
+        "D": "Use a fixed quota per client"
+      },
+      "correctAnswer": "C",
+      "explanation": "The token bucket system is an efficient and accurate way to rate-limit clients in a REST API.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the best practice for handling CORS requests in a REST API?",
+      "options": {
+        "A": "Disable CORS for all browsers",
+        "B": "Enable CORS for specific domains only",
+        "C": "Implement CORS for all resources",
+        "D": "Use a proxy server to handle CORS requests"
+      },
+      "correctAnswer": "B",
+      "explanation": "The best practice is to enable CORS only for the specific domains that are trusted to make requests to the API.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How do you improve the performance of a REST API by reducing database queries?",
+      "options": {
+        "A": "Use database transactions to batch multiple queries",
+        "B": "Implement data caching to store frequently accessed data",
+        "C": "Use ORM (Object-Relational Mapping) tools to map objects to database tables",
+        "D": "Use stored procedures to encapsulate complex queries"
+      },
+      "correctAnswer": "B",
+      "explanation": "Data caching is an effective way to store frequently accessed data and reduce database queries, thus improving performance.",
+      "difficulty": "Easy"
+    }
+  ]
+}
