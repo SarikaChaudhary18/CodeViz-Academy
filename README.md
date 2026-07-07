@@ -107,13 +107,6 @@ flowchart TB
 
 ---
 
-## 📈 Performance & System Metrics
-
-Recent optimizations to database indexing, React re-render cycles, and caching tokens resulted in significant performance improvements:
-
-<<<<<<< HEAD
-| Metric Parameter | Legacy System | Optimized System | Improvement |
-=======
 ### System Flow Sequence
 
 ```mermaid
@@ -283,7 +276,6 @@ DsaProblemSchema.index({ problemId: 1 }, { unique: true });
 These architectural changes and frontend optimizations resulted in significant performance improvements:
 
 | Performance Parameter | Legacy Metric | Optimized Metric | Metric Improvement |
->>>>>>> 31bd44f (docs: Rebrand platform to CodeViz Academy and add comprehensive NOVELTY.md)
 | :--- | :--- | :--- | :--- |
 | **Page Latency (Problem Switching)** | 1,840 ms | 32 ms | **98.26%** |
 | **Database Lookup Time (Indexed)** | 480 ms | 11 ms | **97.70%** |
