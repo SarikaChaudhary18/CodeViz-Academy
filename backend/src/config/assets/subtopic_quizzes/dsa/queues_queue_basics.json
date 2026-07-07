@@ -1,0 +1,173 @@
+{
+  "topic": "Queues - Queue Basics",
+  "questions": [
+    {
+      "question": "What is a Queue data structure?",
+      "options": {
+        "A": "A collection of elements where each element represents a unique resource.",
+        "B": "A sequence of elements that can be accessed in a particular order, usually last-in-first-out (LIFO) or first-in-first-out (FIFO).",
+        "C": "A data structure used to find and delete elements in O(1) time complexity.",
+        "D": "A sorting algorithm that uses a Queue to rearrange elements in ascending order."
+      },
+      "correctAnswer": "B",
+      "explanation": "A Queue is a linear collection of elements where elements are added to the end (enqueue) and removed from the front (dequeue).",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which operation is typically performed at the front of a Queue?",
+      "options": {
+        "A": "Enqueue",
+        "B": "Dequeue",
+        "C": "Peek",
+        "D": "Peek Front"
+      },
+      "correctAnswer": "B",
+      "explanation": "Dequeue is the operation that removes and returns the front element of a Queue. It is typically the last element added (FIFO) or the first element in the Queue (queue implementation details).",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the time complexity for enqueue operation in a Queue?",
+      "options": {
+        "A": "O(1)",
+        "B": "O(n)",
+        "C": "O(log n)",
+        "D": "O(n^2)"
+      },
+      "correctAnswer": "A",
+      "explanation": "In a well-implemented Queue, the enqueue operation typically has a time complexity of O(1), meaning it takes constant time regardless of the size of the Queue.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the data type of elements stored in a Queue?",
+      "options": {
+        "A": "Integer, Float",
+        "B": "Object, Any",
+        "C": "Boolean, String",
+        "D": "Integer only"
+      },
+      "correctAnswer": "B",
+      "explanation": "A Queue can store elements of any data type or object, depending on the programming language or implementation. It is not limited to specific data types like Integer, Float, etc.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which situation describes the use of a Queue?",
+      "options": {
+        "A": "Printing multiple documents in a printer",
+        "B": "Processing requests in a multi-threaded server",
+        "C": "Searching for a word in a text document",
+        "D": "Sorting data for display"
+      },
+      "correctAnswer": "B",
+      "explanation": "A Queue is useful for managing tasks that need to be completed in a particular order, like processing requests in a multi-threaded server or waiting in line. It ensures that elements are processed in the order they were received (FIFO).",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the operation to view the next element that will be dequeued without removing it?",
+      "options": {
+        "A": "Peek",
+        "B": "Dequeue",
+        "C": "Enqueue",
+        "D": "IsEmpty"
+      },
+      "correctAnswer": "A",
+      "explanation": "A Queue provides the operation Peek() to let you view the next element without removing it. However, be aware that Peek has varying implementation in different Queue variations, such as Queue vs. Deque.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "A Queue is implemented using an array.",
+      "options": {
+        "A": "True",
+        "B": "False",
+        "C": "It depends on the implementation",
+        "D": "This is true for all arrays"
+      },
+      "correctAnswer": "B",
+      "explanation": "A true Queue is typically implemented using a Linked List or an array-based implementation that handles shifting elements on deque operations. An array cannot represent a Queue in its basic form.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the typical time complexity for dequeue operation in a Queue?",
+      "options": {
+        "A": "O(1)",
+        "B": "O(n)",
+        "C": "O(log n)",
+        "D": "O(n^2)"
+      },
+      "correctAnswer": "B",
+      "explanation": "When implemented with an array, dequeue operation typically has a time complexity of O(n) in the worst case because elements may need to be shifted to fill the gap after removing an element at the beginning. In a well-implemented linked list, dequeue is O(1).",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What will happen if an attempt is made to dequeue from an empty Queue?",
+      "options": {
+        "A": "It will be treated as an Enqueue operation",
+        "B": "It will throw an exception or handle the case as specified.",
+        "C": "It will be treated as a Peek operation",
+        "D": "An array is created to fulfill the deque operation request"
+      },
+      "correctAnswer": "B",
+      "explanation": "When dequeuing from an empty Queue, the system throws an exception or the Queue class handles the case as specified, depending on the implementation.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "When would you use a Queue over a Stack?",
+      "options": {
+        "A": "When data needs to be accessed randomly",
+        "B": "When a task needs to be completed only upon the last item in the data structure being processed",
+        "C": "When items must be handled in an ordered, sequential fashion as requested, like a first-in-first-out (FIFO)",
+        "D": "When data must adhere to a Least recently used (LRU) policy"
+      },
+      "correctAnswer": "C",
+      "explanation": "Use a Queue over a Stack when items must be handled in a specific order as requested. For example, when handling tasks in an ordered, sequential manner, you'd prefer a Queue.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Why might a Queue's implementation vary?",
+      "options": {
+        "A": "Queue is implemented with an array",
+        "B": "Due to the complexity of its algorithms",
+        "C": "Due to the specific needs or requirements, or different programming languages",
+        "D": "Both A and B are factors"
+      },
+      "correctAnswer": "C",
+      "explanation": "The specific needs or requirements of a system and the language or framework used influence the implementation of a Queue.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is a use case for a Queue in a multi-threading scenario?",
+      "options": {
+        "A": "Processing an asynchronous request",
+        "B": "Printing a multiple-colored image.",
+        "C": "Executing two different tasks in two different threads sequentially.",
+        "D": "Accessing shared resources in a safe thread"
+      },
+      "correctAnswer": "A",
+      "explanation": "A Queue can be used to order, prioritize, or process requests or responses generated asynchronously as a result of a user's actions. This helps the application manage and prioritize tasks efficiently.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "In a system, how would you implement a bounded queue if you wanted to limit the size to a fixed number?",
+      "options": {
+        "A": "You can use a LinkedList that has a size cap. Any item exceeding the size limit would be thrown away immediately",
+        "B": "By using an Array that dynamically shrinks and expands",
+        "C": "By using a fixed Array that handles insertion, deletion, and wrapping around to the beginning of the array when the last index is reached",
+        "D": "You can create an exception for when it's near the maximum size, but that does not actually add to an array."
+      },
+      "correctAnswer": "C",
+      "explanation": "In case of a bounded queue, you could implement it by maintaining two pointers, one for insertion and one for deletion. Once these pointers meet halfway, it means the queue has reached its maximum size.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How would you check if a Queue is empty using O(1) time complexity?",
+      "options": {
+        "A": "By checking if front is null",
+        "B": "By checking the number of elements",
+        "C": "By checking if the last added item has a value other than null",
+        "D": "You can't check a Queue in constant time complexity"
+      },
+      "correctAnswer": "A",
+      "explanation": "You can check if a Queue is empty by looking at its head (front), not its tail (last element). This can be done in a constant time by verifying if the front index or pointer refers to a null item within the data structure.",
+      "difficulty": "Medium"
+    }
+  ]
+}
