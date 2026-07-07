@@ -1,0 +1,173 @@
+{
+  "topic": "Development - Programming Fundamentals",
+  "questions": [
+    {
+      "question": "Which programming paradigm focuses on breaking down a program into independent modules that can be executed concurrently?",
+      "options": {
+        "A": "Procedural",
+        "B": "Functional",
+        "C": "Oriented",
+        "D": "Event-driven"
+      },
+      "correctAnswer": "B",
+      "explanation": "Functional programming emphasizes the use of pure functions, immutability, and recursion to write composable and modular code.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the purpose of a constructor in object-oriented programming?",
+      "options": {
+        "A": "To manage memory allocation",
+        "B": "To initialize object attributes",
+        "C": "To handle exceptions",
+        "D": "To implement inheritance"
+      },
+      "correctAnswer": "B",
+      "explanation": "A constructor is a special method that initializes the attributes of an object when it is created, ensuring that the object is in a valid state.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following data types in JavaScript is mutable?",
+      "options": {
+        "A": "Number",
+        "B": "String",
+        "C": "Array",
+        "D": "Boolean"
+      },
+      "correctAnswer": "C",
+      "explanation": "Arrays and objects in JavaScript are mutable, meaning their contents can be changed after creation, whereas numbers, strings, and booleans are immutable.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the difference between a reference variable and a value variable in programming?",
+      "options": {
+        "A": "Reference variables store immutable values, while value variables store mutable data.",
+        "B": "Reference variables store mutable data, while value variables store immutable values.",
+        "C": "Reference variables store the location of a value, while value variables store the value itself.",
+        "D": "Reference variables are always passed by value, while value variables are always passed by reference."
+      },
+      "correctAnswer": "C",
+      "explanation": "Reference variables store a reference to the location of a value in memory, while value variables store the value itself. This distinction is important when understanding variable scope and assignment in programming languages.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the purpose of the null in a null pointer exception?",
+      "options": {
+        "A": "To indicate that the value is unknown or uninitialized.",
+        "B": "To represent an empty set of values or a non-existent value.",
+        "C": "To prevent the programmer from accidentally using uninitialized variables.",
+        "D": "To indicate the end of a data structure."
+      },
+      "correctAnswer": "A",
+      "explanation": "The null in a null pointer exception indicates that the variable or reference being accessed has not been initialized and does not point to a valid object or location in memory.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the purpose of asynchronous programming?",
+      "options": {
+        "A": "To enable programs to run faster by utilizing multi-core processors.",
+        "B": "To enable programs to execute multiple tasks concurrently, improving responsiveness and efficiency.",
+        "C": "To simplify programming by eliminating the need for manual thread management.",
+        "D": "To improve memory usage by reducing the number of variables in memory."
+      },
+      "correctAnswer": "B",
+      "explanation": "Asynchronous programming enables programs to execute multiple tasks concurrently, improving responsiveness and efficiency by allowing other tasks to continue running while waiting for a slow task to complete.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is type casting in programming?",
+      "options": {
+        "A": "The process of converting one data type into another without losing data.",
+        "B": "The process of automatically converting variables to their native types.",
+        "C": "The process of assigning the same name to a variable and its type.",
+        "D": "The process of specifying the data type and size of a primitive type."
+      },
+      "correctAnswer": "A",
+      "explanation": "Type casting is the process of explicitly converting one data type into another, which can result in data loss if the types are not compatible.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is polymorphism in object-oriented programming?",
+      "options": {
+        "A": "The ability of an object to take on multiple forms, depending on the context.",
+        "B": "The ability of a method to perform different actions based on the type of object being referenced.",
+        "C": "The ability of a class to inherit behavior from another class.",
+        "D": "The ability of a method to override default behavior and provide custom implementation."
+      },
+      "correctAnswer": "B",
+      "explanation": "Polymorphism refers to the ability of a method to perform different actions or return different results based on the type of object being referenced, even if the method has the same name and signature.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is recursion in programming?",
+      "options": {
+        "A": "A programming construct that uses a loop to execute a section of code multiple times.",
+        "B": "A programming construct that uses function calls to solve problems that can be broken down into smaller sub-problems.",
+        "C": "A programming construct that allows a method to call itself, often to solve problems that can be broken down into smaller sub-problems.",
+        "D": "A programming construct that uses memoization to cache the results of expensive function calls."
+      },
+      "correctAnswer": "C",
+      "explanation": "Recursion is a programming construct that allows a method to call itself, often to solve problems that can be broken down into smaller sub-problems, until the base case is reached and the recursion unwinds.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is encapsulation in object-oriented programming?",
+      "options": {
+        "A": "The bundling of data and behavior into a single unit.",
+        "B": "The concept of hiding internal implementation details from external users.",
+        "C": "The ability of a class to inherit behavior from another class.",
+        "D": "The ability of a method to override default behavior and provide custom implementation."
+      },
+      "correctAnswer": "B",
+      "explanation": "Encapsulation refers to the concept of hiding internal implementation details from external users, making it difficult for other classes or objects to access or modify sensitive data or behavior.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is abstraction in object-oriented programming?",
+      "options": {
+        "A": "The ability of a class to inherit behavior from another class.",
+        "B": "The ability of a method to override default behavior and provide custom implementation.",
+        "C": "The concept of showing only necessary information to the outside world, while hiding the details.",
+        "D": "The ability of a class to provide a simplified interface to a complex system."
+      },
+      "correctAnswer": "C",
+      "explanation": "Abstraction refers to the concept of showing only necessary information to the outside world, while hiding the details, to provide a simpler interface to a complex system.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is a lambda function in programming?",
+      "options": {
+        "A": "An anonymous function that can be defined inline within a larger expression.",
+        "B": "A named function that can be defined outside of a larger expression.",
+        "C": "A global function that can be accessed from anywhere in a program.",
+        "D": "A function that can only be passed as an argument to a higher-order function."
+      },
+      "correctAnswer": "A",
+      "explanation": "A lambda function is an anonymous function that can be defined inline within a larger expression, often as a parameter to a higher-order function.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is a closure in programming?",
+      "options": {
+        "A": "A function that has access to its own scope and the scope of its outer environment.",
+        "B": "A function that has access only to its own scope, without the ability to access external variables.",
+        "C": "A global function that can be accessed from anywhere in a program.",
+        "D": "A function that cannot capture external variables or have access to its own scope."
+      },
+      "correctAnswer": "A",
+      "explanation": "A closure is a function that has access to its own scope and the scope of its outer environment, allowing it to capture and remember variables from outer scopes even when the outer scope has gone out of scope.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is memoization in programming?",
+      "options": {
+        "A": "A technique for caching the results of expensive function calls.",
+        "B": "A technique for optimizing loops by reducing the number of iterations.",
+        "C": "A technique for improving the performance of recursive algorithms.",
+        "D": "A technique for reducing memory usage by avoiding unnecessary data structures."
+      },
+      "correctAnswer": "A",
+      "explanation": "Memoization is a technique for caching the results of expensive function calls, often used to optimize recursive algorithms and functions with slow computation.",
+      "difficulty": "Easy"
+    }
+  ]
+}
