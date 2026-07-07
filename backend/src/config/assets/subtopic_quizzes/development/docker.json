@@ -1,0 +1,185 @@
+{
+  "topic": "Development - Docker",
+  "questions": [
+    {
+      "question": "What is Docker used for?",
+      "options": {
+        "A": "Docker is a programming language",
+        "B": "Docker is a virtual machine",
+        "C": "Docker is a containerization platform",
+        "D": "Docker is an operating system"
+      },
+      "correctAnswer": "C",
+      "explanation": "Docker is an open-source containerization platform that allows developers to package, ship, and run applications in containers. These containers are lightweight and portable, making it easier to deploy and manage applications across different environments.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the main difference between Docker Hub and Docker Registry?",
+      "options": {
+        "A": "Docker Hub is a free service, while Docker Registry is paid",
+        "B": "Docker Registry is a service for hosting your own private registry, while Docker Hub is public",
+        "C": "Docker Hub is an official repository for official images, while Docker Registry is for user-private images",
+        "D": "Docker Hub is for Linux images, while Docker Registry is for Windows images"
+      },
+      "correctAnswer": "C",
+      "explanation": "Docker Hub is public, while Docker Registry can be used to host a private registry. Official Docker images are available on Docker Hub, and users can push their own images to the registry. ",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the Dockerfile used for?",
+      "options": {
+        "A": "Used to build a Docker image",
+        "B": "Used to push an image to Docker Hub",
+        "C": "Used to run a Docker container",
+        "D": "Used to delete a Docker image"
+      },
+      "correctAnswer": "A",
+      "explanation": "A Dockerfile is a text file used to build a Docker image automatically. It contains a sequence of instructions that describe how to build the image, including copying files and installing dependencies.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the default network in Docker?",
+      "options": {
+        "A": "bridge",
+        "B": "host",
+        "C": "none",
+        "D": "container"
+      },
+      "correctAnswer": "A",
+      "explanation": "When you don't specify any network in Docker, by default, it uses the bridge network. The bridge network allows containers to communicate with other containers across different hosts.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How do you commit changes in Docker?",
+      "options": {
+        "A": "docker commit [options] <image name>",
+        "B": "docker push [image name] <commit id>",
+        "C": "docker tag [image name] <new-image-name>",
+        "D": "docker save [image name] > output.tar"
+      },
+      "correctAnswer": "A",
+      "explanation": "To commit changes to a Docker image, you use the 'docker commit' command. This command takes an existing container, captures its changes, and creates a new image.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the use of Docker Volume?",
+      "options": {
+        "A": "To persist data between container restarts",
+        "B": "To mount a shared directory between different containers",
+        "C": "To map a host path to a container",
+        "D": "To run a container in detached mode"
+      },
+      "correctAnswer": "A",
+      "explanation": "Docker Volumes are used to persist data between container restarts. This way, you can maintain data even after a container restarts.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What port is used when using the -p 8080:80 flag?",
+      "options": {
+        "A": "8080:80",
+        "B": "80:8080",
+        "C": "80:80",
+        "D": "8080:8080"
+      },
+      "correctAnswer": "A",
+      "explanation": "When you use the -p flag, it's telling Docker to map a port on the host machine to the port inside the container. In this case, port 8080 on the host is mapped to port 80 inside the container.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How do you create a multi-container Docker Compose configuration?",
+      "options": {
+        "A": "docker-compose.yml",
+        "B": "docker-compose config",
+        "C": "docker-compose up",
+        "D": "docker-compose stop"
+      },
+      "correctAnswer": "A",
+      "explanation": "To create a multi-container Docker Compose configuration, you create a YAML file named docker-compose.yml, specifying multiple services with their own configurations.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is a Docker Swarm?",
+      "options": {
+        "A": "A type of Docker container",
+        "B": "A way to scale Docker services",
+        "C": "A type of Docker network",
+        "D": "A distributed system of Docker hosts"
+      },
+      "correctAnswer": "D",
+      "explanation": "Docker Swarm is a tool for turning a cluster of Docker hosts into a single, swarmlike, container-based system. You can manage your services and their distribution across hosts with swarm.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the 'docker system prune' command used for?",
+      "options": {
+        "A": "To remove unused Docker images",
+        "B": "To stop and remove running containers",
+        "C": "To delete all stopped containers",
+        "D": "To free up disk space by removing unused containers, networks, and images"
+      },
+      "correctAnswer": "D",
+      "explanation": "The 'docker system prune' command is used to free up disk space by removing unused containers, networks, and images. This command is especially useful when disk space is limited.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "How do you set environment variables in a Dockerfile?",
+      "options": {
+        "A": "ENV variable_name value",
+        "B": "VARIABLE variable_name value",
+        "C": "ENV <value> variable_name",
+        "D": "VARIABLE variable_name <value>"
+      },
+      "correctAnswer": "A",
+      "explanation": "To set environment variables in a Dockerfile, you use the ENV instruction. This instruction allows you to set a variable named variable_name with a given value.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the purpose of the 'docker run --rm' flag?",
+      "options": {
+        "A": "To automatically delete the container after it exits",
+        "B": "To persist data after the container restarts",
+        "C": "To create a new network for the container",
+        "D": "To expose a port on the host machine from inside the container"
+      },
+      "correctAnswer": "A",
+      "explanation": "The '--rm' flag tells Docker to remove the container after it exits. This flag is useful when you're done with a task and want to automatically delete the container, freeing up resources.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How do you expose ports in a Dockerfile?",
+      "options": {
+        "A": "EXPOSE <port> <port> ...",
+        "B": "PORT <port> <port> ...",
+        "C": "EXPOSE <port1> <port2> ...",
+        "D": "ENV PORTS <port> <port> ..."
+      },
+      "correctAnswer": "C",
+      "explanation": "To expose ports in a Dockerfile, you use the EXPOSE instruction. This instruction specifies the ports that your container listens on.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is a Docker image's hash?",
+      "options": {
+        "A": "A unique identifier for the image",
+        "B": "The version of the Docker engine used to build the image",
+        "C": "A checksum of the image's layers",
+        "D": "A string of characters specifying the environment the image was created in"
+      },
+      "correctAnswer": "A",
+      "explanation": "A Docker image's hash is a unique identifier that distinguishes it from other images. This identifier can be used to reference the image by name.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How do you get a list of all Docker containers, including their images?",
+      "options": {
+        "A": "docker ps",
+        "B": "docker images",
+        "C": "docker containers",
+        "D": "docker system info"
+      },
+      "correctAnswer": "A",
+      "explanation": "The `docker ps` command returns a list of the containers that are currently running, but without their image details. You need to use the `-a` flag to get the details of all the containers, including the images they are based on.",
+      "difficulty": "Hard"
+    }
+  ]
+}
