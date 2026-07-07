@@ -1,0 +1,197 @@
+{
+  "topic": "Trees - Segment Tree",
+  "questions": [
+    {
+      "question": "What is the main purpose of a segment tree data structure?",
+      "options": {
+        "A": "To store tree traversals",
+        "B": "To represent a range query operation on a static array",
+        "C": "To create a binary Search tree",
+        "D": "To use hash tables for efficient data access"
+      },
+      "correctAnswer": "B",
+      "explanation": "A segment tree is designed to efficiently store and query ranges of values in a static array. It is particularly useful for solving range sum queries and update queries.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What are the key benefits of using a segment tree in a real-time system?",
+      "options": {
+        "A": "Reduced memory usage and faster query times",
+        "B": "Improved tree traversal performance",
+        "C": "Simplified implementation and reduced coding",
+        "D": "Support for recursive algorithms only"
+      },
+      "correctAnswer": "A",
+      "explanation": "Segment trees can minimize memory usage and reduce the response time of range queries, which is crucial for maintaining real-time performance in many applications.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How do you initialize a segment tree?",
+      "options": {
+        "A": "By creating a basic binary tree with values inserted in order",
+        "B": "By creating an empty tree and incrementally adding nodes as required",
+        "C": "By initializing all leaf nodes with the same value",
+        "D": "By creating a tree structure based on input values"
+      },
+      "correctAnswer": "B",
+      "explanation": "Initializing a segment tree typically involves incrementally adding nodes as needed to manage the array being queried.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What happens when a new node is added to an existing segment tree?",
+      "options": {
+        "A": "The entire tree is updated to keep the leaf node at the bottom level",
+        "B": "The tree remains unchanged as it is optimized for static queries only",
+        "C": "Both child nodes and parent node get updated in the tree",
+        "D": "The leaf node gets updated and tree remains optimized"
+      },
+      "correctAnswer": "A",
+      "explanation": "When a new node is added, the entire segment tree will need an update. This ensures that queries and updates to ranges can still be efficiently processed.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "In a segment tree, what represents the leaf node?",
+      "options": {
+        "A": "A node that holds the final query result",
+        "B": "A node that represents each element in the array",
+        "C": "A node with the root element as the parent",
+        "D": "A node that stores the array index"
+      },
+      "correctAnswer": "B",
+      "explanation": "The leaf node of a segment tree typically represents each element in the array being queried.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How does a segment tree handle overlapping ranges?",
+      "options": {
+        "A": "By ignoring the overlapping range in calculations",
+        "B": "By combining the overlapping ranges for faster calculation",
+        "C": "By dividing the overlapping ranges",
+        "D": "By not supporting overlapping ranges at all"
+      },
+      "correctAnswer": "B",
+      "explanation": "Overlapping ranges are combined to ensure that queries are optimized based on the segment tree's structure.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the primary operation in a segment tree?",
+      "options": {
+        "A": "Insert operation",
+        "B": "Delete operation",
+        "C": "Query Operation",
+        "D": "Traversal Operation"
+      },
+      "correctAnswer": "C",
+      "explanation": "The primary operation in a segment tree is querying a range of elements, which typically involves calculating a sum or other aggregate value.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Why is a segment tree called a 'tree'?",
+      "options": {
+        "A": "Because it is a binary search tree implementation",
+        "B": "To highlight its tree-like node structure",
+        "C": "For easy traversal, a tree-like approach is taken",
+        "D": "For the ability to handle multiple child nodes"
+      },
+      "correctAnswer": "B",
+      "explanation": "A segment tree is called a tree because it's represented by a tree-like node structure. Each internal node in the tree has two or more child nodes and stores the information for its subtree.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the typical size of a segment tree node?",
+      "options": {
+        "A": "A single element of the array",
+        "B": "An array of elements",
+        "C": "Multiple elements of a range",
+        "D": "The entire array being queried"
+      },
+      "correctAnswer": "C",
+      "explanation": "Each node in a segment tree typically handles multiple elements within a given range.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How can queries be optimized using a segment tree?",
+      "options": {
+        "A": "By recursively traversing the tree from root to leaves",
+        "B": "By using a tree structure that facilitates efficient range queries",
+        "C": "By creating an extra binary search at query time",
+        "D": "By adding more memory allocation"
+      },
+      "correctAnswer": "B",
+      "explanation": "Querying a segment tree can be optimized by using a tree structure that is designed to handle range queries efficiently. This often involves minimizing the number of nodes accessed during query.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How do you update a segment tree in response to an insert operation?",
+      "options": {
+        "A": "By moving all elements of the given range to a new node",
+        "B": "By incrementing all values stored in the affected nodes",
+        "C": "By recursively propagating the update through the tree",
+        "D": "By only modifying the leaf node of the affected range"
+      },
+      "correctAnswer": "C",
+      "explanation": "When an element is inserted into the array, a segment tree update should propagate the change upwards from the leaf node representing the insertion point, updating the parent nodes until each affected node is updated. ",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the difference between a segment tree and a binary search tree?",
+      "options": {
+        "A": "One is a data structure and the other is just an algorithm",
+        "B": "One represents a static array while the other handles dynamic updates",
+        "C": "One is primarily used for querying and the other is used for sorting",
+        "D": "Both have the same application"
+      },
+      "correctAnswer": "B",
+      "explanation": "The key difference between a segment tree and a binary search tree is that a segment tree primarily serves as a query data structure that can handle range updates on a static array, whereas a binary search tree is often used for insertion, deletion, and search of data.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How much faster are range queries over a segment tree compared to a naive array approach?",
+      "options": {
+        "A": "10-20% faster",
+        "B": "1-10% slower",
+        "C": "Much, much faster",
+        "D": "Not faster than arrays"
+      },
+      "correctAnswer": "A",
+      "explanation": "On average range queries over a segment tree are 10 to 20% faster compared to naive array approaches.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What operations can be efficiently performed using a segment tree?",
+      "options": {
+        "A": "Range min and max queries",
+        "B": "Sum of elements within a range of array indices",
+        "C": "Finding the median of elements within a given range",
+        "D": "Only query the root element"
+      },
+      "correctAnswer": "B",
+      "explanation": "A segment tree is specifically optimized for calculating ranges of values on static arrays, making it especially good at handling sum and other aggregate operations.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "When should a segment tree be used instead of a hash table or array?",
+      "options": {
+        "A": "When frequent range updates and queries are needed",
+        "B": "When the array size is relatively large",
+        "C": "When the range of queries is fixed and known beforehand",
+        "D": "When the array can be easily sorted"
+      },
+      "correctAnswer": "A",
+      "explanation": "A segment tree is particularly useful when frequent range updates and queries are necessary because it efficiently handles updates and queries of ranges without requiring a complete scan of the array.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the best algorithm to use when you need to find the maximum of a range in a static array?",
+      "options": {
+        "A": "Use a binary search tree",
+        "B": "Implement a segment tree",
+        "C": "Query an array using recursion",
+        "D": "Apply a hash table to speed up the search"
+      },
+      "correctAnswer": "B",
+      "explanation": "When looking for the maximum or minimum of a range, a segment tree is a suitable choice because it's optimized for handling these types of range queries.",
+      "difficulty": "Medium"
+    }
+  ]
+}
