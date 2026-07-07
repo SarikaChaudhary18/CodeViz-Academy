@@ -1,0 +1,185 @@
+{
+  "topic": "Hashing - Rolling Hash",
+  "questions": [
+    {
+      "question": "In the context of rolling hash, what does the variable 'p' represent?",
+      "options": {
+        "A": "The size of the alphabet or character set",
+        "B": "The base of the hash function",
+        "C": "The modulus value for rolling hash",
+        "D": "The size of the hash table"
+      },
+      "correctAnswer": "B",
+      "explanation": "The variable 'p' in rolling hash represents the base of the hash function. It's used to calculate the hash value by multiplying the previous hash with 'p' and adding the value of the current character.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the main advantage of using rolling hash compared to other string matching algorithms?",
+      "options": {
+        "A": "It minimizes page faults by reducing memory usage",
+        "B": "It's faster for very short strings",
+        "C": "It allows for efficient string matching and searching",
+        "D": "It only works for binary strings"
+      },
+      "correctAnswer": "C",
+      "explanation": "Rolling hash is an efficient algorithm for string matching and searching. It works by creating multiple hash values of a substring and then comparing these values with a sliding window of a given text.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How does the Rabin-Karp algorithm use rolling hash when searching for a pattern in a text?",
+      "options": {
+        "A": "By generating multiple hash values for each character in the pattern",
+        "B": "By dividing the pattern into multiple substrings and computing their hash values",
+        "C": "By computing the hash value for the entire pattern and then searching for it in the text",
+        "D": "By comparing the hash value of the first substring of the pattern with the hash value of the first substring of the text"
+      },
+      "correctAnswer": "D",
+      "explanation": "In the Rabin-Karp algorithm, rolling hash is used to efficiently compare the hash value of the first substring of the pattern with the hash value of a corresponding substring of the text.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is a common application of rolling hash in string matching and searching?",
+      "options": {
+        "A": "Text compression",
+        "B": "Text filtering",
+        "C": "String searching and pattern matching",
+        "D": "Text encryption"
+      },
+      "correctAnswer": "C",
+      "explanation": "Rolling hash is commonly used in algorithms for string searching and pattern matching, where it allows for efficient comparison of substrings and text.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "In rolling hash, what does the variable 'm' represent?",
+      "options": {
+        "A": "The size of the alphabet or character set",
+        "B": "The base of the hash function",
+        "C": "The modulus value for rolling hash",
+        "D": "The size of the hash table"
+      },
+      "correctAnswer": "C",
+      "explanation": "The variable 'm' in rolling hash represents the modulus value for rolling hash. It's used to reduce the range of the hash value and prevent overflow.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Can rolling hash be applied to any character set?",
+      "options": {
+        "A": "Yes, as long as the character set is finite",
+        "B": "Yes, rolling hash works with any character set",
+        "C": "No, rolling hash only works with ASCII characters",
+        "D": "No, rolling hash requires a specific character set"
+      },
+      "correctAnswer": "A",
+      "explanation": "Rolling hash can be applied to any finite character set, where each character has a distinct value. This ensures that the hash function produces a unique hash value for each substring.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is a potential problem with using a small base 'p' in the rolling hash algorithm?",
+      "options": {
+        "A": "Hash collisions may occur",
+        "B": "Hash functions may not be injective",
+        "C": "Hash values may have too many leading zeros",
+        "D": "Hash values may be too large"
+      },
+      "correctAnswer": "C",
+      "explanation": "A small base 'p' can lead to hash values with too many leading zeros, which can cause overflows and other issues with the rolling hash algorithm.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following is a common application of rolling hash in computational biology?",
+      "options": {
+        "A": "Sequence alignment",
+        "B": "Sequence comparison",
+        "C": "Sequence assembly",
+        "D": "Gene expression analysis"
+      },
+      "correctAnswer": "B",
+      "explanation": "Rolling hash is commonly used in algorithms for fast and efficient sequence comparison and searching in computational biology.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How can the rolling hash algorithm be modified to work with binary strings?",
+      "options": {
+        "A": "By using a larger base 'p'",
+        "B": "By using a smaller modulus 'm'",
+        "C": "By using a different approach to hash calculation",
+        "D": "By using a pre-computed hash table"
+      },
+      "correctAnswer": "C",
+      "explanation": "To work with binary strings, the rolling hash algorithm can be modified to use a different approach to hash calculation, such as using bitwise operations.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "In the Rabin-Karp algorithm, what is the name of the hash function used to calculate the hash value of a substring?",
+      "options": {
+        "A": "Rabin-Karp Hash",
+        "B": "FNV-1a Hash",
+        "C": "DJB Hash",
+        "D": "Ferguson's Hash"
+      },
+      "correctAnswer": "A",
+      "explanation": "The Rabin-Karp algorithm uses a specific hash function, the Rabin-Karp Hash, to calculate the hash value of a substring.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the name of the algorithm that was the first to use rolling hash to find a substring in a text?",
+      "options": {
+        "A": "Knuth-Morris-Pratt Algorithm",
+        "B": "Rabin-Karp Algorithm",
+        "C": "KMP Algorithm",
+        "D": "BF Algorithm"
+      },
+      "correctAnswer": "B",
+      "explanation": "The Rabin-Karp algorithm is the first algorithm that uses rolling hash to find a substring in a text.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Which of the following rolling hash implementations uses a polynomial hashing approach?",
+      "options": {
+        "A": "FNV-1a Hash",
+        "B": "Rabin-Karp Hash",
+        "C": "DJB Hash",
+        "D": "Polynomial Rolling Hash"
+      },
+      "correctAnswer": "D",
+      "explanation": "A polynomial rolling hash uses a polynomial hashing approach, where the hash value of a substring is calculated using polynomial exponentiation.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is a disadvantage of using a large modulus 'm' in the rolling hash algorithm?",
+      "options": {
+        "A": "Computations may be faster",
+        "B": "Overflow may occur",
+        "C": "Memory usage may be reduced",
+        "D": "Hash collisions may occur"
+      },
+      "correctAnswer": "B",
+      "explanation": "A large modulus 'm' can lead to overflows and other issues with the rolling hash algorithm due to the large range of the hash value.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Which of the following is a key principle behind the design of the FNV-1a hash algorithm?",
+      "options": {
+        "A": "The algorithm uses a fixed-size hash value",
+        "B": "The algorithm combines input data at different scales",
+        "C": "The algorithm uses a combination of bitwise operations and multiplication",
+        "D": "The algorithm uses a fixed-size modulus value"
+      },
+      "correctAnswer": "B",
+      "explanation": "The FNV-1a hash algorithm combines input data at different scales using bitwise operations and multiplication.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the primary advantage of using the Jenkins hash algorithm for string matching?",
+      "options": {
+        "A": "It produces a fixed-size hash value",
+        "B": "It is very fast and efficient",
+        "C": "It is designed for use in applications where collisions are acceptable",
+        "D": "It is not susceptible to hash collisions"
+      },
+      "correctAnswer": "B",
+      "explanation": "The Jenkins hash algorithm is very fast and efficient, making it a popular choice for many string matching applications.",
+      "difficulty": "Medium"
+    }
+  ]
+}
