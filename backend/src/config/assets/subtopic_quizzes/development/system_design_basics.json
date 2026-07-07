@@ -1,0 +1,185 @@
+{
+  "topic": "Development - System Design Basics",
+  "questions": [
+    {
+      "question": "What is the primary goal of the CAP theorem in system design?",
+      "options": {
+        "A": "To ensure data consistency across all nodes in a distributed system.",
+        "B": "To achieve high availability, partition tolerance, and consistency in a distributed system.",
+        "C": "To prioritize data consistency over other factors in a distributed system.",
+        "D": "To ensure data availability over other factors in a distributed system."
+      },
+      "correctAnswer": "B",
+      "explanation": "The CAP theorem, proposed by Gilbert and Lynch, states that it is impossible for a distributed data store to simultaneously guarantee all three of the following: consistency (all nodes see the same data), availability (any node can accept a request at any given time), and partition tolerance (network partition does not prevent the system from functioning).",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is a common approach to achieve horizontal scaling in a system?",
+      "options": {
+        "A": "Monolithic architecture with centralized management.",
+        "B": "Microservices architecture with distributed load balancing.",
+        "C": "Distributed database with replication.",
+        "D": "Event-driven architecture with complex event publishing."
+      },
+      "correctAnswer": "B",
+      "explanation": "Microservices architecture involves breaking down a monolithic application into smaller, independent services, each with its own functionality and data schema. This approach allows for easier horizontal scaling, as individual services can be scaled independently without affecting the overall system.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the key benefit of using a load balancer in a system?",
+      "options": {
+        "A": "Improved network performance.",
+        "B": "Reduced latency.",
+        "C": "Increased scalability.",
+        "D": "Improved security."
+      },
+      "correctAnswer": "C",
+      "explanation": "A load balancer helps distribute incoming network traffic across multiple servers to improve responsiveness, reliability, and scalability. This is particularly useful in systems handling high traffic, where a single server might become overwhelmed.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the primary purpose of using an event-driven architecture?",
+      "options": {
+        "A": "To handle real-time analytics.",
+        "B": "To improve data consistency.",
+        "C": "To reduce coupling between components.",
+        "D": "To increase complexity in the system."
+      },
+      "correctAnswer": "C",
+      "explanation": "Event-driven architecture is a design pattern that involves decoupling components and allowing them to communicate through events. This reduces coupling between components, making it easier to maintain, modify, and scale the system.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is a disadvantage of using a monolithic architecture?",
+      "options": {
+        "A": "Improved performance.",
+        "B": "Easier maintenance.",
+        "C": "Simplified deployment.",
+        "D": "Increased complexity."
+      },
+      "correctAnswer": "D",
+      "explanation": "Monolithic architecture involves bundling all business logic and infrastructure into a single unit. This makes it harder to maintain, modify, and scale the system, as changes require redeploying the entire application, potentially causing downtime.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the primary benefit of using an orchestration tool in a system?",
+      "options": {
+        "A": "Improved scalability.",
+        "B": "Increased reliability.",
+        "C": "Automated deployment and management.",
+        "D": "Reduced cost."
+      },
+      "correctAnswer": "C",
+      "explanation": "Orchestration tools help manage and automate the deployment, scaling, and lifecycle of containers across clusters. This simplifies the process for developers and operators, ensuring smooth operation and reducing errors.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the main advantage of using containerization?",
+      "options": {
+        "A": "Improved virtualization.",
+        "B": "Increased portability.",
+        "C": "Simplified networking.",
+        "D": "Better resource allocation."
+      },
+      "correctAnswer": "B",
+      "explanation": "Containerization involves packaging an application and its dependencies into a container that can run consistently across different environments. This makes it easier to migrate applications across different platforms, reducing the risk of compatibility issues.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is a key characteristic of a Service-Oriented Architecture (SOA)?",
+      "options": {
+        "A": "Tight coupling between services.",
+        "B": "Services communicate using APIs.",
+        "C": "Services are loosely coupled and autonomous.",
+        "D": "Services are stateless and ephemeral."
+      },
+      "correctAnswer": "C",
+      "explanation": "SOA involves organizing a system as a collection of services that communicate with each other over APIs. This makes the system more flexible and adaptable, as services can be developed, deployed, and scaled independently.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the disadvantage of using a single database for a large system?",
+      "options": {
+        "A": "Improved data replication.",
+        "B": "Increased data consistency.",
+        "C": "Reduced query complexity.",
+        "D": "Performance degradation."
+      },
+      "correctAnswer": "D",
+      "explanation": "Single databases can become bottlenecks as a system grows, leading to performance degradation. This can be mitigated by using distributed databases, caching, or sharding, but ultimately, it requires some degree of horizontal partitioning.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the primary purpose of using a Circuit Breaker pattern?",
+      "options": {
+        "A": "To handle request timeouts.",
+        "B": "To reduce load balancing.",
+        "C": "To detect and prevent cascading failures.",
+        "D": "To handle rate limits."
+      },
+      "correctAnswer": "C",
+      "explanation": "The Circuit Breaker pattern detects and prevents cascading failures by allowing the system to immediately fail and prevent further requests from being sent to the service, which would otherwise lead to continuous cascading failures.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is a characteristic of a scalable architecture?",
+      "options": {
+        "A": "Fixed resource allocation.",
+        "B": "Autoscaling of resources.",
+        "C": "Dedicated server instances.",
+        "D": "Stateless services."
+      },
+      "correctAnswer": "B",
+      "explanation": "Scalable architectures handle varying workloads by scaling resources up or down dynamically. This is typically achieved through autoscaling mechanisms that increase or decrease the number of resources based on current demand.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is a key consideration when designing a highly available system?",
+      "options": {
+        "A": "Minimize resource utilization.",
+        "B": "Maximize resource utilization.",
+        "C": "Ensure data redundancy.",
+        "D": "Optimize for low latency."
+      },
+      "correctAnswer": "C",
+      "explanation": "High availability involves ensuring that the system remains up and accessible to users even in the presence of failures or maintenance. Achieving this often requires ensuring data redundancy and implementing measures to recover quickly in case of failures.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is one benefit of using a NoSQL database?",
+      "options": {
+        "A": "Improved data consistency.",
+        "B": "Faster data replication.",
+        "C": "Scalability and flexibility.",
+        "D": "Improved data modeling."
+      },
+      "correctAnswer": "C",
+      "explanation": "NoSQL databases often employ flexible, schema-agnostic data models that enable scalability and flexibility. They are particularly useful when the structure of the data is not strictly defined or when handling large amounts of unstructured data.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is a characteristic of a cloud-based system?",
+      "options": {
+        "A": "Dependence on a specific provider.",
+        "B": "Location-agnostic deployment.",
+        "C": "Centralized data storage.",
+        "D": "Stateless services."
+      },
+      "correctAnswer": "B",
+      "explanation": "Cloud-based systems are designed for location-agnostic deployment, providing flexibility in choosing the location for infrastructure, services, or data. This makes cloud-based systems ideal for businesses with distributed teams or variable workloads.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the primary benefit of using container orchestration?",
+      "options": {
+        "A": "Simplified deployment.",
+        "B": "Improved resource utilization.",
+        "C": "Automated container management.",
+        "D": "Reduced network complexity."
+      },
+      "correctAnswer": "C",
+      "explanation": "Container orchestration helps manage and automate container lifecycle, deployment, and scaling. This simplifies the workflow for developers and operators, reducing the need for manual intervention and ensuring efficient container operation.",
+      "difficulty": "Medium"
+    }
+  ]
+}
