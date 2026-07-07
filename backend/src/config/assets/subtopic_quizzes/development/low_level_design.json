@@ -1,0 +1,168 @@
+{
+  "topic": "Development - Low Level Design",
+  "questions": [
+    {
+      "question": "What is the primary use of an index in a database?",
+      "options": {
+        "A": "To maintain data consistency and recover from failures",
+        "B": "To speed up query execution by providing rapid data location",
+        "C": "To enforce data integrity and validate user input",
+        "D": "To track changes made to the database schema"
+      },
+      "correctAnswer": "B",
+      "explanation": "A database index is a data structure that improves query performance by minimizing the number of rows that need to be scanned. When a query is issued, the indexer quickly locates the required data, speeding up the query execution time.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which memory management technique helps prevent memory leaks by ensuring each dynamically allocated block is properly released?",
+      "options": {
+        "A": "Garbage Collection",
+        "B": "Manual Memory Management",
+        "C": "Memory Pooling",
+        "D": "Reference Counting"
+      },
+      "correctAnswer": "A",
+      "explanation": "Garbage Collection is a low-level memory management technique that eliminates memory leaks by automatically freeing dynamically allocated memory when it is no longer in use.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is a 'Segmentation Fault' in C/C++ programming?",
+      "options": {
+        "A": "A programming technique for accessing memory outside the allotted range for a running program.",
+        "B": "A bug caused by a variable being modified unexpectedly during a loop iteration.",
+        "C": "A runtime error triggered when a program attempts to read or write to non-mapped memory.",
+        "D": "A memory-related warning reported by the compiler during the coding phase."
+      },
+      "correctAnswer": "C",
+      "explanation": "A segmentation fault occurs when a program accesses a non-mapped memory or a memory that is mapped incorrectly, causing the program to crash. This is often the result of a null pointer dereference.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the primary function of the 'Page Table' in a computer's memory management hierarchy?",
+      "options": {
+        "A": "Managing the cache hierarchy for the processor's registers",
+        "B": "Interpreting instruction codes for the Central Processing Unit",
+        "C": "Mapping virtual addresses to physical addresses for a process",
+        "D": "Resolving conflicts between multiple users of shared files"
+      },
+      "correctAnswer": "C",
+      "explanation": "The Page Table is a core component of virtual memory management. It maps virtual memory addresses to physical memory addresses using a page mapping technique, such as page table entries.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "In a Linked List, what is the primary time complexity of the following operation: deleting a node that is at an arbitrary location in the list?",
+      "options": {
+        "A": "O(1)",
+        "B": "O(log N)",
+        "C": "O(N)",
+        "D": "O(N^2)"
+      },
+      "correctAnswer": "C",
+      "explanation": "Deleting a node at an arbitrary location in a Linked List requires iterating through the list to locate the node to be deleted. Therefore, it involves searching through all the nodes in the list, making the time complexity O(N).",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "In a multi-threaded application, what is the purpose of the 'Mutex' synchronization construct?",
+      "options": {
+        "A": "To manage access to shared memory regions across multiple threads.",
+        "B": "To ensure that a shared resource is accessed simultaneously by multiple threads.",
+        "C": "To execute a set of code instructions that must not be interrupted by other threads.",
+        "D": "To allocate a fixed-size buffer on the stack that is reusable across threads."
+      },
+      "correctAnswer": "C",
+      "explanation": "A Mutex (Mutual Exclusion lock) ensures that threads executing the protected code will not be interrupted by other threads trying to access it at the same time.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is a benefit of implementing a recursive data structure like a Binary Tree in a programming language?",
+      "options": {
+        "A": "It makes the code more difficult to maintain and debug.",
+        "B": "It allows the tree to be traversed efficiently.",
+        "C": "It simplifies the tree data model significantly.",
+        "D": "It prevents the tree from being self-referential."
+      },
+      "correctAnswer": "B",
+      "explanation": "A recursive data structure like a Binary Tree allows the tree to be traversed efficiently, as the traversal algorithm can call itself recursively without needing additional stack space.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "In a memory layout, what does the term 'Page Table Entry' refer to?",
+      "options": {
+        "A": "A reserved location in memory where program instructions or data is stored.",
+        "B": "A mapping between a virtual address and a physical address in memory.",
+        "C": "A memory block allocated for file I/O operations.",
+        "D": "A system call that allows a process to switch from user mode to kernel mode."
+      },
+      "correctAnswer": "B",
+      "explanation": "The Page Table Entry is essentially a mapping between a virtual address and a physical address in memory. Each entry in the table provides information about the physical page that corresponds to a specific virtual address."
+    },
+    {
+      "question": "What is the purpose of the 'Context Switching' operation in operating systems?",
+      "options": {
+        "A": "To handle interrupt requests from hardware devices.",
+        "B": "To switch the CPU resources between multiple threads or processes.",
+        "C": "To handle memory allocation and deallocation requests.",
+        "D": "To provide system calls for user programs to access system services."
+      },
+      "correctAnswer": "B",
+      "explanation": "Context switching involves switching the CPU resources (such as registers and program counters) between multiple threads or processes to efficiently run more than one program concurrently.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How does a 'Paging' algorithm manage virtual memory?",
+      "options": {
+        "A": "It allocates a fixed-size buffer in the address space for each process.",
+        "B": "It maintains a pool of memory pages for sharing among multiple processes.",
+        "C": "It divides the virtual memory space into fixed-size blocks called pages.",
+        "D": "It dynamically allocates or deallocates memory pages for each process based on their needs."
+      },
+      "correctAnswer": "C",
+      "explanation": "Paging is a technique used in virtual memory management to divide the virtual address space into fixed-size blocks called pages. These pages can be swapped into or out of physical memory based on demand."
+    },
+    {
+      "question": "What is the primary mechanism used by the operating system to schedule processes?",
+      "options": {
+        "A": "Round Robin Scheduling",
+        "B": "Priority Scheduling",
+        "C": "First Come First Serve Scheduling",
+        "D": "Shortest Job First Scheduling"
+      },
+      "correctAnswer": "A",
+      "explanation": "Round Robin Scheduling is a type of scheduling algorithm that involves dividing the CPU time into fixed intervals and switching between available processes after each interval.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is a 'Process ID'?",
+      "options": {
+        "A": "A unique identifier assigned to a process at creation.",
+        "B": "A process-specific identifier that changes each time the process is terminated.",
+        "C": "A variable used to keep track of the current working directory of a process.",
+        "D": "A flag indicating whether a process is waiting on a blocking operation or not."
+      },
+      "correctAnswer": "A",
+      "explanation": "A Process ID is a unique identifier assigned to a process at creation, enabling the process to be distinguished from others running at the same time on the same computer.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the name of the data structure that allows us to efficiently search for elements in a sorted array?",
+      "options": {
+        "A": "B-tree",
+        "B": "Heap",
+        "C": "Hash Table",
+        "D": "Binary Search Tree"
+      },
+      "correctAnswer": "A",
+      "explanation": "A B-tree is a self-balancing search tree that allows us to efficiently search for elements in a sorted array by splitting the search space in half with each step.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following system calls is commonly used by a process to request that another process terminate?",
+      "options": {
+        "A": "kill()",
+        "B": "kill() with the specified PID (Process ID)",
+        "C": "wait() to wait for the completion of another process",
+        "D": "exec() to run another process in place of the current process"
+      }
+    }
+  ]
+}
