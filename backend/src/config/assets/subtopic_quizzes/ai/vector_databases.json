@@ -1,0 +1,173 @@
+{
+  "topic": "AI - Vector Databases",
+  "questions": [
+    {
+      "question": "What is a key characteristic of vector databases?",
+      "options": {
+        "A": "They are designed for large-scale graph databases.",
+        "B": "They store data as numerical vectors.",
+        "C": "They are optimized for disk storage.",
+        "D": "They only work with text data."
+      },
+      "correctAnswer": "B",
+      "explanation": "Vector databases are designed to store and query numerical vector data, such as word embeddings or image features. They are particularly useful for tasks like similarity search and clustering.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the primary advantage of vector databases over traditional relational databases?",
+      "options": {
+        "A": "They offer better data integrity and referential integrity.",
+        "B": "They are more scalable and efficient for similarity-based queries.",
+        "C": "They are more suited for transactional workloads.",
+        "D": "They have better support for complex business logic."
+      },
+      "correctAnswer": "B",
+      "explanation": "Vector databases are optimized for similarity-based queries, which are common in machine learning and natural language processing applications. They can return results in milliseconds, even for large datasets.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How do vector databases typically handle duplicate vectors?",
+      "options": {
+        "A": "They store each duplicate vector as a separate entity.",
+        "B": "They use a canonical vector to represent each cluster.",
+        "C": "They hash the vectors to reduce collisions.",
+        "D": "They do not handle duplicates explicitly."
+      },
+      "correctAnswer": "B",
+      "explanation": "Vector databases often store each vector as a cluster ID, rather than the raw vector data. This allows them to efficiently handle duplicate vectors and reduce storage usage.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is an example use case for vector databases?",
+      "options": {
+        "A": "Predicting stock prices based on historical data.",
+        "B": "Recommendation systems for e-commerce products.",
+        "C": "Social network analysis for influencer marketing.",
+        "D": "All of the above."
+      },
+      "correctAnswer": "D",
+      "explanation": "Vector databases are useful for a wide range of applications, including recommendation systems, similarity search, and clustering. Predicting stock prices, social network analysis, and e-commerce recommendations are all potential use cases.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the difference between a vector database and an embedding database?",
+      "options": {
+        "A": "Vector databases store only vectors, while embedding databases store both vectors and their corresponding metadata.",
+        "B": "Embedding databases are optimized for low-dimensional embeddings.",
+        "C": "Vector databases store both vectors and their corresponding metadata.",
+        "D": "Embedding databases are only useful for text data."
+      },
+      "correctAnswer": "A",
+      "explanation": "Vector databases focus on storing and querying numerical vector data, while embedding databases include metadata and other attributes related to the vectors.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the primary application of word embeddings in NLP?",
+      "options": {
+        "A": "Part-of-speech tagging and named entity recognition.",
+        "B": " Sentiment analysis and machine translation.",
+        "C": " Text classification and clustering.",
+        "D": " All of the above."
+      },
+      "correctAnswer": "D",
+      "explanation": "Word embeddings have numerous applications in NLP, including text classification, clustering, and machine translation. They are particularly useful for tasks that require understanding word meaning and relationships.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the difference between semantic search and traditional search?",
+      "options": {
+        "A": "Semantic search uses vector databases, while traditional search relies on text indexing.",
+        "B": "Semantic search is more accurate for short queries, while traditional search is better for longer queries.",
+        "C": "Semantic search is more efficient for large datasets, while traditional search is more effective for small datasets.",
+        "D": "Semantic search understands user intent and context, while traditional search relies on keyword matching."
+      },
+      "correctAnswer": "D",
+      "explanation": "Semantic search is a type of search that understands user intent and context, beyond just keyword matching. It often uses vector databases to retrieve relevant results based on the meaning and relationships between words.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Why is efficient querying of large-scale vectors important in AI applications?",
+      "options": {
+        "A": "It supports training of deep learning models.",
+        "B": "It enables efficient similarity-based clustering and classification.",
+        "C": "It facilitates data analytics and visualization.",
+        "D": " All of the above."
+      },
+      "correctAnswer": "D",
+      "explanation": "Efficient querying of large-scale vectors is essential for various AI applications, including deep learning, similarity-based clustering and classification, and data analytics. It enables fast and accurate results, which are critical for making real-time decisions in various domains.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the role of dimensionality reduction in vector databases?",
+      "options": {
+        "A": "It improves query performance by reducing storage requirements.",
+        "B": "It enhances data quality by removing irrelevant features.",
+        "C": "It facilitates data visualization by projecting high-dimensional data into 3D/2D space.",
+        "D": " All of the above."
+      },
+      "correctAnswer": "D",
+      "explanation": "Dimensionality reduction techniques like PCA and t-SNE are widely used in vector databases to improve query performance, enhance data quality, and facilitate data visualization. They help reduce the complexity and dimensionality of high-dimensional data, making it easier to analyze and query.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the challenge of scaling vector databases to large datasets?",
+      "options": {
+        "A": "Memory usage and storage constraints.",
+        "B": "Indexing and query performance degradation.",
+        "C": "Data quality and accuracy issues.",
+        "D": " All of the above."
+      },
+      "correctAnswer": "D",
+      "explanation": "Scaling vector databases to large datasets is a challenge due to various factors, including memory usage and storage constraints, indexing and query performance degradation, and data quality and accuracy issues. Efficient handling of these challenges is essential to ensure smooth operation and accurate results.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How do vector databases support similarity-based clustering?",
+      "options": {
+        "A": "Using a fixed number of clusters.",
+        "B": "By automatically discovering cluster structures in the data.",
+        "C": "Through hierarchical clustering algorithms.",
+        "D": " Using dimensionality reduction techniques."
+      },
+      "correctAnswer": "B",
+      "explanation": "Vector databases support similarity-based clustering by automatically discovering cluster structures in the data, often using algorithms like k-means or hierarchical clustering. This allows them to efficiently group similar vectors together.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the role of graph algorithms in vector databases?",
+      "options": {
+        "A": "They enable nearest-neighbor search using graph traversal.",
+        "B": "They facilitate clustering of high-dimensional data.",
+        "C": "They support network analysis and visualization.",
+        "D": " They enable efficient indexing of vector data."
+      },
+      "correctAnswer": "A",
+      "explanation": "Graph algorithms play a crucial role in vector databases by enabling nearest-neighbor search using graph traversal, which is essential for various applications like recommendation systems and similarity-based clustering. They help navigate and query complex vector spaces efficiently.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How do vector databases optimize query performance?",
+      "options": {
+        "A": "By using efficient indexing techniques like k-NN index.",
+        "B": "Through dimensionality reduction to reduce storage requirements.",
+        "C": "Using parallel processing and distributed query execution.",
+        "D": " All of the above."
+      },
+      "correctAnswer": "D",
+      "explanation": "Vector databases optimize query performance using a range of techniques, including efficient indexing methods like k-NN index, dimensionality reduction to reduce storage and query requirements, and parallel processing to execute complex queries simultaneously.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the benefit of using a vector database for text search?",
+      "options": {
+        "A": "Faster query response time due to reduced document processing.",
+        "B": "Improved accuracy due to better handling of synonyms and polysemes.",
+        "C": "Reduced memory usage due to compact indexing.",
+        "D": " All of the above."
+      },
+      "correctAnswer": "D",
+      "explanation": "Vector databases provide faster query response time, improved accuracy due to better handling of synonyms and polysemes, and reduced memory usage due to compact indexing, making them ideal for text search applications.",
+      "difficulty": "Medium"
+    }
+  ]
+}
