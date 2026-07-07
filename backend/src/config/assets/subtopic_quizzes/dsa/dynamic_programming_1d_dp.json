@@ -1,0 +1,189 @@
+{
+  "topic": "Dynamic Programming - 1D DP",
+  "questions": [
+    {
+      "question": "What is the main goal of dynamic programming in solving 1D problems?",
+      "options": {
+        "A": "To recursively break down the problem into smaller sub-problems",
+        "B": "To store and reuse solutions to sub-problems",
+        "C": "To apply greedy algorithms to find optimal solutions",
+        "D": "To use brute force to find optimal solutions"
+      },
+      "correctAnswer": "B",
+      "explanation": "Dynamic programming aims to store and reuse solutions to sub-problems to avoid redundant computation and improve efficiency.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the benefit of using dynamic programming over recursion for 1D problems?",
+      "options": {
+        "A": "Reduced code complexity",
+        "B": "Improved memory usage",
+        "C": "Avoids redundant computations",
+        "D": "All of the above"
+      },
+      "correctAnswer": "D",
+      "explanation": "Using dynamic programming for 1D problems avoids redundant computations, reduces code complexity, and improves memory usage, making it more efficient than recursion.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following optimization problems is suitable for dynamic programming?",
+      "options": {
+        "A": "Shortest path in a weighted graph",
+        "B": "Minimum spanning tree of a graph",
+        "C": "Fibonacci sequence",
+        "D": "Longest common subsequence"
+      },
+      "correctAnswer": "A",
+      "explanation": "Optimization problems like finding the shortest path in a weighted graph are suitable for dynamic programming as they require breaking down the problem into smaller sub-problems and storing their solutions.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the time complexity of a dynamic programming solution for the Fibonacci sequence?",
+      "options": {
+        "A": "O(n)",
+        "B": "O(n^2)",
+        "C": "O(log n)",
+        "D": "O(1)"
+      },
+      "correctAnswer": "A",
+      "explanation": "The time complexity of a dynamic programming solution for the Fibonacci sequence is O(n) as we need to perform a constant amount of work for each sub-problem.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "In dynamic programming, what is the term for solving a problem by breaking it down into smaller sub-problems?",
+      "options": {
+        "A": "Divide and Conquer",
+        "B": "Memoization",
+        "C": "Split and Solve",
+        "D": "Overlap"
+      },
+      "correctAnswer": "A",
+      "explanation": "Divide and Conquer is a problem-solving approach that involves breaking down a problem into smaller sub-problems, which is relevant in dynamic programming.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the name of the DP array in which we store the solutions to sub-problems?",
+      "options": {
+        "A": "Memo Table",
+        "B": "DP Table",
+        "C": "Solution Array",
+        "D": "Sub-Problem Array"
+      },
+      "correctAnswer": "B",
+      "explanation": "The DP array is commonly referred to as the DP Table, where we store the solutions to sub-problems to avoid redundant computation.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following is an example of an inductive step in dynamic programming?",
+      "options": {
+        "A": "Using the solution to a sub-problem to solve the original problem",
+        "B": "Computing the solution to a sub-problem from scratch",
+        "C": "Memoizing the solution to a sub-problem",
+        "D": "Iterating over the DP table"
+      },
+      "correctAnswer": "A",
+      "explanation": "An inductive step in dynamic programming involves using the solution to a sub-problem to solve the original problem, which is a fundamental concept in dynamic programming.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Why do we need to store solutions to sub-problems in a DP array?",
+      "options": "We store solutions to sub-problems in a DP array to avoid redundant computations and improve efficiency.",
+      "correctAnswer": "A",
+      "explanation": "Storing solutions to sub-problems avoids redundant computations and improves efficiency as we can directly access and reuse previously computed solutions.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the term for the process of iteratively filling the DP array with solutions to sub-problems?",
+      "options": {
+        "A": "Filling the DP array",
+        "B": "Solving sub-problems",
+        "C": "Computing the DP solution",
+        "D": "Dynamic Programming Pass"
+      },
+      "correctAnswer": "D",
+      "explanation": "Dynamic programming involves iteratively filling the DP array with solutions to sub-problems to solve complex problems efficiently.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following problems can be efficiently solved using dynamic programming?",
+      "options": {
+        "A": "Coin Change Problem",
+        "B": "Fibonacci Sequence",
+        "C": "Shortest Path Problem",
+        "D": "All of the above"
+      },
+      "correctAnswer": "D",
+      "explanation": "Problems like the Coin Change Problem, Fibonacci Sequence, and Shortest Path Problem can be efficiently solved using dynamic programming.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the key benefit of using memoization in dynamic programming?",
+      "options": {
+        "A": "Improved efficiency",
+        "B": "Simplified code complexity",
+        "C": "Avoids redundant computations",
+        "D": "All of the above"
+      },
+      "correctAnswer": "D",
+      "explanation": "Memoization in dynamic programming helps improve efficiency, simplifies code complexity, and avoids redundant computations.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Why do we need to be cautious when using dynamic programming for problems with overlapping sub-problems?",
+      "options": {
+        "A": "Overlapping sub-problems can cause infinite loops",
+        "B": "Overlapping sub-problems can lead to redundant computations",
+        "C": "Overlapping sub-problems can cause memory leaks",
+        "D": "All of the above"
+      },
+      "correctAnswer": "D",
+      "explanation": "In dynamic programming, overlapping sub-problems can cause infinite loops, redundant computations, and memory leaks, so we need to be cautious when solving such problems.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How can dynamic programming help optimize the solution to the Shortest Path Problem?",
+      "options": {
+        "A": "By using a brute-force approach",
+        "B": "By using a greedy algorithm",
+        "C": "By storing solutions to sub-problems and using them to construct the optimal solution",
+        "D": "By using a heuristic approach"
+      },
+      "correctAnswer": "C",
+      "explanation": "Dynamic programming can help optimize the solution to the Shortest Path Problem by storing solutions to sub-problems and using them to construct the optimal solution.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the term for the property of dynamic programming problems that involves solving the same sub-problems multiple times?",
+      "options": {
+        "A": "Overlapping Sub-problems",
+        "B": "Optimal Substructure",
+        "C": "Both Overlapping Sub-problems and Optimal Substructure",
+        "D": "Neither Overlapping Sub-problems nor Optimal Substructure"
+      },
+      "correctAnswer": "C",
+      "explanation": "Dynamic programming problems typically exhibit both overlapping sub-problems and optimal substructure, making them suitable for dynamic programming solutions.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Which of the following statements about the Fibonacci sequence problem is true?",
+      "options": {
+        "A": "The problem has optimal substructure but not overlapping sub-problems",
+        "B": "The problem has overlapping sub-problems but not optimal substructure",
+        "C": "The problem has both optimal substructure and overlapping sub-problems",
+        "D": "The problem has neither optimal substructure nor overlapping sub-problems"
+      },
+      "correctAnswer": "B",
+      "explanation": "The Fibonacci sequence problem has overlapping sub-problems but does not exhibit optimal substructure, making it a classic example of a problem suitable for dynamic programming.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How can dynamic programming be used to solve the Knapsack Problem?",
+      "options": {
+        "A": "By using a greedy algorithm to select items",
+        "B": "By using a brute-force approach to try all combinations",
+        "C": "By storing solutions to sub-problems and using them to construct the optimal solution",
+        "D": "By using a heuristic approach to find the optimal solution"
+      }
+    }
+  ]
+}
