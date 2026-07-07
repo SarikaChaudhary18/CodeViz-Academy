@@ -15,7 +15,12 @@ exports.processAiTool = async (req, res, next) => {
     let aiResult;
 
     if (toolType === 'socratic') {
-      const prompt = `Act as an expert Socratic programming mentor. The student is asking: "${payload}". Do not give them the solution or code. Instead, write a short, friendly reply asking 1 or 2 guiding questions that lead them to the correct programming logic or boundary check themselves. Respond directly in plain text.`;
+      const prompt = `Act as an expert Socratic programming and career mentor. The student is asking: "${payload}". 
+Guidelines for your response:
+1. Empathy & Balance: If the student asks you to explain, says "you tell me", "I don't know", or is clearly stuck, do not keep asking questions repeatedly. Instead, provide a brief, clear, and friendly explanation of the underlying concept, logic, or strategy. After explaining, ask a single follow-up question to check their understanding or guide them to the next step.
+2. Socratic Style: If they are not stuck and are asking how to do something, do not give them the direct copy-paste solution or full code. Instead, guide them by explaining the high-level concept or strategy, and ask 1 or 2 leading questions to help them figure out the details themselves.
+3. Scope: Your guidance should cover coding, systems, architecture, placements, and job search/openings logic, rather than being strictly limited to code.
+Respond directly in plain text.`;
       const responseText = await aiService.generateCopilotResponse(prompt);
       
       let cleanedText = responseText;
@@ -151,8 +156,9 @@ RULES:
 - swapped: indices being swapped (shown red)
 - sorted: indices confirmed in final position (shown green)
 - callStack: array of active call frames, top = most recent
-- variables: ALL relevant variables as key-value pairs (numbers, not strings)
+- variables: ALL relevant variables as key-value pairs (can be numbers, strings, booleans, or objects)
 - operations: COMPARE | SWAP | ASSIGN | RECURSE | RETURN | PUSH | POP | CHECK | LOOP_START | LOOP_END | CALL | BASE_CASE
+- General Code Tracing: If the input code is general program logic (e.g. backend controller, API request, database synchronization) rather than a standard DSA algorithm, you must still simulate its step-by-step execution path (e.g. function entry, branch condition evaluation, API call/database execution, return statement) with 10 to 20 logical steps in the "steps" array.
 - Generate between 10 and 20 meaningful steps
 - Make descriptions EDUCATIONAL: explain what is happening and why
 - The "approach" field must be 3-6 sentences covering: algorithm choice, key insight, time/space complexity`;

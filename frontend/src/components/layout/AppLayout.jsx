@@ -186,8 +186,7 @@ export default function AppLayout({ children }) {
     { name: 'Courses', path: '/courses' },
     { name: 'Quizzes', path: '/quizzes' },
     { name: 'Roadmaps', path: '/roadmaps' },
-    { name: 'Learning DNA', path: '/skill-dna' },
-    { name: 'Forgetting Prediction', path: '/forgetting-prediction' }
+    { name: 'Learning DNA', path: '/skill-dna' }
   ];
 
   const aiToolsGroup = [

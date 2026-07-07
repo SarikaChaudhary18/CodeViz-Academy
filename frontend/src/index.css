@@ -425,9 +425,9 @@ html.light svg {
 html.light input, 
 html.light select, 
 html.light textarea {
-  color: #000000 !important;
-  background-color: rgba(0, 0, 0, 0.015) !important;
-  border-color: rgba(0, 0, 0, 0.12) !important;
+  color: #000000;
+  background-color: rgba(0, 0, 0, 0.015);
+  border-color: rgba(0, 0, 0, 0.12);
 }
 
 html.light input::placeholder {

@@ -24,7 +24,6 @@ import PlatformTracker from './components/features/platform-tracker/PlatformTrac
 import Courses from './components/features/courses/Courses';
 import Quizzes from './components/features/quizzes/Quizzes';
 import SkillDna from './components/features/skill-dna/SkillDna';
-import ForgettingPrediction from './components/features/forgetting-prediction/ForgettingPrediction';
 
 import SocraticMentor from './components/features/ai-tools/SocraticMentor';
 import BugDetective from './components/features/ai-tools/BugDetective';
@@ -208,7 +207,6 @@ export default function App() {
         <Route path="/courses" element={<ProtectedRoute><Courses /></ProtectedRoute>} />
         <Route path="/quizzes" element={<ProtectedRoute><Quizzes /></ProtectedRoute>} />
         <Route path="/skill-dna" element={<ProtectedRoute><SkillDna /></ProtectedRoute>} />
-        <Route path="/forgetting-prediction" element={<ProtectedRoute><ForgettingPrediction /></ProtectedRoute>} />
 
         <Route path="/socratic-mentor" element={<ProtectedRoute><SocraticMentor /></ProtectedRoute>} />
         <Route path="/bug-detective" element={<ProtectedRoute><BugDetective /></ProtectedRoute>} />

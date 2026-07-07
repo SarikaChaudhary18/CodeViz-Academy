@@ -330,35 +330,35 @@ export default function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5 }}
-            className="w-full max-w-5xl mt-16 rounded-2xl border border-slate-800 bg-[#090d16]/80 p-3 shadow-2xl relative overflow-hidden group"
+            className="w-full max-w-5xl mt-16 rounded-2xl border border-zinc-200 bg-white p-3 shadow-2xl relative overflow-hidden group"
           >
             {/* Header window control dots */}
-            <div className="flex items-center justify-between px-3 pb-3 border-b border-slate-905">
+            <div className="flex items-center justify-between px-3 pb-3 border-b border-zinc-200">
               <div className="flex gap-1.5">
                 <div className="w-2.5 h-2.5 rounded-full bg-red-500/60" />
                 <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/60" />
                 <div className="w-2.5 h-2.5 rounded-full bg-green-500/60" />
               </div>
-              <div className="text-[10px] text-slate-500 font-mono">studyquest.codeviz.academy/dashboard</div>
+              <div className="text-[10px] text-zinc-400 font-mono">studyquest.codeviz.academy/dashboard</div>
               <div className="w-8" />
             </div>
 
             {/* Simulated UI layout */}
             <div className="grid grid-cols-12 gap-3 p-3 text-left">
               {/* Left sidebar nav mockup */}
-              <div className="col-span-3 hidden md:flex flex-col gap-2.5 border-r border-slate-900 pr-3">
-                <div className="h-6 bg-indigo-500/10 rounded border border-indigo-500/20 flex items-center px-2 text-[10px] text-indigo-400 font-mono font-bold">Active Track</div>
-                <div className="h-7 bg-slate-900 rounded flex items-center px-2 text-[10px] text-slate-300 font-medium hover:bg-slate-800 cursor-pointer transition-colors">
-                  <BookOpen size={10} className="mr-2 text-indigo-400" /> Web Development
+              <div className="col-span-3 hidden md:flex flex-col gap-2.5 border-r border-zinc-200 pr-3">
+                <div className="h-6 bg-orange-50 rounded border border-orange-200 flex items-center px-2 text-[10px] text-orange-600 font-mono font-bold">Active Track</div>
+                <div className="h-7 bg-zinc-100 rounded flex items-center px-2 text-[10px] text-zinc-700 font-medium hover:bg-zinc-200 cursor-pointer transition-colors">
+                  <BookOpen size={10} className="mr-2 text-orange-500" /> Web Development
                 </div>
-                <div className="h-7 bg-slate-900/40 rounded flex items-center px-2 text-[10px] text-slate-400 font-medium hover:bg-slate-800 cursor-pointer transition-colors">
-                  <Terminal size={10} className="mr-2 text-slate-500" /> Algorithms Practice
+                <div className="h-7 bg-zinc-50 rounded flex items-center px-2 text-[10px] text-zinc-500 font-medium hover:bg-zinc-100 cursor-pointer transition-colors">
+                  <Terminal size={10} className="mr-2 text-zinc-400" /> Algorithms Practice
                 </div>
-                <div className="h-7 bg-slate-900/40 rounded flex items-center px-2 text-[10px] text-slate-400 font-medium hover:bg-slate-800 cursor-pointer transition-colors">
-                  <Target size={10} className="mr-2 text-slate-500" /> ATS Resume Audit
+                <div className="h-7 bg-zinc-50 rounded flex items-center px-2 text-[10px] text-zinc-500 font-medium hover:bg-zinc-100 cursor-pointer transition-colors">
+                  <Target size={10} className="mr-2 text-zinc-400" /> ATS Resume Audit
                 </div>
-                <div className="h-7 bg-slate-900/40 rounded flex items-center px-2 text-[10px] text-slate-400 font-medium hover:bg-slate-800 cursor-pointer transition-colors">
-                  <Users size={10} className="mr-2 text-slate-500" /> Community Squads
+                <div className="h-7 bg-zinc-50 rounded flex items-center px-2 text-[10px] text-zinc-500 font-medium hover:bg-zinc-100 cursor-pointer transition-colors">
+                  <Users size={10} className="mr-2 text-zinc-400" /> Community Squads
                 </div>
               </div>
 
@@ -366,48 +366,48 @@ export default function Hero() {
               <div className="col-span-12 md:col-span-9 space-y-4">
                 {/* Stats row */}
                 <div className="grid grid-cols-3 gap-3">
-                  <div className="bg-[#0e1322] border border-slate-800/60 p-3.5 rounded-xl">
-                    <span className="block text-[9px] text-slate-500 font-mono font-semibold uppercase tracking-wider">Level Rank</span>
-                    <span className="text-base font-bold text-white tracking-tight">Level 8 (Specialist)</span>
-                    <div className="w-full bg-slate-800 h-1 rounded-full mt-2 overflow-hidden">
-                      <div className="bg-indigo-500 h-full w-[70%]" />
+                  <div className="bg-zinc-50 border border-zinc-200 p-3.5 rounded-xl">
+                    <span className="block text-[9px] text-zinc-400 font-mono font-semibold uppercase tracking-wider">Level Rank</span>
+                    <span className="text-base font-bold text-zinc-900 tracking-tight">Level 8 (Specialist)</span>
+                    <div className="w-full bg-zinc-200 h-1 rounded-full mt-2 overflow-hidden">
+                      <div className="bg-orange-500 h-full w-[70%]" />
                     </div>
                   </div>
-                  <div className="bg-[#0e1322] border border-slate-800/60 p-3.5 rounded-xl">
-                    <span className="block text-[9px] text-slate-500 font-mono font-semibold uppercase tracking-wider">Streak</span>
-                    <span className="text-base font-bold text-orange-400 tracking-tight flex items-center gap-1">
+                  <div className="bg-zinc-50 border border-zinc-200 p-3.5 rounded-xl">
+                    <span className="block text-[9px] text-zinc-400 font-mono font-semibold uppercase tracking-wider">Streak</span>
+                    <span className="text-base font-bold text-orange-500 tracking-tight flex items-center gap-1">
                       🔥 14 Days
                     </span>
                   </div>
-                  <div className="bg-[#0e1322] border border-slate-800/60 p-3.5 rounded-xl">
-                    <span className="block text-[9px] text-slate-500 font-mono font-semibold uppercase tracking-wider">Quests Solved</span>
-                    <span className="text-base font-bold text-green-400 tracking-tight">42 / 60</span>
+                  <div className="bg-zinc-50 border border-zinc-200 p-3.5 rounded-xl">
+                    <span className="block text-[9px] text-zinc-400 font-mono font-semibold uppercase tracking-wider">Quests Solved</span>
+                    <span className="text-base font-bold text-green-600 tracking-tight">42 / 60</span>
                   </div>
                 </div>
 
                 {/* Simulated Content Block (Timeline nodes + active item detail) */}
-                <div className="bg-[#0c101d] border border-slate-850 p-4 rounded-xl space-y-3 relative">
-                  <div className="flex items-center justify-between border-b border-slate-900 pb-2">
-                    <h4 className="text-[11px] font-bold uppercase tracking-wider text-slate-300">Current Sprint: Javascript Core</h4>
-                    <span className="text-[9px] bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 px-2 py-0.5 rounded uppercase font-mono font-semibold">Active Node</span>
+                <div className="bg-zinc-50 border border-zinc-200 p-4 rounded-xl space-y-3 relative">
+                  <div className="flex items-center justify-between border-b border-zinc-200 pb-2">
+                    <h4 className="text-[11px] font-bold uppercase tracking-wider text-zinc-700">Current Sprint: Javascript Core</h4>
+                    <span className="text-[9px] bg-orange-50 text-orange-600 border border-orange-200 px-2 py-0.5 rounded uppercase font-mono font-semibold">Active Node</span>
                   </div>
 
                   <div className="flex flex-col sm:flex-row items-center justify-between gap-4 py-2">
                     {/* Visual node line preview */}
                     <div className="flex items-center gap-2 w-full sm:w-auto">
-                      <div className="w-6 h-6 rounded-full bg-indigo-500/20 border border-indigo-500 flex items-center justify-center text-[10px] text-indigo-400 font-bold font-mono">1</div>
-                      <div className="h-0.5 w-6 bg-indigo-500" />
-                      <div className="w-6 h-6 rounded-full bg-indigo-500/20 border border-indigo-500 flex items-center justify-center text-[10px] text-indigo-400 font-bold font-mono">2</div>
-                      <div className="h-0.5 w-6 bg-slate-800" />
-                      <div className="w-6 h-6 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-[10px] text-slate-500 font-bold font-mono">3</div>
+                      <div className="w-6 h-6 rounded-full bg-orange-100 border border-orange-300 flex items-center justify-center text-[10px] text-orange-600 font-bold font-mono">1</div>
+                      <div className="h-0.5 w-6 bg-orange-400" />
+                      <div className="w-6 h-6 rounded-full bg-orange-100 border border-orange-300 flex items-center justify-center text-[10px] text-orange-600 font-bold font-mono">2</div>
+                      <div className="h-0.5 w-6 bg-zinc-200" />
+                      <div className="w-6 h-6 rounded-full bg-zinc-100 border border-zinc-200 flex items-center justify-center text-[10px] text-zinc-400 font-bold font-mono">3</div>
                     </div>
 
                     <div className="flex items-center gap-3 w-full sm:w-auto justify-end">
                       <div className="text-right">
-                        <span className="block text-[10px] font-bold text-slate-200">Topic: Closures & Scopes</span>
-                        <span className="block text-[8px] text-slate-500">Estimated duration: 25 mins</span>
+                        <span className="block text-[10px] font-bold text-zinc-700">Topic: Closures & Scopes</span>
+                        <span className="block text-[8px] text-zinc-400">Estimated duration: 25 mins</span>
                       </div>
-                      <button className="px-3.5 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-[10px] font-bold transition-all shadow-md active:scale-[0.98]">
+                      <button className="px-3.5 py-1.5 bg-orange-600 hover:bg-orange-500 text-white rounded-lg text-[10px] font-bold transition-all shadow-md active:scale-[0.98]">
                         Complete Node
                       </button>
                     </div>
@@ -421,7 +421,7 @@ export default function Hero() {
         {/* TRUSTED BY COMPANIES */}
         <section className="bg-transparent py-10 w-full overflow-hidden">
           <div className="w-full text-center space-y-6">
-            <p className="text-[10px] text-white font-mono uppercase tracking-widest px-6">
+            <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest px-6">
               Trusted by learners preparing for technical interview pipelines at
             </p>
             <div className="relative w-full opacity-85 hover:opacity-100 transition-opacity">
@@ -429,7 +429,7 @@ export default function Hero() {
                 {COMPANIES.map((company, index) => (
                   <div
                     key={index}
-                    className="flex flex-col items-center justify-center gap-3.5 px-8 py-2 text-white transition-all cursor-default select-none shrink-0"
+                    className="flex flex-col items-center justify-center gap-3.5 px-8 py-2 text-zinc-700 transition-all cursor-default select-none shrink-0"
                   >
                     {company.logo && (
                       <div className="flex items-center justify-center h-12 w-auto">
@@ -440,7 +440,7 @@ export default function Hero() {
                         />
                       </div>
                     )}
-                    <span className="text-[10px] font-bold tracking-wider font-mono uppercase text-white/90 hover:text-white transition-colors">
+                    <span className="text-[10px] font-bold tracking-wider font-mono uppercase text-zinc-600 hover:text-zinc-900 transition-colors">
                       {company.name}
                     </span>
                   </div>
@@ -456,21 +456,21 @@ export default function Hero() {
         {/* LEARNING STATISTICS */}
         <section className="max-w-7xl mx-auto px-6 py-16">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-            <div className="bg-slate-900/30 border border-slate-850 p-6 rounded-2xl backdrop-blur-sm">
-              <span className="block text-3xl md:text-4xl font-extrabold text-white tracking-tight">{stats.roadmaps}</span>
-              <span className="block text-[10px] text-slate-500 font-mono uppercase mt-2">Active Career Tracks</span>
+            <div className="bg-orange-50/30 border border-orange-100/70 p-6 rounded-2xl backdrop-blur-sm shadow-sm">
+              <span className="block text-3xl md:text-4xl font-extrabold text-orange-600 tracking-tight">{stats.roadmaps}</span>
+              <span className="block text-[10px] text-zinc-500 font-mono uppercase mt-2">Active Career Tracks</span>
             </div>
-            <div className="bg-slate-900/30 border border-slate-850 p-6 rounded-2xl backdrop-blur-sm">
-              <span className="block text-3xl md:text-4xl font-extrabold text-white tracking-tight">{stats.resources}+</span>
-              <span className="block text-[10px] text-slate-500 font-mono uppercase mt-2">Curated Resources</span>
+            <div className="bg-orange-50/30 border border-orange-100/70 p-6 rounded-2xl backdrop-blur-sm shadow-sm">
+              <span className="block text-3xl md:text-4xl font-extrabold text-orange-600 tracking-tight">{stats.resources}+</span>
+              <span className="block text-[10px] text-zinc-500 font-mono uppercase mt-2">Curated Resources</span>
             </div>
-            <div className="bg-slate-900/30 border border-slate-850 p-6 rounded-2xl backdrop-blur-sm">
-              <span className="block text-3xl md:text-4xl font-extrabold text-white tracking-tight">{stats.docs}+</span>
-              <span className="block text-[10px] text-slate-500 font-mono uppercase mt-2">Documentation Guides</span>
+            <div className="bg-orange-50/30 border border-orange-100/70 p-6 rounded-2xl backdrop-blur-sm shadow-sm">
+              <span className="block text-3xl md:text-4xl font-extrabold text-orange-600 tracking-tight">{stats.docs}+</span>
+              <span className="block text-[10px] text-zinc-500 font-mono uppercase mt-2">Documentation Guides</span>
             </div>
-            <div className="bg-slate-900/30 border border-slate-850 p-6 rounded-2xl backdrop-blur-sm">
-              <span className="block text-3xl md:text-4xl font-extrabold text-white tracking-tight">{stats.users}K+</span>
-              <span className="block text-[10px] text-slate-500 font-mono uppercase mt-2">Active Students</span>
+            <div className="bg-orange-50/30 border border-orange-100/70 p-6 rounded-2xl backdrop-blur-sm shadow-sm">
+              <span className="block text-3xl md:text-4xl font-extrabold text-orange-600 tracking-tight">{stats.users}K+</span>
+              <span className="block text-[10px] text-zinc-500 font-mono uppercase mt-2">Active Students</span>
             </div>
           </div>
         </section>
@@ -478,11 +478,11 @@ export default function Hero() {
         {/* BENTO FEATURE WORKSPACE PREVIEW */}
         <section id="bento" className="max-w-7xl mx-auto px-6 py-20">
           <div className="text-center space-y-4 mb-16">
-            <span className="text-[10px] text-indigo-400 font-mono font-bold tracking-widest uppercase">Visual Preview</span>
-            <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight leading-none">
+            <span className="text-[10px] text-orange-600 font-mono font-bold tracking-widest uppercase">Visual Preview</span>
+            <h2 className="text-3xl sm:text-4xl font-black text-zinc-900 tracking-tight leading-none">
               A Unified Platform. No Clutter.
             </h2>
-            <p className="text-sm text-slate-400 max-w-xl mx-auto leading-relaxed">
+            <p className="text-sm text-zinc-500 max-w-xl mx-auto leading-relaxed">
               Why use five separate applications? Coordinate your code, resume auditing, interactive checklists, and community feeds inside one dashboard.
             </p>
           </div>
@@ -491,82 +491,82 @@ export default function Hero() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             
             {/* Box 1: Interactive Roadmap Preview */}
-            <div className="col-span-1 md:col-span-2 border border-slate-855 bg-[#090d16]/60 p-6 rounded-2xl flex flex-col justify-between hover:border-slate-800 transition-colors">
+            <div className="col-span-1 md:col-span-2 border border-zinc-200 bg-white p-6 rounded-2xl flex flex-col justify-between hover:border-orange-500/50 hover:shadow-md transition-all">
               <div className="space-y-2">
-                <span className="text-[9px] font-mono text-slate-500 uppercase tracking-widest">MODULE 01</span>
-                <h3 className="text-lg font-bold text-white tracking-tight">Structured Learning Roadmaps</h3>
-                <p className="text-xs text-slate-400 leading-relaxed max-w-lg">
+                <span className="text-[9px] font-mono text-zinc-400 uppercase tracking-widest">MODULE 01</span>
+                <h3 className="text-lg font-bold text-zinc-950 tracking-tight">Structured Learning Roadmaps</h3>
+                <p className="text-xs text-zinc-500 leading-relaxed max-w-lg">
                   Follow visual path guidelines configured from top syllabus templates. Complete coding nodes, pass checklists, and evaluate your milestone stats.
                 </p>
               </div>
 
               {/* Node Graph Mockup */}
-              <div className="bg-[#04060b] border border-slate-900 p-4 rounded-xl mt-6 flex flex-col items-center sm:flex-row justify-around gap-4">
+              <div className="bg-zinc-50 border border-zinc-200 p-4 rounded-xl mt-6 flex flex-col items-center sm:flex-row justify-around gap-4">
                 <div className="flex flex-col items-center gap-1">
-                  <span className="text-[9px] font-mono text-slate-500 uppercase">START</span>
-                  <div className="px-4 py-2 bg-green-500/10 border border-green-500/30 text-green-400 rounded-lg text-xs font-bold font-mono">HTML Basics</div>
+                  <span className="text-[9px] font-mono text-zinc-400 uppercase">START</span>
+                  <div className="px-4 py-2 bg-green-50 border border-green-200 text-green-750 rounded-lg text-xs font-bold font-mono">HTML Basics</div>
                 </div>
-                <div className="h-0.5 w-6 bg-green-500/40 hidden sm:block" />
+                <div className="h-0.5 w-6 bg-green-200 hidden sm:block" />
                 <div className="flex flex-col items-center gap-1">
-                  <span className="text-[9px] font-mono text-indigo-400 uppercase font-bold">CURRENT</span>
-                  <div className="px-4 py-2 bg-indigo-500/20 border border-indigo-500 text-indigo-400 rounded-lg text-xs font-bold font-mono">CSS Grid & Layouts</div>
+                  <span className="text-[9px] font-mono text-orange-600 uppercase font-bold">CURRENT</span>
+                  <div className="px-4 py-2 bg-orange-100 border border-orange-300 text-orange-600 rounded-lg text-xs font-bold font-mono">CSS Grid & Layouts</div>
                 </div>
-                <div className="h-0.5 w-6 bg-slate-850 hidden sm:block" />
+                <div className="h-0.5 w-6 bg-zinc-200 hidden sm:block" />
                 <div className="flex flex-col items-center gap-1">
-                  <span className="text-[9px] font-mono text-slate-500 uppercase">LOCKED</span>
-                  <div className="px-4 py-2 bg-slate-900 border border-slate-800 text-slate-500 rounded-lg text-xs font-bold font-mono">JavaScript Scopes</div>
+                  <span className="text-[9px] font-mono text-zinc-400 uppercase">LOCKED</span>
+                  <div className="px-4 py-2 bg-white border border-zinc-200 text-zinc-400 rounded-lg text-xs font-bold font-mono">JavaScript Scopes</div>
                 </div>
               </div>
             </div>
 
             {/* Box 2: Resume scoring index */}
-            <div className="border border-slate-855 bg-[#090d16]/60 p-6 rounded-2xl flex flex-col justify-between hover:border-slate-800 transition-colors">
+            <div className="border border-zinc-200 bg-white p-6 rounded-2xl flex flex-col justify-between hover:border-orange-500/50 hover:shadow-md transition-all">
               <div className="space-y-2">
-                <span className="text-[9px] font-mono text-slate-500 uppercase tracking-widest">MODULE 02</span>
-                <h3 className="text-lg font-bold text-white tracking-tight">ATS Resume Auditor</h3>
-                <p className="text-xs text-slate-400 leading-relaxed">
+                <span className="text-[9px] font-mono text-zinc-400 uppercase tracking-widest">MODULE 02</span>
+                <h3 className="text-lg font-bold text-zinc-950 tracking-tight">ATS Resume Auditor</h3>
+                <p className="text-xs text-zinc-500 leading-relaxed">
                   Evaluate formatting density metrics, sections alignment, and get instant recommendations to pass corporate filter gates.
                 </p>
               </div>
 
               {/* Score mockup */}
-              <div className="bg-[#04060b] border border-slate-900 p-4 rounded-xl mt-6 space-y-3">
+              <div className="bg-zinc-50 border border-zinc-200 p-4 rounded-xl mt-6 space-y-3">
                 <div className="flex justify-between items-center">
-                  <span className="text-[10px] text-slate-400 font-medium">Format Evaluation</span>
-                  <span className="text-xs font-mono font-bold text-green-400">91%</span>
+                  <span className="text-[10px] text-zinc-650 font-medium">Format Evaluation</span>
+                  <span className="text-xs font-mono font-bold text-green-600">91%</span>
                 </div>
-                <div className="w-full bg-slate-900 h-1.5 rounded-full overflow-hidden">
+                <div className="w-full bg-zinc-200 h-1.5 rounded-full overflow-hidden">
                   <div className="bg-green-500 h-full w-[91%]" />
                 </div>
-                <div className="space-y-1.5 text-[9px] text-slate-500 font-mono">
-                  <div className="flex items-center gap-1.5 text-green-400">✓ ATS structure parsed correctly</div>
-                  <div className="flex items-center gap-1.5 text-green-400">✓ Decoupled table structures detected</div>
-                  <div className="flex items-center gap-1.5 text-amber-500">⚠ Action density is slightly low</div>
+                <div className="space-y-1.5 text-[9px] text-zinc-550 font-mono">
+                  <div className="flex items-center gap-1.5 text-green-600">✓ ATS structure parsed correctly</div>
+                  <div className="flex items-center gap-1.5 text-green-600">✓ Decoupled table structures detected</div>
+                  <div className="flex items-center gap-1.5 text-amber-600">⚠ Action density is slightly low</div>
                 </div>
               </div>
             </div>
 
             {/* Box 3: Coding Sandbox Mockup */}
-            <div className="border border-slate-855 bg-[#090d16]/60 p-6 rounded-2xl flex flex-col justify-between hover:border-slate-800 transition-colors">
+            <div className="border border-zinc-200 bg-white p-6 rounded-2xl flex flex-col justify-between hover:border-orange-500/50 hover:shadow-md transition-all">
               <div className="space-y-2">
-                <span className="text-[9px] font-mono text-slate-500 uppercase tracking-widest">MODULE 03</span>
-                <h3 className="text-lg font-bold text-white tracking-tight">DSA Code Sandbox</h3>
-                <p className="text-xs text-slate-400 leading-relaxed">
+                <span className="text-[9px] font-mono text-zinc-400 uppercase tracking-widest">MODULE 03</span>
+                <h3 className="text-lg font-bold text-zinc-950 tracking-tight">DSA Code Sandbox</h3>
+                <p className="text-xs text-zinc-500 leading-relaxed">
                   Write solution algorithms in a robust sandbox. Includes dynamic tests execution, code state persistence, and language runtimes.
                 </p>
               </div>
 
               {/* Editor Mockup */}
-              <div className="bg-[#04060b] border border-slate-900 rounded-xl mt-6 overflow-hidden font-mono text-[10px] text-slate-400">
-                <div className="bg-slate-905 px-3 py-1.5 border-b border-slate-950 flex items-center justify-between text-slate-500">
+              <div className="bg-zinc-950 border border-zinc-800 rounded-xl mt-6 overflow-hidden font-mono text-[10px] text-zinc-400">
+                <div className="bg-zinc-900 px-3 py-1.5 border-b border-zinc-950 flex items-center justify-between text-zinc-500">
                   <span>bubble_sort.js</span>
-                  <span className="text-[8px] bg-slate-800 px-1.5 py-0.5 rounded text-slate-400">JavaScript</span>
+                  <span className="text-[8px] bg-zinc-800 px-1.5 py-0.5 rounded text-slate-400">JavaScript</span>
                 </div>
-                <div className="p-3.5 space-y-1">
-                  <p><span className="text-indigo-400">function</span> <span className="text-yellow-400">bubbleSort</span>(arr) &#123;</p>
+                <div className="p-3.5 space-y-1 text-left bg-zinc-950">
+                  <p><span className="text-indigo-400">function</span> <span className="text-yellow-450">bubbleSort</span>(arr) &#123;</p>
                   <p className="pl-4">let len = arr.length;</p>
                   <p className="pl-4"><span className="text-indigo-400">for</span> (let i = 0; i &lt; len; i++) &#123;</p>
-                  <p className="pl-8 text-slate-500">// optimize loop swaps</p>
+                  <p className="pl-8 text-zinc-500">// optimize loop swaps</p>
                   <p className="pl-4">&#125;</p>
                   <p>&#125;</p>
                 </div>
@@ -574,34 +574,34 @@ export default function Hero() {
             </div>
 
             {/* Box 4: Communities Leaderboard */}
-            <div className="col-span-1 md:col-span-2 border border-slate-855 bg-[#090d16]/60 p-6 rounded-2xl flex flex-col justify-between hover:border-slate-800 transition-colors">
+            <div className="col-span-1 md:col-span-2 border border-zinc-200 bg-white p-6 rounded-2xl flex flex-col justify-between hover:border-orange-500/50 hover:shadow-md transition-all">
               <div className="space-y-2">
-                <span className="text-[9px] font-mono text-slate-500 uppercase tracking-widest">MODULE 04</span>
-                <h3 className="text-lg font-bold text-white tracking-tight">Active Peer Leaderboards</h3>
-                <p className="text-xs text-slate-400 leading-relaxed max-w-lg">
+                <span className="text-[9px] font-mono text-zinc-400 uppercase tracking-widest">MODULE 04</span>
+                <h3 className="text-lg font-bold text-zinc-950 tracking-tight">Active Peer Leaderboards</h3>
+                <p className="text-xs text-zinc-500 leading-relaxed max-w-lg">
                   Join WebSocket-driven chat groups, compare progress points on live leaderboards, check daily completions, and prepare in dynamic squads.
                 </p>
               </div>
 
               {/* Leaderboard Mockup */}
-              <div className="bg-[#04060b] border border-slate-900 p-4 rounded-xl mt-6 space-y-2.5">
-                <div className="flex justify-between items-center text-[10px] text-slate-400 border-b border-slate-900 pb-1.5">
+              <div className="bg-zinc-50 border border-zinc-200 p-4 rounded-xl mt-6 space-y-2.5">
+                <div className="flex justify-between items-center text-[10px] text-zinc-400 border-b border-zinc-200 pb-1.5">
                   <span>Rankings</span>
                   <span>Daily XP</span>
                 </div>
                 <div className="flex justify-between items-center text-[10px]">
                   <div className="flex items-center gap-2">
-                    <span className="text-amber-500 font-bold">1</span>
-                    <span className="text-slate-200">SarikaChaudhary</span>
+                    <span className="text-orange-500 font-bold">1</span>
+                    <span className="text-zinc-800">SarikaChaudhary</span>
                   </div>
-                  <span className="text-indigo-400 font-mono font-bold">1,240 XP</span>
+                  <span className="text-orange-600 font-mono font-bold">1,240 XP</span>
                 </div>
                 <div className="flex justify-between items-center text-[10px]">
                   <div className="flex items-center gap-2">
-                    <span className="text-slate-400 font-bold">2</span>
-                    <span className="text-slate-200">OperatorStudy</span>
+                    <span className="text-zinc-500 font-bold">2</span>
+                    <span className="text-zinc-800">OperatorStudy</span>
                   </div>
-                  <span className="text-indigo-400 font-mono font-bold">980 XP</span>
+                  <span className="text-orange-600 font-mono font-bold">980 XP</span>
                 </div>
               </div>
             </div>
@@ -611,39 +611,39 @@ export default function Hero() {
         {/* WHY CHOOSE CODEVIZ */}
         <section id="features" className="max-w-7xl mx-auto px-6 py-20">
           <div className="text-center space-y-4 mb-16">
-            <span className="text-[10px] text-indigo-400 font-mono font-bold tracking-widest uppercase">Platform Pillars</span>
-            <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight leading-none">
+            <span className="text-[10px] text-orange-600 font-mono font-bold tracking-widest uppercase">Platform Pillars</span>
+            <h2 className="text-3xl sm:text-4xl font-black text-zinc-900 tracking-tight leading-none">
               Built for Software Engineers
             </h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="space-y-4 group">
-              <div className="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center group-hover:scale-105 transition-transform">
+              <div className="w-10 h-10 rounded-xl bg-orange-50 border border-orange-200 text-orange-500 flex items-center justify-center group-hover:scale-105 transition-transform">
                 <Target size={18} />
               </div>
-              <h3 className="text-sm font-bold uppercase tracking-wider text-slate-200 group-hover:text-indigo-400 transition-colors">Targeted DSA Sheets</h3>
-              <p className="text-xs text-slate-400 leading-relaxed">
+              <h3 className="text-sm font-bold uppercase tracking-wider text-zinc-800 group-hover:text-orange-600 transition-colors">Targeted DSA Sheets</h3>
+              <p className="text-xs text-zinc-500 leading-relaxed">
                 Filter by target companies standards to build high-demand problem solving metrics without solving duplicate questions.
               </p>
             </div>
 
             <div className="space-y-4 group">
-              <div className="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center group-hover:scale-105 transition-transform">
+              <div className="w-10 h-10 rounded-xl bg-orange-50 border border-orange-200 text-orange-500 flex items-center justify-center group-hover:scale-105 transition-transform">
                 <Terminal size={18} />
               </div>
-              <h3 className="text-sm font-bold uppercase tracking-wider text-slate-200 group-hover:text-indigo-400 transition-colors">Interactive Documentation</h3>
-              <p className="text-xs text-slate-400 leading-relaxed">
+              <h3 className="text-sm font-bold uppercase tracking-wider text-zinc-800 group-hover:text-orange-600 transition-colors">Interactive Documentation</h3>
+              <p className="text-xs text-zinc-500 leading-relaxed">
                 Review concepts directly alongside code syntax checklists, filterable by track topics, and save links inside your local state parameters.
               </p>
             </div>
 
             <div className="space-y-4 group">
-              <div className="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center group-hover:scale-105 transition-transform">
+              <div className="w-10 h-10 rounded-xl bg-orange-50 border border-orange-200 text-orange-500 flex items-center justify-center group-hover:scale-105 transition-transform">
                 <Users size={18} />
               </div>
-              <h3 className="text-sm font-bold uppercase tracking-wider text-slate-200 group-hover:text-indigo-400 transition-colors">Multiverse Peer Groups</h3>
-              <p className="text-xs text-slate-400 leading-relaxed">
+              <h3 className="text-sm font-bold uppercase tracking-wider text-zinc-800 group-hover:text-orange-600 transition-colors">Multiverse Peer Groups</h3>
+              <p className="text-xs text-zinc-500 leading-relaxed">
                 Practice together. Sync status points over WebSockets and track global placement metrics collectively.
               </p>
             </div>
@@ -653,36 +653,36 @@ export default function Hero() {
         {/* TESTIMONIALS */}
         <section className="max-w-7xl mx-auto px-6 py-20">
           <div className="text-center space-y-4 mb-16">
-            <span className="text-[10px] text-indigo-400 font-mono font-bold tracking-widest uppercase">Testimonials</span>
-            <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight leading-none">
+            <span className="text-[10px] text-orange-600 font-mono font-bold tracking-widest uppercase">Testimonials</span>
+            <h2 className="text-3xl sm:text-4xl font-black text-zinc-900 tracking-tight leading-none">
               Success Stories
             </h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="border border-slate-850 bg-[#090d16]/30 p-8 rounded-2xl space-y-4">
+            <div className="border border-zinc-200 bg-white p-8 rounded-2xl space-y-4 shadow-sm">
               <div className="flex gap-1">
-                {[...Array(5)].map((_, i) => <Star key={i} size={14} className="text-amber-400 fill-amber-400" />)}
+                {[...Array(5)].map((_, i) => <Star key={i} size={14} className="text-orange-400 fill-orange-400" />)}
               </div>
-              <p className="text-xs text-slate-300 leading-relaxed italic">
+              <p className="text-xs text-zinc-600 leading-relaxed italic">
                 "The structured roadmap tracks kept me highly focused. I tracked HTML/CSS frameworks, practiced compiler scripts in the sandbox, and cracked my placement OA without jumping between platforms."
               </p>
               <div>
-                <span className="block text-xs font-bold text-white">Ankit Sharma</span>
-                <span className="block text-[9px] text-slate-500 font-mono uppercase">Software Intern, Adobe</span>
+                <span className="block text-xs font-bold text-zinc-900">Ankit Sharma</span>
+                <span className="block text-[9px] text-zinc-400 font-mono uppercase">Software Intern, Adobe</span>
               </div>
             </div>
 
-            <div className="border border-slate-850 bg-[#090d16]/30 p-8 rounded-2xl space-y-4">
+            <div className="border border-zinc-200 bg-white p-8 rounded-2xl space-y-4 shadow-sm">
               <div className="flex gap-1">
-                {[...Array(5)].map((_, i) => <Star key={i} size={14} className="text-amber-400 fill-amber-400" />)}
+                {[...Array(5)].map((_, i) => <Star key={i} size={14} className="text-orange-400 fill-orange-400" />)}
               </div>
-              <p className="text-xs text-slate-300 leading-relaxed italic">
+              <p className="text-xs text-zinc-600 leading-relaxed italic">
                 "CodeViz's ATS Resume Auditor scanned my LaTeX file structure and identified missing sections immediately. After making the recommended overrides, my response rate from tech applications improved dramatically."
               </p>
               <div>
-                <span className="block text-xs font-bold text-white">Riya Patel</span>
-                <span className="block text-[9px] text-slate-500 font-mono uppercase">Associate Engineer, Amazon</span>
+                <span className="block text-xs font-bold text-zinc-900">Riya Patel</span>
+                <span className="block text-[9px] text-zinc-400 font-mono uppercase">Associate Engineer, Amazon</span>
               </div>
             </div>
           </div>
@@ -691,8 +691,8 @@ export default function Hero() {
         {/* PRICING PLANS */}
         <section id="pricing" className="max-w-7xl mx-auto px-6 py-20">
           <div className="text-center space-y-4 mb-16">
-            <span className="text-[10px] text-indigo-400 font-mono font-bold tracking-widest uppercase">Membership Tiers</span>
-            <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight leading-none">
+            <span className="text-[10px] text-orange-600 font-mono font-bold tracking-widest uppercase">Membership Tiers</span>
+            <h2 className="text-3xl sm:text-4xl font-black text-zinc-900 tracking-tight leading-none">
               Accelerate Your Career Scaling
             </h2>
           </div>
@@ -700,23 +700,23 @@ export default function Hero() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             
             {/* Free Tier */}
-            <div className="border border-slate-850 bg-[#090d16]/40 p-8 rounded-2xl flex flex-col justify-between hover:border-slate-800 transition-colors">
+            <div className="border border-zinc-200 bg-white p-8 rounded-2xl flex flex-col justify-between hover:border-zinc-300 transition-colors shadow-sm">
               <div className="space-y-6">
                 <div className="space-y-2">
-                  <h3 className="text-xs font-bold font-mono text-slate-400 uppercase tracking-widest">FREE SANDBOX</h3>
-                  <div className="flex items-baseline gap-1 text-white">
+                  <h3 className="text-xs font-bold font-mono text-zinc-400 uppercase tracking-widest">FREE SANDBOX</h3>
+                  <div className="flex items-baseline gap-1 text-zinc-900">
                     <span className="text-4xl font-black">₹99</span>
-                    <span className="text-[10px] text-slate-500 font-mono">/ MONTH</span>
+                    <span className="text-[10px] text-zinc-400 font-mono">/ MONTH</span>
                   </div>
                 </div>
-                <p className="text-xs text-slate-400 leading-relaxed">
+                <p className="text-xs text-zinc-500 leading-relaxed">
                   Start tracking algorithms, complete baseline DSA sheets, and explore default roadmaps.
                 </p>
-                <ul className="space-y-2.5 text-[11px] text-slate-400 pt-6 border-t border-slate-905 font-mono">
-                  <li className="flex items-center gap-2"><Check size={12} className="text-indigo-400" /> 905 DSA Practice Problems</li>
-                  <li className="flex items-center gap-2"><Check size={12} className="text-indigo-400" /> Basic Code Execution</li>
-                  <li className="flex items-center gap-2"><Check size={12} className="text-indigo-400" /> Community Chat Rooms</li>
-                  <li className="flex items-center gap-2"><Check size={12} className="text-indigo-400" /> Standard Roadmap Paths</li>
+                <ul className="space-y-2.5 text-[11px] text-zinc-500 pt-6 border-t border-zinc-100 font-mono">
+                  <li className="flex items-center gap-2"><Check size={12} className="text-orange-500" /> 905 DSA Practice Problems</li>
+                  <li className="flex items-center gap-2"><Check size={12} className="text-orange-500" /> Basic Code Execution</li>
+                  <li className="flex items-center gap-2"><Check size={12} className="text-orange-500" /> Community Chat Rooms</li>
+                  <li className="flex items-center gap-2"><Check size={12} className="text-orange-500" /> Standard Roadmap Paths</li>
                 </ul>
               </div>
               <button
@@ -794,8 +794,8 @@ export default function Hero() {
         {/* FAQ ACCORDION SECTION */}
         <section id="faq" className="max-w-4xl mx-auto px-6 py-20">
           <div className="text-center space-y-4 mb-16">
-            <span className="text-[10px] text-indigo-400 font-mono font-bold tracking-widest uppercase">FAQ</span>
-            <h2 className="text-3xl font-black text-white tracking-tight leading-none">
+            <span className="text-[10px] text-orange-600 font-mono font-bold tracking-widest uppercase">FAQ</span>
+            <h2 className="text-3xl font-black text-zinc-900 tracking-tight leading-none">
               Frequently Asked Questions
             </h2>
           </div>
@@ -804,18 +804,18 @@ export default function Hero() {
             {FAQS.map((faq, index) => (
               <div
                 key={index}
-                className="border border-slate-850 rounded-xl bg-[#090d16]/30 overflow-hidden transition-all"
+                className="border border-zinc-200 rounded-xl bg-white overflow-hidden transition-all shadow-sm"
               >
                 <button
                   onClick={() => toggleFaq(index)}
-                  className="w-full px-6 py-4 flex items-center justify-between text-left text-xs font-semibold text-slate-200 hover:text-white transition-colors cursor-pointer"
+                  className="w-full px-6 py-4 flex items-center justify-between text-left text-xs font-semibold text-zinc-700 hover:text-zinc-900 transition-colors cursor-pointer"
                 >
                   <span>{faq.q}</span>
                   <ChevronDown
                     size={14}
                     className={cn(
-                      "text-slate-400 transition-transform duration-200",
-                      activeFaq === index && "transform rotate-180 text-white"
+                      "text-zinc-400 transition-transform duration-200",
+                      activeFaq === index && "transform rotate-180 text-orange-600"
                     )}
                   />
                 </button>
@@ -828,7 +828,7 @@ export default function Hero() {
                       transition={{ duration: 0.2 }}
                       className="overflow-hidden"
                     >
-                      <div className="px-6 pb-5 pt-1 text-[11px] text-slate-400 leading-relaxed border-t border-slate-900/40">
+                      <div className="px-6 pb-5 pt-1 text-[11px] text-zinc-500 leading-relaxed border-t border-zinc-100">
                         {faq.a}
                       </div>
                     </motion.div>
@@ -840,14 +840,14 @@ export default function Hero() {
         </section>
 
         {/* MODERN PROFESSIONAL FOOTER */}
-        <footer className="w-full bg-[#02050c]/30 text-slate-400 py-12 px-4">
+        <footer className="w-full bg-zinc-50 text-zinc-500 py-12 px-4 border-t border-zinc-200">
           <div className="relative mx-auto grid max-w-7xl items-center justify-center gap-6 p-10 pb-0 md:flex">
             <Link to="/">
               <div className="flex items-center justify-center">
                 <img src={logo} alt="Logo" className="w-[3.5rem] h-[3.5rem] object-contain" />
               </div>
             </Link>
-            <p className="bg-transparent text-center text-[11px] leading-relaxed text-slate-500 md:text-left max-w-4xl">
+            <p className="bg-transparent text-center text-[11px] leading-relaxed text-zinc-400 md:text-left max-w-4xl">
               Welcome to CodeViz Academy, a structured engineering workspace designed to accelerate technical interview preparation.
               We specialize in interactive roadmaps, step-by-step DSA tracks, ATS-optimized resume analysis, and collaborative peer learning.
               Our mission is to provide developers with the exact tools and feedback loop needed to master algorithmic thinking and stand out in placements.
@@ -855,7 +855,7 @@ export default function Hero() {
           </div>
 
           <div className="mx-auto max-w-7xl px-6 py-10">
-            <div className="border-b border-dotted border-slate-800/60"> </div>
+            <div className="border-b border-dotted border-zinc-200"> </div>
             <div className="py-10">
               {navigation.categories.map((category) => (
                 <div
@@ -864,7 +864,7 @@ export default function Hero() {
                 >
                   {category.sections.map((section) => (
                     <div key={section.name} className="space-y-2">
-                      <span className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest font-mono">
+                      <span className="block text-[10px] font-bold text-zinc-400 uppercase tracking-widest font-mono">
                         {section.name}
                       </span>
                       <ul
@@ -875,7 +875,7 @@ export default function Hero() {
                           <li key={item.name} className="flow-root">
                             <Link
                               to={item.href}
-                              className="text-xs text-slate-500 hover:text-white transition-colors"
+                              className="text-xs text-zinc-400 hover:text-orange-600 transition-colors"
                             >
                               {item.name}
                             </Link>
@@ -887,7 +887,7 @@ export default function Hero() {
                 </div>
               ))}
             </div>
-            <div className="border-b border-dotted border-slate-800/60"> </div>
+            <div className="border-b border-dotted border-zinc-200"> </div>
           </div>
 
           <div className="flex flex-wrap justify-center items-center gap-6 gap-y-4 px-6 py-4">
@@ -938,19 +938,19 @@ export default function Hero() {
                 <Youtube className="h-5 w-5" />
               </a>
             </div>
-            <div className="flex items-center justify-center p-2.5 rounded-xl border border-dotted border-slate-800 hover:bg-slate-900/40 transition-all cursor-pointer">
-              <Sun className="h-5 w-5 text-slate-400 hover:text-white" />
+            <div className="flex items-center justify-center p-2.5 rounded-xl border border-dotted border-zinc-300 hover:bg-zinc-100 transition-all cursor-pointer">
+              <Sun className="h-5 w-5 text-zinc-400 hover:text-orange-600" />
             </div>
           </div>
 
           <div className="mx-auto mb-10 mt-10 flex flex-col justify-between text-center text-xs md:max-w-7xl">
-            <div className="flex flex-row items-center justify-center gap-1 text-slate-600">
+            <div className="flex flex-row items-center justify-center gap-1 text-zinc-400">
               <span> © </span>
               <span>{new Date().getFullYear()}</span>
               <span>Made with</span>
               <Heart className="text-red-600 mx-1 h-4 w-4 animate-pulse" />
               <span> by </span>
-              <span className="hover:text-white cursor-pointer text-slate-400 transition-colors">
+              <span className="hover:text-orange-600 cursor-pointer text-zinc-500 transition-colors">
                 <Link
                   aria-label="CodeViz Team"
                   className="font-bold"
@@ -960,7 +960,7 @@ export default function Hero() {
                 </Link>
               </span>
               <span className="mx-1">-</span>
-              <span className="hover:text-white cursor-pointer text-slate-400 transition-colors">
+              <span className="hover:text-orange-600 cursor-pointer text-zinc-500 transition-colors">
                 <Link aria-label="CodeViz Academy" to="/">
                   CodeViz Academy
                 </Link>

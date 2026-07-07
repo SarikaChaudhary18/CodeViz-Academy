@@ -206,7 +206,7 @@ export default function InteractiveGraph({ graphData, activeNodeId, title = 'Flo
   }
 
   return (
-    <div style={{ width:'100%', height:'100%', minHeight:500, borderRadius:16, overflow:'hidden', border:'1.5px solid #e2e8f0', background:'#fafafa', boxShadow:'0 2px 12px rgba(0,0,0,0.04)' }}>
+    <div style={{ width:'100%', height:'400px', borderRadius:16, overflow:'hidden', border:'1.5px solid #e2e8f0', background:'#fafafa', boxShadow:'0 2px 12px rgba(0,0,0,0.04)' }}>
       <ReactFlow
         nodes={nodes} edges={edges}
         onNodesChange={onNodesChange} onEdgesChange={onEdgesChange}

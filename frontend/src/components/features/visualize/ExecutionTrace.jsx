@@ -112,9 +112,9 @@ function CodeView({ code, activeLine, editable, onChange }) {
         {!editable && activeLine && <span style={{ marginLeft:'auto', fontSize:9, color:'#ea580c', background:'rgba(234,88,12,0.15)', padding:'2px 8px', borderRadius:4 }}>Line {activeLine} executing</span>}
       </div>
       {editable ? (
-        <textarea value={code} onChange={e=>onChange(e.target.value)} placeholder="Paste code OR describe a LeetCode problem..." style={{ width:'100%', minHeight:180, padding:'14px 16px', background:'transparent', border:'none', outline:'none', color:'#e2e8f0', fontFamily:'monospace', fontSize:12, lineHeight:1.7, resize:'vertical', boxSizing:'border-box' }} />
+        <textarea value={code} onChange={e=>onChange(e.target.value)} placeholder="Paste code OR describe a LeetCode problem..." style={{ width:'100%', minHeight:320, padding:'14px 16px', background:'transparent', border:'none', outline:'none', color:'#e2e8f0', fontFamily:'monospace', fontSize:12, lineHeight:1.7, resize:'vertical', boxSizing:'border-box' }} />
       ) : (
-        <div style={{ padding:'8px 0', maxHeight:280, overflowY:'auto' }}>
+        <div style={{ padding:'8px 0', maxHeight:400, overflowY:'auto', overflowX:'auto' }}>
           {lines.map((ln,i)=>{
             const n = i+1;
             const active = n===activeLine;
@@ -270,8 +270,8 @@ export default function ExecutionTrace() {
         </div>
 
         {/* Main input area */}
-        <div style={{ display:'grid', gridTemplateColumns:'1fr 190px', gap:16, alignItems:'start' }}>
-          <div>
+        <div className="flex flex-col md:flex-row gap-4 items-start">
+          <div className="flex-1 min-w-0">
             <CodeView code={data ? codeToShow : input} activeLine={step?.line} editable={!data} onChange={setInput} />
             <button onClick={run} disabled={loading || !input.trim()}
               style={{ width:'100%', marginTop:12, display:'flex', alignItems:'center', justifyContent:'center', gap:8, padding:'12px 0', background:'#ea580c', color:'white', border:'none', borderRadius:12, fontFamily:'monospace', fontSize:12, fontWeight:900, cursor:'pointer', opacity: loading ? 0.7 : 1, boxShadow:'0 4px 14px rgba(234,88,12,0.28)', transition:'opacity 0.2s' }}>
@@ -280,13 +280,13 @@ export default function ExecutionTrace() {
           </div>
 
           {/* Quick examples */}
-          <div style={{ display:'flex', flexDirection:'column', gap:6 }}>
+          <div className="w-full md:w-[190px] shrink-0" style={{ display:'flex', flexDirection:'column', gap:6 }}>
             <span style={{ fontSize:9, fontFamily:'monospace', fontWeight:800, color:'#94a3b8', textTransform:'uppercase', letterSpacing:'0.1em', marginBottom:2 }}>Quick examples</span>
             {[
               ['Two Sum', 'Given an array of integers and a target, return indices of the two numbers that add up to target. Use O(n) approach.'],
-              ['Binary Search', 'function binarySearch(arr,t){let l=0,r=arr.length-1;while(l<=r){let m=Math.floor((l+r)/2);if(arr[m]===t)return m;arr[m]<t?l=m+1:r=m-1;}return -1;}\nbinarySearch([1,3,5,7,9,11],7);'],
+              ['Binary Search', 'function binarySearch(arr,t){\n  let l=0,r=arr.length-1;\n  while(l<=r){\n    let m=Math.floor((l+r)/2);\n    if(arr[m]===t) return m;\n    arr[m]<t?l=m+1:r=m-1;\n  }\n  return -1;\n}\nbinarySearch([1,3,5,7,9,11],7);'],
               ['Merge Sort', 'Explain merge sort. Show divide and conquer with example [38,27,43,3,9,82,10].'],
-              ['Fib DP', 'function fib(n,memo={}){if(n<=1)return n;if(memo[n])return memo[n];return memo[n]=fib(n-1,memo)+fib(n-2,memo);}\nfib(6);'],
+              ['Fib DP', 'function fib(n,memo={}){\n  if(n<=1) return n;\n  if(memo[n]) return memo[n];\n  return memo[n]=fib(n-1,memo)+fib(n-2,memo);\n}\nfib(6);'],
               ['Valid Parens', 'Given a string of brackets, determine if it is valid. Use a stack approach.'],
             ].map(([label, val])=>(
               <button key={label} className="ex-btn" onClick={()=>{ setInput(val); setData(null); }}
@@ -383,9 +383,8 @@ export default function ExecutionTrace() {
                   </div>
                 )}
 
-                {/* Main viz area: array + variables + call stack */}
-                <div style={{ display:'grid', gridTemplateColumns:'1fr 280px', gap:20 }}>
-                  <div style={{ display:'flex', flexDirection:'column', gap:16 }}>
+                <div className="flex flex-col md:flex-row gap-5 items-start">
+                  <div className="flex-1 min-w-0 flex flex-col gap-4">
                     {step.arrayState ? (
                       <ArrayViz arrayState={step.arrayState} highlighted={step.highlighted??[]} swapped={step.swapped??[]} sorted={step.sorted??[]} />
                     ) : (
@@ -395,7 +394,9 @@ export default function ExecutionTrace() {
                     )}
                     <VarGrid variables={step.variables} />
                   </div>
-                  <CallStack frames={step.callStack??[]} />
+                  <div className="w-full md:w-[280px] shrink-0">
+                    <CallStack frames={step.callStack??[]} />
+                  </div>
                 </div>
               </div>
             )}

@@ -75,6 +75,19 @@ const seedDefaultCommunities = async (defaultUser) => {
 const seedCourses = async () => {
   try {
     const Course = require('../models/Course');
+    
+    // Remove the deprecated courses if they exist
+    const titlesToRemove = [
+      "Advanced DSA Masterclass",
+      "Full-Stack Next.js Developer",
+      "System Design Fundamentals",
+      "Modern UI/UX with Tailwind & Framer Motion"
+    ];
+    const deleteResult = await Course.deleteMany({ title: { $in: titlesToRemove } });
+    if (deleteResult.deletedCount > 0) {
+      logger.info(`Removed ${deleteResult.deletedCount} deprecated courses from database.`);
+    }
+
     const coursesAsset = require('./assets/courses.json');
     
     for (const courseData of coursesAsset) {
@@ -85,7 +98,7 @@ const seedCourses = async () => {
       }
     }
   } catch (err) {
-    logger.error('Failed to seed courses: %s', err.message);
+    logger.error('Failed to seed/clean courses: %s', err.message);
   }
 };
 

@@ -343,7 +343,7 @@ export default function Courses() {
               </div>
 
               {/* Progress & Bottom Bar */}
-              <div className="space-y-4 pt-4 border-t border-zinc-100">
+              <div className="space-y-4 pt-4 px-5 pb-5 border-t border-zinc-100">
                 {course.progress > 0 ? (
                   <div className="space-y-1.5">
                     <div className="flex justify-between items-center text-[10px] font-mono">

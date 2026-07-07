@@ -54,7 +54,7 @@ function cleanAndParseJSON(str) {
  * Call Gemini API
  */
 async function callGemini(key, prompt) {
-  const model = process.env.GEMINI_MODEL || 'gemini-3.5-flash';
+  const model = process.env.GEMINI_MODEL || 'gemini-2.5-flash';
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${key}`;
   
   logger.info(`AI Service: Attempting with Gemini model ${model}`);
@@ -79,15 +79,19 @@ async function callGemini(key, prompt) {
  * Call Groq API (OpenAI Compatible)
  */
 async function callGroq(key, prompt) {
-  const model = process.env.GROQ_MODEL || 'llama-3.3-70b-versatile';
+  const model = process.env.GROQ_MODEL || 'llama-3.1-8b-instant';
   const url = 'https://api.groq.com/openai/v1/chat/completions';
   
+  const adjustedPrompt = prompt.toLowerCase().includes('json')
+    ? prompt
+    : `${prompt}\n\nReturn the output as a JSON object.`;
+
   logger.info(`AI Service: Attempting with Groq model ${model}`);
   const response = await axios.post(
     url,
     {
       model: model,
-      messages: [{ role: 'user', content: prompt }],
+      messages: [{ role: 'user', content: adjustedPrompt }],
       response_format: { type: 'json_object' }
     },
     {
@@ -176,18 +180,11 @@ async function callNemotron(prompt) {
  * Falls back to 10-model chain on failure.
  */
 async function generateWithNemotron(prompt) {
-  // Try Nemotron first (best reasoning)
-  try {
-    const raw = await callNemotron(prompt);
-    return cleanAndParseJSON(raw);
-  } catch (err) {
-    logger.warn(`Nemotron failed (${err.message}), cycling through fallback model chain`);
-  }
-
-  // 10-model fallback chain: try multiple Groq models + Gemini + Nvidia NIM
+  // 10-model Groq chain first for blazing fast < 1s responses
   const FALLBACK_GROQ_MODELS = [
-    'deepseek-r1-distill-llama-70b',
+    'llama-3.1-8b-instant',
     'llama-3.3-70b-versatile',
+    'deepseek-r1-distill-llama-70b',
     'llama-3.1-70b-specdec',
     'llama-3.2-90b-vision-preview',
     'mixtral-8x7b-32768',
@@ -200,19 +197,30 @@ async function generateWithNemotron(prompt) {
     if (isKeyOnCooldown(key)) continue;
     for (const model of FALLBACK_GROQ_MODELS) {
       try {
-        logger.info(`Fallback: trying Groq model ${model}`);
+        logger.info(`Primary: trying Groq model ${model}`);
+        const adjustedPrompt = prompt.toLowerCase().includes('json')
+          ? prompt
+          : `${prompt}\n\nReturn the output as a JSON object.`;
         const response = await axios.post(
           'https://api.groq.com/openai/v1/chat/completions',
-          { model, messages: [{ role: 'user', content: prompt }], response_format: { type: 'json_object' } },
+          { model, messages: [{ role: 'user', content: adjustedPrompt }], response_format: { type: 'json_object' } },
           { headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' }, timeout: 180000 }
         );
         if (response.data?.choices?.[0]?.message?.content) {
           return cleanAndParseJSON(response.data.choices[0].message.content);
         }
       } catch (e) {
-        logger.warn(`Fallback Groq model ${model} failed: ${e.message}`);
+        logger.warn(`Primary Groq model ${model} failed: ${e.message}`);
       }
     }
+  }
+
+  // Try Nemotron as fallback
+  try {
+    const raw = await callNemotron(prompt);
+    return cleanAndParseJSON(raw);
+  } catch (err) {
+    logger.warn(`Nemotron fallback failed (${err.message}), cycling through general JSON generator`);
   }
 
   // Final fallback: standard provider chain
@@ -270,6 +278,11 @@ async function generateContentJSON(prompt) {
       // If rate limited or standard server errors, put the key on cooldown with dynamic duration
       const status = err.response ? err.response.status : null;
       const isTimeout = !err.response || err.message.toLowerCase().includes('timeout');
+
+      if (status === 400 || status === 413) {
+        // Request-specific errors, don't cool down the key
+        continue;
+      }
 
       if (status || isTimeout) {
         let duration = 5 * 60 * 1000; // default 5 minutes
@@ -382,6 +395,11 @@ async function generateCopilotResponse(prompt, imageBase64 = null, mimeType = nu
       
       const status = err.response ? err.response.status : null;
       const isTimeout = !err.response || err.message.toLowerCase().includes('timeout');
+
+      if (status === 400 || status === 413) {
+        // Request-specific errors, don't cool down the key
+        continue;
+      }
 
       if (status || isTimeout) {
         let duration = 5 * 60 * 1000;
