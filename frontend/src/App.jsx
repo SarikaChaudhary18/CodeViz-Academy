@@ -28,7 +28,6 @@ import SkillDna from './components/features/skill-dna/SkillDna';
 import SocraticMentor from './components/features/ai-tools/SocraticMentor';
 import BugDetective from './components/features/ai-tools/BugDetective';
 import CodeReview from './components/features/ai-tools/CodeReview';
-import CareerNavigator from './components/features/ai-tools/CareerNavigator';
 import InterviewSimulator from './components/features/ai-tools/InterviewSimulator';
 
 import ExecutionTrace from './components/features/visualize/ExecutionTrace';
@@ -211,7 +210,6 @@ export default function App() {
         <Route path="/socratic-mentor" element={<ProtectedRoute><SocraticMentor /></ProtectedRoute>} />
         <Route path="/bug-detective" element={<ProtectedRoute><BugDetective /></ProtectedRoute>} />
         <Route path="/code-review" element={<ProtectedRoute><CodeReview /></ProtectedRoute>} />
-        <Route path="/career-navigator" element={<ProtectedRoute><CareerNavigator /></ProtectedRoute>} />
         <Route path="/interview-simulator" element={<ProtectedRoute><InterviewSimulator /></ProtectedRoute>} />
 
         <Route path="/visualizer/execution-trace" element={<ProtectedRoute><ExecutionTrace /></ProtectedRoute>} />

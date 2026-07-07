@@ -206,6 +206,121 @@ You must respond with a JSON object matching this EXACT schema:
 }`;
       aiResult = await aiService.generateContentJSON(prompt);
     } 
+    else if (toolType === 'company-role-fit') {
+      const prompt = `Evaluate what roles and work suits which company based on this request: "${payload}". If a company name is provided, list the top engineering/product roles, their suitability scores, why they fit, and key teams/projects. If a skill list is provided, recommend the top companies that fit these skills, explaining why.
+You must respond with a JSON object matching this schema:
+{
+  "fitSummary": "General analysis summary of the company/skills fit",
+  "recommendedRoles": [
+    {
+      "role": "Role Name (e.g. Systems Engineer, AI/ML Researcher)",
+      "suitabilityScore": number (out of 100),
+      "whyItFits": "Brief explanation of why this role fits the company culture or why the skills fit this company",
+      "keyTeams": "Key teams or products involved (e.g. Search Infrastructure, Azure Cloud)"
+    }
+  ]
+}`;
+      aiResult = await aiService.generateContentJSON(prompt);
+    }
+    else if (toolType === 'simulated-job-search') {
+      const { keywords, location } = payload;
+      const prompt = `Search and simulate real, currently active LinkedIn job postings for: keywords="${keywords || 'Frontend Developer'}", location="${location || 'India'}". Act as an aggregator returning extremely realistic, high-quality, currently posted jobs with actual descriptions and companies. Generate 8-10 distinct listings.
+You must respond with a JSON object matching this schema:
+{
+  "jobs": [
+    {
+      "id": "job_id_unique_string",
+      "title": "Job Title (e.g. Senior Frontend Engineer)",
+      "company": "Company Name",
+      "location": "Location (e.g. Bangalore, India)",
+      "postedDate": "Time posted (e.g. 2 hours ago, 1 day ago)",
+      "description": "Short 2-3 sentence overview of expectations, required skills, and salary if available",
+      "applyUrl": "URL to apply (use a realistic LinkedIn job search link for that role)"
+    }
+  ]
+}`;
+      aiResult = await aiService.generateContentJSON(prompt);
+    }
+    else if (toolType === 'game-code-battle') {
+      const { topic, difficulty } = payload;
+      const prompt = `Generate a dynamic coding challenge for a single-player Code Battle game against an AI bot. Topic: "${topic || 'Arrays'}", Difficulty: "${difficulty || 'Medium'}".
+The challenge must include:
+1. A clear question statement.
+2. A starter code template in JavaScript.
+3. The AI bot's final completed solution code in JavaScript (which we will simulate typing character-by-character).
+4. One simple validation test case.
+You must respond with a JSON object matching this schema:
+{
+  "question": "Problem description with examples.",
+  "starterCode": "function solve(...) {\\n  // type here\\n}",
+  "aiOpponentSolution": "function solve(...) {\\n  // Full correct solution\\n}",
+  "testCase": { "input": "input argument description or json", "expected": "expected return value" }
+}`;
+      aiResult = await aiService.generateContentJSON(prompt);
+    }
+    else if (toolType === 'game-code-validate') {
+      const { question, userCode, testCase } = payload;
+      const prompt = `Evaluate this JavaScript user submission for correctness against the given challenge:
+Question: "${question}"
+User Code: "${userCode}"
+Test Case: ${JSON.stringify(testCase)}
+
+Acts as a code validation runner. Evaluate if the code is logically correct and handles the test cases. If it is correct, return isCorrect true. If incorrect, return isCorrect false along with a helpful error explanation.
+You must respond with a JSON object matching this schema:
+{
+  "isCorrect": boolean,
+  "error": "Explanation of bug or compilation failure, or null if correct"
+}`;
+      aiResult = await aiService.generateContentJSON(prompt);
+    }
+    else if (toolType === 'game-bug-hunt') {
+      const { topic } = payload;
+      const prompt = `Generate a dynamic single-player Bug Hunt game challenge. Topic: "${topic || 'General Programming'}".
+Create a JS code snippet (between 5 and 12 lines) containing exactly one subtle syntax or semantic bug on a specific line.
+Provide:
+1. The title of the puzzle.
+2. An array of lines representing the code.
+3. The 1-indexed line number containing the bug.
+4. A clear explanation of what the bug is, why it is incorrect, and how to fix it.
+You must respond with a JSON object matching this schema:
+{
+  "title": "Puzzle Title",
+  "codeLines": ["line 1", "line 2", "line 3", "..."],
+  "buggyLineNumber": number (1-indexed line containing the bug),
+  "explanation": "Explanation of the bug and the correct code"
+}`;
+      aiResult = await aiService.generateContentJSON(prompt);
+    }
+    else if (toolType === 'game-algo-race') {
+      const { topic } = payload;
+      const prompt = `Generate a rapid-fire quiz containing 3 algorithmic and data structure questions for an Algorithm Speed Race. Topic: "${topic || 'Data Structures'}".
+Each question must be a short, direct technical question (e.g. space complexity, time complexity, or data structure mechanics) with a clear, short, single-word or short-phrase answer.
+You must respond with a JSON object matching this schema:
+{
+  "tasks": [
+    {
+      "question": "Question text",
+      "answer": "Expected exact answer (short, e.g. O(1), Stack, Merge Sort)"
+    }
+  ]
+}`;
+      aiResult = await aiService.generateContentJSON(prompt);
+    }
+    else if (toolType === 'game-escape-room') {
+      const { topic } = payload;
+      const prompt = `Generate a single-player Algorithmic Escape Room puzzle. Topic: "${topic || 'JavaScript Concepts'}".
+Provide:
+1. A concept riddle or logical challenge about programming mechanisms (e.g. event loop, closure, inheritance, scopes, hoisting).
+2. The correct passcode (should be a single lowercase word, e.g. 'closure', 'hoisting', 'promises', 'currying').
+3. A subtle, helpful hint if the user gets stuck.
+You must respond with a JSON object matching this schema:
+{
+  "riddle": "Riddle text",
+  "passcode": "single-word passcode in lowercase",
+  "hint": "Helpful hint explaining the concept"
+}`;
+      aiResult = await aiService.generateContentJSON(prompt);
+    }
     else {
       return res.status(400).json({ status: 'fail', message: 'Invalid toolType specified.' });
     }

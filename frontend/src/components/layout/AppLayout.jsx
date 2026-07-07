@@ -193,7 +193,6 @@ export default function AppLayout({ children }) {
     { name: 'Socratic Mentor', path: '/socratic-mentor' },
     { name: 'Bug Detective', path: '/bug-detective' },
     { name: 'Code Review', path: '/code-review' },
-    { name: 'Career Navigator', path: '/career-navigator' },
     { name: 'Interview Simulator', path: '/interview-simulator' }
   ];
 
@@ -221,6 +220,7 @@ export default function AppLayout({ children }) {
 
   const careerGroup = [
     { name: 'DSA Sheets Practice', path: '/dsa-sheets' },
+    { name: 'Hackathons', path: '/hackathons' },
     { name: 'Resume Auditor', path: '/resume-auditor' },
     { name: 'Mock Interview Flow', path: '/mock-interview' },
     { name: 'Project List', path: '/projects/list' },

@@ -179,6 +179,78 @@ const seedQuizzes = async () => {
   }
 };
 
+const seedHackathons = async () => {
+  try {
+    const Hackathon = require('../models/Hackathon');
+    const existingCount = await Hackathon.countDocuments();
+    if (existingCount === 0) {
+      const now = new Date();
+      const mockHackathons = [
+        {
+          title: "Google Solution Challenge 2026",
+          host: "Google Developers",
+          url: "https://developers.google.com/community/solutions-challenge",
+          startDate: new Date(now.getTime() - 5 * 24 * 60 * 60 * 1000), // started 5 days ago
+          endDate: new Date(now.getTime() + 45 * 24 * 60 * 60 * 1000), // ends in 45 days
+          registrationDeadline: new Date(now.getTime() + 15 * 24 * 60 * 60 * 1000),
+          tags: ["AI/ML", "Cloud", "Mobile", "Web"],
+          prizePool: "$50,000",
+          bannerSrc: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80",
+          avatarSrc: "https://images.unsplash.com/photo-1573804633927-bfcbcd909acd?auto=format&fit=crop&w=120&h=120&q=80",
+          platform: "Google Community",
+          location: "Online"
+        },
+        {
+          title: "Microsoft Imagine Cup 2026",
+          host: "Microsoft",
+          url: "https://imaginecup.microsoft.com",
+          startDate: new Date(now.getTime() + 10 * 24 * 60 * 60 * 1000), // starts in 10 days
+          endDate: new Date(now.getTime() + 60 * 24 * 60 * 60 * 1000), // ends in 60 days
+          registrationDeadline: new Date(now.getTime() + 8 * 24 * 60 * 60 * 1000),
+          tags: ["Software", "Azure", "AI", "Social Impact"],
+          prizePool: "$100,000",
+          bannerSrc: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&w=600&q=80",
+          avatarSrc: "https://images.unsplash.com/photo-1625014020903-e329f586c990?auto=format&fit=crop&w=120&h=120&q=80",
+          platform: "Imagine Cup Portal",
+          location: "Hybrid (Online / Seattle)"
+        },
+        {
+          title: "Smart India Hackathon 2026",
+          host: "Ministry of Education, Govt of India",
+          url: "https://www.sih.gov.in",
+          startDate: new Date(now.getTime() - 2 * 24 * 60 * 60 * 1000),
+          endDate: new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000),
+          registrationDeadline: new Date(now.getTime() + 10 * 24 * 60 * 60 * 1000),
+          tags: ["Hardware", "Software", "Web", "Agriculture", "Smart Cities"],
+          prizePool: "₹1,00,000 per problem statement",
+          bannerSrc: "https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?auto=format&fit=crop&w=600&q=80",
+          avatarSrc: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=120&h=120&q=80",
+          platform: "SIH Portal",
+          location: "India (Nodal Centres)"
+        },
+        {
+          title: "Ethereum Global Buildathon",
+          host: "ETHGlobal",
+          url: "https://ethglobal.com",
+          startDate: new Date(now.getTime() + 15 * 24 * 60 * 60 * 1000),
+          endDate: new Date(now.getTime() + 25 * 24 * 60 * 60 * 1000),
+          registrationDeadline: new Date(now.getTime() + 14 * 24 * 60 * 60 * 1000),
+          tags: ["Web3", "Blockchain", "Solidity", "Cryptography"],
+          prizePool: "$25,000",
+          bannerSrc: "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?auto=format&fit=crop&w=600&q=80",
+          avatarSrc: "https://images.unsplash.com/photo-1621761191319-c6fb62004040?auto=format&fit=crop&w=120&h=120&q=80",
+          platform: "ETHGlobal Dashboard",
+          location: "Online"
+        }
+      ];
+      await Hackathon.insertMany(mockHackathons);
+      logger.info(`Seeded ${mockHackathons.length} active hackathons successfully.`);
+    }
+  } catch (err) {
+    logger.error('Failed to seed hackathons: %s', err.message);
+  }
+};
+
 const connectDB = async () => {
   const primaryURI = process.env.MONGODB_URI;
   const localFallbackURI = 'mongodb://127.0.0.1:27017/studyquest';
@@ -222,6 +294,7 @@ const connectDB = async () => {
     // Note: Default user/community seeding removed — all data is user-generated
     await seedCourses();
     await seedQuizzes();
+    await seedHackathons();
   } catch (err) {
     logger.error('Primary MongoDB connection failed: %s', err.message);
     
@@ -232,6 +305,7 @@ const connectDB = async () => {
         await setupEventsAndConnect(localFallbackURI);
         await seedCourses();
         await seedQuizzes();
+        await seedHackathons();
         return;
       } catch (fallbackErr) {
         logger.error('Fallback local MongoDB connection also failed: %s', fallbackErr.message);
