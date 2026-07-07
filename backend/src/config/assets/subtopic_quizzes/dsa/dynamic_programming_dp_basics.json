@@ -1,0 +1,146 @@
+{
+  "topic": "Dynamic Programming - DP Basics",
+  "questions": [
+    {
+      "question": "In Dynamic Programming, what does the 'memoization' technique help with?",
+      "options": {
+        "A": "Reducing the time complexity of an algorithm",
+        "B": "Increasing the space complexity of a solution",
+        "C": "Overcoming the combinatorial explosion problem",
+        "D": "Making the algorithm more parallelizable"
+      },
+      "correctAnswer": "C",
+      "explanation": "Memoization helps by caching the results of subproblems, preventing repeated calculations, and thereby overcoming the combinatorial explosion problem. This technique is particularly useful for problems with overlapping subproblems.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the key characteristic of a problem that makes it suitable for Dynamic Programming?",
+      "options": {
+        "A": "It can be solved in a single recursive call",
+        "B": "It has a constant time complexity",
+        "C": "It has overlapping subproblems or optimal substructure",
+        "D": "It can be solved using a greedy approach"
+      },
+      "correctAnswer": "C",
+      "explanation": "Dynamic Programming is particularly suited for problems that have either optimal substructure (i.e., the optimal solution can be constructed from the optimal solutions of its subproblems) or overlapping subproblems (i.e., the subproblems are the same or similar).",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Consider an array of integers where each element appears only once, except for one element which appears n times. How can we count the frequency of the most frequent element in O(n) time complexity using Dynamic Programming?",
+      "options": {
+        "A": "Use a hash map to store the frequency of each element",
+        "B": "Sort the array and count the most frequent element in the second pass",
+        "C": "Use a two-pointer technique to compare adjacent elements",
+        "D": "Count the frequency of all elements using a single pass and then identify the maximum frequency"
+      },
+      "correctAnswer": "D",
+      "explanation": "To solve this problem, we initialize an array to store the frequency counts and then iterate through the array. For each element, we increment the corresponding frequency count in the array. This gives us O(n) time complexity to count the frequency of all elements. In the end, we can identify the maximum frequency, which corresponds to the most frequent element.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What technique do we use to build optimal solutions to problems that have the properties of 'optimal substructure'?",
+      "options": {
+        "A": "Divide and Conquer",
+        "B": "Greedy Algorithms",
+        "C": "Dynamic Programming",
+        "D": "Recursion with memoization"
+      },
+      "correctAnswer": "D",
+      "explanation": "Since the problem has the properties of 'optimal substructure', we can use Divide and Conquer, but that wouldn't give us optimal subproblems. The best technique here is actually Recursion with memoization, which ensures we only solve each subproblem once. The other options don't fit here well.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which data structure is commonly used to store 'state' in Dynamic Programming problems?",
+      "options": {
+        "A": "Stack",
+        "B": "Queue",
+        "C": "Hash Table",
+        "D": "Array-based Table"
+      },
+      "correctAnswer": "D",
+      "explanation": "Dynamic Programming problems often use a table, typically an array-based table, to store 'state' (i.e., subproblem solutions). We fill in the table as needed by using the previous results in each subproblem to compute the solutions. This makes it easy to build upon previous work and reduces redundant computation.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Explain the concept of 'state' in Dynamic Programming and provide an example.",
+      "options": {
+        "A": "Any data structure used by the program",
+        "B": "Any global variables or function parameters used by the code",
+        "C": "Information associated with subproblems and passed across function calls or loops to reduce redundant computation",
+        "D": "Information shared across processes in a parallel program"
+      },
+      "correctAnswer": "C",
+      "explanation": "In Dynamic Programming, 'state' refers to the information associated with a subproblem, which is often stored in a table or data structure. As we solve subproblems recursively, we pass this state across calls to build up the overall solution. In the coin changing problem, for instance, each state is the set of coins chosen as we build the optimal solution to change a given amount.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is an example of a 'Dynamic Programming' problem?",
+      "options": {
+        "A": "Maximum subarray sum",
+        "B": "Longest common subsequence",
+        "C": "Shortest path problem in a weighted graph",
+        "D": "Both A and B"
+      },
+      "correctAnswer": "D",
+      "explanation": "Dynamic Programming is applicable to a variety of problems including finding the maximum subarray sum and computing the longest common subsequence. These are classic examples that show how solving subproblems and building up from those subproblems can yield efficient algorithms by reducing redundant computation.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Explain why recursion is often used in Dynamic Programming.",
+      "options": {
+        "A": "Because it's the only way to solve complex problems",
+        "B": "Because it helps us visualize the algorithm and the subproblems",
+        "C": "Because we can break down the problem into smaller subproblems by recursively calling the function, and build up the overall solution",
+        "D": "Because we cannot apply loop unrolling in recursive algorithms"
+      },
+      "correctAnswer": "C",
+      "explanation": "Recursion is commonly used in Dynamic Programming because it allows us to break down the problem into smaller subproblems, solve each recursively, and then use the subproblem solutions to build up the overall answer. This makes recursion extremely useful for problems that have the 'optimal substructure' characteristic and can thus have overlapping subproblems.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Explain how to identify whether a problem falls under 'Dynamic Programming'.",
+      "options": {
+        "A": "Look for problems with no subproblems",
+        "B": "Find a problem that can be divided into smaller instances of the same problem and then look for the overlapping subproblems",
+        "C": "Check if the problem requires sorting, which is a sure indication of Dynamic Programming",
+        "D": "Verify that there are no 'if' conditions"
+      },
+      "correctAnswer": "B",
+      "explanation": "To identify if a problem is a good candidate for Dynamic Programming, look for problems that are naturally recursive, with subproblems resembling smaller instances of the same problem. Next, identify the overlapping subproblems or optimal substructure. Then apply an optimization strategy to reuse solutions of these subproblems, reducing redundant computations and thus optimizing the algorithm.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Explain the process of converting recursive algorithms to iterative ones.",
+      "options": {
+        "A": "Unfold the recursion into explicit loops",
+        "B": "Transform loops into recursion",
+        "C": "Remove all loop unrolling operations",
+        "D": "Replace every occurrence of recursion with a while loop"
+      },
+      "correctAnswer": "A",
+      "explanation": "Converting a recursive algorithm to an iterative one requires unfolding the recursion into explicit loops. This can be done using memoization or iteration. It is worth considering iterative solutions since recursion might be inefficient due to function call overhead.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Explain the process of finding the 'bottom-up' solution of a problem using Dynamic Programming.",
+      "options": {
+        "A": "Start with the final result and work backwards",
+        "B": "Start with the initial inputs and gradually build up solution steps",
+        "C": "First solve the problem from the top down, and then from bottom-up",
+        "D": "Work on the solution step-by-step using backtracking"
+      },
+      "correctAnswer": "B",
+      "explanation": "In 'bottom-up' Dynamic Programming, we build up the solution incrementally, starting with the basic cases or initial inputs. Then, we construct the final result by aggregating the subproblem solutions. For example, we calculate each row in a staircase table and build up to the final solution row by row",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How does the choice of table size impact the complexity of Dynamic Programming algorithms?",
+      "options": {
+        "A": "Increasing table size typically reduces the complexity of the algorithm",
+        "B": "Increasing table size has no effect on the algorithm's time complexity",
+        "C": "Increasing table size typically increases the computational complexity",
+        "D": "Both B and C"
+      }
+    }
+  ]
+}
