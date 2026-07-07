@@ -1,0 +1,161 @@
+{
+  "topic": "Linked Lists - Linked List Interview Problems",
+  "questions": [
+    {
+      "question": "What is a linked list?",
+      "options": {
+        "A": "A dynamic array of items where each item has a reference to the item before it.",
+        "B": "A data structure where elements are stored in a single array with a fixed length, ordered by some criteria.",
+        "C": "A data structure that stores elements as separate objects and each references the next one.",
+        "D": "A data structure that uses a hash table for fast lookups, with each item being a separate object."
+      },
+      "correctAnswer": "C",
+      "explanation": "A linked list is a dynamic collection of elements, with each element referring to the next one in the sequence. This allows for efficient insertion or removal of elements. This question tests a student's understanding of the basic definition of a linked list.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the main advantage of a linked list compared to a dynamic array?",
+      "options": {
+        "A": "Efficient sorting of elements based on some criteria",
+        "B": "Faster access to elements by index",
+        "C": "Efficient insertion and deletion of elements at any position",
+        "D": "A much smaller memory footprint"
+      },
+      "correctAnswer": "C",
+      "explanation": "Linked lists are efficient for inserting or deleting elements at any position because only the affected nodes are updated, whereas arrays can be slow if inserting or deleting is done regularly. This question tests a student's understanding of the trade-offs between data structures.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following is a type of linked list?",
+      "options": {
+        "A": "Array",
+        "B": "Tree",
+        "C": "Stack",
+        "D": "Singly Linked List"
+      },
+      "correctAnswer": "D",
+      "explanation": "A singly linked list is a type of linked list where each node has a reference to the next node. This question tests a student's knowledge of linked list types.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the operation of traversing a linked list from head to tail called?",
+      "options": {
+        "A": "Delete",
+        "B": "Insert",
+        "C": "Search",
+        "D": "Traverse"
+      },
+      "correctAnswer": "D",
+      "explanation": "Traversing a linked list from head to tail involves iterating through each node until the end of the list is reached. This question tests a student's understanding of common linked list operations.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How do you handle a null pointer exception when traversing a linked list?",
+      "options": {
+        "A": "Ignore and continue traversing",
+        "B": "Throw an error and stop the program",
+        "C": "Check for null pointers before moving to the next node",
+        "D": "Insert a new node with a null reference"
+      },
+      "correctAnswer": "C",
+      "explanation": "When traversing a linked list, it's essential to check for null pointers before moving to the next node to avoid a null pointer exception. This question tests a student's knowledge of error handling in linked lists.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the time complexity of searching for an element in a singly linked list?",
+      "options": {
+        "A": "O(1) if the element is at the head of the list",
+        "B": "O(n) in the worst-case scenario",
+        "C": "O(1) for all cases due to the use of an index",
+        "D": "O(sqrt(n)) due to the linked nature of the list"
+      },
+      "correctAnswer": "B",
+      "explanation": "Searching for an element in a singly linked list requires traversing the list from the head, which takes O(n) time in the worst-case scenario if the element is not found. This question tests a student's understanding of time complexity.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Can a doubly linked list be sorted in-place?",
+      "options": {
+        "A": "Yes, because it has a 'prev' pointer",
+        "B": "No, it's not designed for sorting",
+        "C": "Yes, but it requires an auxiliary data structure",
+        "D": "Only if the list is sorted before hand"
+      },
+      "correctAnswer": "C",
+      "explanation": "A doubly linked list can be sorted in-place by rearranging the 'next' and 'prev' pointers, but an auxiliary data structure is required to store the swap information. This question tests a student's knowledge of linked list operations.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Which of the following operations on a linked list is O(1) when performed at the head of the list?",
+      "options": {
+        "A": "Insertion",
+        "B": "Deletion",
+        "C": "Search",
+        "D": "Traverse"
+      },
+      "correctAnswer": "A",
+      "explanation": "Insertion at the head of a linked list takes O(1) time because it's only updating the 'next' pointer of the current head. This question tests a student's understanding of time complexity.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How do you implement a reverse of a linked list?",
+      "options": {
+        "A": "Iterate through the list and swap 'prev' and 'next' pointers",
+        "B": "Iterate through the list and update the 'next' pointer to point to the previous node",
+        "C": "Create a new list and insert elements in the reversed order",
+        "D": "Iterate through the list and update the 'prev' pointer to point to the next node"
+      },
+      "correctAnswer": "A",
+      "explanation": "Reversing a linked list involves iterating through the list and swapping the 'prev' and 'next' pointers of each node. This question tests a student's knowledge of linked list operations.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Can you sort a linked list in O(n log n) time using an external data structure?",
+      "options": {
+        "A": "Yes, by using a heap",
+        "B": "Yes, by using a binary search tree",
+        "C": "Yes, by using an external array",
+        "D": "No, the best time complexity is O(n log n) with sorting algorithms"
+      },
+      "correctAnswer": "A",
+      "explanation": "Yes, a linked list can be sorted in O(n log n) time using an external data structure such as a heap. This question tests a student's knowledge of sorting algorithms.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "How do you find the nth node from the end of a linked list?",
+      "options": {
+        "A": "Create two pointers, one starting at the head and the other starting at the nth node from the head",
+        "B": "Create a recursive function that traverses the list and updates a stack",
+        "C": "Use a stack to store the nodes and pop them off until the nth node is found",
+        "D": "Iterate through the list and update the 'next' pointer to point to the nth node"
+      },
+      "correctAnswer": "A",
+      "explanation": "Finding the nth node from the end of a linked list involves creating two pointers, one starting at the head and the other starting at the nth node from the head. The two pointers move at the same speed until the first pointer reaches the end of the list, at which point the nth node from the end is the second pointer. This question tests a student's knowledge of linked list traversal.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Is it possible to efficiently find the maximum value in a linked list without iterating through the entire list?",
+      "options": {
+        "A": "Yes, using a sentinel node",
+        "B": "Yes, by using a hash table",
+        "C": "Yes, using a stack",
+        "D": "No, it's not possible"
+      },
+      "correctAnswer": "B",
+      "explanation": "Finding the maximum value in a linked list can be done efficiently by storing the maximum values seen so far in a hash table. This question tests a student's knowledge of data structures.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Can you determine the middle element of a linked list without iterating through the entire list?",
+      "options": {
+        "A": "Yes, by using two pointers",
+        "B": "Yes, by using a sentinel node",
+        "C": "Yes, using a stack",
+        "D": "No, it's not possible"
+      },
+      "correctAnswer": "A",
+      "explanation": "Finding the middle element of a linked list involves creating two pointers, one starting at the head and the other moving twice as fast. When the fast pointer reaches the end of the list, the slow pointer will be at the middle element. This question tests a student's knowledge of linked list traversal.",
+      "difficulty": "Hard"
+    }
+  ]
+}
