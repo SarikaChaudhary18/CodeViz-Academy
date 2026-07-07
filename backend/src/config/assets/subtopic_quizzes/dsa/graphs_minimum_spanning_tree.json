@@ -1,0 +1,157 @@
+{
+  "topic": "Graphs - Minimum Spanning Tree",
+  "questions": [
+    {
+      "question": "What is the primary goal of finding a Minimum Spanning Tree (MST) in a connected, undirected graph?",
+      "options": {
+        "A": "To find the shortest possible path between two nodes in the graph.",
+        "B": "To identify the subset of edges that connect all nodes with the lowest total cost.",
+        "C": "To find the longest path between two nodes in the graph.",
+        "D": "To verify whether the graph contains a Hamiltonian cycle."
+      },
+      "correctAnswer": "B",
+      "explanation": "Finding an MST in a graph means identifying a subgraph (a tree) that connects all nodes with the minimum total cost or weight of edges. This is typically achieved using algorithms like Kruskal's or Prim's.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following is a correct statement about the minimum spanning tree?",
+      "options": {
+        "A": "The MST of a connected graph is a directed graph.",
+        "B": "The MST of a connected graph is a tree.",
+        "C": "The MST of a connected graph is unique.",
+        "D": "The MST of a connected graph has a higher total cost compared to the original graph."
+      },
+      "correctAnswer": "B",
+      "explanation": "The MST is indeed a tree since it is connected and has no cycles. It is not a directed graph and its total cost can be lower or equal to the original graph depending on the structure and edge weights.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is one key property of a Minimum Spanning Tree?",
+      "options": {
+        "A": "All edges have the same weight.",
+        "B": "All edges belong to the original graph.",
+        "C": "All nodes have the same degree.",
+        "D": "All edges have a non-zero weight."
+      },
+      "correctAnswer": "B",
+      "explanation": "A property of an MST is that all edges belong to the original graph, ensuring that no edges are added or removed during the process.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which algorithm is commonly used to find a Minimum Spanning Tree in a connected graph?",
+      "options": {
+        "A": "Breadth-First Search (BFS) algorithm.",
+        "B": "Depth-First Search (DFS) algorithm.",
+        "C": "Dijkstra's algorithm.",
+        "D": "Both Prim's and Kruskal's algorithms can be used."
+      },
+      "correctAnswer": "D",
+      "explanation": "While various algorithms can produce an MST, popular choices for this task are Prim's and Kruskal's algorithms. Dijkstra's is usually used for finding shortest paths and doesn't always yield a minimal spanning tree.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Given a connected, undirected graph with 10 nodes and 15 edges, how would you determine if it has at most one Minimum Spanning Tree?",
+      "options": {
+        "A": "Check if the graph is connected and has no cycles.",
+        "B": "Use a graph coloring algorithm and ensure no adjacent nodes have the same color.",
+        "C": "Find the MST using Prim's or Kruskal's algorithm once.",
+        "D": "Find the MST using Prim's algorithm, then repeat it 10 times to ensure the correct answer."
+      },
+      "correctAnswer": "C",
+      "explanation": "You can find the MST once and be certain that it will be the only one if the graph is connected. Having one node or edge more/less doesn't affect this fact, but 10 nodes is a special case where there's only one MST.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How do you verify if an edge is part of the MST in a connected, undirected graph?",
+      "options": {
+        "A": "Check if it's the lightest edge in the graph.",
+        "B": "Verify if it connects two nodes that are connected only by it.",
+        "C": "Find the shortest path between its endpoints and compare the total weight of the path to the weight of the edge.",
+        "D": "Compare the weight of the edge with the total cost of the MST found so far."
+      },
+      "correctAnswer": "D",
+      "explanation": "Checking if the edge is part of the MST requires ensuring that its weight is no larger than the total cost of the MST so far. This can be achieved using algorithms like Prim's or Kruskal's.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "In a graph with 5 nodes and 6 edges, which type of graph will always have a unique Minimum Spanning Tree?",
+      "options": {
+        "A": "Bipartite",
+        "B": "Complete",
+        "C": "Connected with distinct edge weights.",
+        "D": "Complete bipartite."
+      },
+      "correctAnswer": "C",
+      "explanation": "Complete bipartite graphs are always 2-colorable, thus their MST is known to be unique since a 2-color graph with unique MST can only exist under certain conditions such as distinct weights.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which statement is true about the properties of a Minimum Spanning Tree?",
+      "options": {
+        "A": "All edge weights of the original MST remain unchanged.",
+        "B": "The sum of edge weights is minimized.",
+        "C": "Removing any edge results in either isolating a node, splitting the tree or adding a cycle.",
+        "D": "Adding any edge connects any remaining nodes but may add redundant branches."
+      },
+      "correctAnswer": "C",
+      "explanation": "MST by definition will always connect every node and removing any edge will isolate a node thus, MST does not split the graph. On the other hand, it is the original properties of edges that can introduce redundant branches.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "You're asked to develop an algorithm to find the MST of a connected graph with n vertices and m edges. Which data structure can be useful for storing and updating the set of included edges?",
+      "options": {
+        "A": "Dynamic Array",
+        "B": "Hash Set",
+        "C": "Priority Queue",
+        "D": "Graph Library."
+      },
+      "correctAnswer": "B",
+      "explanation": "A hash set can help quickly and efficiently store and update the set of included edges in the MST. It is especially useful when considering disjoint sets and union-find operations for finding the tree.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How does Kruskal's algorithm choose edges for the MST?",
+      "options": {
+        "A": "It greedily chooses the edge with the smallest weight first.",
+        "B": "It sorts the edges by non-decreasing order of their weights, then adds the minimum-weight one that doesn't create a cycle.",
+        "C": "It starts with the graph's lightest edge and includes the next edge in the sorted order if it forms a cycle.",
+        "D": "It selects at random among the smallest non-overlapped edge weights."
+      },
+      "correctAnswer": "B",
+      "explanation": "Kruskal's algorithm works by selecting the smallest edge that doesn't create a cycle, which effectively means adding the minimum-weight edge at each iteration without violating the graph connectivity.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What happens to the MST when it's added or removed from the graph?",
+      "options": {
+        "A": "Adding an edge will increase its cost.",
+        "B": "Removing an edge will increase its cost.",
+        "C": "An edge being removed won't affect the MST."
+      },
+      "correctAnswer": "C",
+      "explanation": "The cost of an edge is only relevant in the initial setup, and it doesn't change once the MST is constructed. Thus, removing an edge in the current MST won't increase the cost.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Consider a connected graph with distinct edge weights. Given that there are two MSTs, what can be concluded about their total edge weights?",
+      "options": {
+        "A": "They are identical.",
+        "B": "One is heavier than the other.",
+        "C": "Both have the same weight.",
+        "D": "Both are equal and both have same weight."
+      },
+      "correctAnswer": "B",
+      "explanation": "By definition, every pair of MSTs has exactly 1 different edge, and given that all edges in the graph are distinct, the one with the higher weight must be in one MST, and the lower in another.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following graph properties makes finding an MST particularly complicated?",
+      "options": {
+        "A": "Bipartititeness of the graph",
+        "B": "Weight of edges are negative",
+        "C": "Edges with non-unique weights",
+        "D": "Graph is connected."
+      }
+    }
+  ]
+}
