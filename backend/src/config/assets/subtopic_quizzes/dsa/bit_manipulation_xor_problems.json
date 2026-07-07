@@ -1,0 +1,151 @@
+{
+  "topic": "Bit Manipulation - XOR Problems",
+  "questions": [
+    {
+      "question": "For any pair of bits (a and b), what does the following expression evaluate to: a XOR (a XOR b)?",
+      "options": {
+        "A": "a",
+        "B": "b",
+        "C": "It will always be false",
+        "D": "It will always be true"
+      },
+      "correctAnswer": "A",
+      "explanation": "When we apply XOR operation twice, it will result in the initial value of 'a' (because XOR operation of a number with itself gives zero, and then XOR'ing 0 with 'b' results in 'b', which is the case where 'a' is 0).",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Given two bits a and b, what does the following expression evaluate to: (a XOR b) == (b XOR a)?",
+      "options": {
+        "A": "true",
+        "B": "false",
+        "C": "It depends on the bits a and b",
+        "D": "It will never evaluate to true"
+      },
+      "correctAnswer": "A",
+      "explanation": "The XOR operation is commutative, i.e., (a XOR b) is equal to (b XOR a). So this expression will always be true.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the XOR of 5 and 3?",
+      "options": {
+        "A": "8",
+        "B": "6",
+        "C": "7",
+        "D": "9"
+      },
+      "correctAnswer": "C",
+      "explanation": "To find the XOR of two numbers, we can use the properties of binary representation: XOR of two numbers gives the result for the bits that are set only in one of them. Thus, 5 (101) XOR 3 (011) = 110 = 6 in decimal. However, here if we consider the number of bits set, then XOR of 5 (101) and 3 (011) results in a 2 (10 in binary), which is equivalent to 2 in decimal. But, actually the XOR operation gives us 110, which is 6 in decimal, which is our final answer.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Given a number 'x', find the number 'n' such that 'x^n == x'. What value should 'n' be?",
+      "options": {
+        "A": "0",
+        "B": "1",
+        "C": "2",
+        "D": "Any"
+      },
+      "correctAnswer": "B",
+      "explanation": "For any number 'x', if 'n' equals to '1' then only x^1 will be equal to x, in any case for  any other value of 'n' except 1, the value x will always be different from x^n.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What does XOR operation do to a number when it is performed with the same number twice?",
+      "options": {
+        "A": "it remains the same",
+        "B": "changes its state to the other state",
+        "C": "returns 0",
+        "D": "returns the number itself"
+      },
+      "correctAnswer": "C",
+      "explanation": "In binary representation,  any number 'x' is 'x' XOR 'y' equals 'x' if 'x' = 'y'. Hence when the same number is XORed with itself, we end up getting zero.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "If a, b and c are bits, and a XOR b XOR c equals to 'true' (1), and a XOR b is 'true' (1), then what should c be?",
+      "options": {
+        "A": "false (0)",
+        "B": "true (1)",
+        "C": "Any",
+        "D": "Can't determine from the information"
+      },
+      "correctAnswer": "A",
+      "explanation": "Given that a XOR b equals 'true' (1) and c XOR (a XOR b) also equals one. Therefore to satisfy the given conditions, b (and hence c) must be equal to zero.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Consider an 8-bit number 01101101. What is the binary representation of XORing it with 01101101, which is same number.",
+      "options": {
+        "A": "0",
+        "B": "00000000",
+        "C": "11111111",
+        "D": "01101101"
+      },
+      "correctAnswer": "B",
+      "explanation": "As previously mentioned, any number XORed once with itself equals 0. Thus in our case  01101101 XOR 01101101 would equal 00000000.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "For any numbers a, b and c, does following hold true: ((a XOR b) XOR c) == (a XOR (b XOR c)) ?",
+      "options": {
+        "A": "true",
+        "B": "false",
+        "C": "Depends on the values of a, b and c",
+        "D": "Will never evaluate to true"
+      },
+      "correctAnswer": "A",
+      "explanation": "The XOR operation is associative. This means that for any set of elements, the order of evaluation does not affect the result",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Find the result of XOR operation of a 10-bit number 0110100010 and 1111011100",
+      "options": {
+        "A": "0101111110",
+        "B": "1111011010",
+        "C": "0101010110",
+        "D": "1100011110"
+      },
+      "correctAnswer": "B",
+      "explanation": "XOR operation is the operation of 'a' and 'b' to get 'c' where c[i] is false if 'a[i] and b[i]' is same else c[i] is true",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What value will be the result of  (a XOR b) XOR (b XOR a) for any bits a and b?",
+      "options": {
+        "A": "true",
+        "B": "false",
+        "C": "a",
+        "D": "b"
+      },
+      "correctAnswer": "B",
+      "explanation": "Since the XOR operation has property of being commutative and associative, (a XOR b) XOR (a XOR b) equals a XOR ((b XOR b)). As previously stated b XORed with b results in zero; this means (a XOR (b XOR b)) equals a XOR 0, which equals to a itself.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "For any bits a, b and c, given a XOR b is 'true' (1), b XOR c is 'false' (0) and c XOR a is 'true' (1), then what is c?",
+      "options": {
+        "A": "false (0)",
+        "B": "true (1)",
+        "C": "Can't be determined from given information",
+        "D": "Any"
+      },
+      "correctAnswer": "C",
+      "explanation": "As a XOR b is true and b XOR c is false, then we know that 'a and not c' is true (because XOR of a and c will make the expression true), and as b XOR c is false then c XOR not c must equal false.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Let 'x' be the smallest value that for any two bits a and b such that a XOR b equals 'true' (1), the following will be true: a | b == x",
+      "options": "B",
+      "correctAnswer": "00001111",
+      "explanation": "As 'x' is the smallest value, we're looking for minimum number of 1s in binary representation of 'x'. We know that 'x' must have at least bit 3 equals to 1, thus in our case 'x' must be at least 8 in decimal.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "If the value of a is '1010' in binary and the value of b is '1101' in binary, then the binary value of a XOR b is ",
+      "options": "D",
+      "correctAnswer": "0111",
+      "explanation": "The result of the XOR operation is the result where the two numbers have opposite bits. From the problem given 'a' XOR 'b' results in 0111.",
+      "difficulty": "Medium"
+    }
+  ]
+}
