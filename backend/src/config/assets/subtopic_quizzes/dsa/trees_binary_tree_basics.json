@@ -1,0 +1,173 @@
+{
+  "topic": "Trees - Binary Tree Basics",
+  "questions": [
+    {
+      "question": "What is a Binary Tree?",
+      "options": {
+        "A": "A tree with nodes having only two children",
+        "B": "A tree with nodes having only one parent",
+        "C": "A tree with nodes having no children",
+        "D": "A tree with nodes having no parents"
+      },
+      "correctAnswer": "A",
+      "explanation": "A binary tree is a data structure in which each node has at most two children (left child and right child). This characteristic makes it useful for many applications, such as searching and sorting.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the term for the order in which the left and right subtrees are traversed in a pre-order traversal of a binary tree?",
+      "options": {
+        "A": "In order",
+        "B": "Pre-order",
+        "C": "Post-order",
+        "D": "Level-order"
+      },
+      "correctAnswer": "B",
+      "explanation": "In a pre-order traversal, the root node is visited first, followed by the left subtree, and then the right subtree. This order is denoted as 'root -> left -> right'.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the time complexity of inserting a node in the middle of a balanced binary search tree?",
+      "options": {
+        "A": "O(1)",
+        "B": "O(n)",
+        "C": "O(log n)",
+        "D": "O(n log n)"
+      },
+      "correctAnswer": "C",
+      "explanation": "In a balanced binary search tree, the time complexity of inserting a node is O(log n), where n is the number of nodes in the tree. This is because the tree remains self-balancing, ensuring that the height of the tree remains relatively small.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Can a binary search tree contain duplicate values?",
+      "options": {
+        "A": "Yes, as values are stored in nodes",
+        "B": "No, as duplicate values can cause inconsistencies",
+        "C": "Only if the tree is not self-balancing",
+        "D": "Only if the tree is degenerate"
+      },
+      "correctAnswer": "A",
+      "explanation": "Although binary search trees typically store unique values, some implementations can store duplicate values in nodes. However, it's essential to handle duplicates carefully to maintain the tree's integrity.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the purpose of the NULL child pointer in a binary tree node?",
+      "options": {
+        "A": "To represent the tree's root",
+        "B": "To indicate the absence of children",
+        "C": "To store extra information",
+        "D": "To track the node's depth"
+      },
+      "correctAnswer": "B",
+      "explanation": "The NULL child pointer in a binary tree node typically represents the absence of a child node. This allows for efficient memory allocation and node structure.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is a full binary tree?",
+      "options": {
+        "A": "A tree where all nodes have at most one child",
+        "B": "A tree where every node has two children",
+        "C": "A tree where all nodes except the leaves have two children",
+        "D": "A tree where all nodes are leaves"
+      },
+      "correctAnswer": "C",
+      "explanation": "A full binary tree is a tree where every node, except for the leaves, has two children. This definition ensures that every internal node has a complete binary subtree.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How does a binary tree handle left and right rotations?",
+      "options": {
+        "A": "Left rotation: the node with the smaller value moves to its right child",
+        "B": "Right rotation: the node with the smaller value moves to its left child",
+        "C": "Left rotation: the node with the larger value moves to its left child",
+        "D": "Right rotation: the node with the larger value moves to its right child"
+      },
+      "correctAnswer": "C",
+      "explanation": "In a binary tree, a left rotation occurs when a node with a larger value moves to its left child, while a right rotation occurs when a node with a smaller value moves to its right child.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the difference between an Abstract Syntax Tree (AST) and a Binary Tree?",
+      "options": {
+        "A": "ASTs store values, whereas Binary Trees store nodes",
+        "B": "Binary Trees are used for parsing, whereas ASTs are used for code evaluation",
+        "C": "Binary Trees represent a hierarchical structure, whereas ASTs represent a parse tree",
+        "D": "ASTs are a specific type of binary tree"
+      },
+      "correctAnswer": "C",
+      "explanation": "While both abstract syntax trees (ASTs) and binary trees can represent hierarchical structures, ASTs specifically represent the syntax of a programming language, making them a distinct data structure.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Can a degenerate binary tree be considered a valid binary tree?",
+      "options": {
+        "A": "No, as its structure is not hierarchical",
+        "B": "Yes, if it has at least one node",
+        "C": "Yes, if it has a valid root node",
+        "D": "Only if it is self-balancing"
+      },
+      "correctAnswer": "B",
+      "explanation": "A degenerate binary tree can be considered a valid binary tree if it has at least one node. The absence of nodes other than the root still satisfies the basic definition of a binary tree.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the average case time complexity of inserting a new node into an n-node binary search tree?",
+      "options": {
+        "A": "O(n)",
+        "B": "O(log n)",
+        "C": "O(1)",
+        "D": "O(n log n)"
+      },
+      "correctAnswer": "B",
+      "explanation": "In an n-node binary search tree, the average case time complexity of inserting a new node is O(log n), as the tree is self-balancing, ensuring that the tree's height remains relatively small.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How do you represent a null node in a binary tree?",
+      "options": {
+        "A": "Null child pointers",
+        "B": "Special 'nil' sentinel",
+        "C": "Memory allocation for empty nodes",
+        "D": "Using extra memory for each node"
+      },
+      "correctAnswer": "B",
+      "explanation": "A null node in a binary tree is often represented by a special 'nil' sentinel, which helps indicate the absence of a child node.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the purpose of a sentinel node in a binary tree?",
+      "options": {
+        "A": "To avoid memory leaks",
+        "B": "To represent a null node",
+        "C": "To store extra information",
+        "D": "To speed up node insertion"
+      },
+      "correctAnswer": "B",
+      "explanation": "A sentinel node in a binary tree is used to represent a null or missing child node, simplifying the tree's structure and enabling more efficient node creation.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "When traversing a binary tree using a depth-first search, what happens when a node has no left child?",
+      "options": {
+        "A": "The current node is skipped",
+        "B": "The current node is visited",
+        "C": "The left subtree is traversed",
+        "D": "The right subtree is traversed"
+      },
+      "correctAnswer": "D",
+      "explanation": "In a depth-first search traversal, when a node has no left child, the algorithm typically traverses the right subtree first. The left subtree is only explored if it becomes relevant at a later point.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the term for a binary tree with all levels completely filled, except possibly the last level?",
+      "options": {
+        "A": "Full binary tree",
+        "B": "Complete binary tree",
+        "C": "Balanced binary tree",
+        "D": "Deepest node in a full subtree"
+      },
+      "correctAnswer": "B",
+      "explanation": "A complete binary tree is a binary tree with all levels completely filled, except possibly the last level. All nodes in the last level, if any, are filled from left to right.",
+      "difficulty": "Medium"
+    }
+  ]
+}
