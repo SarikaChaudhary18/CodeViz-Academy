@@ -1,0 +1,173 @@
+{
+  "topic": "Linked Lists - Singly Linked List",
+  "questions": [
+    {
+      "question": "What is a Singly Linked List?",
+      "options": {
+        "A": "A data structure where each element points to the next element in sequence.",
+        "B": "A data structure where each element contains an array of references to other elements.",
+        "C": "A data structure where each element contains a reference to the previous element.",
+        "D": "A data structure where each element contains a reference to a random element."
+      },
+      "correctAnswer": "A",
+      "explanation": "A Singly Linked List is a type of data structure where each element (node) points to the next element in sequence only. This allows for one-way traversal.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the purpose of a 'head' node in a Linked List?",
+      "options": {
+        "A": "To store the middle element of the Linked List.",
+        "B": "To provide an entry point for traversing the Linked List.",
+        "C": "To maintain insertion and deletion efficiency at the end of the Linked List.",
+        "D": "To optimize node searching."
+      },
+      "correctAnswer": "B",
+      "explanation": "The 'head' node serves as the starting point for traversing the Linked List, allowing for efficient access to the first element.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the time complexity for traversing a Linked List using a pointer?",
+      "options": {
+        "A": "O(n)",
+        "B": "O(1)",
+        "C": "O(log n)",
+        "D": "O(n/2)"
+      },
+      "correctAnswer": "A",
+      "explanation": "Traversing a Linked List using a pointer involves accessing each element sequentially, resulting in a linear time complexity of O(n).",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which data structure is most similar to a Singly Linked List?",
+      "options": {
+        "A": "Doubly Linked List",
+        "B": "Array",
+        "C": "Stack",
+        "D": "Queue"
+      },
+      "correctAnswer": "B",
+      "explanation": "While Linked Lists have dynamic memory allocation, an Array also stores elements in a sequential manner but has fixed-size storage.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Suppose you have the following Singly Linked List: head -> A -> B -> C. What is the node after 'B'?",
+      "options": {
+        "A": "head",
+        "B": "C",
+        "C": "None",
+        "D": "A"
+      },
+      "correctAnswer": "B",
+      "explanation": "Given the provided Linked List, 'B' points to 'C', thus 'C' is the next node after 'B'.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Consider a Singly Linked List with the following properties: deletion is allowed only at the head node, and no new nodes can be inserted. What kind of operations are most suitable for this Linked List?",
+      "options": {
+        "A": "Push, Pop, Peek",
+        "B": "Insert, Delete, Search",
+        "C": "Append, Prepend, Print",
+        "D": "Pop, Peek, Clear"
+      },
+      "correctAnswer": "A",
+      "explanation": "Considering the constraints, a Stack is an ideal data structure since push, pop, and peek operations can be efficiently implemented.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Why might we choose a Singly Linked List over a traditional Array?",
+      "options": {
+        "A": "Memory efficiency due to dynamic allocation.",
+        "B": "Ease of traversal and searching.",
+        "C": "Efficient use of memory with contiguous storage.",
+        "D": "Dynamic insertion and deletion of elements."
+      },
+      "correctAnswer": "D",
+      "explanation": "Singly Linked Lists offer efficient insertion and deletion of elements since they only require updating the reference of adjacent nodes.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What are the primary advantages of using a Singly Linked List?",
+      "options": {
+        "A": "Memory efficiency and cache friendliness for small datasets.",
+        "B": "Efficient insertion, deletion, and search operations.",
+        "C": "Random access and efficient search for large datasets.",
+        "D": "Memory safety with garbage collection."
+      },
+      "correctAnswer": "B",
+      "explanation": "Singly Linked Lists provide efficient insertion, deletion, and search operations but may not be ideal for data with many random accesses.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "If we want a data structure where we can traverse the elements in both forward and backward directions, which data structure should we use?",
+      "options": {
+        "A": "Doubly Linked List",
+        "B": "Circularly Linked List",
+        "C": "Stack",
+        "D": "Queue"
+      },
+      "correctAnswer": "A",
+      "explanation": "Doubly Linked Lists allow for traversing elements in both forward and backward directions due to the presence of forward and backward pointers.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How do you delete a node from a Singly Linked List?",
+      "options": {
+        "A": "Update the reference of the next node to skip over the node to be deleted.",
+        "B": "Remove the node to be deleted from memory and update the references of adjacent nodes.",
+        "C": "Only update the reference of the previous node to skip over the node to be deleted.",
+        "D": "Do nothing, as Singly Linked Lists do not support deletion."
+      },
+      "correctAnswer": "A",
+      "explanation": "When deleting a node, it is crucial to update the reference of the next node to prevent memory leaks and maintain data integrity.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Consider a scenario where you need to implement a queue data structure using a Singly Linked List. What steps can be taken to support the FIFO (First-In-First-Out) property?",
+      "options": {
+        "A": "Maintain a pointer to the last element and use it to implement enqueuing and dequeuing.",
+        "B": "Use the head node as a reference point to implement enqueuing and dequeuing.",
+        "C": "Implement a doubly linked list data structure with a sentinel node.",
+        "D": "Implement a circular queue using a fixed-size buffer."
+      },
+      "correctAnswer": "B",
+      "explanation": "A Singly Linked List can be used to implement a queue by using the head node as a reference point for enqueuing and dequeuing, adhering to the FIFO property.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Suppose you are tasked with finding an element in a large Singly Linked List. What approach would be most efficient?",
+      "options": {
+        "A": "Implement a binary search algorithm to locate the desired element quickly.",
+        "B": "Use a recursive traversal approach to search for the element.",
+        "C": "Store the elements in an auxiliary data structure, like a hash table, for faster lookup.",
+        "D": "Iterate through the Linked List sequentially until the desired element is found or the end is reached."
+      },
+      "correctAnswer": "D",
+      "explanation": "While a hash table could be used, the most straightforward and efficient method to search a Singly Linked List is a sequential iteration.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Consider a situation where you want to merge two sorted Singly Linked Lists into a single sorted Linked List. What approach would be reasonable?",
+      "options": {
+        "A": "Create a temporary array to hold the elements and sort it, then construct the merged Linked List.",
+        "B": "Traverse the first Linked List and insert each element into the second Linked List in sorted order.",
+        "C": "Create a new node with the smaller of the two front elements and attach it to a new Linked List.",
+        "D": "Merge the Linked Lists into a doubly Linked List to preserve the sorted order."
+      },
+      "correctAnswer": "C",
+      "explanation": "A simple approach to merge two sorted Linked Lists is to choose the smaller of the two front elements, create a new node with this value and add it to the new merged Linked List, and then move to the next nodes in the original Linked Lists.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "If we are dealing with a large dataset and want to ensure efficient iteration and access, what type of Linked List would be most suitable?",
+      "options": {
+        "A": "Static Linked List",
+        "B": "Dynamic Linked List",
+        "C": "Cyclic Linked List",
+        "D": "Unrolled Linked List"
+      },
+      "correctAnswer": "D",
+      "explanation": "An Unrolled Linked List, a variant of a dynamic Linked List, can improve performance for large datasets by combining multiple elements into a single memory block.",
+      "difficulty": "Medium"
+    }
+  ]
+}
