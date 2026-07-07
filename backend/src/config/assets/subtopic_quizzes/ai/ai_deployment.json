@@ -1,0 +1,170 @@
+{
+  "topic": "AI - AI Deployment",
+  "questions": [
+    {
+      "question": "What is the primary purpose of a Model Serving platform?",
+      "options": {
+        "A": "To deploy and manage Machine Learning models on local machines",
+        "B": "To serve predictions from trained Machine Learning models in a scalable and secure manner",
+        "C": "To train Machine Learning models from scratch",
+        "D": "To visualize the inner workings of a Machine Learning model"
+      },
+      "correctAnswer": "B",
+      "explanation": "A Model Serving platform is designed to handle high traffic and serve predictions from trained models efficiently. It provides scalability, security, and manageability features for deploying models in production.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following is an example of a Cloud AI Platform?",
+      "options": {
+        "A": "Google Colab",
+        "B": "Microsoft Azure AI Platform",
+        "C": "Amazon SageMaker",
+        "D": "All of the above"
+      },
+      "correctAnswer": "D",
+      "explanation": "Cloud AI Platforms provide a managed service to deploy, manage, and monitor Machine Learning models at scale. Examples include Google Cloud AI Platform, Microsoft Azure AI Platform, and Amazon SageMaker.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the difference between containerization and virtualization in Machine Learning deployment?",
+      "options": {
+        "A": "Containerization runs the entire operating system, while virtualization runs only a set of applications",
+        "B": "Containerization is less efficient than virtualization",
+        "C": "Containerization provides better isolation and security than virtualization",
+        "D": "Containerization is used only for development, while virtualization is used for production"
+      },
+      "correctAnswer": "C",
+      "explanation": "Containerization provides better isolation and security than virtualization because it runs the application and its dependencies in a single, isolated environment. Virtualization, on the other hand, runs multiple virtual machines on a single host.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the primary benefit of using a Service Mesh for Machine Learning model deployment?",
+      "options": {
+        "A": "Increased latency and overhead",
+        "B": "Improved model accuracy through advanced analytics",
+        "C": "Better observability, scalability, and security for distributed systems",
+        "D": "Reduced model training time through optimized hyperparameter tuning"
+      },
+      "correctAnswer": "C",
+      "explanation": "A Service Mesh provides real-time observability, scalability, and security features for complex distributed systems, making it an ideal choice for deploying Machine Learning models at scale.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Which of the following deployment strategies is typically used for Machine Learning models with real-time requirements?",
+      "options": {
+        "A": "Batch deployment",
+        "B": "Real-time deployment",
+        "C": "Microservices architecture",
+        "D": "Continuous Integration and Continuous Deployment (CI/CD)"
+      },
+      "correctAnswer": "B",
+      "explanation": "Real-time deployment strategies are used for Machine Learning models that require low latency and high throughput, such as chatbots, recommendation systems, and real-time analytics.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the difference between monolithic and microservices architecture for Machine Learning deployment?",
+      "options": {
+        "A": "Monolithic architecture is used for small-scale deployment, while microservices architecture is used for large-scale deployment",
+        "B": "Monolithic architecture is more scalable than microservices architecture",
+        "C": "Monolithic architecture provides better observability and security than microservices architecture",
+        "D": "Monolithic architecture is a collection of microservices, while microservices architecture is a single, monolithic application"
+      },
+      "correctAnswer": "C",
+      "explanation": "Monolithic architecture provides better observability and security than microservices architecture because it has a single, centralized codebase and service boundary. Microservices architecture, on the other hand, is composed of multiple, independent services.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Which of the following is an example of a Kubernetes Operator for Machine Learning deployment?",
+      "options": {
+        "A": "Google Cloud AI Platform",
+        "B": "Amazon SageMaker",
+        "C": "TensorFlow Operator",
+        "D": "All of the above"
+      },
+      "correctAnswer": "D",
+      "explanation": "A Kubernetes Operator is a software component that extends the Kubernetes API with custom resources and controllers. Examples of Kubernetes Operators for Machine Learning include the TensorFlow Operator, which manages TensorFlow workloads, and Google Cloud AI Platform and Amazon SageMaker, which provide managed services for deploying Machine Learning models.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the primary benefit of using a Model Serving platform with built-in Model Monitoring?",
+      "options": {
+        "A": "Improved model accuracy through real-time metrics and logging",
+        "B": "Reduced latency and overhead through optimized model serving",
+        "C": "Better scalability and security through model monitoring and auto-scaling",
+        "D": "All of the above"
+      },
+      "correctAnswer": "D",
+      "explanation": "A Model Serving platform with built-in Model Monitoring provides real-time metrics and logging, optimized model serving, and auto-scaling, making it an ideal choice for deploying and monitoring Machine Learning models at scale.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Which of the following is an example of a DevOps tool for Machine Learning deployment?",
+      "options": {
+        "A": "Jenkins",
+        "B": "Docker",
+        "C": "Kubernetes",
+        "D": "All of the above"
+      },
+      "correctAnswer": "D",
+      "explanation": "DevOps tools provide automation, scalability, and reliability features for CI/CD pipelines. Examples of DevOps tools for Machine Learning include Jenkins for continuous integration and delivery, Docker for containerization, and Kubernetes for container orchestration.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the primary benefit of using a Serverless platform for Machine Learning deployment?",
+      "options": {
+        "A": "Reduced latency and overhead through optimized model serving",
+        "B": "Improved model accuracy through real-time metrics and logging",
+        "C": "Better scalability and security through serverless architecture",
+        "D": "All of the above"
+      },
+      "correctAnswer": "C",
+      "explanation": "A Serverless platform provides a highly scalable and secure architecture for deploying Machine Learning models, making it an ideal choice for applications with unpredictable traffic and variable workloads.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Which of the following deployment strategies is typically used for Machine Learning models that require real-time predictions and updates?",
+      "options": {
+        "A": "Continuous Integration and Continuous Deployment (CI/CD)",
+        "B": "Continuous Integration and Continuous Delivery (CICD)",
+        "C": "Real-time deployment with incremental updates",
+        "D": "Batch deployment with periodic updates"
+      },
+      "correctAnswer": "C",
+      "explanation": "Real-time deployment with incremental updates is used for Machine Learning models that require real-time predictions and updates, such as recommendation systems, speech recognition, and autonomous vehicles.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the primary benefit of using an Edge AI platform for Machine Learning deployment?",
+      "options": {
+        "A": "Reduced latency and overhead through edge processing",
+        "B": "Improved model accuracy through real-time data integration",
+        "C": "Better scalability and security through edge architecture",
+        "D": "All of the above"
+      },
+      "correctAnswer": "D",
+      "explanation": "An Edge AI platform provides real-time processing, edge computing, and advanced analytics features for deploying Machine Learning models at the edge, making it an ideal choice for applications with low latency and high throughput requirements.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Which of the following is an example of an Edge AI platform for Machine Learning deployment?",
+      "options": {
+        "A": "TensorFlow",
+        "B": "PyTorch",
+        "C": "Azure IoT Edge",
+        "D": "All of the above"
+      },
+      "correctAnswer": "D",
+      "explanation": "An Edge AI platform is a software platform that provides real-time processing, edge computing, and advanced analytics features for deploying Machine Learning models at the edge. Examples of Edge AI platforms include TensorFlow, PyTorch, and Azure IoT Edge.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the primary benefit of using a Model Serving platform with built-in Model Auto-Scaling?",
+      "options": {
+        "A": "Improved model accuracy through real-time metrics and logging",
+        "B": "Reduced latency and overhead through optimized model serving",
+        "C": "Better scalability and security through model auto-scaling",
+        "D": "All of the above"
+      }
+    }
+  ]
+}
