@@ -1,0 +1,158 @@
+{
+  "topic": "Development - High Level Design",
+  "questions": [
+    {
+      "question": "When designing a high-level system, what is the primary goal of a class diagram?",
+      "options": {
+        "A": "To show the relationships between different classes",
+        "B": "To identify the responsibilities of each class",
+        "C": "To predict the performance of the system",
+        "D": "To implement the database schema"
+      },
+      "correctAnswer": "A",
+      "explanation": "A class diagram is used to visualize the static structure of a system, showing the relationships between classes, such as inheritance, composition, and associations.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the difference between a high-level design and a low-level design?",
+      "options": {
+        "A": "High-level design focuses on implementation details, while low-level design focuses on system requirements",
+        "B": "High-level design focuses on system requirements, while low-level design focuses on implementation details",
+        "C": "High-level design is done by senior developers, while low-level design is done by junior developers",
+        "D": "High-level design is a phase of the development lifecycle, while low-level design is not"
+      },
+      "correctAnswer": "B",
+      "explanation": "High-level design focuses on the overall system architecture and requirements, while low-level design focuses on the implementation details, such as code and data structure.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the primary benefit of using a top-down design approach?",
+      "options": {
+        "A": "It is faster than bottom-up design",
+        "B": "It helps identify potential risks early in the development process",
+        "C": "It reduces maintenance costs",
+        "D": "It eliminates the need for testing"
+      },
+      "correctAnswer": "B",
+      "explanation": "Top-down design involves starting with a high-level view of the system and gradually adding details, which helps identify potential risks and requirements early in the development process.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the difference between a data-driven system and a function-driven system?",
+      "options": {
+        "A": "A data-driven system relies on pre-defined functions, while a function-driven system relies on pre-defined data",
+        "B": "A data-driven system relies on user input, while a function-driven system relies on pre-defined logic",
+        "C": "A data-driven system focuses on the data model, while a function-driven system focuses on the business logic",
+        "D": "A data-driven system is more flexible than a function-driven system"
+      },
+      "correctAnswer": "C",
+      "explanation": "A data-driven system focuses on the data model, where data is used to drive the application's behavior, while a function-driven system focuses on the business logic, where pre-defined functions are used to process data.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How do developers typically validate their high-level design?",
+      "options": {
+        "A": "By writing unit tests",
+        "B": "By creating a prototype",
+        "C": "By performing a feasibility study",
+        "D": "By creating a detailed design document"
+      },
+      "correctAnswer": "C",
+      "explanation": "Developers typically validate their high-level design by performing a feasibility study, which involves assessing the system's technical and business viability.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the purpose of a context diagram in high-level design?",
+      "options": {
+        "A": "To show the system's internal structure",
+        "B": "To show the relationships between different external entities",
+        "C": "To show the system's data model",
+        "D": "To show the system's user interface"
+      },
+      "correctAnswer": "B",
+      "explanation": "A context diagram is used to show the relationships between different external entities, such as users, systems, and devices, which helps identify the system's boundaries and requirements.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How do you identify performance bottlenecks in high-level design?",
+      "options": {
+        "A": "By analyzing the system's data model",
+        "B": "By identifying the system's use cases",
+        "C": "By analyzing the system's architecture",
+        "D": "By identifying the system's user interface"
+      },
+      "correctAnswer": "C",
+      "explanation": "To identify performance bottlenecks, you need to analyze the system's architecture, including the allocation of responsibilities, the communication patterns, and the interfaces.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the difference between a high-level architecture and a low-level architecture?",
+      "options": {
+        "A": "A high-level architecture focuses on the system's overall structure, while a low-level architecture focuses on the implementation details",
+        "B": "A high-level architecture focuses on the system's user interface, while a low-level architecture focuses on the system's business logic",
+        "C": "A high-level architecture is defined by senior developers, while a low-level architecture is defined by junior developers",
+        "D": "A high-level architecture is created before low-level architecture"
+      },
+      "correctAnswer": "A",
+      "explanation": "A high-level architecture focuses on the system's overall structure, including the system's components, their relationships, and the interfaces, while a low-level architecture focuses on the implementation details, such as the data structures and the algorithms.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the primary benefit of using a microservices architecture?",
+      "options": {
+        "A": "It is more efficient than a monolithic architecture",
+        "B": "It is more scalable than a monolithic architecture",
+        "C": "It is more maintainable than a monolithic architecture",
+        "D": "It eliminates the need for testing"
+      },
+      "correctAnswer": "B",
+      "explanation": "Microservices architecture is more scalable than a monolithic architecture because each microservices is a separate, independent process that can be scaled and deployed independently.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How do you identify security risks in high-level design?",
+      "options": {
+        "A": "By analyzing the system's data model",
+        "B": "By identifying the system's use cases",
+        "C": "By analyzing the system's architecture",
+        "D": "By identifying the system's user interface"
+      },
+      "correctAnswer": "C",
+      "explanation": "To identify security risks, you need to analyze the system's architecture, including the allocation of responsibilities, the communication patterns, and the interfaces.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the purpose of a use case diagram in high-level design?",
+      "options": {
+        "A": "To show the system's internal structure",
+        "B": "To show the relationships between different external entities",
+        "C": "To show the system's business logic",
+        "D": "To show the system's user interface"
+      },
+      "correctAnswer": "B",
+      "explanation": "A use case diagram is used to show the relationships between different external entities, such as actors and use cases, which helps identify the system's requirements and boundaries.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How do you validate the correctness of a high-level design?",
+      "options": {
+        "A": "By writing unit tests",
+        "B": "By creating a prototype",
+        "C": "By performing a feasibility study",
+        "D": "By creating a detailed design document"
+      },
+      "correctAnswer": "B",
+      "explanation": "Developers typically validate the correctness of a high-level design by creating a prototype, which allows them to test the design and identify any issues or inconsistencies.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the difference between a high-level model and a low-level model?",
+      "options": {
+        "A": "A high-level model focuses on the system's overall structure, while a low-level model focuses on the implementation details",
+        "B": "A high-level model focuses on the system's user interface, while a low-level model focuses on the system's business logic",
+        "C": "A high-level model is defined by senior developers, while a low-level model is defined by junior developers",
+        "D": "A high-level model is created before a low-level model"
+      }
+    }
+  ]
+}
