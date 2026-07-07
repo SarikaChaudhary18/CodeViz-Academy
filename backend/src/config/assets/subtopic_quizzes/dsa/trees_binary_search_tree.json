@@ -1,0 +1,170 @@
+{
+  "topic": "Trees - Binary Search Tree",
+  "questions": [
+    {
+      "question": "What is a Binary Search Tree (BST)?",
+      "options": {
+        "A": "A binary tree where each node has at most two children (left and right).",
+        "B": "A binary tree where each node has two children (left and right), and all elements in the left subtree are less than the node, while all elements in the right subtree are greater than the node.",
+        "C": "A binary tree where each node has two children (left and right), and all elements in the left subtree are greater than the node, while all elements in the right subtree are less than the node.",
+        "D": "A binary tree where each node has one child."
+      },
+      "correctAnswer": "B",
+      "explanation": "A Binary Search Tree is a binary tree where each node has two children (left and right), and all elements in the left subtree are less than the node, while all elements in the right subtree are greater than the node. This ensures efficient search, insertion, and deletion operations.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the time complexity of searching for a node in a Binary Search Tree?",
+      "options": {
+        "A": "O(1)",
+        "B": "O(log n)",
+        "C": "O(n)",
+        "D": "O(n log n)"
+      },
+      "correctAnswer": "B",
+      "explanation": "The time complexity of searching for a node in a Binary Search Tree is O(log n) because the tree is height-balanced, meaning that the number of nodes to search through is proportional to the height of the tree, which is logarithmic in the number of nodes.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the main goal of maintaining a Binary Search Tree?",
+      "options": {
+        "A": "To achieve a higher time complexity for search operations.",
+        "B": "To ensure that all left child nodes are greater than their parent node and all right child nodes are less than their parent node.",
+        "C": "To balance the tree after insertions or deletions.",
+        "D": "To increase the number of nodes in the tree."
+      },
+      "correctAnswer": "B",
+      "explanation": "The main goal of maintaining a Binary Search Tree is to ensure that all left child nodes are greater than their parent node and all right child nodes are less than their parent node, which allows for efficient search, insertion, and deletion operations.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What happens when a binary tree is self-balancing? ",
+      "options": {
+        "A": " It makes searching and inserting nodes very inefficient in the case of skewed trees",
+        "B": " It helps to maintain the height of the tree close to the logarithm of the number of nodes",
+        "C": "It increases the time for insertion operations.",
+        "D": "It makes trees useless in real-world applications"
+      },
+      "correctAnswer": "B",
+      "explanation": " When a binary tree is self-balancing, it helps to maintain the height of the tree close to the logarithm of the number of nodes, making the time complexity of search, insertion, and deletion operations more efficient.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the term for a node with no children in a Binary Search Tree?",
+      "options": {
+        "A": "Leaf node",
+        "B": "Internal node",
+        "C": "Root node",
+        "D": "External node"
+      },
+      "correctAnswer": "A",
+      "explanation": "A node with no children in a Binary Search Tree is called a leaf node. Leaf nodes do not have any children, meaning they are the terminal nodes in the tree.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the purpose of traversing a Binary Search Tree using inorder traversal?",
+      "options": {
+        "A": "To find the height of the tree.",
+        "B": "To display the nodes of the tree in ascending order.",
+        "C": "To check if the tree is empty.",
+        "D": "To calculate the sum of all node values."
+      },
+      "correctAnswer": "B",
+      "explanation": "Inorder traversal of a Binary Search Tree visits the left subtree, then the current node, and finally the right subtree, effectively displaying the nodes in ascending order.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the correct order of node visitation for pre-order traversal of a Binary Search Tree?",
+      "options": {
+        "A": "Root, left, right",
+        "B": "Left, root, right",
+        "C": "Right, left, root",
+        "D": "Root, right, left"
+      },
+      "correctAnswer": "A",
+      "explanation": "Pre-order traversal of a Binary Search Tree visits the root node, then the left subtree, and finally the right subtree.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the time complexity of inserting a node into a Binary Search Tree, assuming the tree is already balanced?",
+      "options": {
+        "A": "O(1)",
+        "B": "O(log n)",
+        "C": "O(n)",
+        "D": "O(n log n)"
+      },
+      "correctAnswer": "B",
+      "explanation": "The time complexity of inserting a node into a Binary Search Tree is O(log n) because the tree is already balanced, and the number of nodes to traverse is proportional to the height of the tree.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which tree traversal method visits the nodes in the following order: root, right, left?",
+      "options": {
+        "A": "Inorder traversal",
+        "B": "Pre-order traversal",
+        "C": "Post-order traversal",
+        "D": "None of the above"
+      },
+      "correctAnswer": "B",
+      "explanation": "Pre-order traversal visits the root node, then the right subtree, and finally the left subtree.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the purpose of left rotation in a Binary Search Tree?",
+      "options": {
+        "A": "To right-rotate a subtree",
+        "B": "To increase the height of the tree",
+        "C": "To maintain the tree's balance after insertion",
+        "D": "To decrease the tree's height"
+      },
+      "correctAnswer": "C",
+      "explanation": "Left rotation is performed when an insertion operation causes a subtree to become unbalanced, and it helps to maintain the tree's balance by rotating the node to the left.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the difference between a Binary Search Tree and a regular Binary Tree?",
+      "options": {
+        "A": "A Binary Search Tree always balances itself after insertion operations, while a regular Binary Tree does not.",
+        "B": "A Binary Search Tree has a greater maximum height compared to regular Binary Tree",
+        "C": "A Binary Search Tree ensures that all elements in the left subtree are less than the node, while all elements in the right subtree are greater than the node.",
+        "D": "A Binary Search Tree requires more computational complexity compared to regular Binary Tree"
+      },
+      "correctAnswer": "C",
+      "explanation": "The key difference between a Binary Search Tree and a regular Binary Tree is that a Binary Search Tree ensures that all elements in the left subtree are less than the node, while all elements in the right subtree are greater than the node.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the time complexity of deleting a node in a Binary Search Tree, assuming the tree is already balanced?",
+      "options": {
+        "A": "O(1)",
+        "B": "O(log n)",
+        "C": "O(n)",
+        "D": "O(n log n)"
+      },
+      "correctAnswer": "B",
+      "explanation": "The time complexity of deleting a node in a Binary Search Tree is O(log n) because the tree is already balanced, and the number of nodes to traverse is proportional to the height of the tree.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the term for a node that is greater than its parent in a Binary Search Tree?",
+      "options": {
+        "A": "Internal node",
+        "B": "Leaf node",
+        "C": "Invalid node",
+        "D": "None of the above"
+      },
+      "correctAnswer": "D",
+      "explanation": "In a Binary Search Tree, a node must be less than its parent. A node that is greater than its parent would not be considered valid.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the purpose of in-order traversal of a Binary Search Tree when printing the elements?",
+      "options": {
+        "A": "To print the elements in reverse order.",
+        "B": "To print the elements in ascending order.",
+        "C": "To print the elements in a random order.",
+        "D": "To check for duplicates."
+      }
+    }
+  ]
+}
