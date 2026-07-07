@@ -1,0 +1,113 @@
+{
+  "topic": "Bit Manipulation - Power of Two",
+  "questions": [
+    {
+      "question": "What does the bitwise AND operation (&) do in the expression (x - 1) & x?",
+      "options": {
+        "A": "Shifts the bits of x to the left and fills the leftmost bits with the value 1",
+        "B": "Picks the least significant 1-bit in the binary representation of x and clears all the lower-order bits",
+        "C": "Performs a bitwise XOR operation between x and 1",
+        "D": "Picks the most significant 1-bit in the binary representation of x and sets all the lower-order bits to 1"
+      },
+      "correctAnswer": "B",
+      "explanation": "The expression (x - 1) & x is a common pattern for checking if a bit is set in x. The expression effectively clears all the lower-order bits of x, leaving only the least significant 1-bit. The bitwise AND operation (&) then picks this bit and sets all the lower-order bits to 0.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How do you check if a number is a power of two?",
+      "options": {
+        "A": "x & (x - 1) == 0",
+        "B": "x | (x - 1) == 0",
+        "C": "x ^ (x - 1) == 0",
+        "D": "x << 1 == 0"
+      },
+      "correctAnswer": "A",
+      "explanation": "A number is a power of two if and only if it has exactly one 1-bit in its binary representation. The bitwise AND operation (&) between a number and the number minus one will result in zero if and only if the number is a power of two.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Why does the expression `x & (-x)` result in a number with only one 1-bit?",
+      "options": {
+        "A": "Because the bitwise NOT operation (~) inverts all the bits of x",
+        "B": "Because the bitwise AND operation (&) picks the least significant 1-bit in the binary representation of x",
+        "C": "Because the bitwise NOT operation (~) and bitwise AND operation (&) together have a complementary effect on the bits of x",
+        "D": "Because the expression results in a number with no bits set to 1"
+      },
+      "correctAnswer": "C",
+      "explanation": "The bitwise NOT operation (~) inverts all the bits of x, and the expression `-x` computes the two's complement of x. When we perform a bitwise AND operation (&) between x and -x, all the bits that were not set to 1 in either x and -x will be cleared, leaving a number with only one 1-bit.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the result of the expression `x & ((x - 1) | y)`?",
+      "options": {
+        "A": "x & y",
+        "B": "x & (x - 1) | y",
+        "C": "The least significant non-zero bits of x or y",
+        "D": "The most significant non-zero bits of x or y"
+      },
+      "correctAnswer": "C",
+      "explanation": "The expression `x & ((x - 1) | y)` first computes the bitwise OR operation between `(x - 1)` and `y`, which picks the least significant non-zero bits of `y` that are also set in `x`. The bitwise AND operation between `x` and the result then picks the least significant non-zero bits of `x` that are also set in the result.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Can you use the power property of bitwise operations to simplify the expression `x == 1 || x & (x - 1) == 0`?",
+      "options": {
+        "A": "Yes, using bitwise AND with the complement of the input",
+        "B": "Yes, by using a recursive approach",
+        "C": "No, it is not possible to simplify the expression",
+        "D": "Yes, using the fact that `x` is a power of two"
+      },
+      "correctAnswer": "A",
+      "explanation": "The expression can be simplified to `x == 1 || (x & (x - 1))`, which is equivalent to `x == 1 || x & ~x == x == 1`. We can then rewrite the expression to a single condition `x & ~x == 0` using the fact that an XOR with the complement has a complementary effect, i.e., `x == (~x ^ y).",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Can you implement the function `isPowerOfTwo` in C with the help of bitwise operations?",
+      "options": {
+        "A": "Yes, by checking if `(x & (x - 1)) == 0`",
+        "B": "Yes, by checking if `(x | (x - 1)) == 0`",
+        "C": "Yes, by checking if `(x & (x + 1)) == 0`",
+        "D": "No, this is not possible"
+      },
+      "correctAnswer": "A",
+      "explanation": "The function can be implemented using the property that a number is a power of two if and only if it has exactly one 1-bit in its binary representation. The expression `(x & (x - 1)) == 0` is equivalent to checking if `x` is a power of two. The `&&` operator has higher precedence than the `==` operator, so the expression is equivalent to `x == 1 || (x & (x - 1) == 0)`. This function can be used efficiently, since it only requires a constant number of memory accesses and no loops or recursive calls.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Can you implement the function `isPowerOfTwo` in Python with the help of bitwise operations?",
+      "options": {
+        "A": "Yes, by checking if `~x & (x - 1) == 0`",
+        "B": "Yes, by checking if `x & (x - 1) == 0`",
+        "C": "Yes, by checking if `x | (x - 1) == 0`",
+        "D": "No, this is not possible"
+      },
+      "correctAnswer": "B",
+      "explanation": "The function can be implemented using the property that a number is a power of two if and only if it has exactly one 1-bit in its binary representation. The expression `x & (x - 1) == 0` is equivalent to checking if `x` is a power of two. The bitwise AND operation (&) and the comparison to zero == 0 are enough to determine if `x` is a power of two, without need of additional logic or conditional checks.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Can you implement the function `isPowerOfTwo` in Java with the help of bitwise operations?",
+      "options": {
+        "A": "Yes, by checking if `(mask & n) != 0`",
+        "B": "Yes, by checking if `(n & (n - 1)) == 0`",
+        "C": "Yes, by checking if `(n & ~n) == 0`",
+        "D": "No, this is not possible"
+      },
+      "correctAnswer": "B",
+      "explanation": "In Java, bitwise operations are implemented using shift operators (&, |, ^, ~, <<, >>). The function can be implemented using the property that a number is a power of two if and only if it has exactly one 1-bit in its binary representation. The expression `(n & (n - 1)) == 0` is equivalent to checking if `n` is a power of two. This function can be used efficiently, since it only requires a constant number of memory accesses and no loops or recursive calls.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Can you implement the function `isPowerOfTwo` in C++ with the help of bitwise operations?",
+      "options": {
+        "A": "Yes, by checking if `(x & (x - 1)) == 0`",
+        "B": "Yes, by checking if `(x | (x - 1)) == 0`",
+        "C": "Yes, by checking if `(x & (x + 1)) == 0`",
+        "D": "No, this is not possible"
+      },
+      "correctAnswer": "A",
+      "explanation": "The function can be implemented using the property that a number is a power of two if and only if it has exactly one 1-bit in its binary representation. The expression `(x & (x - 1)) == 0` is equivalent to checking if `x` is a power of two. The function requires the use of bitwise AND (&) and the comparison to zero == 0. This provides the most efficient solution.",
+      "difficulty": "Easy"
+    }
+  ]
+}
