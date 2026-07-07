@@ -1,0 +1,170 @@
+{
+  "topic": "Dynamic Programming - 2D DP",
+  "questions": [
+    {
+      "question": "What is the key characteristic of the 2D DP approach?",
+      "options": {
+        "A": "Break down a 2D problem into smaller 1D subproblems.",
+        "B": "Store the solutions of smaller subproblems in a 2D array.",
+        "C": "Apply greedy algorithms to select the best choice.",
+        "D": "Use recursive functions to build the solution."
+      },
+      "correctAnswer": "B",
+      "explanation": "The 2D DP approach involves breaking down a 2D problem into smaller subproblems and storing the solutions of these subproblems in a 2D array, which is often called the DP table. This approach is particularly useful for problems with overlapping subproblems.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following problems is a good candidate for 2D DP?",
+      "options": {
+        "A": "Find the longest increasing subsequence of an array.",
+        "B": "Solve a graph traversal problem using DFS/BFS.",
+        "C": "Compute the maximum sum of a submatrix within a matrix.",
+        "D": "Perform matrix multiplication."
+      },
+      "correctAnswer": "C",
+      "explanation": "Problems like computing the maximum sum of a submatrix within a matrix involve finding the maximum sum of a subarray and have overlapping subproblems, which makes them good candidates for 2D DP.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the name of the technique used to fill the DP table when all elements of the table are dependent on the previous element?",
+      "options": {
+        "A": "Overlapping Subproblems Optimization Technique.",
+        "B": "Matrix Chain Multiplication Algorithm.",
+        "C": "Longest Common Subsequence Technique.",
+        "D": "Fill-Up Approach."
+      },
+      "correctAnswer": "D",
+      "explanation": "When the elements of the DP table are dependent on the previous element, this is called a Fill-Up approach. This technique involves filling up the entire row or column first.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Consider an optimization problem: Given a cost matrix, compute the cost of the minimum spanning tree of an undirected graph. Which 2D DP algorithm can be applied to solve this problem?",
+      "options": {
+        "A": "Kruskal's Algorithm.",
+        "B": "Prim's Algorithm.",
+        "C": "2D DP with Memoization.",
+        "D": "None of the above."
+      },
+      "correctAnswer": "C",
+      "explanation": "This problem is a 2D DP problem because it requires computing the minimum value in a 2D DP table based on the previous elements. Memoization is an effective way to optimize the solution for performance.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How do you fill up the DP table when all elements of the table are independent of each other?",
+      "options": {
+        "A": "Fill-Up Approach.",
+        "B": "Bottom-Up Approach.",
+        "C": "Top-Down Approach.",
+        "D": "None of the above."
+      },
+      "correctAnswer": "B",
+      "explanation": "When the elements of the DP table are independent of each other, the DP table is typically filled up using a bottom-up approach where each cell is filled by first computing the previous rows/columns, and so on.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Consider an optimization problem with a 2D DP approach. What type of recursion do we typically employ when the DP table is already computed and we need to reconstruct the solution?",
+      "options": {
+        "A": "Forward Recursive.",
+        "B": "Backward Recursive.",
+        "C": "Top-Down Recursive.",
+        "D": "None of the above."
+      },
+      "correctAnswer": "B",
+      "explanation": "When the DP table is already computed, we typically employ a backward recursive approach to reconstruct the solution because we start from the final result and backtrack to find the previous steps.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "How do you modify the 2D DP approach to handle problems with varying subproblem sizes?",
+      "options": {
+        "A": "Increase the size of the DP table.",
+        "B": "Shrink the size of the DP table.",
+        "C": "Use a sliding window technique.",
+        "D": "None of the above."
+      },
+      "correctAnswer": "C",
+      "explanation": "When dealing with problems that have subproblems of varying sizes, the 2D DP approach can be modified by applying a sliding window technique where the window size is adjusted depending on the size of each subproblem.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Suppose you are given two 2D DP algorithms A and B, both solving the same problem but with different DP table sizes. Which algorithm has a larger constant time complexity for accessing elements?",
+      "options": {
+        "A": "Algorithm A if the DP table size is smaller.",
+        "B": "Algorithm B if the DP table size is larger.",
+        "C": "Both have the same time complexity.",
+        "D": "None of the above."
+      },
+      "correctAnswer": "C",
+      "explanation": "Regardless of the DP table sizes, 2D DP algorithms typically access elements in a uniform manner, so their time complexities are always the same.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Why is memoization often a good fit for 2D DP algorithms in real-world applications?",
+      "options": {
+        "A": "It optimizes the DP table size.",
+        "B": "It reduces the memory footprint.",
+        "C": "It avoids re-computing subproblems.",
+        "D": "All of the above."
+      },
+      "correctAnswer": "D",
+      "explanation": "Memoization often fits 2D DP algorithms well because it optimizes the DP table size by storing the results of previously computed subproblems, reduces the memory footprint, and avoids re-computing subproblems.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "How do you detect if a dynamic programming problem is over-optimizing, i.e., when the solution space is reduced too much?",
+      "options": {
+        "A": "Check if the problem size is decreasing with each recursive call.",
+        "B": "Increase the DP table size.",
+        "C": "Monitor the performance metrics such as time and space complexity.",
+        "D": "None of the above."
+      },
+      "correctAnswer": "C",
+      "explanation": "To detect over-optimization, monitor the performance metrics, specifically time and space complexity, rather than relying on heuristic approaches like monitoring problem size.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "When to use 2D DP for graph problems?",
+      "options": {
+        "A": "For problems with cyclic graphs.",
+        "B": "For problems with directed graphs.",
+        "C": "For problems with unweighted graphs.",
+        "D": "For problems with negative-weighted graphs."
+      },
+      "correctAnswer": "C",
+      "explanation": "2D DP is particularly well-suited for handling unweighted graph problems where it can efficiently explore the graph without getting lost in complex cases like cyclic graphs.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "When to use 1D DP for graph problems?",
+      "options": {
+        "A": "For problems with cyclic graphs.",
+        "B": "For problems with weighted graphs.",
+        "C": "For problems with bipartite graphs.",
+        "D": "For problems with planar graphs."
+      },
+      "correctAnswer": "B",
+      "explanation": "One-dimensional DP (1D DP) might be more suitable for graph problems involving weighted graphs, which often require considering multiple edge weights.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Suppose you need to compute the minimum number of edits to transform one string into another. Which approach do you recommend?",
+      "options": {
+        "A": "Use a dynamic programming approach to fill a DP table with all possible edit distances.",
+        "B": "Implement the Levenshtein distance algorithm.",
+        "C": "Use an A* search algorithm.",
+        "D": "None of the above."
+      },
+      "correctAnswer": "B",
+      "explanation": "This problem falls directly under the Levenshtein distance computation, which is an example of how a 2D DP table can represent state values and actions.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Consider a problem that involves solving a multistage network flow problem. Do you recommend 1D DP, 2D DP, or another method?",
+      "options": {
+        "A": "1D DP to model all nodes.",
+        "B": "2D DP to handle both stages.",
+        "C": "Flow-based algorithms like the Max-Flow algorithm.",
+        "D": "Dynamic programming cannot solve flow problems."
+      }
+    }
+  ]
+}
