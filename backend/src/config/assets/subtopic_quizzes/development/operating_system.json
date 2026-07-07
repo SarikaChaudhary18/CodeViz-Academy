@@ -1,0 +1,185 @@
+{
+  "topic": "Development - Operating System",
+  "questions": [
+    {
+      "question": "Which of the following best describes the role of a process in an operating system?",
+      "options": {
+        "A": "A process is a thread within a program.",
+        "B": "A process is an independent program that can be run by the user.",
+        "C": "A process is a set of system resources, including memory and CPU time.",
+        "D": "A process is a sequence of instructions in a program."
+      },
+      "correctAnswer": "B",
+      "explanation": "In an operating system, a process is an independent program that can be run by the user, and it can be terminated or paused independently.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the primary purpose of the kernel in an operating system?",
+      "options": {
+        "A": "To provide a user interface for the operating system.",
+        "B": "To manage storage devices such as hard drives and solid-state drives.",
+        "C": "To manage system resources such as memory and CPU time.",
+        "D": "To protect the operating system from security threats."
+      },
+      "correctAnswer": "C",
+      "explanation": "The kernel is responsible for managing system resources, including memory and CPU time, and it provides a platform for running applications.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following is an example of a multithreaded operating system?",
+      "options": {
+        "A": "Windows 10",
+        "B": "Android 10",
+        "C": "Ubuntu Linux 20.04",
+        "D": "macOS 12"
+      },
+      "correctAnswer": "B",
+      "explanation": "Android 10 is an example of a multithreaded operating system, as it uses multiple threads to run background processes and services.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the purpose of a file system in an operating system?",
+      "options": {
+        "A": "To manage system resources such as memory and CPU time.",
+        "B": "To provide a user interface for the operating system.",
+        "C": "To store and manage files and directories.",
+        "D": "To protect the operating system from security threats."
+      },
+      "correctAnswer": "C",
+      "explanation": "The file system is responsible for managing and storing files and directories, and it provides a platform for reading and writing data.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following is an example of a real-time operating system?",
+      "options": {
+        "A": "Windows 10",
+        "B": "Ubuntu Linux 20.04",
+        "C": "VxWorks",
+        "D": "Android 10"
+      },
+      "correctAnswer": "C",
+      "explanation": "VxWorks is an example of a real-time operating system, as it is designed to operate in real-time environments such as aerospace and industrial control systems.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the role of a network interface controller (NIC) in an operating system?",
+      "options": {
+        "A": "To manage system resources such as memory and CPU time.",
+        "B": "To provide a user interface for the operating system.",
+        "C": "To receive and send messages over a network connection.",
+        "D": "To protect the operating system from security threats."
+      },
+      "correctAnswer": "C",
+      "explanation": "The NIC is responsible for receiving and sending messages over a network connection, and it provides a platform for communicating with other devices on the network.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following is an example of a monolithic kernel architecture?",
+      "options": {
+        "A": "Microkernel architecture",
+        "B": "Monolithic kernel architecture",
+        "C": "Hybrid kernel architecture",
+        "D": "Exokernel architecture"
+      },
+      "correctAnswer": "B",
+      "explanation": "The monolithic kernel architecture is a type of kernel architecture where the kernel is a single, monolithic block of code that contains all the operating system's functionality.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the purpose of a driver in an operating system?",
+      "options": {
+        "A": "To manage system resources such as memory and CPU time.",
+        "B": "To provide a user interface for the operating system.",
+        "C": "To interface between a hardware device and the operating system.",
+        "D": "To protect the operating system from security threats."
+      },
+      "correctAnswer": "C",
+      "explanation": "The driver is responsible for interfacing between a hardware device and the operating system, and it provides a platform for communicating with the device.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following is an example of a virtualization technology?",
+      "options": {
+        "A": "Hyper-V",
+        "B": "VMware ESXi",
+        "C": "KVM",
+        "D": "Xen"
+      },
+      "correctAnswer": "B",
+      "explanation": "VMware ESXi is an example of a virtualization technology, as it provides a platform for running virtual machines on a physical host server.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the role of a scheduler in an operating system?",
+      "options": {
+        "A": "To manage system resources such as memory and CPU time.",
+        "B": "To provide a user interface for the operating system.",
+        "C": "To schedule tasks and processes to run on the CPU.",
+        "D": "To protect the operating system from security threats."
+      },
+      "correctAnswer": "C",
+      "explanation": "The scheduler is responsible for scheduling tasks and processes to run on the CPU, and it provides a platform for managing the CPU utilization.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following is an example of a multilevel feedback queue (MFQ) scheduling algorithm?",
+      "options": {
+        "A": "First-come-first-served (FCFS) scheduling algorithm",
+        "B": "Shortest job first (SJF) scheduling algorithm",
+        "C": "Round-robin (RR) scheduling algorithm",
+        "D": "Multilevel feedback queue (MFQ) scheduling algorithm"
+      },
+      "correctAnswer": "D",
+      "explanation": "The MFQ scheduling algorithm is a type of scheduling algorithm that provides multiple priority queues to schedule tasks and processes.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the purpose of a boot loader in an operating system?",
+      "options": {
+        "A": "To manage system resources such as memory and CPU time.",
+        "B": "To provide a user interface for the operating system.",
+        "C": "To load the operating system into memory and start the boot process.",
+        "D": "To protect the operating system from security threats."
+      },
+      "correctAnswer": "C",
+      "explanation": "The boot loader is responsible for loading the operating system into memory and starting the boot process, and it provides a platform for configuring the boot device.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following is an example of a loadable kernel module (LKM) architecture?",
+      "options": {
+        "A": "Monolithic kernel architecture",
+        "B": "Microkernel architecture",
+        "C": "Hybrid kernel architecture",
+        "D": "Loadable kernel module (LKM) architecture"
+      },
+      "correctAnswer": "D",
+      "explanation": "The LKM architecture is a type of kernel architecture where the kernel is composed of loadable modules that can be loaded and unloaded at runtime.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the purpose of a file system table (FST) in an operating system?",
+      "options": {
+        "A": "To manage system resources such as memory and CPU time.",
+        "B": "To provide a user interface for the operating system.",
+        "C": "To store and manage file names and directories.",
+        "D": "To protect the operating system from security threats."
+      },
+      "correctAnswer": "C",
+      "explanation": "The FST is responsible for storing and managing file names and directories, and it provides a platform for locating and accessing files and directories.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following is an example of a virtual file system (VFS) architecture?",
+      "options": {
+        "A": "Monolithic kernel architecture",
+        "B": "Microkernel architecture",
+        "C": "Hybrid kernel architecture",
+        "D": "Virtual file system (VFS) architecture"
+      },
+      "correctAnswer": "D",
+      "explanation": "The VFS architecture is a type of file system architecture that provides a common interface for managing file systems and device files.",
+      "difficulty": "Easy"
+    }
+  ]
+}
