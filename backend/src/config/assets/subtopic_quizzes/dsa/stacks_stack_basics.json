@@ -1,0 +1,185 @@
+{
+  "topic": "Stacks - Stack Basics",
+  "questions": [
+    {
+      "question": "What is the primary operation performed when pushing an element onto a stack?",
+      "options": {
+        "A": "Popping the top element",
+        "B": "Peeking at the top element",
+        "C": "Reversing the order of elements",
+        "D": "Adding the new element to the top"
+      },
+      "correctAnswer": "D",
+      "explanation": "When pushing an element onto a stack, the new element is added to the top of the stack, effectively changing the stack from the original top element.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following stack operations will result in an empty stack?",
+      "options": {
+        "A": "Popping the top element",
+        "B": "Peeking at the top element without removing it",
+        "C": "Reversing the order of elements",
+        "D": "Emptying all elements from the stack"
+      },
+      "correctAnswer": "A",
+      "explanation": "If a stack contains only one element and the user attempts to pop it, the stack will become empty. The remaining operations do not affect the emptiness of the stack.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How does a stack handle duplicate elements when pushed onto it?",
+      "options": {
+        "A": "Replaces the existing top element",
+        "B": "Adds the new element below the existing one",
+        "C": "Does not change the existing top element",
+        "D": "Requires manual removal of the old top element"
+      },
+      "correctAnswer": "C",
+      "explanation": "A stack follows the last-in-first-out (LIFO) principle, meaning that all elements, including duplicates, are stored in reverse chronological order. Duplicate elements do not change this behavior.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What does the term 'Last-In-First-Out (LIFO)' refer to in the context of stacks?",
+      "options": {
+        "A": "Newest elements are removed first",
+        "B": "The order in which elements were pushed",
+        "C": "Oldest elements are removed first",
+        "D": "Elements with the highest priority are removed first"
+      },
+      "correctAnswer": "A",
+      "explanation": "The 'Last-In-First-Out (LIFO)' principle states that the most recently pushed (newest) element is the first one to be popped from the stack.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "When using a stack for evaluation of postfix expressions, what is the purpose of the pop operation?",
+      "options": {
+        "A": "To add numbers and operators together",
+        "B": "To evaluate the result of the expression",
+        "C": "To retrieve the top operand for calculations",
+        "D": "To compare the top element with a given value"
+      },
+      "correctAnswer": "C",
+      "explanation": "During the evaluation of postfix expressions, the pop operation retrieves the top operand, which can then be used for the calculations.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What happens if the top element of a stack is not defined (or null) when attempting to peek at the top element?",
+      "options": {
+        "A": "The stack is emptied",
+        "B": "The top element remains unchanged",
+        "C": "The program throws an error",
+        "D": "The stack remains the same"
+      },
+      "correctAnswer": "C",
+      "explanation": "In cases where the top element does not exist, attempting to peek at it will result in a runtime error, as most stacks are implemented to handle this situation.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Describe the behavior of a stack when pushing or popping elements concurrently.",
+      "options": {
+        "A": "Pushing and popping elements in any order will always result in a consistent stack",
+        "B": "Pushing and popping elements in any order will not affect the stack's state",
+        "C": "Pushing and popping elements concurrently will result in unpredictable behavior",
+        "D": "The top element remains unchanged"
+      },
+      "correctAnswer": "C",
+      "explanation": "Concurrent push and pop operations can lead to unpredictable behavior, as it may result in unexpected stack modifications.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "When implementing a stack using a linked list, which of the following operations will affect the length of the stack?",
+      "options": {
+        "A": "Pushing a new element",
+        "B": "Popping the top element",
+        "C": "Peeking at the top element",
+        "D": "Checking the stack's length"
+      },
+      "correctAnswer": "A",
+      "explanation": "When a new element is pushed onto the stack, the length of the stack will increase by 1, making it the correct operation.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How does the order of elements change when elements are added to and removed from a stack?",
+      "options": {
+        "A": "Reverses the order of elements",
+        "B": "Leaves the order of elements unchanged",
+        "C": "The order of elements is preserved",
+        "D": "The order of elements becomes a linked list"
+      },
+      "correctAnswer": "A",
+      "explanation": "As elements are added and removed from a stack, the order of elements will reverse, following the last-in-first-out (LIFO) principle.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What type of data structure is best suited for evaluating postfix expressions?",
+      "options": {
+        "A": "List or array",
+        "B": "Stack or queue",
+        "C": "Tree or graph",
+        "D": "Hash table or dictionary"
+      },
+      "correctAnswer": "B",
+      "explanation": "A stack's LIFO property lends itself well to the evaluation of postfix expressions, which typically rely on following these expressions step-by-step.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Given a stack with the following operations: Push(x), Push(y), Pop(), and Pop(), describe the resulting stack contents.",
+      "options": {
+        "A": "[x, y]",
+        "B": "[y, x]",
+        "C": "Stack is empty",
+        "D": "[x, y]"
+      },
+      "correctAnswer": "C",
+      "explanation": "The sequence of operations results in popping both elements, which would leave the stack empty.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Why are stacks often preferred over queues for implementing certain algorithms?",
+      "options": {
+        "A": "Stacks handle duplicates more efficiently",
+        "B": "Stacks implement faster deletion operations",
+        "C": "Stacks handle concurrent operations more efficiently",
+        "D": "Stacks follow the last-in-first-out (LIFO) principle"
+      },
+      "correctAnswer": "D",
+      "explanation": "The LIFO principle of stack operations typically makes them more suitable for applications where the most recently added element is the first to be processed.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How does the time complexity of a stack's operations affect its suitability for large datasets?",
+      "options": {
+        "A": "Linear complexity improves performance on large datasets",
+        "B": "Constant complexity improves performance on small datasets",
+        "C": "Asymptotic complexity is negligible in performance comparisons",
+        "D": "Logarithmic complexity does not impact performance"
+      },
+      "correctAnswer": "A",
+      "explanation": "A linear time complexity for the push and pop operations of a stack implies that performance may degrade significantly as the dataset size grows.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which data structure has operations similar to stacks when considering the insertion and deletion of elements?",
+      "options": {
+        "A": "Queue",
+        "B": "List or array",
+        "C": "Graph or tree",
+        "D": "None of the above"
+      },
+      "correctAnswer": "A",
+      "explanation": "A queue follows the first-in-first-out (FIFO) principle, where elements are added to the end and removed from the front.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the main difference between a stack and a queue, considering their operations?",
+      "options": {
+        "A": "Pushing operations differ",
+        "B": "The number of elements differs",
+        "C": "Insertion and deletion order differs",
+        "D": "Data type differs"
+      },
+      "correctAnswer": "C",
+      "explanation": "The main difference between a stack and a queue is the order in which elements are inserted and deleted, with stacks following the LIFO principle and queues following the FIFO principle.",
+      "difficulty": "Easy"
+    }
+  ]
+}
