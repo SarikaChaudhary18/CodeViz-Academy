@@ -1,0 +1,185 @@
+{
+  "topic": "Development - OOP",
+  "questions": [
+    {
+      "question": "What is Encapsulation in Object-Oriented Programming?",
+      "options": {
+        "A": "Exposing implementation details to other parts of the program",
+        "B": "Concealing internal implementation and only revealing necessary information through public interfaces",
+        "C": "Inheritance of behavior from parent classes",
+        "D": "Polymorphism through function overloading"
+      },
+      "correctAnswer": "B",
+      "explanation": "Encapsulation is a fundamental concept of OOP, which bundles data and methods that operate on that data within a single unit, hiding the internal details from the outside world. This helps to protect the integrity of the data and improve code maintainability.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "In Object-Oriented Programming, what does Abstraction mean?",
+      "options": {
+        "A": "Showing all the internal details of the object",
+        "B": "Exposing only the necessary information about the object to the outside world",
+        "C": "Allowing objects to inherit behavior from other classes",
+        "D": "Using interfaces to define communication between objects"
+      },
+      "correctAnswer": "B",
+      "explanation": "Abstraction is a concept in OOP that helps to hide complex implementation details and expose only the necessary information to the outside world. This improves code flexibility and maintainability.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is Inheritance in Object-Oriented Programming?",
+      "options": {
+        "A": "Creating a new object type from an existing object",
+        "B": "Defining a new class that contains all the attributes and methods of a parent class",
+        "C": "Allowing objects to communicate with each other using interfaces",
+        "D": "Using design patterns to implement a specific coding technique"
+      },
+      "correctAnswer": "B",
+      "explanation": "Inheritance is a fundamental concept of OOP, which enables a new class to inherit the attributes and methods of a parent class. This promotes code reusability and facilitates the creation of complex object hierarchies.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "In Object-Oriented Programming, what is Encapsulation?",
+      "options": {
+        "A": "Separation of concerns",
+        "B": "Data hiding",
+        "C": "Single responsibility principle",
+        "D": "Don't repeat yourself principle"
+      },
+      "correctAnswer": "B",
+      "explanation": "Encapsulation wraps data and methods into a single unit, hiding the internal implementation details from the outside world. This promotes data security and improves code maintainability.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is Single Responsibility Principle?",
+      "options": {
+        "A": "A class should have only one method",
+        "B": "A class should be responsible for only one task",
+        "C": "A method can have multiple responsibilities",
+        "D": "A class can have multiple parents"
+      },
+      "correctAnswer": "B",
+      "explanation": "The Single Responsibility Principle states that a class should have only one reason to change, making it more maintainable and easier to modify when requirements change.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "In Object-Oriented Programming, what does Polymorphism mean?",
+      "options": {
+        "A": "Having multiple types of something",
+        "B": "Performing operations different from their type",
+        "C": "Using a single method for multiple operations",
+        "D": "Type checking at runtime"
+      },
+      "correctAnswer": "B",
+      "explanation": "Polymorphism allows objects of different types to behave like objects of a single type, by using the same method signature. This promotes code flexibility and generic programming.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is a Design Pattern in Object-Oriented Programming?",
+      "options": {
+        "A": "A code organization scheme",
+        "B": "A reusable piece of code",
+        "C": "A solution to a recurring problem in software development",
+        "D": "A method to measure code complexity"
+      },
+      "correctAnswer": "C",
+      "explanation": "Design patterns are tested and proven solutions to recurring problems in software development, promoting code maintainability, reusability, and flexibility.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following is a benefit of Object-Oriented Programming?",
+      "options": {
+        "A": "Improved code maintainability and flexibility",
+        "B": "Simplified debugging and testing",
+        "C": "Enhanced security and data protection",
+        "D": "Reduced code scalability"
+      },
+      "correctAnswer": "A",
+      "explanation": "Object-Oriented Programming promotes code organization, reusability, and maintainability, making it easier to evolve and adapt software to changing requirements.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What does Inheritance enable?",
+      "options": {
+        "A": "Code reusability and generic programming",
+        "B": "Improved code maintainability and organization",
+        "C": "Enhanced security and data protection",
+        "D": "Reduced code scalability"
+      },
+      "correctAnswer": "A",
+      "explanation": "Inheritance enables child classes to inherit attributes and methods from parent classes, promoting code reusability and facilitating the creation of complex object hierarchies.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which software development principle aims to maximize reusability of software components?",
+      "options": {
+        "A": "Open/Closed principle",
+        "B": "Single Responsibility Principle",
+        "C": "Don't Repeat Yourself principle",
+        "D": "Separation of Concerns principle"
+      },
+      "correctAnswer": "C",
+      "explanation": "The Don't Repeat Yourself principle encourages developers to avoid duplicated code and focus on reusing existing components, promoting code maintainability and reducing the risk of errors.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What does Abstraction allow?",
+      "options": {
+        "A": "Direct access to internal implementation details",
+        "B": "Exposure of internal details to the outside world",
+        "C": "Flexibility in code design and modification",
+        "D": "Improved code organization and maintainability"
+      },
+      "correctAnswer": "C",
+      "explanation": "Abstraction allows code to be decoupled from its underlying implementation, promoting flexibility and enabling changes to be made independently of the existing code.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "In Object-Oriented Programming, what does Encapsulate mean?",
+      "options": {
+        "A": "Hiding internal implementation details",
+        "B": "Exposing internal implementation details",
+        "C": "Using interfaces to define communication",
+        "D": "Improving code maintainability"
+      },
+      "correctAnswer": "A",
+      "explanation": "Encapsulation involves hiding the internal implementation details of an object from the outside world, protecting its integrity and improving code maintainability.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the purpose of the Open/Closed principle?",
+      "options": {
+        "A": "Designing code to prevent changes to external APIs",
+        "B": "Designing code to prevent changes to the system architecture",
+        "C": "Designing code that is open to extension but closed to modification",
+        "D": "Designing code that minimizes coupling and maximizes flexibility"
+      },
+      "correctAnswer": "C",
+      "explanation": "The Open/Closed principle encourages the design of code that can be modified and extended without affecting its functionality or existing code, promoting maintainability and flexibility.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the key to achieving code scalability in Object-Oriented Programming?",
+      "options": {
+        "A": "Separation of Concerns principle",
+        "B": "Don't Repeat Yourself principle",
+        "C": "Single Responsibility Principle",
+        "D": "Using interfaces to define communication"
+      },
+      "correctAnswer": "B",
+      "explanation": "The Don't Repeat Yourself principle promotes code scalability by avoiding duplicated code and encouraging the reuse of existing components, reducing the risk of errors and improving maintainability.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How does Polymorphism enable code modularity?",
+      "options": {
+        "A": "By providing a single method for multiple operations",
+        "B": "By enabling multiple types to perform the same operation",
+        "C": "By allowing code to be executed at higher levels of abstraction",
+        "D": "By reducing coupling and increasing flexibility"
+      },
+      "correctAnswer": "D",
+      "explanation": "Polymorphism enables code modularity by reducing coupling and increasing flexibility, allowing code to be modified, extended, and reused without affecting existing functionality.",
+      "difficulty": "Medium"
+    }
+  ]
+}
