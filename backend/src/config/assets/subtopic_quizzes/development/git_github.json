@@ -1,0 +1,173 @@
+{
+  "topic": "Development - Git & GitHub",
+  "questions": [
+    {
+      "question": "What does 'git init' command do in Git?",
+      "options": {
+        "A": "It clones an existing Git repository.",
+        "B": "It creates a new Git repository in the current directory.",
+        "C": "It fetches commits from a remote repository.",
+        "D": "It stages all changed files in the repository."
+      },
+      "correctAnswer": "B",
+      "explanation": "The 'git init' command initializes a new Git repository in the current directory, allowing you to start version-controlling your project.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the primary purpose of a Git branch?",
+      "options": {
+        "A": "To switch between different commits.",
+        "B": "To collaborate with other team members on a specific task.",
+        "C": "To isolate changes from the main codebase.",
+        "D": "To merge changes from multiple developers."
+      },
+      "correctAnswer": "C",
+      "explanation": "A Git branch is used to isolate changes from the main codebase, allowing you to work on new features or bug fixes without affecting the stable version of the code.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What does 'git add .' do in Git?",
+      "options": {
+        "A": "It stages all changed files in the repository.",
+        "B": "It deletes all staged files in the repository.",
+        "C": "It unstages all files in the repository.",
+        "D": "It creates a new branch in the repository."
+      },
+      "correctAnswer": "A",
+      "explanation": "The 'git add .' command stages all changed files in the repository, but not untracked files.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the purpose of 'git commit --amend'?",
+      "options": {
+        "A": "To undo local changes.",
+        "B": "To reword the commit message.",
+        "C": "To squash commits into one.",
+        "D": "To merge branches together."
+      },
+      "correctAnswer": "B",
+      "explanation": "The 'git commit --amend' command allows you to reword the commit message of the last commit, making it easier to correct mistakes or clarify the intent of the commit.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How do you push changes from your local repository to a remote repository on GitHub?",
+      "options": {
+        "A": "Using 'git push origin master'.",
+        "B": "Using 'git fetch origin'.",
+        "C": "Using 'git pull origin master'.",
+        "D": "Using 'git add . && git commit -m 'Initial commit' && git push origin master'."
+      },
+      "correctAnswer": "D",
+      "explanation": "To push changes to a remote repository, you need to stage the changes, commit them with a meaningful message, and then use 'git push' to send the changes to the remote repository.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What does 'git remote add' do?",
+      "options": {
+        "A": "It creates a new branch in the local repository.",
+        "B": "It adds a remote repository to the local repository.",
+        "C": "It fetches commits from a remote repository.",
+        "D": "It merges changes from multiple developers."
+      },
+      "correctAnswer": "B",
+      "explanation": "The 'git remote add' command allows you to add a remote repository to your local repository, enabling you to pull and push changes to the remote repository.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How do you resolve a merge conflict in Git?",
+      "options": {
+        "A": "Using 'git pull' to resolve conflicts.",
+        "B": "Using 'git merge' to resolve conflicts.",
+        "C": "Using a visual mergetool like Meld or KDiff3.",
+        "D": "Using 'git add' to stage conflicting files."
+      },
+      "correctAnswer": "C",
+      "explanation": "Merge conflicts can be resolved using a visual mergetool, which allows you to visually compare the changes and decide which one to keep.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is a Git reflog?",
+      "options": {
+        "A": "A list of all commits made to the repository.",
+        "B": "A list of deleted files in the repository.",
+        "C": "A list of recent actions performed in the repository.",
+        "D": "A list of all branches in the repository."
+      },
+      "correctAnswer": "C",
+      "explanation": "The Git reflog shows a list of recent actions performed in the repository, including commits, branch switching, and merges.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How do you squash multiple commits into one using 'git rebase'?",
+      "options": {
+        "A": "Using 'git rebase -i HEAD~5'.",
+        "B": "Using 'git rebase -i HEAD~10'.",
+        "C": "Using 'git merge -i HEAD~5'.",
+        "D": "Using 'git rebase -i HEAD~5' to squash, then 'git push -f'."
+      },
+      "correctAnswer": "D",
+      "explanation": "To squash multiple commits into one using 'git rebase', you need to use 'git rebase -i HEAD~5' to interactively rebase the commits, and then force push the updated commit history to the remote repository.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the difference between 'git commit' and 'git commit -m'?",
+      "options": {
+        "A": "One is used for committing changes, the other for committing with a message.",
+        "B": "One is used for merging branches, the other for committing changes.",
+        "C": "None, they are the same command.",
+        "D": "One is used for creating a new branch, the other for committing changes."
+      },
+      "correctAnswer": "A",
+      "explanation": "The 'git commit' command commits changes without a message, while 'git commit -m' commits changes with a meaningful commit message.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How do you undo a commit in Git?",
+      "options": {
+        "A": "Using 'git revert' to undo changes.",
+        "B": "Using 'git reset --hard' to discard changes.",
+        "C": "Using 'git commit --amend' to reword the commit message.",
+        "D": "Using 'git cherry-pick' to discard changes."
+      },
+      "correctAnswer": "B",
+      "explanation": "To undo a commit in Git, you need to use 'git reset --hard' to discard all changes made after the commit, or 'git revert' to create a new commit that undoes the changes.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is Git stash?",
+      "options": {
+        "A": "A feature to undo changes made to the repository.",
+        "B": "A feature to temporarily stash changes made to the repository.",
+        "C": "A feature to create a new branch in the repository.",
+        "D": "A feature to merge changes from multiple developers."
+      },
+      "correctAnswer": "B",
+      "explanation": "Git stash allows you to temporarily stash changes made to the repository, making it easier to switch branches or reset your repository to a clean state.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How do you create a new branch in Git?",
+      "options": {
+        "A": "Using 'git branch new-branch'.",
+        "B": "Using 'git checkout -b new-branch'.",
+        "C": "Using 'git merge new-branch'.",
+        "D": "Using 'git push -f origin new-branch'."
+      },
+      "correctAnswer": "B",
+      "explanation": "To create a new branch in Git, you need to use 'git checkout -b new-branch', which creates a new branch and checks out the first commit on the branch.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is a fast-forward merge?",
+      "options": {
+        "A": "A type of merge that requires manual conflict resolution.",
+        "B": "A type of merge that does not create a new commit.",
+        "C": "A type of merge that creates a new branch.",
+        "D": "A type of merge that involves multiple parents."
+      },
+      "correctAnswer": "B",
+      "explanation": "A fast-forward merge is a type of merge that does not create a new commit, as the branch has been updated with the new changes already.",
+      "difficulty": "Easy"
+    }
+  ]
+}
