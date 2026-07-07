@@ -1,0 +1,185 @@
+{
+  "topic": "Dynamic Programming - LCS",
+  "questions": [
+    {
+      "question": "What does LCS stand for in the context of dynamic programming?",
+      "options": {
+        "A": "Longest Common Subsequence",
+        "B": "Least Common Subsequence",
+        "C": "Longest Common String",
+        "D": "Least Common String"
+      },
+      "correctAnswer": "A",
+      "explanation": "LCS refers to the Longest Common Subsequence, which is the longest subsequences common to all sequences.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the time complexity of the LCS problem?",
+      "options": {
+        "A": "O(n*m)",
+        "B": "O(n*m^2)",
+        "C": "O(n+m)",
+        "D": "O(n+m^2)"
+      },
+      "correctAnswer": "B",
+      "explanation": "The LCS problem can be solved using dynamic programming with a time complexity of O(n*m^2), where n and m are the lengths of the input sequences.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "In a dynamic programming table for LCS, what does each cell represent?",
+      "options": {
+        "A": "The distance between two sequences",
+        "B": "The length of the LCS",
+        "C": "The number of characters in the sequence",
+        "D": "The maximum length of a subsequence"
+      },
+      "correctAnswer": "B",
+      "explanation": "Each cell in the dynamic programming table for LCS represents the length of the LCS of the subsequences up to that point in the table.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the base case for the LCS problem?",
+      "options": {
+        "A": "When the sequences are empty",
+        "B": "When the sequences are same",
+        "C": "When the sequences are of length 1",
+        "D": "When the sequences are of length n*m"
+      },
+      "correctAnswer": "A",
+      "explanation": "The base case for the LCS problem is when the sequences are empty, in which case the LCS is an empty string.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How do you implement backtracking in a LCS solution?",
+      "options": {
+        "A": "Recursively call the LCS function with the previous sequences",
+        "B": "Use a stack to store the previous sequences",
+        "C": "Construct a 2D table for the LCS and backtrack from the cell with the most recent changes",
+        "D": "None of the above"
+      },
+      "correctAnswer": "A",
+      "explanation": "Backtracking can be implemented in a LCS solution by recursively calling the LCS function with the previous sequences to construct the subsequence.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the space complexity of the LCS problem?",
+      "options": {
+        "A": "O(n)",
+        "B": "O(1)",
+        "C": "O(n*m)",
+        "D": "O(n*m^2)"
+      },
+      "correctAnswer": "C",
+      "explanation": "The LCS problem can be solved using dynamic programming with a space complexity of O(n*m), where n and m are the lengths of the input sequences.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How do you fill the table for LCS problem?",
+      "options": {
+        "A": "Fill the table from top to bottom and left to right",
+        "B": "Fill the table from bottom to top and right to left",
+        "C": "Fill the table in any order you want",
+        "D": "Fill the table with random values"
+      },
+      "correctAnswer": "A",
+      "explanation": "The table for LCS problem is filled from top to bottom and left to right, as this allows us to efficiently use the computed values from the previous rows and columns to fill the current cell.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the relationship between LCS and sequence alignment?",
+      "options": {
+        "A": "LCS is used to compute sequence alignment",
+        "B": "Sequence alignment is used to compute LCS",
+        "C": "LCS and sequence alignment are different problems",
+        "D": "LCS is used to evaluate the similarity between sequences"
+      },
+      "correctAnswer": "D",
+      "explanation": "Longest Common Subsequence is related to sequence alignment as it can be used to evaluate the similarity between sequences, with similar sequences having a longer LCS.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the time complexity of LCS using the top-down approach?",
+      "options": {
+        "A": "O(n*m^2)",
+        "B": "O(n*m)",
+        "C": "O(2^n)",
+        "D": "O(2^m)"
+      },
+      "correctAnswer": "C",
+      "explanation": "The time complexity of LCS using the top-down approach is O(2^n), where n is the length of the input sequence, as this approach uses recursion with overlapping subproblems.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What are the three main steps of solving LCS problem?",
+      "options": {
+        "A": "Create a 2D table, fill the table, and construct the subsequence",
+        "B": "Construct the subsequence, fill the table, and create a 2D table",
+        "C": "Fill the table, create a 2D table, and construct the subsequence",
+        "D": "Construct the subsequence, create a 2D table, and fill the table"
+      },
+      "correctAnswer": "A",
+      "explanation": "To solve the LCS problem, we first create a 2D table, then fill the table with the longest common substring for each pair of sequences, and finally construct the subsequence using the table.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How do you handle duplicate characters in the LCS problem?",
+      "options": {
+        "A": "Ignore duplicate characters",
+        "B": "Include all duplicate characters in the LCS",
+        "C": "Use a hash table to count the occurrence of each character",
+        "D": "None of the above"
+      },
+      "correctAnswer": "C",
+      "explanation": "When handling duplicate characters in the LCS problem, we can use a hash table to count the occurrence of each character, so that we can accurately determine the longest common subsequence.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How do you handle mismatched characters in the LCS problem?",
+      "options": {
+        "A": "Ignore mismatched characters",
+        "B": "Include all mismatched characters in the LCS",
+        "C": "Move to the next character in the current sequence",
+        "D": "None of the above"
+      },
+      "correctAnswer": "C",
+      "explanation": "In the LCS problem, when we encounter mismatched characters, we simply move to the next character in the current sequence, so that we can find the longest common subsequence.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the application of LCS problem in bioinformatics?",
+      "options": {
+        "A": "Sequence alignment and phylogenetic analysis",
+        "B": "Gene prediction and transcriptomics",
+        "C": "Protein structure prediction and docking",
+        "D": "None of the above"
+      },
+      "correctAnswer": "C",
+      "explanation": "LCS has several applications in bioinformatics, including sequence alignment and phylogenetic analysis, as well as protein structure prediction and docking.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the application of LCS problem in natural language processing?",
+      "options": {
+        "A": "Text classification and document similarity",
+        "B": "Part-of-speech tagging and named entity recognition",
+        "C": "Machine translation and sentence similarity",
+        "D": "None of the above"
+      },
+      "correctAnswer": "C",
+      "explanation": "LCS can be used in natural language processing to compute the similarity between sentences and to improve the results of machine translation.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the relationship between LCS and minimum edit distance?",
+      "options": {
+        "A": "LCS is used to compute minimum edit distance",
+        "B": "Minimum edit distance is used to compute LCS",
+        "C": "LCS and minimum edit distance are different problems",
+        "D": "LCS is used to evaluate the similarity between sequences"
+      },
+      "correctAnswer": "B",
+      "explanation": "Minimum edit distance can be used to compute LCS, as the minimum edit distance between two sequences is equal to the length of the LCS between those two sequences.",
+      "difficulty": "Hard"
+    }
+  ]
+}
