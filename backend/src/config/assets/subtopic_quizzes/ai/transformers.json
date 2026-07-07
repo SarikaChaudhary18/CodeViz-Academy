@@ -1,0 +1,197 @@
+{
+  "topic": "AI - Transformers",
+  "questions": [
+    {
+      "question": "What is the primary function of the Self-Attention mechanism in Transformers?",
+      "options": {
+        "A": "To handle the long-range dependencies in the input data",
+        "B": "To scale down the input data",
+        "C": "To convert input data to vectors",
+        "D": "To perform the embedding layer"
+      },
+      "correctAnswer": "A",
+      "explanation": "The Self-Attention mechanism enables Transformers to model long-range dependencies in the input data, allowing it to capture complex interactions between different elements of the input sequence.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "In the Transformer architecture, what is the purpose of the Feed Forward Neural Network (FFNN)?",
+      "options": {
+        "A": "To add non-linearity in the model",
+        "B": "To handle the Self-Attention calculations",
+        "C": "To output the final probability distribution of the output sequence",
+        "D": "None of the above"
+      },
+      "correctAnswer": "A",
+      "explanation": "The FFNN adds non-linearity to the model, allowing it to learn complex relationships between the input elements. This is essential for modeling the output sequence.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the name of the sub-layer that performs the self-attention mechanism in the Transformer architecture?",
+      "options": {
+        "A": "Self-Attention Module",
+        "B": "Feed Forward Module",
+        "C": "Encoder Module",
+        "D": "Multi-Head Attention"
+      },
+      "correctAnswer": "D",
+      "explanation": "The Multi-Head Attention is the sub-layer that performs the self-attention mechanism, allowing the model to capture complex interactions between the input elements.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Why is the positional encoding necessary in the Transformer architecture?",
+      "options": {
+        "A": "To maintain the order of words in the input sequence",
+        "B": "To perform the Self-Attention calculations",
+        "C": "To add non-linearity in the model",
+        "D": "To enable the model to handle out-of-vocabulary words"
+      },
+      "correctAnswer": "A",
+      "explanation": "The positional encoding is necessary to maintain the order of words in the input sequence, as the Self-Attention mechanism relies on positions to perform the calculations.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the name of the Transformer variant that uses relative positions instead of absolute positions?",
+      "options": {
+        "A": "Detected Transformer",
+        "B": "Localizer",
+        "C": "Relative Positional Transformer",
+        "D": "Performer"
+      },
+      "correctAnswer": "C",
+      "explanation": "The Relative Positional Transformer uses relative positions instead of absolute positions, allowing the model to capture local dependencies in the input sequence.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Why is the Residual Connection necessary in the Transformer architecture?",
+      "options": {
+        "A": "To prevent the gradients from vanishing or exploding",
+        "B": "To add non-linearity in the model",
+        "C": "To enable the model to handle out-of-vocabulary words",
+        "D": "To maintain the order of words in the input sequence"
+      },
+      "correctAnswer": "A",
+      "explanation": "The Residual Connection is necessary to prevent the gradients from vanishing or exploding, allowing the model to learn more complex representations of the input sequence.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the name of the technique used in the Transformer architecture to stabilize the training process?",
+      "options": {
+        "A": "Layer Normalization",
+        "B": "Batch Normalization",
+        "C": "Weight Standardization",
+        "D": "Gradient Clipping"
+      },
+      "correctAnswer": "A",
+      "explanation": "Layer Normalization is a technique used to stabilize the training process, as it helps to prevent the gradients from vanishing or exploding.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How does the Transformer architecture handle tokenization?",
+      "options": {
+        "A": "Using word piece tokenization",
+        "B": "Using subword tokenization",
+        "C": "Using character-level tokenization",
+        "D": "Not using tokenization"
+      },
+      "correctAnswer": "B",
+      "explanation": "The Transformer architecture uses subword tokenization, which breaks down words into smaller subword units to handle out-of-vocabulary words.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Why is the use of learnable position embeddings necessary in the Transformer architecture?",
+      "options": {
+        "A": "To maintain the order of words in the input sequence",
+        "B": "To perform the Self-Attention calculations",
+        "C": "To add non-linearity in the model",
+        "D": "To enable the model to learn the optimal position embeddings"
+      },
+      "correctAnswer": "D",
+      "explanation": "The use of learnable position embeddings is necessary to enable the model to learn the optimal position embeddings, which is essential for the model to capture long-range dependencies.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the name of the attention mechanism used in the Transformer architecture to generate the output sequence?",
+      "options": {
+        "A": "Self-Attention",
+        "B": "Encoder-Decoder Attention",
+        "C": "Multi-Head Attention",
+        "D": "All of the above"
+      },
+      "correctAnswer": "D",
+      "explanation": "The Transformer architecture uses all three attention mechanisms mentioned above to generate the output sequence.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Why is the use of layer normalization necessary in the Transformer architecture?",
+      "options": {
+        "A": "To prevent the gradients from vanishing or exploding",
+        "B": "To add non-linearity in the model",
+        "C": "To stabilize the training process",
+        "D": "To enable the model to handle out-of-vocabulary words"
+      },
+      "correctAnswer": "C",
+      "explanation": "The use of layer normalization is necessary to stabilize the training process, as it helps to prevent the gradients from vanishing or exploding.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the name of the optimization technique used to reduce the dimensionality of the input sequence?",
+      "options": {
+        "A": "Attention",
+        "B": "Encoder-Decoder",
+        "C": "Self-Attention",
+        "D": "Positional Encoding"
+      },
+      "correctAnswer": "D",
+      "explanation": "The Positional Encoding is used to reduce the dimensionality of the input sequence, allowing the model to focus on more relevant information.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Why is the use of the FFNN necessary in the Transformer architecture?",
+      "options": {
+        "A": "To add non-linearity in the model",
+        "B": "To perform the Self-Attention calculations",
+        "C": "To handle the output sequence",
+        "D": "To enable the model to handle out-of-vocabulary words"
+      },
+      "correctAnswer": "A",
+      "explanation": "The FFNN is necessary to add non-linearity in the model, allowing it to learn more complex relationships between the input elements.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the name of the regularization technique used to prevent overfitting in the Transformer architecture?",
+      "options": {
+        "A": "Dropout",
+        "B": "Batch Normalization",
+        "C": "Weight Decay",
+        "D": "L1 Regularization"
+      },
+      "correctAnswer": "A",
+      "explanation": "The dropout is a regularization technique used to prevent overfitting, as it randomly sets a fraction of the outputs to zero during training.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the name of the technique used to handle the context window in the Transformer architecture?",
+      "options": {
+        "A": "Self-Attention",
+        "B": "Encoder-Decoder",
+        "C": "Positional Encoding",
+        "D": "Look-Ahead Window"
+      },
+      "correctAnswer": "D",
+      "explanation": "The Look-Ahead Window is used to handle the context window, allowing the model to capture more information about the input sequence.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Why is the use of the learnable embedding necessary in the Transformer architecture?",
+      "options": {
+        "A": "To maintain the order of words in the input sequence",
+        "B": "To perform the Self-Attention calculations",
+        "C": "To add non-linearity in the model",
+        "D": "To enable the model to learn the optimal embeddings"
+      },
+      "correctAnswer": "D",
+      "explanation": "The use of the learnable embedding is necessary to enable the model to learn the optimal embeddings, which is essential for the model to handle out-of-vocabulary words.",
+      "difficulty": "Easy"
+    }
+  ]
+}
