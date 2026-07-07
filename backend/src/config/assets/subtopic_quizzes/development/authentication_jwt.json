@@ -1,0 +1,170 @@
+{
+  "topic": "Development - Authentication & JWT",
+  "questions": [
+    {
+      "question": "What is the primary purpose of a JSON Web Token (JWT)?",
+      "options": {
+        "A": "To store sensitive data in a database",
+        "B": "To provide a secure way to transfer information between parties",
+        "C": "To create a session for a user",
+        "D": "To encrypt data at rest"
+      },
+      "correctAnswer": "B",
+      "explanation": "A JWT is a compact, URL-safe means of representing claims to be transferred between two parties. The claims in a JWT are encoded as a JSON object to be sent over HTTP/HTTPS.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Why is JWT considered more secure than traditional session management methods?",
+      "options": {
+        "A": "Because it uses a symmetric encryption key",
+        "B": "Because it uses a random session ID",
+        "C": "Because it uses an asymmetric encryption key to sign and verify the token",
+        "D": "Because it uses a hashed password"
+      },
+      "correctAnswer": "C",
+      "explanation": "JWTs use a digital signature (created with a secret key) to prevent tampering and provide authenticity. This allows JWTs to be securely transmitted and verified across different systems.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How do JWTs typically handle user authentication?",
+      "options": {
+        "A": "By storing the user's password in the token",
+        "B": "By using a third-party service for authentication",
+        "C": "By verifying a username and password against a database",
+        "D": "By generating a unique token after successful authentication"
+      },
+      "correctAnswer": "D",
+      "explanation": "JWTs typically do not store sensitive information such as passwords. Instead, after successful authentication, a unique token is generated and returned to the user, which can then be used for subsequent requests.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the best practice for storing JWTs securely in a web application?",
+      "options": {
+        "A": "In a plain text cookie",
+        "B": "In a secure cookie with a HTTP only flag",
+        "C": "In local storage",
+        "D": "In a database"
+      },
+      "correctAnswer": "B",
+      "explanation": "For the best security, JWTs should be stored in a secure cookie with a HTTP only flag. This prevents JavaScript from accessing the token, making it more difficult for attackers to steal it.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the difference between an ID token and an access token in OAuth?",
+      "options": {
+        "A": "An ID token is used to identify the user, while an access token is used for authorization",
+        "B": "An ID token is used for authorization, while an access token is used to identify the user",
+        "C": "An ID token is used for authentication, while an access token is used for authorization",
+        "D": "An ID token is used for authorization, while an access token is used for authentication"
+      },
+      "correctAnswer": "A",
+      "explanation": "An ID token is used to identify the user and their claims, while an access token is used for authorization, granting the user access to a particular resource.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "When using JWTs for OAuth, why is it preferred to store the access token in storage rather than in memory?",
+      "options": {
+        "A": "Because it allows for easier caching",
+        "B": "Because it prevents CSRF attacks",
+        "C": "Because it allows for easier revocation",
+        "D": "Because it allows for easier state management"
+      },
+      "correctAnswer": "C",
+      "explanation": "Since JWTs are intended to be used across multiple requests, storing the access token in storage rather than in memory allows for easier revocation, as the token can be removed from storage when it expires or is invalid.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How do JWTs handle token expiration?",
+      "options": {
+        "A": "By using a fixed expiration time",
+        "B": "By using a sliding window expiration",
+        "C": "By verifying the token's expiration using a third-party service",
+        "D": "By regenerating the token on each request"
+      },
+      "correctAnswer": "B",
+      "explanation": "JWTs typically use a sliding window expiration, where the token is considered valid for a certain amount of time since the last time it was used. This prevents token expiration issues in situations where the user stays logged in for a long period.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What are the benefits of using a JSON Web Key Set (JWKS) over a static public key?",
+      "options": {
+        "A": "It allows for more secure encryption",
+        "B": "It allows for easier key management",
+        "C": "It allows for more scalability",
+        "D": "It allows for more flexibility"
+      },
+      "correctAnswer": "B",
+      "explanation": "Using a JWKS provides a way to easily manage and switch out cryptographic keys without having to replace the entire application, as the keys are stored in a single location and can be easily updated or rotated.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What are some common security considerations when implementing JWTs for authentication?",
+      "options": {
+        "A": "Insecure token secret",
+        "B": "Insufficient validation",
+        "C": "Insecure secure cookie handling",
+        "D": "All of the above"
+      },
+      "correctAnswer": "D",
+      "explanation": "Insecure token secret, insufficient validation, and insecure secure cookie handling are all common security considerations when implementing JWTs for authentication. Proper secret key management, validating the token's integrity and authenticity, and secure cookie handling are essential for JWT security.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How do you determine the size of the secret key for JWTs?",
+      "options": {
+        "A": "By using a random number generator",
+        "B": "By using the length of the public key",
+        "C": "By using the SHA-256 hash of a random string",
+        "D": "By using a cryptographically secure random number generator"
+      },
+      "correctAnswer": "D",
+      "explanation": "A good secret key should be 32 to 64 bytes long. The secret can be a cryptographically secure random number generated with, for example, a cryptographically secure pseudo-random number generator (CSPRNG). The key should be stored safely.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What are some challenges when using JWTs for authorization?",
+      "options": {
+        "A": "Insecure token secret",
+        "B": "Insecure secure cookie handling",
+        "C": "Authorization logic complexity",
+        "D": "Insufficient validation"
+      },
+      "correctAnswer": "C",
+      "explanation": "When using JWTs for authorization, determining which user has access to which resources and permissions can lead to authorization logic complexity. Proper validation, secret management, and secure cookie handling are essential to JWT security.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Can you explain the difference between RS256 and HS256?",
+      "options": {
+        "A": "RS256 uses a symmetric key, while HS256 uses an asymmetric key",
+        "B": "HS256 uses a symmetric key, while RS256 uses an asymmetric key",
+        "C": "RS256 is used for signing, while HS256 is used for encryption",
+        "D": "HS256 is used for signing, while RS256 is used for encryption"
+      },
+      "correctAnswer": "B",
+      "explanation": "RS256 is used for signing with an asymmetric private key, while HS256 is used for symmetric encryption using a shared secret key.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the typical format of a JWT claims block?",
+      "options": {
+        "A": "{\"iss\":\"issuer\",\"exp\":1423706830,\"sub\":\"subject\"}",
+        "B": "{\"iss\":\"issuer\",\"exp\":1423706830,\"sub\":\"subject\",\"aud\":\"audience\"}",
+        "C": "{\"iss\":\"issuer\",\"sub\":\"subject\",\"aud\":\"audience\"}",
+        "D": "{\"aud\":\"audience\",\"exp\":1423706830,\"sub\":\"subject\"}"
+      },
+      "correctAnswer": "B",
+      "explanation": "A typical JWT claims block includes the issuer (iss), expiration time (exp), subject (sub), and audience (aud) claims. Other claims may be included depending on the use case.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "How do you securely store the public key for RS256?",
+      "options": {
+        "A": "In a database",
+        "B": "In a separate environment variable",
+        "C": "In a public key store like a Hardware Security Module (HSM)",
+        "D": "All of the above"
+      }
+    }
+  ]
+}
