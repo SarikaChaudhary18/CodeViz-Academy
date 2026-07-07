@@ -1,0 +1,173 @@
+{
+  "topic": "Greedy - Huffman Coding",
+  "questions": [
+    {
+      "question": "What is the primary goal of Huffman coding?",
+      "options": {
+        "A": "To create a fixed-length prefix code",
+        "B": "To create a variable-length prefix code",
+        "C": "To compress data by replacing repeated characters",
+        "D": "To create a code with equal probabilities for all characters"
+      },
+      "correctAnswer": "B",
+      "explanation": "Huffman coding aims to create a prefix code where each character has a unique binary string as its code. This is achieved through a binary tree, where characters with lower frequencies are closer to the root.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "In Huffman coding, what data structure is used to store the character frequencies and their corresponding codes?",
+      "options": {
+        "A": "A heap data structure",
+        "B": "A binary search tree",
+        "C": "A linked list",
+        "D": "A graph "
+      },
+      "correctAnswer": "A",
+      "explanation": "In Huffman coding, a priority queue (usually implemented as a heap) is used to store the characters and their frequencies, allowing for efficient retrieval and selection of the character with the greatest priority.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the name of the algorithm used to build the Huffman tree?",
+      "options": {
+        "A": "Greedy Algorithm",
+        "B": "Dynamic Programming",
+        "C": "Divide and Conquer",
+        "D": "Backtracking"
+      },
+      "correctAnswer": "A",
+      "explanation": "Huffman coding uses a greedy algorithm to build the binary tree, which selects the two characters with the lowest frequencies at each step to create a new internal node.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the benefit of using Huffman coding over other compression algorithms?",
+      "options": {
+        "A": "It compresses data more efficiently",
+        "B": "It is faster and more efficient in computation",
+        "C": "It compresses data while maintaining readability",
+        "D": "It allows for variable-length character codes"
+      },
+      "correctAnswer": "D",
+      "explanation": "One of the significant benefits of Huffman coding is that it allows for the creation of variable-length prefix codes, making it an efficient method for compressing data.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "In what order do Huffman codes prioritize characters during the process of Huffman coding?",
+      "options": {
+        "A": "Largest frequency to smallest frequency",
+        "B": "Smallest frequency to largest frequency",
+        "C": "Alphabetical order",
+        "D": "Reverse alphabetical order"
+      },
+      "correctAnswer": "B",
+      "explanation": "In Huffman coding, characters with lower frequencies are assigned shorter codes, making them closer to the root of the tree. Therefore, the order of prioritization is from smallest frequency to largest frequency.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "In Huffman coding, is it possible to have a code where a character has a more complex code than another character with higher probability?",
+      "options": {
+        "A": "Yes, this is possible",
+        "B": "No, this is not possible",
+        "C": "Depends on the context",
+        "D": "Only if the code follows a specific order"
+      },
+      "correctAnswer": "A",
+      "explanation": "Yes, in Huffman coding, it is possible for a character to have a more complex code than another character with higher probability. This is because the Huffman tree is built based on the overall frequency of the characters, rather than their individual probabilities.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "In Huffman coding, how do you ensure that no two characters have the same code?",
+      "options": {
+        "A": "By assigning unique codes to each character",
+        "B": "By ensuring that the codes have different lengths",
+        "C": "By using a binary tree with a guaranteed unique code path",
+        "D": "None of the above"
+      },
+      "correctAnswer": "C",
+      "explanation": "A binary tree is used in Huffman coding to ensure that no two characters have the same code. Since each internal node in a binary tree can have at most two children, it's possible to guarantee that each character has a unique code path from the root.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "If two characters have the same frequency, how are their codes assigned in Huffman coding?",
+      "options": {
+        "A": "The character that appears first in the alphabet gets a shorter code",
+        "B": "The character that appears second in the alphabet gets a shorter code",
+        "C": "The character with an odd index gets a shorter code",
+        "D": "They are assigned the same code"
+      },
+      "correctAnswer": "A",
+      "explanation": "When two characters have the same frequency in Huffman coding, the one that appears first in the alphabet gets a shorter code. This is because the code construction process prioritizes characters by their frequency and then alphabetically.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Can Huffman coding be used to compress image data?",
+      "options": {
+        "A": "Yes, it can be used to compress image data",
+        "B": "No, it is only used for text data",
+        "C": "It depends on the context and type of image data",
+        "D": "Only for lossless image compression"
+      },
+      "correctAnswer": "C",
+      "explanation": "Huffman coding can be used to compress image data, but it's primarily used for text and other discrete data. For image compression, other methods such as lossy compression or transform-based algorithms are more suitable.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "In what scenario would the Huffman coding algorithm be a less efficient choice for data compression?",
+      "options": {
+        "A": "When data is already highly compressed",
+        "B": "When data is highly structured and has many repetitions",
+        "C": "When data is highly disordered and has many variations in character frequency",
+        "D": "When data is too large to fit into memory"
+      },
+      "correctAnswer": "C",
+      "explanation": "Huffman coding is less efficient in scenarios where data is highly disordered and has many variations in character frequency. Other compression algorithms like arithmetic coding or dictionary-based compression may perform better in such cases.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Are there any limitations to the Huffman coding algorithm?",
+      "options": {
+        "A": "Yes, it can only handle discrete data",
+        "B": "No, it can handle both discrete and continuous data",
+        "C": "Yes, it assumes a fixed-length code",
+        "D": "Yes, it requires a large amount of memory"
+      },
+      "correctAnswer": "C",
+      "explanation": "The primary limitation of Huffman coding is that it assumes a fixed-length prefix code. This might cause problems when dealing with data that has a lot of low-frequency characters.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "In which of the following cases would Huffman coding be more effective than the other algorithms?",
+      "options": {
+        "A": "When all characters in the text have close frequencies",
+        "B": "When a small number of characters have high frequencies",
+        "C": "When a large number of characters have low frequencies",
+        "D": "Both B and C"
+      },
+      "correctAnswer": "D",
+      "explanation": "Huffman coding is particularly effective when dealing with data that has a mixture of high- and low-frequency characters, making it suitable for scenarios described in B and C.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How is the Huffman code represented in a binary tree?",
+      "options": {
+        "A": "Each node in the binary tree contains a character and its frequency",
+        "B": "Each node in the binary tree contains a probability",
+        "C": "Each node in the binary tree contains a unique code",
+        "D": "The root node contains all characters"
+      },
+      "correctAnswer": "A",
+      "explanation": "The Huffman code is represented in a binary tree by having each node contain a character and its frequency, which helps in efficiently calculating the code length and constructing the final compressed data.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the term used to describe the process of calculating the Huffman code for each character in the data?",
+      "options": {
+        "A": "Huffman encoding",
+        "B": "Huffman decoding",
+        "C": "Code construction",
+        "D": "Frequency calculation"
+      },
+      "correctAnswer": "C",
+      "explanation": "Code construction is the term used to describe the process of calculating the Huffman code for each character in the data.",
+      "difficulty": "Hard"
+    }
+  ]
+}
