@@ -1,0 +1,185 @@
+{
+  "topic": "Stacks - Histogram Problems",
+  "questions": [
+    {
+      "question": "What is the primary use case for stacks in histogram problems?",
+      "options": {
+        "A": "To store and retrieve elements in last-in-first-out (LIFO) order",
+        "B": "To efficiently calculate the maximum and minimum values in a histogram",
+        "C": "To handle multiple histogram queries concurrently",
+        "D": "To create a sorted stack"
+      },
+      "correctAnswer": "A",
+      "explanation": "Stacks are ideal for histogram problems because they allow for efficient storage and retrieval of elements in last-in-first-out (LIFO) order, which is essential for processing histogram queries.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which data structure would be more suitable for histogram problems: stacks or heaps?",
+      "options": {
+        "A": "Stacks",
+        "B": "Heaps",
+        "C": "Both stacks and heaps",
+        "D": "Neither stacks nor heaps"
+      },
+      "correctAnswer": "A",
+      "explanation": "Stacks are more suitable for histogram problems because they allow for efficient storage and retrieval of elements in LIFO order, whereas heaps are more useful for priority queuing.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the purpose of a stack in the histogram problem described below?\n\nGiven a histogram and a query to calculate the maximum and minimum values at a given index, a stack is used to store the indices of the histogram bars.",
+      "options": {
+        "A": "To store the sizes of the histogram bars",
+        "B": "To store the start and end indices of the histogram bars",
+        "C": "To store the indices of the histogram bars that are still active",
+        "D": "To store the maximum and minimum values at each index"
+      },
+      "correctAnswer": "C",
+      "explanation": "The stack stores the indices of the histogram bars that are still active, which allows for efficient calculation of the maximum and minimum values at a given index.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following is NOT a valid operation on a stack in a histogram problem?",
+      "options": {
+        "A": "Push operation",
+        "B": "Pop operation",
+        "C": "Peek operation",
+        "D": "Swap operation"
+      },
+      "correctAnswer": "D",
+      "explanation": "Swap operation is not a valid operation on a stack in a histogram problem, as stacks allow only push, pop, and peek operations.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the main advantage of using a two-pointer technique with a stack in a histogram problem?",
+      "options": {
+        "A": "Efficient storage of data",
+        "B": "Improved performance",
+        "C": "Reduced memory usage",
+        "D": "Simplified implementation"
+      },
+      "correctAnswer": "B",
+      "explanation": "The main advantage of using a two-pointer technique with a stack in a histogram problem is that it improves performance by reducing the number of stack operations required.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following is a valid approach to solve a histogram problem using a stack?",
+      "options": {
+        "A": "Using a priority queue",
+        "B": "Using a stack with a two-pointer technique",
+        "C": "Using a hash map",
+        "D": "Using a recursive function"
+      },
+      "correctAnswer": "B",
+      "explanation": "Using a stack with a two-pointer technique is a valid approach to solve a histogram problem, as it allows for efficient calculation of the maximum and minimum values at a given index.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the key challenge in solving histogram problems using a stack?",
+      "options": {
+        "A": "Handling large data sets",
+        "B": "Maintaining the stack integrity",
+        "C": "Efficiently calculating maximum and minimum values",
+        "D": "Resolving stack overflows"
+      },
+      "correctAnswer": "B",
+      "explanation": "The key challenge in solving histogram problems using a stack is maintaining the stack integrity, as the stack needs to be updated dynamically to reflect the changes in the histogram.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following is a correct statement about the use of stacks in histogram problems?",
+      "options": {
+        "A": "Stacks are used to store the histogram bars",
+        "B": "Stacks are used to store the start and end indices of the histogram bars",
+        "C": "Stacks are used to store the sizes of the histogram bars",
+        "D": "Stacks are used to store the maximum and minimum values at each index"
+      },
+      "correctAnswer": "C",
+      "explanation": "Stacks are indeed used to store the sizes of the histogram bars, which allows for efficient calculation of the maximum and minimum values at a given index.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the main benefit of using a stack in a histogram problem?",
+      "options": {
+        "A": "Improved data storage",
+        "B": "Enhanced performance",
+        "C": "Simplified implementation",
+        "D": "All of the above"
+      },
+      "correctAnswer": "B",
+      "explanation": "The main benefit of using a stack in a histogram problem is that it enhances performance by allowing for efficient calculation of the maximum and minimum values at a given index.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following is NOT a valid use case for stacks in histogram problems?",
+      "options": {
+        "A": "To calculate the maximum and minimum values at a given index",
+        "B": "To store the start and end indices of the histogram bars",
+        "C": "To count the number of histogram bars",
+        "D": "To calculate the average value of the histogram bars"
+      },
+      "correctAnswer": "D",
+      "explanation": "Stacks are not typically used to calculate the average value of the histogram bars, as this operation does not require LIFO ordering.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the purpose of the two-pointer technique in histogram problems?",
+      "options": {
+        "A": "To efficiently search the histogram values",
+        "B": "To efficiently calculate the maximum and minimum values at a given index",
+        "C": "To efficiently store the histogram values",
+        "D": "To efficiently display the histogram values"
+      },
+      "correctAnswer": "B",
+      "explanation": "The two-pointer technique is used to efficiently calculate the maximum and minimum values at a given index in a histogram problem.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following is a valid approach to optimize the performance of a histogram problem using a stack?",
+      "options": {
+        "A": "Using a binary search algorithm",
+        "B": "Using a two-pointer technique",
+        "C": "Using a recursive function",
+        "D": "Using an iterative algorithm"
+      },
+      "correctAnswer": "B",
+      "explanation": "Using a two-pointer technique is a valid approach to optimize the performance of a histogram problem by reducing the number of stack operations required.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the main challenge in implementing a stack in a histogram problem?",
+      "options": {
+        "A": "Handling large data sets",
+        "B": "Maintaining the stack integrity",
+        "C": "Efficiently calculating maximum and minimum values",
+        "D": "Resolving stack overflows"
+      },
+      "correctAnswer": "B",
+      "explanation": "The main challenge in implementing a stack in a histogram problem is maintaining the stack integrity, as the stack needs to be updated dynamically to reflect the changes in the histogram.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following is a correct statement about the use of stacks in histogram problems?",
+      "options": {
+        "A": "Stacks are used to store the histogram bars",
+        "B": "Stacks are used to store the start and end indices of the histogram bars",
+        "C": "Stacks are used to store the sizes of the histogram bars",
+        "D": "All of the above"
+      },
+      "correctAnswer": "C",
+      "explanation": "Stacks are indeed used to store the sizes of the histogram bars, which allows for efficient calculation of the maximum and minimum values at a given index.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following is a valid operation on a stack in a histogram problem?",
+      "options": {
+        "A": "Push operation",
+        "B": "Pop operation",
+        "C": "Peek operation",
+        "D": "Swap operation"
+      },
+      "correctAnswer": "A",
+      "explanation": "Push operation is a valid operation on a stack in a histogram problem, as it adds an element to the top of the stack.",
+      "difficulty": "Easy"
+    }
+  ]
+}
