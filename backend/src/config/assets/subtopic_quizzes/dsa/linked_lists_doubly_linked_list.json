@@ -1,0 +1,161 @@
+{
+  "topic": "Linked Lists - Doubly Linked List",
+  "questions": [
+    {
+      "question": "What is a characteristic of a doubly linked list?",
+      "options": {
+        "A": "Nodes only linked forward",
+        "B": "Each node has a reference to the next node",
+        "C": "Each node has references to both previous and next nodes",
+        "D": "Nodes are linked in a circular fashion"
+      },
+      "correctAnswer": "C",
+      "explanation": "A doubly linked list is a type of linked list in which each node has a reference to both the previous and next nodes in the sequence.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "In a doubly linked list, which operation requires traversing the list from the beginning?",
+      "options": {
+        "A": "Insertion",
+        "B": "Deletion at the end of the list",
+        "C": "Updating a node's value",
+        "D": "Traversal from head to end"
+      },
+      "correctAnswer": "D",
+      "explanation": "To traverse a doubly linked list from beginin to end, we typically start at the head node and incrementally move along the list, which is only possible if each node has a reference to the next one.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How do you update the middle node in a doubly linked list?",
+      "options": {
+        "A": "By traversing the entire list from the head node",
+        "B": "By incrementally updating each node as you traverse towards the target node",
+        "C": "By updating the target node and setting adjacent nodes to point at each other",
+        "D": "By using the previous node's reference to connect with the new node"
+      },
+      "correctAnswer": "D",
+      "explanation": "Updating the middle node in a doubly linked list is efficient when you know its position in the sequence and can update the previous and next node's references without traversing the entire list.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "In a doubly linked list, what is the time complexity of searching for a specific node?",
+      "options": {
+        "A": "O(1)",
+        "B": "O(log n)",
+        "C": "O(n)",
+        "D": "O(n/2)"
+      },
+      "correctAnswer": "C",
+      "explanation": "Without a way to quickly access a specific node, we must iterate over each node in the list, resulting in a time complexity of O(n), where n is the number of nodes.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which data structure would be a good fit for a doubly linked list when searching, inserting, and deleting nodes is the primary concern?",
+      "options": {
+        "A": "Array",
+        "B": "Stack",
+        "C": "Queue",
+        "D": "Linked List"
+      },
+      "correctAnswer": "D",
+      "explanation": "Doubly linked lists are suitable for applications where nodes need to be frequently inserted, deleted, or accessed from anywhere in the sequence.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the time complexity of inserting a new node from the head of a doubly linked list?",
+      "options": {
+        "A": "O(1)",
+        "B": "O(log n)",
+        "C": "O(n)",
+        "D": "O(n/2)"
+      },
+      "correctAnswer": "A",
+      "explanation": "Inserting a new node at the beginning of a doubly linked list is a constant time operation as only a few node references need to be updated.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "In a doubly linked list, how do you implement an efficient iterator?",
+      "options": {
+        "A": "By using recursive functions and node values to navigate",
+        "B": "Through utilizing a cursor object that moves along the linked list",
+        "C": "By setting each node to point to the next one, but with a flag indicating traversal is over",
+        "D": "Using the head node as a starting point to initialize an iterator"
+      },
+      "correctAnswer": "B",
+      "explanation": "An iterator in a doubly linked list can be efficiently implemented as a cursor object that tracks the current node, allowing navigation along the list.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Consider a doubly linked list implementation with a Node class having attributes for data and references to its 'previous node' and 'next node'. Which of the methods would correctly update the links of three adjacent nodes when removing a node in the middle of the sequence?",
+      "options": {
+        "A": "prev.next = cur.next and next.prev = cur.prev",
+        "B": "prev = node.next and node.prev = NULL",
+        "C": "cur = NULL and set all other node references to NULL",
+        "D": "cur.next = node.prev and prev.next = node.next"
+      },
+      "correctAnswer": "D",
+      "explanation": "Removing a node from the middle of the sequence requires updating adjacent nodes such that they correctly reference each other.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Given a doubly linked list, how do you determine whether it contains a cycle?",
+      "options": {
+        "A": "By comparing node references recursively to find a loop",
+        "B": "Through using Floyd's Tortoise and Hare algorithm",
+        "C": "By checking if the length of the linked list exceeds the number of iterations",
+        "D": "By traversing the entire list from the head node"
+      },
+      "correctAnswer": "B",
+      "explanation": "Floyd's Tortoise and Hare algorithm is an efficient method to detect cycles in a linked list, utilizing two pointers moving at different speeds.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Consider a scenario where you're implementing a deque using a doubly linked list. What would be the correct order of operations when deleting the front element?",
+      "options": {
+        "A": "Delete the front node and update adjacent nodes",
+        "B": "Remove the front node, then delete the node's previous neighbor",
+        "C": "Set the front node to next and delete the node that's now front, or delete the node then set the new front to be the next of the new",
+        "D": "Delete the previous node's reference first then remove the front node"
+      },
+      "correctAnswer": "C",
+      "explanation": "When deleting a front element from a doubly linked list, the correct sequence of operations involves removing the current front node and then updating adjacent nodes to maintain the correct links.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What would be the best way to traverse a doubly linked list in reverse order?",
+      "options": {
+        "A": "Starting at the head node, traverse each node and update its next reference to point to the previous node",
+        "B": "Begin at the tail node and iterate to the head node, updating each node's previous reference",
+        "C": "Traverse the list as you normally would, then create a reverse iterator",
+        "D": "Use a temporary stack to store node references in reverse order"
+      },
+      "correctAnswer": "C",
+      "explanation": "Although traversing a doubly linked list in reverse order can be achieved without a specific data structure, using a temporary stack provides a more intuitive and efficient approach.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Suppose you're implementing a doubly linked list that should support efficient insertion and deletion of nodes at arbitrary positions. How would you update the list's structure when the target node is not at the beginning or end of the list?",
+      "options": {
+        "A": "Move pointers iteratively until you reach the correct position",
+        "B": "Use a recursive function to locate the correct position",
+        "C": "Update adjacent nodes' next and previous references to the target node",
+        "D": "Update the target node's next and previous references to adjacent nodes"
+      },
+      "correctAnswer": "D",
+      "explanation": "To update links of adjacent nodes to the target node in the middle of a doubly linked list, we must modify the target node's adjacent node references to point to its new neighbors.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Consider a scenario where you are implementing a doubly linked list-based queue with insert and delete operations at both heads and tails. How would you implement a method to remove an element from the beginning of the queue?",
+      "options": {
+        "A": "Remove the node at the front of the list and update adjacent nodes",
+        "B": "Remove the node's previous neighbor's reference then delete the front",
+        "C": "Delete the front node, then set its next neighbor as the new front",
+        "D": "Create a new node, remove the front node and update adjacent nodes"
+      },
+      "correctAnswer": "C",
+      "explanation": "In a doubly linked list-based queue that supports efficient insertion and deletion at both heads and tails, the correct sequence of operations involves removing the front node, then setting its next adjacent node as the new front node.",
+      "difficulty": "Medium"
+    }
+  ]
+}
