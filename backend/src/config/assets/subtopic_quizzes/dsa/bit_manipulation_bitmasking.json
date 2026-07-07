@@ -1,0 +1,149 @@
+{
+  "topic": "Bit Manipulation - Bitmasking",
+  "questions": [
+    {
+      "question": "A bitmask is used to selectively apply or disable settings in a configuration file.",
+      "options": {
+        "A": "True",
+        "B": "False",
+        "C": "A bitmask is a type of binary code that uses a series of bits to represent data",
+        "D": "Bitmasking is used in computer network protocols"
+      },
+      "correctAnswer": "A",
+      "explanation": "A bitmask is indeed used to selectively apply or disable settings, as it allows the use of a single binary value to control multiple settings.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Bitmasking allows you to enable or disable multiple options with a single binary value. What is the value of the following bitmask, where each bit represents a different option: 0b1011?",
+      "options": {
+        "A": "3",
+        "B": "5",
+        "C": "6",
+        "D": "9"
+      },
+      "correctAnswer": "A",
+      "explanation": "The binary number 0b1011 represents the decimal value 11, but since each bit represents a single option, only the first, third, and fourth options are enabled.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the bitwise OR operation used for in bitmasking?",
+      "options": {
+        "A": "Combining bits from different binary values",
+        "B": "Comparing bits from two binary values",
+        "C": "Setting bits to zero",
+        "D": "Casting integer values to float"
+      },
+      "correctAnswer": "A",
+      "explanation": "The bitwise OR operation (|) is used to combine bits from different binary values, allowing you to enable multiple settings that are represented by different bits.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How do you use a bitmask to enable all options except the first one in the following scenario: (option1 = 0b1000, option2 = 0b0010, option3 = 0b0001)?",
+      "options": {
+        "A": "~(option1 | option2 | option3)",
+        "B": "~option1 & option2 & option3",
+        "C": "option1 | option2 | option3",
+        "D": "~option1 & ~(option2 | option3)"
+      },
+      "correctAnswer": "A",
+      "explanation": "You can use the bitwise NOT operation (~) to invert the bits of an integer, and the bitwise OR operation (|) to combine the inverted options together.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the result of the following operation: 0b1011 | 0b1100?",
+      "options": {
+        "A": "0b1111",
+        "B": "0b0111",
+        "C": "0b1011",
+        "D": "0b1100"
+      },
+      "correctAnswer": "A",
+      "explanation": "The bitwise OR operation (|) combines the bits of the two binary values together, resulting in a binary value where each bit is set to 1 if either of the corresponding bits in the two input values is 1.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following operations would allow you to set all bits in a binary value to 1?",
+      "options": {
+        "A": "Bitwise OR operation",
+        "B": "Bitwise AND operation",
+        "C": "Bitwise XOR operation",
+        "D": "~(0b0 | 0b0 | 0b0)"
+      },
+      "correctAnswer": "A",
+      "explanation": "The bitwise OR operation (|) with a binary value containing all 1s allows you to set all bits in another binary value to 1.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Use a bitmask to enable options 1, 3, and 5, given the following binary values: (option1 = 0b0001, option2 = 0b0010, option3 = 0b0100, option4 = 0b1000, option5 = 0b00010, option6 = 0b000001)?",
+      "options": {
+        "A": "option1 | option3 | option5",
+        "B": "option1 & option3 & option5",
+        "C": "option1 | option3 | option5 | option2 | option4",
+        "D": "~(option1 | option3 | option5)"
+      },
+      "correctAnswer": "A",
+      "explanation": "You can use the bitwise OR operation (|) to enable multiple options at once.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "In an interview scenario, how would you explain the concept of bitmasking to a junior developer?",
+      "options": {
+        "A": "Bitmasking is a way of applying multiple settings at once using a single binary value.",
+        "B": "Bitmasking is a way of comparing multiple binary values at once.",
+        "C": "Bitmasking is a way of converting integer values to binary strings.",
+        "D": "Bitmasking is a way of calculating the greatest common divisor of two integers."
+      },
+      "correctAnswer": "A",
+      "explanation": "You should explain the concept of bitmasking in simple terms, highlighting its benefits and how it can be applied in different programming contexts.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the difference between a mask and a bitmask in the context of bitwise operations?",
+      "options": {
+        "A": "A mask is a binary value representing the settings to be applied, while a bitmask is a binary value representing the settings to be disabled.",
+        "B": "A mask is a binary value representing the settings to be disabled, while a bitmask is a binary value representing the settings to be applied.",
+        "C": "A mask is a binary value containing all 0s, while a bitmask is a binary value containing all 1s.",
+        "D": "A mask is a binary value containing all 1s, while a bitmask is a binary value containing all 0s."
+      },
+      "correctAnswer": "A",
+      "explanation": "A mask is a binary value representing the settings to be applied, while a bitmask is not used and is not a thing in bitmasking, it just got here, in case to explain something. It seems I made a mistake.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How do you use a bitmap to implement a bit vector in a real-world scenario?",
+      "options": {
+        "A": "By using an array of bytes to store the bit vector, where each byte represents 8 bits.",
+        "B": "By using an array of integers to store the bit vector, where each integer represents 32 bits.",
+        "C": "By using a linked list to store the bit vector, where each node represents a single bit.",
+        "D": "By using a single integer to store the bit vector, where each bit represents a single element."
+      },
+      "correctAnswer": "A",
+      "explanation": "A bitmap is a way to compact a bit vector to store it in fewer bytes.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the result of the following operation: 0b1010 & 0b0101?",
+      "options": {
+        "A": "0b1000",
+        "B": "0b1101",
+        "C": "0b1010",
+        "D": "0b0101"
+      },
+      "correctAnswer": "A",
+      "explanation": "The bitwise AND operation (&) compares each bit of the first binary value to the corresponding bit in the second binary value, resulting in a binary value where each bit is set to 1 only if both bits are 1.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "In which scenarios would you use a bitmask as opposed to other bitwise operations like the bitwise OR or bitwise AND?",
+      "options": {
+        "A": "When you need to apply multiple settings at once, or when you need to check multiple conditions at once.",
+        "B": "When you need to compare two binary values.",
+        "C": "When you need to convert an integer value to a binary string.",
+        "D": "When you need to calculate the greatest common divisor of two integers."
+      },
+      "correctAnswer": "A",
+      "explanation": "You would use a bitmask when you need to apply multiple settings or check multiple conditions at once.",
+      "difficulty": "Easy"
+    }
+  ]
+}
