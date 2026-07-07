@@ -1,0 +1,197 @@
+{
+  "topic": "Hashing - Hash Maps",
+  "questions": [
+    {
+      "question": "What is the primary purpose of a hash map in computer science?",
+      "options": {
+        "A": "To sort data in ascending order",
+        "B": "To store and retrieve data efficiently using a hash function",
+        "C": "To implement a graph data structure",
+        "D": "To perform complex mathematical calculations"
+      },
+      "correctAnswer": "B",
+      "explanation": "A hash map is designed to store and retrieve data efficiently by converting keys into indices of a backing array using a hash function.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the time complexity of the average case for a hash collision resolution strategy that uses separate chaining in a hash map?",
+      "options": {
+        "A": "O(1)",
+        "B": "O(n)",
+        "C": "O(log n)",
+        "D": "O(n + m)"
+      },
+      "correctAnswer": "B",
+      "explanation": "When a collision occurs using separate chaining, the average time complexity is O(n), where n is the number of elements in the bucket.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the benefit of using a power of 2 as the initial size of a hash map?",
+      "options": {
+        "A": "It helps with load balancing between buckets",
+        "B": "It reduces the likelihood of collisions",
+        "C": "It optimizes cache performance",
+        "D": "All of the above"
+      },
+      "correctAnswer": "D",
+      "explanation": "Using a power of 2 as the initial size of a hash map helps with load balancing between buckets, reduces the likelihood of collisions, and optimizes cache performance.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the name of the hash map operation that retrieves a value associated with a given key?",
+      "options": {
+        "A": "Insert",
+        "B": "Delete",
+        "C": "Get",
+        "D": "Put"
+      },
+      "correctAnswer": "C",
+      "explanation": "The Get operation in a hash map retrieves the value associated with a specific key.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the name of the data structure used to resolve collisions when resizing a hash map?",
+      "options": {
+        "A": "Linked list",
+        "B": "Binary search tree",
+        "C": "Array",
+        "D": "Hash table"
+      },
+      "correctAnswer": "A",
+      "explanation": "When resizing a hash map, a linked list is often used to resolve collisions for the elements that need to be rehashed.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the term for the average number of comparisons needed to retrieve an element in a hash map?",
+      "options": {
+        "A": "Collision rate",
+        "B": "Load factor",
+        "C": "Average search time",
+        "D": "Search complexity"
+      },
+      "correctAnswer": "C",
+      "explanation": "The average number of comparisons needed to retrieve an element in a hash map is referred to as the average search time.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the time complexity of rehashing an entire hash map?",
+      "options": {
+        "A": "O(n)",
+        "B": "O(n log n)",
+        "C": "O(n^2)",
+        "D": "O(n + m)"
+      },
+      "correctAnswer": "A",
+      "explanation": "Rehashing an entire hash map typically has a time complexity of O(n), where n is the number of elements in the map.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How do you handle a collision in a hash map when you already have an element with the same hash value?",
+      "options": {
+        "A": "Remove the existing element",
+        "B": "Insert the new element at the beginning of the bucket",
+        "C": "Use separate chaining or open addressing to resolve the collision",
+        "D": "Use a linked list to store all elements that hash to the same index"
+      },
+      "correctAnswer": "C",
+      "explanation": "Collisions can be resolved using separate chaining or open addressing, which allow the hash map to still achieve an average time complexity of O(1).",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What happens when the load factor of a hash map exceeds 0.7?",
+      "options": {
+        "A": "The map shrinks to maintain performance",
+        "B": "The map resizes to maintain a good load factor",
+        "C": "The map throws an error",
+        "D": "None of the above"
+      },
+      "correctAnswer": "B",
+      "explanation": "When the load factor exceeds 0.7, a hash map may choose to resize itself to maintain a good load factor and prevent degradation of performance.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the benefit of using a hash map with open addressing instead of separate chaining?",
+      "options": {
+        "A": "It reduces the likelihood of collisions",
+        "B": "It optimizes cache performance",
+        "C": "It minimizes the number of comparisons needed to find an element",
+        "D": "All of the above"
+      },
+      "correctAnswer": "D",
+      "explanation": "Open addressing can reduce the likelihood of collisions, optimize cache performance, and minimize the number of comparisons needed to find an element.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the term for the measure of the density of elements in a hash map?",
+      "options": {
+        "A": "Load factor",
+        "B": "Collision rate",
+        "C": "Hash ratio",
+        "D": "Search factor"
+      },
+      "correctAnswer": "A",
+      "explanation": "The load factor is a measure of the density of elements in a hash map, indicating how full the map is.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What happens when you use a poor-quality hash function in a hash map?",
+      "options": {
+        "A": "The map is optimized for cache performance",
+        "B": "The map minimizes the number of collisions",
+        "C": "The map experiences increased search times and a high collision rate",
+        "D": "None of the above"
+      },
+      "correctAnswer": "C",
+      "explanation": "A poor-quality hash function can lead to an increased likelihood of collisions, search times, and reduced performance in a hash map.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the purpose of the initial size of a hash map?",
+      "options": {
+        "A": "To optimize cache performance",
+        "B": "To minimize the number of collisions",
+        "C": "To set the initial load factor",
+        "D": "To establish a baseline for growth"
+      },
+      "correctAnswer": "D",
+      "explanation": "The initial size of a hash map sets a baseline for growth, allowing the map to scale correctly as elements are added or removed.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What are the primary benefits of using separate chaining in a hash map?",
+      "options": {
+        "A": "It minimizes cache thrashing",
+        "B": "It reduces the likelihood of collisions",
+        "C": "It optimizes load factor",
+        "D": "All of the above"
+      },
+      "correctAnswer": "D",
+      "explanation": "Separate chaining can minimize cache thrashing, reduce the likelihood of collisions, and optimize the load factor of a hash map.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How can you ensure that a hash map remains balanced even after insertions and deletions?",
+      "options": {
+        "A": "By regularly rehashing the map",
+        "B": "By resizing the map after insertions and deletions",
+        "C": "By using a load factor threshold to trigger resizing",
+        "D": "None of the above"
+      },
+      "correctAnswer": "C",
+      "explanation": "Regularly resizing the map after insertions and deletions can keep the map balanced by adjusting the load factor and optimizing performance.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the term for the process of updating the hash value of an element after resizing a hash map?",
+      "options": {
+        "A": "Rehash",
+        "B": "Recalculate",
+        "C": "Rescale",
+        "D": "Resize"
+      },
+      "correctAnswer": "A",
+      "explanation": "After resizing a hash map, elements may need to be rehashed to account for the updated size of the map.",
+      "difficulty": "Easy"
+    }
+  ]
+}
