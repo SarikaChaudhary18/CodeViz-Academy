@@ -1,0 +1,173 @@
+{
+  "topic": "Development - Computer Networks",
+  "questions": [
+    {
+      "question": "What is the fundamental unit of data in a network?",
+      "options": {
+        "A": "Bit",
+        "B": "Byte",
+        "C": " Packet",
+        "D": "Frame"
+      },
+      "correctAnswer": "A",
+      "explanation": "A bit is the basic unit of information in computing and digital communications. It represents a single binary digit, either 0 or 1. This fundamental unit is used to represent data in various forms within a network.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following is the primary function of a hub in a network?",
+      "options": {
+        "A": "Routing",
+        "B": "Switching",
+        "C": "Broadcasting",
+        "D": "Amplifying signal"
+      },
+      "correctAnswer": "C",
+      "explanation": "A hub in a network forwards incoming data to all its connected network devices. This allows data to be broadcast to multiple devices, making it a simple and non-intelligent networking device.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the primary difference between a LAN and a WAN?",
+      "options": {
+        "A": "Physical size",
+        "B": "Network speed",
+        "C": "Administrative control",
+        "D": "Scalability"
+      },
+      "correctAnswer": "C",
+      "explanation": "A LAN (Local Area Network) typically covers a small geographic area, such as a home or office, and is usually managed by a single administrator or organization. A WAN (Wide Area Network) spans larger areas, such as cities or countries, and often involves multiple administrative domains.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the function of a DNS resolver in a network?",
+      "options": {
+        "A": "Mapping domain names to IP addresses",
+        "B": "Encrypting network traffic",
+        "C": "Authenticating user credentials",
+        "D": "Buffering network packets"
+      },
+      "correctAnswer": "A",
+      "explanation": "A DNS (Domain Name System) resolver converts human-readable domain names into IP addresses that can be understood by computers. This allows users to access websites and online services using easy-to-remember names rather than complex IP addresses.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the concept of Quality of Service (QoS) in a network?",
+      "options": {
+        "A": "Guaranteed bandwidth and latency for all network traffic",
+        "B": "Prioritized network traffic based on application requirements",
+        "C": "Automated network traffic shaping and policing",
+        "D": "Real-time traffic monitoring and analytics"
+      },
+      "correctAnswer": "B",
+      "explanation": "QoS (Quality of Service) in a network prioritizes traffic based on various factors, such as application type, packet size, and packet type. This ensures that critical applications receive sufficient bandwidth and latency to function properly.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the purpose of subnetting in a network?",
+      "options": {
+        "A": "To increase the number of IP addresses available within a subnet",
+        "B": "To reduce the number of subnets within a network",
+        "C": "To improve network security by isolating traffic",
+        "D": "To reduce network congestion by optimizing packet forwarding"
+      },
+      "correctAnswer": "A",
+      "explanation": "Subnetting is a technique that involves dividing a single IP address range into multiple smaller sub-networks, each with its own network ID and subnet mask. This allows for a more efficient use of IP addresses within a network.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the primary advantage of using TCP (Transmission Control Protocol) compared to UDP (User Datagram Protocol)?",
+      "options": {
+        "A": "Speed",
+        "B": "Reliability",
+        "C": "Flow control",
+        "D": "Multiplexing"
+      },
+      "correctAnswer": "B",
+      "explanation": "TCP (Transmission Control Protocol) provides reliable data transfer by ensuring that packets are delivered in the correct order and retransmitted if errors occur. This makes it suitable for applications that require guaranteed data integrity, such as file transfers and web browsing.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the function of an ARP cache in a network?",
+      "options": {
+        "A": "Maps IP addresses to MAC addresses",
+        "B": "Caches frequently accessed network resources",
+        "C": "Sends data packets to their destination",
+        "D": "Detects network loops and bottlenecks"
+      },
+      "correctAnswer": "A",
+      "explanation": "An ARP (Address Resolution Protocol) cache is a temporary storage location that maps IP addresses to MAC addresses. When a device needs to communicate with another device, it checks the ARP cache to find the corresponding MAC address before sending the data packet.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the difference between IPv4 and IPv6 addressing schemes?",
+      "options": {
+        "A": "Number of available IP addresses",
+        "B": "Packet size and fragmentation",
+        "C": "Header structure and compression",
+        "D": "Security features and encryption"
+      },
+      "correctAnswer": "A",
+      "explanation": "IPv6 (Internet Protocol version 6) has a much larger address space than IPv4, with 128 bits per address compared to IPv4's 32 bits. This allows for a virtually unlimited number of unique IP addresses.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the primary purpose of a routing table in a network?",
+      "options": {
+        "A": "To map IP addresses to MAC addresses",
+        "B": "To route data packets to their destination",
+        "C": "To track network latency and packet loss",
+        "D": "To monitor network security and intrusion detection"
+      },
+      "correctAnswer": "B",
+      "explanation": "A routing table is used by routers to determine the best path for forwarding data packets to their destination. It contains a list of routes, each with a destination IP address, subnet mask, and next hop IP address.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the concept of packet switching in a network?",
+      "options": {
+        "A": "Routing data packets to their destination based on packet header information",
+        "B": "Fragmenting large packets into smaller packets for transmission",
+        "C": "Reassembling fragmented packets at the destination",
+        "D": "Encrypting data packets for secure transmission"
+      },
+      "correctAnswer": "A",
+      "explanation": "Packet switching is a networking technique where data packets are routed to their destination based on packet header information, such as source and destination IP addresses and port numbers.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the primary advantage of using OpenFlow in a network?",
+      "options": {
+        "A": "Improved network security through packet inspection",
+        "B": "Enhanced network scalability through distributed routing",
+        "C": "Simplified network configuration through centralized management",
+        "D": "Increased network performance through programmable switching"
+      },
+      "correctAnswer": "D",
+      "explanation": "OpenFlow is a protocol that allows for programmable switching, enabling network administrators to create custom switching rules and flow tables. This allows for more efficient and flexible network management.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the function of a SDN controller in a network?",
+      "options": {
+        "A": "Distributes routing information to network devices",
+        "B": "Configures network devices through OpenFlow rules",
+        "C": "Analyzes network performance through real-time monitoring",
+        "D": "Automates network security through threat detection"
+      },
+      "correctAnswer": "B",
+      "explanation": "A SDN (Software-Defined Networking) controller is responsible for configuring network devices through OpenFlow rules, creating a centralized management layer for network administration.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the difference between a network interface card (NIC) and a network interface device (NID)?",
+      "options": {
+        "A": "NIC handles data transmission, while NID manages network routing",
+        "B": "NIC is a hardware component, while NID is a software component",
+        "C": "NIC connects devices to a network, while NID connects a network to the internet",
+        "D": "NIC deals with data encapsulation, while NID deals with data decapsulation"
+      },
+      "correctAnswer": "A",
+      "explanation": "A NIC (Network Interface Card) handles data transmission and reception for a network device, while a NID (Network Interface Device) is typically responsible for managing network routing and forwarding.",
+      "difficulty": "Hard"
+    }
+  ]
+}
