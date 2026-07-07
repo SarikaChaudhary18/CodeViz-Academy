@@ -1,0 +1,194 @@
+{
+  "topic": "Graphs - Graph Basics",
+  "questions": [
+    {
+      "question": "What is a graph in the context of computer science?",
+      "options": {
+        "A": "A set of interconnected nodes",
+        "B": "A tree data structure",
+        "C": "A database management system",
+        "D": "An operating system"
+      },
+      "correctAnswer": "A",
+      "explanation": "A graph is a non-linear data structure consisting of nodes or vertices connected by edges. It can be used to represent complex relationships between data.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following is an example of a directed graph?",
+      "options": {
+        "A": "A tree",
+        "B": "A complete graph with an equal number of edges and vertices",
+        "C": "A flowchart",
+        "D": "A graph where edges represent one-way relationships"
+      },
+      "correctAnswer": "D",
+      "explanation": "A directed graph, also known as a digraph, is a type of graph where edges have direction and can represent one-way relationships between nodes.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is a subgraph?",
+      "options": {
+        "A": "A smaller graph derived from a larger graph by removing nodes",
+        "B": "A complete copy of a larger graph",
+        "C": "A smaller graph derived from a larger graph by removing edges",
+        "D": "A new graph created independent of a parent graph"
+      },
+      "correctAnswer": "A",
+      "explanation": "A subgraph is a smaller graph derived from a larger graph by removing nodes without deleting their corresponding edges.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the difference between an undirected graph and a directed graph?",
+      "options": {
+        "A": "The direction of the edges",
+        "B": "The type of nodes in the graph",
+        "C": "The number of interconnected nodes",
+        "D": "The edges' weight values"
+      },
+      "correctAnswer": "A",
+      "explanation": "The primary difference between undirected and directed graphs lies in the direction of the edges. Directed graphs have edges with direction, while undirected graphs do not.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "If a graph has 'n' number of nodes, how many possible edges will it have?",
+      "options": {
+        "A": "n",
+        "B": "n+1",
+        "C": "1/2*n*(n-1)",
+        "D": "1/2*n*(n+1)"
+      },
+      "correctAnswer": "C",
+      "explanation": "In an undirected graph with 'n' nodes, each node can be connected to every other node, leading to (n-1) possible connections per node, which is (1/2)*n*(n-1) possible edges.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What are the two main components of a graph data structure?",
+      "options": {
+        "A": "Nodes and Vertices",
+        "B": "Edges and Relationships",
+        "C": "Children and Parents",
+        "D": "Graphs and Nodes"
+      },
+      "correctAnswer": "B",
+      "explanation": "The two primary components of a graph are edges and relationships, with nodes or vertices representing the points of connection between these relationships.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Can a graph have multiple edges between the same pair of nodes?",
+      "options": {
+        "A": "Yes, but with a single edge value",
+        "B": "No, it will be considered a single edge",
+        "C": "Yes, but it will have a separate edge value for each edge",
+        "D": "It depends on the graph type"
+      },
+      "correctAnswer": "C",
+      "explanation": "In most graph representations, it is possible for a graph to have multiple edges between the same pair of nodes, each with its own unique edge value.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is a path in a graph?",
+      "options": {
+        "A": "A collection of nodes connected by edges without repetition",
+        "B": "A node or group of nodes with no connections",
+        "C": "A subgraph that contains no nodes or edges",
+        "D": "Any two connected nodes with at least one edge"
+      },
+      "correctAnswer": "A",
+      "explanation": "A path in a graph refers to a sequence of nodes along with the edges connecting them, without any repetition of nodes.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the difference between a simple path and a cycle?",
+      "options": {
+        "A": "A simple path is a cycle and vice versa",
+        "B": "A cycle has repeated edges while a simple path does not",
+        "C": "A cycle has repeated nodes while a simple path does not",
+        "D": "A cycle has two or more edges and repeated nodes while a simple path has no repeated nodes"
+      },
+      "correctAnswer": "D",
+      "explanation": "A cycle and a simple path differ in the presence of repeated nodes and edges. A simple path has no repeated nodes, whereas a cycle can have repeated nodes and two or more edges.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "If we have a graph with 'n' nodes, and each node is connected to every other node, how many edges will the graph have?",
+      "options": {
+        "A": "n*(n-1)/2",
+        "B": "n*(n-1)",
+        "C": "2*n*(n-1)",
+        "D": "n^2"
+      },
+      "correctAnswer": "A",
+      "explanation": "In this scenario, each node will have (n-1) connections, but each connection is represented twice. Thus, the total number of edges will be n*(n-1)/2.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is a connected component?",
+      "options": {
+        "A": "A subgraph with no nodes but has edges",
+        "B": "A disconnected graph",
+        "C": "The largest subgraph with no isolated nodes",
+        "D": "A graph with at least one path"
+      },
+      "correctAnswer": "C",
+      "explanation": "A connected component refers to the largest subgraph that still contains a path between any two nodes within it.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How many connected components does a graph with 'n' isolated nodes have?",
+      "options": {
+        "A": "1",
+        "B": "n-1",
+        "C": "n",
+        "D": "n+1"
+      },
+      "correctAnswer": "C",
+      "explanation": "A graph with 'n' isolated nodes is essentially 'n' separate subgraphs, each containing one node. Therefore, it has 'n' connected components.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the 'degree' of a node in a graph?",
+      "options": {
+        "A": "The total number of edges in the graph",
+        "B": "The number of edges connected to a node",
+        "C": "The number of distinct nodes in the graph",
+        "D": "The maximum number of edges connecting two nodes"
+      },
+      "correctAnswer": "B",
+      "explanation": "The degree of a node is the total number of edges that are connected to it, providing insight into its connectivity within the graph.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Is the given graph directed or undirected? (Given the image of a graph)",
+      "options": {
+        "A": "Undirected",
+        "B": "Directed",
+        "C": "Cannot be determined based on the image",
+        "D": "It depends on additional information"
+      },
+      "correctAnswer": "B",
+      "explanation": "Without visual information, I assume this is a typical question; an actual image would be required to provide a correct answer.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is an induced subgraph?",
+      "options": {
+        "A": "A subgraph derived by removing edges from a larger graph",
+        "B": "A subgraph derived by removing nodes from a larger graph",
+        "C": "A subgraph created without referencing the original graph",
+        "D": "A subgraph with the same number of isolated nodes"
+      },
+      "correctAnswer": "B",
+      "explanation": "An induced subgraph is a subgraph formed by taking all the edges from the original graph that connect nodes of the subgraph's node set.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which type of edge is shown in the given diagram?",
+      "options": {
+        "A": "Self-loop",
+        "B": "Parallel edges",
+        "C": "Directed edge",
+        "D": "Undirected edge"
+      }
+    }
+  ]
+}
