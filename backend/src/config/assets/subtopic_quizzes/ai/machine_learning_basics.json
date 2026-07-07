@@ -1,0 +1,209 @@
+{
+  "topic": "AI - Machine Learning Basics",
+  "questions": [
+    {
+      "question": "What is the primary goal of Machine Learning?",
+      "options": {
+        "A": "To solve complex mathematical problems",
+        "B": "To make predictions or decisions based on data",
+        "C": "To understand the behavior of natural language models",
+        "D": "To generate realistic images using deep learning"
+      },
+      "correctAnswer": "B",
+      "explanation": "The primary goal of Machine Learning is to enable systems to make predictions or decisions based on data, without being explicitly programmed for each specific case.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What type of learning is characterized by the absence of prior knowledge about the relationships between inputs and outputs?",
+      "options": {
+        "A": "Supervised Learning",
+        "B": "Unsupervised Learning",
+        "C": "Semi-Supervised Learning",
+        "D": "Reinforcement Learning"
+      },
+      "correctAnswer": "B",
+      "explanation": "Unsupervised Learning is characterized by the absence of prior knowledge about the relationships between inputs and outputs, and aims to identify patterns or structure in the data.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the main difference between a Classifier and a Regressor?",
+      "options": {
+        "A": "A Classifier outputs continuous values, while a Regressor outputs discrete values",
+        "B": "A Classifier outputs discrete values, while a Regressor outputs continuous values",
+        "C": "A Classifier uses categorical variables, while a Regressor uses numerical variables",
+        "D": "A Classifier uses numerical variables, while a Regressor uses categorical variables"
+      },
+      "correctAnswer": "B",
+      "explanation": "A Classifier is typically used for classification tasks, where the output is discrete (e.g., 0/1), while a Regressor is used for regression tasks, where the output is continuous.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What type of data is typically used for training a Deep Learning model?",
+      "options": {
+        "A": "Categorical data",
+        "B": "Numerical data",
+        "C": "Image data",
+        "D": "All of the above"
+      },
+      "correctAnswer": "D",
+      "explanation": "Deep Learning models can be trained on a variety of data types, including categorical data, numerical data, image data, and more.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the name of the algorithm used to train a neural network?",
+      "options": {
+        "A": "Gradient Descent",
+        "B": "Linear Regression",
+        "C": "Decision Trees",
+        "D": "Random Forest"
+      },
+      "correctAnswer": "A",
+      "explanation": "Gradient Descent is an iterative algorithm used to train a neural network by minimizing the loss function.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the term for the process of adjusting the weights of a neural network to minimize the error between predictions and actual outputs?",
+      "options": {
+        "A": "Forward Propagation",
+        "B": "Backward Propagation",
+        "C": "Regularization",
+        "D": "Optimization"
+      },
+      "correctAnswer": "B",
+      "explanation": "Backward Propagation is the process of adjusting the weights of a neural network to minimize the error between predictions and actual outputs.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the term for a model that predicts the probability of a specific event occurring?",
+      "options": {
+        "A": "Classifier",
+        "B": "Regressor",
+        "C": "Probability Model",
+        "D": "Decision Tree"
+      },
+      "correctAnswer": "C",
+      "explanation": "A Probability Model is a type of model that predicts the probability of a specific event occurring.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the term for the process of combining multiple models to obtain better results?",
+      "options": {
+        "A": "Model Averaging",
+        "B": "Model Selection",
+        "C": "Ensemble Learning",
+        "D": "Feature Selection"
+      },
+      "correctAnswer": "C",
+      "explanation": "Ensemble Learning is the process of combining multiple models to obtain better results.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the term for a situation in which a machine learning model is deployed in a real-world setting?",
+      "options": {
+        "A": "Model Deployment",
+        "B": "Model Retraining",
+        "C": "Model Maintenance",
+        "D": "Model Evaluation"
+      },
+      "correctAnswer": "A",
+      "explanation": "Model Deployment refers to the process of deploying a machine learning model in a real-world setting.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the term for a situation in which a machine learning model is tested on a new, unseen dataset?",
+      "options": {
+        "A": "Model Evaluation",
+        "B": "Model Retraining",
+        "C": "Model Maintenance",
+        "D": "Model Deployment"
+      },
+      "correctAnswer": "A",
+      "explanation": "Model Evaluation refers to the process of testing a machine learning model on a new, unseen dataset.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the term for a machine learning model that is designed to optimize an objective function?",
+      "options": {
+        "A": "Optimizer Model",
+        "B": "Maximizer Model",
+        "C": "Gradient Descent Model",
+        "D": "Linear Regression Model"
+      },
+      "correctAnswer": "A",
+      "explanation": "An Optimizer Model is a type of machine learning model that is designed to optimize an objective function.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the term for a technique used to reduce overfitting in machine learning models?",
+      "options": {
+        "A": "Regularization",
+        "B": "Early Stopping",
+        "C": "Gradient Clipping",
+        "D": "Learning Rate Adaptation"
+      },
+      "correctAnswer": "A",
+      "explanation": "Regularization is a technique used to reduce overfitting in machine learning models.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the term for a machine learning model that is designed to optimize a reward function?",
+      "options": {
+        "A": "Policy Gradient Model",
+        "B": "Value Function Model",
+        "C": "Actor-Critic Model",
+        "D": "Deep Q-Network Model"
+      },
+      "correctAnswer": "A",
+      "explanation": "A Policy Gradient Model is a type of machine learning model that is designed to optimize a reward function.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the term for a situation in which a machine learning model is deployed in a multi-agent setting?",
+      "options": {
+        "A": "Multi-Agent Deployment",
+        "B": "Multi-Agent Learning",
+        "C": "Multi-Agent Evaluation",
+        "D": "Multi-Agent Optimization"
+      },
+      "correctAnswer": "A",
+      "explanation": "Multi-Agent Deployment refers to the process of deploying a machine learning model in a multi-agent setting.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the term for a type of data that is used to train a machine learning model?",
+      "options": {
+        "A": "Training Data",
+        "B": "Testing Data",
+        "C": "Validation Data",
+        "D": "All of the above"
+      },
+      "correctAnswer": "D",
+      "explanation": "All of the above options are types of data that are used to train a machine learning model.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the concept of learning from an expert teacher without any supervision or explicit feedback?",
+      "options": {
+        "A": "Supervised Learning",
+        "B": "Unsupervised Learning",
+        "C": "Reinforcement Learning",
+        "D": "Imitation Learning"
+      },
+      "correctAnswer": "D",
+      "explanation": "Imitation Learning is the concept of learning from an expert teacher without any supervision or explicit feedback.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the process of learning from a combination of labeled and unlabeled data?",
+      "options": {
+        "A": "Supervised Learning",
+        "B": "Unsupervised Learning",
+        "C": "Semi-Supervised Learning",
+        "D": "Reinforcement Learning"
+      },
+      "correctAnswer": "C",
+      "explanation": "Semi-Supervised Learning is the process of learning from a combination of labeled and unlabeled data.",
+      "difficulty": "Medium"
+    }
+  ]
+}
