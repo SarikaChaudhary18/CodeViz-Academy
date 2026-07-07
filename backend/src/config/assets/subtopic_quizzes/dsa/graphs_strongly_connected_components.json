@@ -1,0 +1,158 @@
+{
+  "topic": "Graphs - Strongly Connected Components",
+  "questions": [
+    {
+      "question": "What is the purpose of Strongly Connected Components (SCCs) in graph theory?",
+      "options": {
+        "A": "To identify connected components in an undirected graph",
+        "B": "To find the shortest path between two nodes in a directed graph",
+        "C": "To group together nodes in a directed graph that have direct cycles",
+        "D": "To partition an unweighted graph into clusters"
+      },
+      "correctAnswer": "C",
+      "explanation": "Strongly Connected Components are used to identify nodes in a directed graph that are directly reachable in both directions. In other words, they group together nodes that have cycles between them. This is useful for analyzing graph structures and identifying nodes with strong relationships.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What does it mean for a node to be strongly connected?",
+      "options": {
+        "A": "It is connected to every other node in the graph",
+        "B": "It forms a cycle with every other node in the graph",
+        "C": "It has direct edges to and from every other node in the graph",
+        "D": "It has a high in-degree and high out-degree"
+      },
+      "correctAnswer": "C",
+      "explanation": "A node is strongly connected if it has a direct edge to every other node in the graph, as well as a direct edge from every other node in the graph. In other words, it has strong relationships with every other node.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How do we find the Strongly Connected Components in a graph?",
+      "options": {
+        "A": "By performing a breadth-first search (BFS)",
+        "B": "By performing a depth-first search (DFS)",
+        "C": "By using Kosaraju's algorithm",
+        "D": "By using Floyd-Warshall algorithm"
+      },
+      "correctAnswer": "C",
+      "explanation": "We use Kosaraju's algorithm to find the Strongly Connected Components in a graph. This algorithm involves doing a DFS, reversing the graph, and then doing another DFS. It ensures that we find all the strongly connected components in the graph.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is Kosaraju's algorithm used for?",
+      "options": {
+        "A": "Finding the minimum spanning tree",
+        "B": "Finding the Strongly Connected Components",
+        "C": "Finding the connected components",
+        "D": "Finding the Shortest Path"
+      },
+      "correctAnswer": "B",
+      "explanation": "Kosaraju's algorithm is specifically designed to find the Strongly Connected Components in a graph. It is an efficient algorithm that can handle large graphs.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How do we reverse a directed graph?",
+      "options": {
+        "A": "By swapping all the edges in the graph",
+        "B": "By reversing the direction of all the edges in the graph",
+        "C": "By keeping the edges the same and reversing the nodes",
+        "D": "By removing all the edges and starting from scratch"
+      },
+      "correctAnswer": "B",
+      "explanation": "To reverse a directed graph, we simply reverse the direction of all the edges in the graph. This means if there was an edge from node A to node B, it will now be an edge from node B to node A after reversal.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Why do we need to reverse the directed graph before doing the second DFS?",
+      "options": {
+        "A": "To ensure that we find connected components",
+        "B": "To ensure that we find strongly connected components",
+        "C": "To ensure that we find the minimum spanning tree",
+        "D": "To ensure that we find the shortest path"
+      },
+      "correctAnswer": "B",
+      "explanation": "By reversing the graph after doing the first DFS, we ensure that the second DFS starts at a node that is already in a strongly connected component. This way, we can correctly identify all the strongly connected components in the graph.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the advantage of using Kosaraju's algorithm over other algorithms?",
+      "options": {
+        "A": "It is faster and more efficient",
+        "B": "It uses less memory",
+        "C": "It handles large graphs well",
+        "D": "All of the above"
+      },
+      "correctAnswer": "D",
+      "explanation": "Kosaraju's algorithm has multiple advantages. It is faster and more efficient compared to other algorithms, uses less memory, and can handle large graphs well. Therefore, it is a preferred choice for finding strongly connected components in large graphs.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How does Kosaraju's algorithm handle large graphs?",
+      "options": {
+        "A": "By partitioning the graph into smaller sub-graphs",
+        "B": "By using a divide-and-conquer approach",
+        "C": "By doing a DFS on the entire graph first",
+        "D": "By using a breadth-first search (BFS)"
+      },
+      "correctAnswer": "A",
+      "explanation": "To handle large graphs, Kosaraju's algorithm partitions the graph into smaller sub-graphs. It then finds the strongly connected components in each sub-graph separately. This approach is more efficient and scalable for large graphs.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the time complexity of Kosaraju's algorithm?",
+      "options": {
+        "A": "O(V + E)",
+        "B": "O(V log V + E log E)",
+        "C": "O(V^2 + E)",
+        "D": "O(V * E)"
+      },
+      "correctAnswer": "C",
+      "explanation": "The time complexity of Kosaraju's algorithm is O(V^2 + E). This is because we are doing two depth-first searches and also iterating over the graph to find the reversed graph. This complexity makes it suitable for finding strongly connected components in large graphs.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Assume we have a directed graph with 100 vertices and 500 edges. Which algorithm would be more efficient in finding the strongly connected components?",
+      "options": {
+        "A": "Kosaraju's algorithm",
+        "B": "Bellman-Ford algorithm",
+        "C": "Dijkstra's algorithm",
+        "D": "Floyd-Warshall algorithm"
+      },
+      "correctAnswer": "A",
+      "explanation": "For a large graph with 100 vertices and 500 edges, Kosaraju's algorithm is more efficient than the other algorithms. It has a time complexity of O(V^2 + E) and is specifically designed to find strongly connected components in directed graphs.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Suppose we want to partition a directed graph into strongly connected components. How would you do it?",
+      "options": {
+        "A": "Use a breadth-first search (BFS)",
+        "B": "Use a depth-first search (DFS)",
+        "C": "Use Kosaraju's algorithm",
+        "D": "Use both DFS and BFS"
+      },
+      "correctAnswer": "C",
+      "explanation": "To partition a directed graph into strongly connected components, we should use Kosaraju's algorithm. This algorithm guarantees that we find all strongly connected components in the graph and is specifically designed for this purpose.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Consider a directed graph with nodes A, B, C, and D, where there are edges between nodes A-B, B-C, C-D, and D-A. What are the strongly connected components in this graph?",
+      "options": {
+        "A": "Nodes A, B, and C are one strongly connected component, and node D is another strongly connected component",
+        "B": "Nodes B, C, and D are one strongly connected component, and node A is another strongly connected component",
+        "C": "Nodes A and B are one strongly connected component, and nodes C and D are another strongly connected component",
+        "D": "Nodes A, B, C, and D are all part of one strongly connected component"
+      },
+      "correctAnswer": "A",
+      "explanation": "In this graph, nodes A, B, and C are strongly connected because they have direct cycles. Node D is also strongly connected by itself. Therefore, the strongly connected components are nodes A, B, and C as one component and node D as another component.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Suppose we have a graph with 5 nodes and 6 edges. If the edges form a cycle, what is the minimum possible number of strongly connected components?",
+      "options": {
+        "A": "1",
+        "B": "2",
+        "C": "3",
+        "D": "More than 3"
+      }
+    }
+  ]
+}
