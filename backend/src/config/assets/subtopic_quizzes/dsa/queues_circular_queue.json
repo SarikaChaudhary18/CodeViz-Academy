@@ -1,0 +1,197 @@
+{
+  "topic": "Queues - Circular Queue",
+  "questions": [
+    {
+      "question": "In a circular queue implementation, if the front and rear pointers both wrap around to the beginning of the queue, what operation is triggered?",
+      "options": {
+        "A": "Enqueue",
+        "B": "Dequeue",
+        "C": "Peek",
+        "D": "Resize"
+      },
+      "correctAnswer": "B",
+      "explanation": "When the front and rear pointers wrap around to the beginning of the queue, it means the queue is empty after a dequeue operation. Therefore, the dequeue operation is triggered.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the primary advantage of using a circular buffer for implementing a queue?",
+      "options": {
+        "A": "Improved performance during resizing",
+        "B": "Efficient memory management",
+        "C": "Reduced overhead during element removal",
+        "D": "Avoidance of buffer overflow"
+      },
+      "correctAnswer": "D",
+      "explanation": "Because the buffer is a fixed size, it's easier to avoid buffer overflow when implementing a queue using a circular buffer.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Suppose you have a circular queue with a size of 5. How many operations are needed to make the front and rear pointers overlap?",
+      "options": {
+        "A": "1",
+        "B": "2",
+        "C": "3",
+        "D": "4"
+      },
+      "correctAnswer": "D",
+      "explanation": "This is because the last element is removed, and the front pointer points to the position after the last element. Since the buffer is full, the second element from the beginning has to be removed, overlapping the front and rear pointers.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which data structure would you use if you need to store a fixed-size buffer and implement a queue on it?",
+      "options": {
+        "A": "Array",
+        "B": "Linked List",
+        "C": "Heap",
+        "D": "Stack"
+      },
+      "correctAnswer": "A",
+      "explanation": "An array is a fixed-size buffer and is suitable for implementing a queue using a circular buffer.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Consider a queue with a size of 3. When you insert 5 elements into the queue, how many elements will be discarded?",
+      "options": {
+        "A": "0",
+        "B": "1",
+        "C": "2",
+        "D": "3"
+      },
+      "correctAnswer": "B",
+      "explanation": "Since the size of the queue is 3, once this is reached, subsequent elements will be discarded until space becomes available.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Suppose you're given a queue and asked to dequeue all elements from the queue. How many operations are required if there are n elements in the queue?",
+      "options": {
+        "A": "1",
+        "B": "n",
+        "C": "2n",
+        "D": "n(n+1)/2"
+      },
+      "correctAnswer": "B",
+      "explanation": "Dequeue operations are performed once for each element, resulting in n operations.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Consider a queue with a size of 2. When you remove an element, what happens to the front and rear pointers?",
+      "options": {
+        "A": "Both move forward simultaneously",
+        "B": "Only the front pointer moves forward",
+        "C": "Only the rear pointer moves forward",
+        "D": "No change"
+      },
+      "correctAnswer": "B",
+      "explanation": "After removing an element, the front pointer is incremented since the front pointer points to the next element to be removed.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Suppose you have a circular queue. How can you detect overflow?",
+      "options": {
+        "A": "Check if the queue is empty",
+        "B": "Check if the queue has reached its maximum capacity",
+        "C": "Check if the head pointer is null",
+        "D": "Check if the tail pointer is null"
+      },
+      "correctAnswer": "B",
+      "explanation": "An overflow occurs when the queue has reached its maximum capacity. Checking if the queue has reached its maximum capacity provides an indication of an overflow.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the time complexity of the enqueue operation in a circular queue implementation?",
+      "options": {
+        "A": "O(1)",
+        "B": "O(n)",
+        "C": "O(log n)",
+        "D": "O(n log n)"
+      },
+      "correctAnswer": "A",
+      "explanation": "The enqueue operation involves updating the rear pointer and writing to the next available position in the queue. These two operations can be performed in constant time O(1).",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Consider a queue and ask how many operations are needed to enqueue an element if the queue has n elements and can contain up to k elements?",
+      "options": {
+        "A": "1 + n",
+        "B": "1",
+        "C": "n",
+        "D": "k"
+      },
+      "correctAnswer": "A",
+      "explanation": "In the worst case, we need one operation to move all elements down and then we need n operations to shift each element by one place. In the best case, no shifting is required.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "In a circular queue, how do you handle the case when the rear pointer is at the last index and the next element to be dequeued is at the next available index?",
+      "options": {
+        "A": "Wrap around the queue",
+        "B": "Increase the size of the queue",
+        "C": "Discard the new element",
+        "D": "Do nothing but wait"
+      },
+      "correctAnswer": "D",
+      "explanation": "This situation occurs when the queue overflows. When the queue overflows, the new element is discarded. Therefore, we do nothing but wait for an element to be dequeued or the queue to become full.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Suppose you have a queue and want to implement a double-ended queue. Which of the following data structures is suitable?",
+      "options": {
+        "A": "Stack",
+        "B": "Linked List",
+        "C": "Array",
+        "D": "Queue"
+      },
+      "correctAnswer": "B",
+      "explanation": "Implementing a double-ended queue can be done efficiently using a linked list that supports both front and rear insertion and deletion.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Consider the following scenario: suppose you insert elements into a queue until it overflows. What happens to the first elements when you enqueue n elements into the queue of size q?",
+      "options": {
+        "A": "All elements remain in the queue",
+        "B": "Some elements remain, while others are discarded",
+        "C": "None of the elements remain",
+        "D": "The elements are moved to the beginning of the queue"
+      },
+      "correctAnswer": "B",
+      "explanation": "Elements that exceed the capacity of the queue are discarded. Those elements already in the queue will be pushed forward to accommodate the newly inserted elements.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How many operations are required to clear a queue of n elements if you iterate n times, removing an element in each iteration?",
+      "options": {
+        "A": "n",
+        "B": "1",
+        "C": "n*(n+1)/2",
+        "D": "n^2"
+      },
+      "correctAnswer": "A",
+      "explanation": "Each iteration removes an element, and this results in n operations to clear the queue.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Suppose you need to implement a queue using a data structure that minimizes overhead. Which data structure should you use?",
+      "options": {
+        "A": "Array",
+        "B": "Stack",
+        "C": "Set",
+        "D": "Linked List"
+      },
+      "correctAnswer": "A",
+      "explanation": "An array has a fixed-size memory allocation and supports both constant time insertion and removal using a circular buffer approach.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Which of the following scenarios results in an underflow in a queue?",
+      "options": {
+        "A": "Enqueue is performed when the queue is already full",
+        "B": "Dequeue is performed when the queue is empty",
+        "C": "An element is accessed without modifying it",
+        "D": "The queue's size is increased"
+      },
+      "correctAnswer": "B",
+      "explanation": "When trying to dequeue from an empty queue, it indicates that there isn't enough elements to perform the operation, thus resulting in a queue underflow.",
+      "difficulty": "Medium"
+    }
+  ]
+}
