@@ -1,0 +1,197 @@
+{
+  "topic": "Development - Load Balancing",
+  "questions": [
+    {
+      "question": "What is the primary purpose of load balancing in a distributed system?",
+      "options": {
+        "A": "To handle high traffic by spreading it across multiple servers",
+        "B": "To prioritize high-priority traffic over low-priority traffic",
+        "C": "To ensure that all users are directed to the same server for a session",
+        "D": "To reduce the overhead of connection setup and teardown"
+      },
+      "correctAnswer": "A",
+      "explanation": "Load balancing is primarily used to handle high traffic by spreading it across multiple servers, ensuring efficient resource utilization and preventing any single point of failure.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which type of load balancing is considered a 'passive' approach and requires no configuration at the client side?",
+      "options": {
+        "A": "Session Persistence",
+        "B": "Round-Robin",
+        "C": "DNS Load Balancing",
+        "D": "Hardware Load Balancing"
+      },
+      "correctAnswer": "C",
+      "explanation": "DNS Load Balancing is a passive approach that requires no configuration at the client side, directing requests to different servers based on DNS records.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the main advantage of using a load balancer with multiple backend servers?",
+      "options": {
+        "A": "Improved scalability",
+        "B": "Enhanced security",
+        "C": "Increased reliability",
+        "D": "Better performance"
+      },
+      "correctAnswer": "A",
+      "explanation": "The main advantage of using a load balancer with multiple backend servers is improved scalability, allowing it to handle increased traffic by dynamically allocating resources to different servers.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which algorithm is used in Round-Robin load balancing to distribute traffic across multiple servers?",
+      "options": {
+        "A": "Least Connection",
+        "B": "IP Hash",
+        "C": "Randomized",
+        "D": "First-Come-First-Served"
+      },
+      "correctAnswer": "D",
+      "explanation": "First-Come-First-Served is the default algorithm used in Round-Robin load balancing to distribute traffic across multiple servers.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the primary concern when implementing Load Balancing with a cluster of web servers?",
+      "options": {
+        "A": "Connection persistence",
+        "B": "Session management",
+        "C": "Cache coherence",
+        "D": "Data consistency"
+      },
+      "correctAnswer": "B",
+      "explanation": "When implementing Load Balancing with a cluster of web servers, session management is the primary concern, as user sessions may be distributed across multiple servers, requiring synchronization mechanisms to ensure session integrity.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the name of the load balancing algorithm that directs each client request to the backend server with the fewest active connections?",
+      "options": {
+        "A": "Round-Robin",
+        "B": "Least Connection",
+        "C": "IP Hash",
+        "D": "Randomized"
+      },
+      "correctAnswer": "B",
+      "explanation": "Least Connection is a load balancing algorithm that directs each client request to the backend server with the fewest active connections.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What are the benefits of using an HAProxy load balancer?",
+      "options": {
+        "A": "Improved security, load balancing, and scalability",
+        "B": "Faster request processing and lower latency",
+        "C": "High availability and disaster recovery",
+        "D": "All of the above"
+      },
+      "correctAnswer": "D",
+      "explanation": "HAProxy offers numerous benefits, including improved security, load balancing, and scalability, as well as faster request processing, lower latency, and high availability, and disaster recovery.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the primary function of a load balancer's 'health check' mechanism?",
+      "options": {
+        "A": "Monitoring server response times",
+        "B": "Detecting server errors",
+        "C": "Checking server connectivity",
+        "D": "Ensuring server session persistence"
+      },
+      "correctAnswer": "B",
+      "explanation": "A load balancer's health check mechanism detects server errors, allowing it to redirect traffic to other available servers and ensure continuous service availability.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Which load balancing algorithm is particularly useful for applications with high-traffic spikes?",
+      "options": {
+        "A": "Session Persistence",
+        "B": "Round-Robin",
+        "C": "Least Connection",
+        "D": "Distributed"
+      },
+      "correctAnswer": "D",
+      "explanation": "Distributed load balancing is particularly useful for applications with high-traffic spikes, as it can dynamically allocate resources across multiple servers to handle increased traffic.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the main difference between 'active' and 'passive' load balancing approaches?",
+      "options": {
+        "A": "Number of servers supported",
+        "B": "Connection persistence",
+        "C": "Number of network hops required",
+        "D": "Client-side configuration required"
+      },
+      "correctAnswer": "D",
+      "explanation": "The main difference between active and passive load balancing approaches is that active approaches typically require client-side configuration, while passive approaches do not.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the primary concern when implementing Load Balancing with a web application that relies heavily on caching?",
+      "options": {
+        "A": "Cache coherence",
+        "B": "Session management",
+        "C": "Data consistency",
+        "D": "Request compression"
+      },
+      "correctAnswer": "A",
+      "explanation": "When implementing Load Balancing with a web application that relies heavily on caching, cache coherence is the primary concern, as caching policies may not be synchronized across all servers.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the benefit of using a load balancer with integrated 'connection persistence'?",
+      "options": {
+        "A": "Reduced server utilization",
+        "B": "Improved request processing",
+        "C": "Enhanced scalability",
+        "D": "Maintained session continuity"
+      },
+      "correctAnswer": "D",
+      "explanation": "A load balancer with integrated 'connection persistence' maintains session continuity by ensuring that the same client session is always directed to the same server, reducing the risk of lost updates.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What are the key considerations when selecting a load balancing algorithm?",
+      "options": {
+        "A": "Scalability, reliability, and performance",
+        "B": "Request compression, caching, and server load",
+        "C": "Session persistence, client-side configuration, and server grouping",
+        "D": "IP addressing, DNS, and network routing"
+      },
+      "correctAnswer": "A",
+      "explanation": "When selecting a load balancing algorithm, key considerations include scalability, reliability, and performance, as these will impact system responsiveness and capacity under various usage patterns.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the primary advantage of using 'IP Hash' as a load balancing algorithm?",
+      "options": {
+        "A": "Improved scalability",
+        "B": "Enhanced security",
+        "C": "Increased session persistence",
+        "D": "Simplified server configuration"
+      },
+      "correctAnswer": "C",
+      "explanation": "IP Hash is a load balancing algorithm that improves session persistence by directing clients with the same source IP to the same server, even if they open multiple connections.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the benefit of using a load balancer with integrated 'server monitoring'?",
+      "options": {
+        "A": "Reduced false positives",
+        "B": "Improved incident detection",
+        "C": "Enhanced system performance",
+        "D": "All of the above"
+      },
+      "correctAnswer": "D",
+      "explanation": "A load balancer with integrated 'server monitoring' offers numerous benefits, including reduced false positives, improved incident detection, and enhanced system performance.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the primary concern when implementing Load Balancing with a legacy system?",
+      "options": {
+        "A": "Integration complexity",
+        "B": "Resource utilization",
+        "C": "Session management",
+        "D": "Request compression"
+      },
+      "correctAnswer": "A",
+      "explanation": "When implementing Load Balancing with a legacy system, integration complexity is often a primary concern, as existing infrastructure may need to be modified or adapted to accommodate load balancing requirements.",
+      "difficulty": "Medium"
+    }
+  ]
+}
