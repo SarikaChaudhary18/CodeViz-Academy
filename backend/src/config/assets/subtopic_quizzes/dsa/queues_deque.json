@@ -1,0 +1,182 @@
+{
+  "topic": "Queues - Deque",
+  "questions": [
+    {
+      "question": "What is a Deque in computer science?",
+      "options": {
+        "A": "A single element queue",
+        "B": "A double-ended queue, supporting insertion and removal from both ends",
+        "C": "A circular buffer with FIFO order",
+        "D": "A priority queue with user-defined priorities"
+      },
+      "correctAnswer": "B",
+      "explanation": "A Deque is a data structure that follows the principle of 'last-in, first-out' (LIFO) on one end and 'first-in, first-out' (FIFO) on the other.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following operations is allowed in a Deque?",
+      "options": {
+        "A": "Insert at front, delete at rear",
+        "B": "Insert at front, delete at front",
+        "C": "Insert at rear, delete at rear",
+        "D": "Insert at rear, delete at front"
+      },
+      "correctAnswer": "B",
+      "explanation": "A Deque typically allows insertion and deletion at the front and rear.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the main advantage of using a Deque over a simple queue?",
+      "options": {
+        "A": "Faster insertion and deletion",
+        "B": "Lower storage requirements",
+        "C": "Improved cache performance",
+        "D": "Simplified implementation"
+      },
+      "correctAnswer": "A",
+      "explanation": "The primary benefit of a Deque is its ability to quickly insert or remove elements in any order.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Consider a Deque with 5 elements. How many ways are there to access the first element?",
+      "options": {
+        "A": 1,
+        "B": 2,
+        "C": 3,
+        "D": 4
+      },
+      "correctAnswer": "B",
+      "explanation": "A Deque can access elements from both ends; therefore, there are 2 ways to access the first element.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "In a Deque, what happens when we try to delete the last element after it's already empty?",
+      "options": {
+        "A": "It throws an exception",
+        "B": "It discards the operation",
+        "C": "It performs it silently",
+        "D": "It performs it by appending a null element"
+      },
+      "correctAnswer": "A",
+      "explanation": "A typical Deque implementation will throw an exception or raise an error when deleting an element from an empty deque.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which data structure is similar to a Deque in terms of accessing elements?",
+      "options": {
+        "A": "Stack",
+        "B": "Queue",
+        "C": "Linked List",
+        "D": "Array-based Tree"
+      },
+      "correctAnswer": "A",
+      "explanation": "Similar to a Deque, a Stack can access elements from the front (top) or rear.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What's the difference between a Deque and a doubly linked list?",
+      "options": {
+        "A": "Deque allows faster insertion and deletion",
+        "B": "Deque does not store the size of the data",
+        "C": "All of the above",
+        "D": "None of the above"
+      },
+      "correctAnswer": "C",
+      "explanation": "While both structures support insertion and deletion, a Deque typically provides faster and more efficient operations due to its internal indexing mechanism.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Which of the following operations can be O(1) in a Deque?",
+      "options": {
+        "A": "Insert at front, delete at rear",
+        "B": "Insert at front, delete at front",
+        "C": "Insert at rear, delete at front",
+        "D": "None of the above"
+      },
+      "correctAnswer": "B",
+      "explanation": "When using an array-based implementation, inserting at the front and deleting at the front can be performed in constant time.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "If a Deque has 5000 elements, how many times faster could an array-based Deque implementation be compared to an explicit doubly linked list implementation?",
+      "options": {
+        "A": 1000,
+        "B": 5000,
+        "C": 9999,
+        "D": 10000
+      },
+      "correctAnswer": "B",
+      "explanation": "If an array-based Deque uses a pre-allocated array of size 5000, and an explicit doubly linked list node has size 1 byte each, then the array-based implementation will be 5,000 times faster for the deletion case and 5,000 times faster in addition for the insertion case.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What's the most efficient way to implement a Deque using a doubly linked list?",
+      "options": {
+        "A": "Use pre-allocated and pre-allocated tail",
+        "B": "Use a doubly linked list implementation",
+        "C": "Add explicit 'dummy nodes' at each end",
+        "D": "Keep track of front and back pointers"
+      },
+      "correctAnswer": "D",
+      "explanation": "The fastest method would be to keep a single pair of pointers, which can point the head and tail. That will give an average time complexity O(1).",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Consider implementing a Deque that uses dynamic memory allocation. What's the primary concern during resizing?",
+      "options": {
+        "A": "Preventing memory fragmentation",
+        "B": "Managing cache lines",
+        "C": "Avoiding memory deallocation overhead",
+        "D": "Synchronizing multi-threaded access"
+      },
+      "correctAnswer": "A",
+      "explanation": "To prevent fragmentation, implement the following steps during resizing: (1) check for available memory before allocating, (2) round up the array size to the nearest power of two, (3) check whether the memory allocation will exceed the capacity of the previous allocation, and (4) use a large buffer allocation to handle the case of multiple reallocations.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Assume we're implementing the Deque class in Java/C#. What's the best approach for synchronization in a single-threaded environment?",
+      "options": {
+        "A": "Synchronize every Deque operation",
+        "B": "Synchronize only Deque insertion and deletion",
+        "C": "Do not synchronize any Deque operations",
+        "D": "Use atomic operations for insertions and deletions only where necessary"
+      },
+      "correctAnswer": "D",
+      "explanation": "Implementing atomic operations where it's necessary (like when inserting and deleting elements) will greatly reduce contention. Avoiding synchronization whenever possible will improve performance and maintain consistency.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "We're implementing a custom Deque in Python. Which one of the following operations can be faster than the standard Deque implementation?",
+      "options": {
+        "A": "Insert at rear, delete at front",
+        "B": "Insert at rear, delete at rear",
+        "C": "Insert at front, delete at front",
+        "D": "Insert at front, delete at rear"
+      },
+      "correctAnswer": "C",
+      "explanation": "Insertions and deletions from the front can be faster because of how the Deque's buffer memory is allocated and managed, as the insertion operation does not change the memory address where it was allocated. This will give faster insertion and deletion compared to Dequeue insertions and deletions.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Suppose we use a Deque as a temporary buffer for some network I/O tasks. If the buffer size exceeds 2 GB, what would be the best approach?",
+      "options": {
+        "A": "Use the `long` type to store the capacity",
+        "B": "Split up the buffer into multiple smaller Deques",
+        "C": "Reconfigure the network interface to use a larger MTU",
+        "D": "Use a memory-mapped file for the buffer"
+      },
+      "correctAnswer": "B",
+      "explanation": "Splitting the buffer into multiple smaller Deques is the best option. You can have multiple smaller Dequeues which will be a more elegant solution.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "If you want to make your Deque implementation thread-safe, which design pattern would you apply?",
+      "options": {
+        "A": "Synchronized block design pattern",
+        "B": "Reentrant lock design pattern (e.g., `Lock` in Java)",
+        "C": "Mentorship pattern using atomic operations",
+        "D": "The Singleton pattern"
+      }
+    }
+  ]
+}
