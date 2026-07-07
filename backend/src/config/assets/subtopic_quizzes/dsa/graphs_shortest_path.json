@@ -1,0 +1,173 @@
+{
+  "topic": "Graphs - Shortest Path",
+  "questions": [
+    {
+      "question": "What is the primary use of Dijkstra's algorithm in graph theory?",
+      "options": {
+        "A": "Finding the longest path between two nodes.",
+        "B": "Determining whether a graph is connected.",
+        "C": "Finding the shortest path between two nodes.",
+        "D": "Detecting cycles in a graph."
+      },
+      "correctAnswer": "C",
+      "explanation": "Dijkstra's algorithm is used for finding the shortest path between a source node and all other nodes in a graph. It iteratively relaxes the edges in the graph until the shortest path to each node is found.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the time complexity of the Bellman-Ford algorithm used to find the shortest path in a weighted graph?",
+      "options": {
+        "A": "O(n + e)",
+        "B": "O(n * e)",
+        "C": "O(V^3)",
+        "D": "O(V * E^2)"
+      },
+      "correctAnswer": "C",
+      "explanation": "The Bellman-Ford algorithm has a time complexity of O(V * E), where V is the number of vertices and E is the number of edges in the graph.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What type of graph is suitable for using Dijkstra's algorithm?",
+      "options": {
+        "A": "Directed graph",
+        "B": "Undirected graph",
+        "C": "Weighted graph",
+        "D": "All of the above"
+      },
+      "correctAnswer": "C",
+      "explanation": "Dijkstra's algorithm can be used on weighted graphs where edge weights represent distance, cost, or other types of edge attributes.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the A* search algorithm used for?",
+      "options": {
+        "A": "Finding the longest path between two nodes.",
+        "B": "Determining whether a graph is connected.",
+        "C": "Finding the shortest path between two nodes.",
+        "D": "Finding a path in a graph from a start node to a goal node while avoiding obstacles."
+      },
+      "correctAnswer": "C",
+      "explanation": "The A* search algorithm is an optimization of the Dijkstra's algorithm used to find the shortest path between two nodes in a weighted graph, especially when there's an estimate of the distance from the current node to the target node.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is Johnson's algorithm used for?",
+      "options": {
+        "A": "Finding the shortest path tree in a graph.",
+        "B": "Determining whether a graph is planar.",
+        "C": "Floyd-Warshall for finding the shortest paths in all pairs of nodes in a weighted graph.",
+        "D": "Finding the shortest path tree in a weighted graph with a negative-weight cycle."
+      },
+      "correctAnswer": "D",
+      "explanation": "Johnson's algorithm is used to find the shortest path tree in a weighted graph with negative-weight cycles by adjusting the edge weights.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "In the Dijkstra's algorithm, what does the 'relaxation step' do?",
+      "options": {
+        "A": "Updating the shortest distance to a node's neighbors.",
+        "B": "Marking all visited nodes as visited.",
+        "C": "Selecting the closest unvisited node to visit.",
+        "D": "Computing the shortest path from source to every node."
+      },
+      "correctAnswer": "A",
+      "explanation": "The relaxation step in Dijkstra's algorithm updates the shortest distance to the neighbors of the selected node, based on whether the new distance to this node is less than the current shortest path.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which graph traversal technique is used in the Bellman-Ford algorithm?",
+      "options": {
+        "A": "Depth-First Search (DFS)",
+        "B": "Breadth-First Search (BFS)",
+        "C": "Dijkstra's algorithm using BFS",
+        "D": "Relaxation using a queue"
+      },
+      "correctAnswer": "B",
+      "explanation": "The Bellman-Ford algorithm uses Breadth-First Search (BFS) to keep track of the edges and vertices, and relaxes the edges to find the shortest paths.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "In Dijkstra's algorithm, why is it necessary to store nodes in a priority queue?",
+      "options": {
+        "A": "To keep track of visited nodes.",
+        "B": "To store nodes in non-strict order.",
+        "C": "To prioritize nodes based on the minimum distance from the source node.",
+        "D": "To handle disconnected graphs."
+      },
+      "correctAnswer": "C",
+      "explanation": "Dijkstra's algorithm needs to choose the node with the minimum distance to be processed next, which is done by storing nodes in a priority queue based on the distance from the source node.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the role of the distance array in Dijkstra's algorithm?",
+      "options": {
+        "A": "To store the next node to visit.",
+        "B": "To store the shortest distance from the source node to each node.",
+        "C": "To store visited nodes.",
+        "D": "To store edge weights."
+      },
+      "correctAnswer": "B",
+      "explanation": "The distance array in Dijkstra's algorithm stores the shortest distance from the source node to each node.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Can Dijkstra's algorithm handle graphs with negative-weight cycles?",
+      "options": {
+        "A": "Yes, it can handle such graphs.",
+        "B": "No, it cannot handle such graphs.",
+        "C": "Maybe",
+        "D": "It depends on the graph."
+      },
+      "correctAnswer": "B",
+      "explanation": "Dijkstra's algorithm is not suitable for graphs with negative-weight cycles, as these cycles can lead to cycles of negative weights and hence, incorrect shortest paths.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "In the Floyd-Warshall algorithm, what does the inner-most loop do?",
+      "options": {
+        "A": "Computes shortest distance from source to every node.",
+        "B": "Updates the k as the shortest path to reach k through i and then j.",
+        "C": "Finds minimum distance between i and j.",
+        "D": "Updates distance array."
+      },
+      "correctAnswer": "B",
+      "explanation": "The inner-most loop updates the k as the shortest path to reach k through i and then j.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Given two points A and B with coordinates (x1, y1) and (x2, y2), find the shortest path between the points using the Euclidean distance metric",
+      "options": {
+        "A": "The line formed by connecting the two points is the shortest path.",
+        "B": "The diagonal of the rectangle defined by the points A and B is the shortest path.",
+        "C": "Use Dijkstra's algorithm to find the shortest path.",
+        "D": "The Euclidean distance between the two points is the shortest path."
+      },
+      "correctAnswer": "D",
+      "explanation": "The Euclidean distance between the two points is the shortest path as it represents the minimum distance in the Euclidean metric.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Find the shortest path in the graph: A -> B -> C -> D -> E",
+      "options": {
+        "A": "A -> B -> D -> C -> E",
+        "B": "A -> B -> C -> E -> D",
+        "C": "A -> C -> B -> E -> D",
+        "D": "There is no unique shortest path."
+      },
+      "correctAnswer": "C",
+      "explanation": "Using Dijkstra's algorithm on the given graph, we can find that the shortest path from node A to node E is A -> C -> B -> E -> D.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Which of the following is the shortest path from node A to node E in a weighted graph G?",
+      "options": {
+        "A": "A -> E",
+        "B": "A -> B -> E",
+        "C": "A -> C -> D -> E -> F -> G -> H -> E",
+        "D": "There are multiple shortest paths."
+      },
+      "correctAnswer": "D",
+      "explanation": "There are multiple shortest paths from A to E, as shown in the graph.",
+      "difficulty": "Medium"
+    }
+  ]
+}
