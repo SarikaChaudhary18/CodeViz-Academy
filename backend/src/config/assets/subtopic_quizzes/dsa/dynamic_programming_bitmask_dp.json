@@ -1,0 +1,170 @@
+{
+  "topic": "Dynamic Programming - Bitmask DP",
+  "questions": [
+    {
+      "question": "What is the primary application of Bitmask DP?",
+      "options": {
+        "A": "Solving linear equations",
+        "B": "Counting and optimization problems involving sets",
+        "C": "Implementing recursive algorithms",
+        "D": "Finding maximum and minimum values"
+      },
+      "correctAnswer": "B",
+      "explanation": "Bitmask DP is primarily used for counting and optimization problems involving sets where each element can have multiple states, represented as a bitmask.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following is an example of Bitmask DP?",
+      "options": {
+        "A": "0-1 Knapsack Problem",
+        "B": "Longest Increasing Subsequence",
+        "C": "Counting the number of subsets with an even sum",
+        "D": "Shortest Path Problem"
+      },
+      "correctAnswer": "C",
+      "explanation": "Counting the number of subsets with an even sum is an example of Bitmask DP as it involves counting the number of subsets where each element has two states (on or off), represented as a bitmask.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "In Bitmask DP, how do we handle the case when the bitmask is 0?",
+      "options": {
+        "A": "We assign a special value to it and handle it separately",
+        "B": "We ignore it and continue with the rest of the bitmask",
+        "C": "We return a default value of 1",
+        "D": "We raise an error"
+      },
+      "correctAnswer": "A",
+      "explanation": "In Bitmask DP, when the bitmask is 0, we assign a special value to it and handle it separately to avoid infinite recursion or incorrect outcomes. This special value is usually a base case value that we can return directly.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the time complexity of Bitmask DP for an n-bit bitmask?",
+      "options": {
+        "A": "O(1)",
+        "B": "O(n)",
+        "C": "O(2^n)",
+        "D": "O(n * 2^n)"
+      },
+      "correctAnswer": "B",
+      "explanation": "For an n-bit bitmask, we need to iterate through each bit once to calculate the bitmask. The time complexity is proportional to the number of bits (n). Therefore, the time complexity is O(n).",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How do we handle overlapping subproblems in Bitmask DP?",
+      "options": {
+        "A": "By using memoization or tabulation",
+        "B": "By ignoring the subproblems",
+        "C": "By using recursion only",
+        "D": "By using a loop only"
+      },
+      "correctAnswer": "A",
+      "explanation": "In Bitmask DP, overlapping subproblems occur because we are calculating the same subproblems multiple times. To handle this, we use memoization or tabulation to store the results of subproblems so that we can reuse them instead of recalculating them.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the key difference between Memoization and Tabulation in Bitmask DP?",
+      "options": {
+        "A": "Order of filling table for top-down vs bottom-up",
+        "B": "Data structure used (list vs array)",
+        "C": "Computational complexity trade-off",
+        "D": "Problem-solving approach (dynamic vs static)"
+      },
+      "correctAnswer": "C",
+      "explanation": "The key difference between Memoization and Tabulation is the trade-off they make between computational complexity. Memoization tries to minimize computation by storing the solution to each subproblem at the first time it's solved, while Tabulation fills up the table in a single pass before starting to solve the problem, which can improve computational efficiency.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "In what type of problems is Bitmask DP particularly useful?",
+      "options": {
+        "A": "Graph problems",
+        "B": "String matching problems",
+        "C": "Counting and optimization problems involving sets",
+        "D": "All of the above"
+      },
+      "correctAnswer": "C",
+      "explanation": "Bitmask DP is particularly useful for counting and optimization problems involving sets where each element can have multiple states, represented as a bitmask. It provides an efficient solution by utilizing the properties of bitmasks.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How do you handle cases where multiple bits in the bitmask are allowed to be 1?",
+      "options": {
+        "A": "Using bitwise AND and OR operators",
+        "B": "Using bitwise XOR and OR operators",
+        "C": "Using a separate table for each possible combination",
+        "D": "Using recursion only"
+      },
+      "correctAnswer": "C",
+      "explanation": "When multiple bits in the bitmask are allowed to be 1, we need to consider all possible combinations. To accommodate this, we use a separate table for each possible combination, where we store the result for each bitmask value.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the time complexity of Bitmask DP for a bitmask of size m, where k bits are set and the rest are not?",
+      "options": {
+        "A": "O(m * 2^m)",
+        "B": "O(k * 2^k)",
+        "C": "O(m * 2^k)",
+        "D": "O(n * 2^n)"
+      },
+      "correctAnswer": "A",
+      "explanation": "For a bitmask of size m, where k bits are set and the rest are not, we need to consider all possible combinations of the set bits. The time complexity is proportional to the number of possible combinations, which is O(m * 2^m).",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How do you decide which algorithm (Bitmask DP or Recursive DP) to use for a particular problem?",
+      "options": {
+        "A": "Based on the number of subproblems",
+        "B": "Based on the size of the bitmask",
+        "C": "Based on whether the subproblems are independent or overlapping",
+        "D": "Based on the type of problem (graph, string, etc.)"
+      },
+      "correctAnswer": "C",
+      "explanation": "We should choose the algorithm (Bitmask DP or Recursive DP) based on whether the subproblems are independent or overlapping. If the subproblems are overlapping, Bitmask DP is likely a better choice due to its efficient handling of overlapping subproblems.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the advantage of using Bitmask DP compared to Recursive DP?",
+      "options": {
+        "A": "Faster execution time",
+        "B": "Smaller memory usage",
+        "C": "Efficient handling of overlapping subproblems",
+        "D": "Simpler code"
+      },
+      "correctAnswer": "C",
+      "explanation": "The main advantage of Bitmask DP is its efficient handling of overlapping subproblems. By storing the results of subproblems in a table, Bitmask DP avoids the overhead of recalculating subproblems multiple times.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the key challenge when implementing Bitmask DP for problems with a large number of states?",
+      "options": {
+        "A": "Handling overlapping subproblems",
+        "B": "Calculating the bitmask value",
+        "C": "Storing the table for memoization or tabulation",
+        "D": "Deciding which algorithm to use (Bitmask DP or Recursive DP)"
+      },
+      "correctAnswer": "C",
+      "explanation": "When implementing Bitmask DP for problems with a large number of states, the key challenge is storing the table for memoization or tabulation. The table size can grow rapidly with the number of states, requiring careful memory planning and optimization.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "How do you optimize the memory usage of Bitmask DP for problems with a large number of states?",
+      "options": {
+        "A": "By using a more efficient data structure (e.g., array instead of list)",
+        "B": "By storing only the necessary information in the table",
+        "C": "By using a sparse table to store only relevant bitmask values",
+        "D": "By using a combination of memoization and tabulation"
+      },
+      "correctAnswer": "C",
+      "explanation": "To optimize memory usage, we can use a sparse table to store only relevant bitmask values. This approach reduces memory usage without sacrificing performance by storing only the necessary information.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the main limitation of Bitmask DP compared to other dynamic programming techniques?",
+      "options": {
+        "A": "Faster execution time",
+        "B": "Simpler code",
+        "C": "Limited applicability to problems with complex dependencies",
+        "D": "Smaller memory usage"
+      }
+    }
+  ]
+}
