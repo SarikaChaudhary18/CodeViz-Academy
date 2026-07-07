@@ -1,0 +1,146 @@
+{
+  "topic": "Stacks - Next Greater Element",
+  "questions": [
+    {
+      "question": "What is the next greater element for a given array?",
+      "options": {
+        "A": "The next greater element for a given array is the smallest element greater than the current element.",
+        "B": "The next greater element for a given array is the largest element greater than the current element.",
+        "C": "The next greater element for a given array is the first element in the array.",
+        "D": "The next greater element for a given array is the element that occurs after the current element in the array if it exists."
+      },
+      "correctAnswer": "D",
+      "explanation": "The next greater element for a given array is the element that occurs after the current element in the array if it exists. This concept is used in the Next Greater Element problem, where we need to find the next greater element for each element in the array.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What data structure can be used to efficiently find the next greater element?",
+      "options": {
+        "A": "Linked List",
+        "B": "Queue",
+        "C": "Stack",
+        "D": "Graph"
+      },
+      "correctAnswer": "C",
+      "explanation": "A stack can be used to efficiently find the next greater element. We can push elements onto the stack and pop elements from the stack when we find the next greater element, maintaining a height balance by popping elements from the stack as we push new elements onto the stack.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How can we use a stack to maintain a height balance while finding the next greater element?",
+      "options": {
+        "A": "Push elements onto the stack until we find the next greater element, then pop all elements from the stack.",
+        "B": "Push elements onto the stack until we find the next greater element, then pop all elements except the top element from the stack.",
+        "C": "Push elements onto the stack in a way that maintains a height balance, popping elements from the stack when we find the next greater element.",
+        "D": "Do not use a stack to maintain a height balance, use a queue instead."
+      },
+      "correctAnswer": "C",
+      "explanation": "We can use a stack to maintain a height balance by pushing elements onto the stack in a way that maintains a height balance, popping elements from the stack when we find the next greater element.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the time complexity of the next greater element problem with a stack-based solution?",
+      "options": {
+        "A": "O(n^2)",
+        "B": "O(n log n)",
+        "C": "O(n)",
+        "D": "O(n^3)"
+      },
+      "correctAnswer": "C",
+      "explanation": "The time complexity of the next greater element problem with a stack-based solution is O(n). This is because we iterate through the array once and pop elements from the stack when we find the next greater element, resulting in a linear time complexity.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How can we handle duplicate elements in the array for the next greater element problem?",
+      "options": {
+        "A": "Ignore duplicate elements and only process each element once.",
+        "B": "Process duplicate elements as if they were distinct elements.",
+        "C": "Handle duplicate elements by popping all elements from the stack when we encounter a duplicate element.",
+        "D": "Handle duplicate elements by pushing all elements from the original array onto the stack before processing the array."
+      },
+      "correctAnswer": "B",
+      "explanation": "We can process duplicate elements as if they were distinct elements. This means that if an element appears multiple times in the array, we treat it as a distinct element and find the next greater element for each occurrence.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Can we use a queue instead of a stack to solve the next greater element problem?",
+      "options": {
+        "A": "Yes, we can use a queue to solve the next greater element problem.",
+        "B": "No, we cannot use a queue to solve the next greater element problem.",
+        "C": "It depends on the implementation, we can use a queue but it's not efficient.",
+        "D": "A queue is not suitable for the next greater element problem but other data structures like arrays or linked lists can be used."
+      },
+      "correctAnswer": "B",
+      "explanation": "No, we cannot use a queue to solve the next greater element problem. The queue data structure does not support the same operations as a stack, such as pushing and popping elements from the top of the queue.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How can we optimize the next greater element problem with a large input array?",
+      "options": {
+        "A": "Use a stack-based solution with a time complexity of O(n).",
+        "B": "Use a queue-based solution with a time complexity of O(n log n).",
+        "C": "Use a hash table-based solution with a time complexity of O(n).",
+        "D": "Use a sorting-based solution with a time complexity of O(n log n)."
+      },
+      "correctAnswer": "A",
+      "explanation": "We can optimize the next greater element problem with a large input array by using a stack-based solution with a time complexity of O(n). This is because the stack-based solution uses a single iteration through the array and does not require any additional data structures with a high time complexity.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Can we use recursion to solve the next greater element problem?",
+      "options": {
+        "A": "Yes, we can use recursion to solve the next greater element problem.",
+        "B": "No, we cannot use recursion to solve the next greater element problem.",
+        "C": "It depends on the implementation, we can use recursion but it's not efficient.",
+        "D": "A recursive solution is not suitable for the next greater element problem but other approaches like iteration can be used."
+      },
+      "correctAnswer": "D",
+      "explanation": "A recursive solution is not suitable for the next greater element problem. The recursive approach would lead to high space complexity due to the recursive call stack and is not necessary for this problem.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the space complexity of the next greater element problem with a stack-based solution?",
+      "options": {
+        "A": "O(1)",
+        "B": "O(n)",
+        "C": "O(n log n)",
+        "D": "O(n^2)"
+      },
+      "correctAnswer": "B",
+      "explanation": "The space complexity of the next greater element problem with a stack-based solution is O(n). This is because we need to store the elements from the array in the stack, resulting in a linear space complexity.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Can we skip duplicate elements in the array for the next greater element problem?",
+      "options": {
+        "A": "Yes, we can skip duplicate elements in the array.",
+        "B": "No, we cannot skip duplicate elements in the array.",
+        "C": "It depends on the implementation, we can skip duplicate elements but it's not efficient.",
+        "D": "A naive approach would be to process all elements in the array, even if they are duplicate."
+      },
+      "correctAnswer": "A",
+      "explanation": "Yes, we can skip duplicate elements in the array for the next greater element problem. If an element appears multiple times in the array, we can simply ignore all occurrences of that element except the first one, as they will not affect the result.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the main advantage of using a stack-based solution for the next greater element problem?",
+      "options": {
+        "A": "It is the most memory-efficient solution.",
+        "B": "It is the most cache-friendly solution.",
+        "C": "It takes advantage of the stack data structure to efficiently find the next greater element.",
+        "D": "It only requires a single loop through the array."
+      },
+      "correctAnswer": "C",
+      "explanation": "The main advantage of using a stack-based solution for the next greater element problem is that it takes advantage of the stack data structure to efficiently find the next greater element. This leads to a significant improvement in performance compared to other approaches.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How can we handle negative numbers in the array for the next greater element problem?",
+      "options": {
+        "A": "We can handle negative numbers by treating them as positive numbers.",
+        "B": "We can handle negative numbers by pushing them onto the stack as negative numbers.",
+        "C": "We can handle negative numbers by ignoring them or setting their next greater element as negative infinity.",
+        "D": "We can handle negative numbers by pushing them onto the stack as positive numbers with a negative sign."
+      }
+    }
+  ]
+}
