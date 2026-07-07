@@ -1,0 +1,173 @@
+{
+  "topic": "Graphs - DFS",
+  "questions": [
+    {
+      "question": "What is the main purpose of Depth-First Search (DFS) in graphs?",
+      "options": {
+        "A": "To find the shortest path between two nodes",
+        "B": "To traverse the graph level by level",
+        "C": "To determine whether a graph is connected",
+        "D": "To find a path between two nodes in a graph"
+      },
+      "correctAnswer": "D",
+      "explanation": "DFS is used to find a path between two nodes in a graph. While other traversals may also find a path, DFS is the most commonly used algorithm for this task.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What does the term 'recursive' refer to in the context of DFS?",
+      "options": {
+        "A": "The traversal order",
+        "B": "The data structure used to implement the traversal",
+        "C": "The way the algorithm calls itself",
+        "D": "The speed at which the algorithm runs"
+      },
+      "correctAnswer": "C",
+      "explanation": "In DFS, the algorithm calls itself recursively to visit each node in the graph. This is a key characteristic of the algorithm.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the time complexity of DFS in terms of the number of edges and vertices in the graph?",
+      "options": {
+        "A": "O(E + V)",
+        "B": "O(E * V)",
+        "C": "O(V)",
+        "D": "O(E)"
+      },
+      "correctAnswer": "A",
+      "explanation": "The time complexity of DFS is O(E + V), where E is the number of edges and V is the number of vertices in the graph.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the main difference between an adjacency list and an adjacency matrix representation of a graph?",
+      "options": {
+        "A": "Space usage",
+        "B": "Time complexity of DFS",
+        "C": "Whether they support weighted edges",
+        "D": "Whether they support directed edges"
+      },
+      "correctAnswer": "A",
+      "explanation": "An adjacency list uses more space than an adjacency matrix, since it stores only the edges connected to each vertex. However, it can be faster and more efficient for large graphs.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Suppose you have a graph with 10 nodes and 15 edges. How many DFS traversals will you need to find a path from node A to node J?",
+      "options": {
+        "A": "1",
+        "B": "2",
+        "C": "One more than the number of nodes in the graph",
+        "D": "Depends on the graph structure"
+      },
+      "correctAnswer": "A",
+      "explanation": "Since DFS is a single pass algorithm, it will need at most 1 traversal to find the path from node A to node J.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Consider a graph with two nodes (A and B) and one edge between them. If you use DFS to find a path from node A to node B, what will be the sequence of visited nodes?",
+      "options": {
+        "A": "A, B",
+        "B": "B, A",
+        "C": "[A, B], [B, A]",
+        "D": "A, A, B"
+      },
+      "correctAnswer": "A",
+      "explanation": "When using DFS, the visited sequence will depend on the order in which the nodes are added to the recursion stack. In this case, since the only edge is between A and B, we only need to consider the path A -> B.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What happens when you run DFS on a tree data structure?",
+      "options": {
+        "A": "The algorithm visits all nodes in the tree in ascending order",
+        "B": "The tree is reconstructed as a list of adjacency lists",
+        "C": "The tree's edges are traversed exactly once",
+        "D": "The tree's nodes are visited in a breadth-first manner"
+      },
+      "correctAnswer": "C",
+      "explanation": "When running DFS on a tree, each edge in the tree is traversed exactly once. This is a key property of trees, since they are connected graphs with no cycles.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Consider a graph with 5 nodes and 7 edges. If you use DFS to find all connected components, how many traversals will you need?",
+      "options": {
+        "A": "1",
+        "B": "2",
+        "C": "At most the number of nodes in the graph",
+        "D": "Depends on the graph structure"
+      },
+      "correctAnswer": "C",
+      "explanation": "The number of traversals will depend on the number of connected components in the graph. If there are fewer vertices in one component, you may need to traverse it multiple times.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the time complexity of iterating over all connected components in a graph using DFS?",
+      "options": {
+        "A": "O(V + E)",
+        "B": "O(V * E)",
+        "C": "O(E)",
+        "D": "O(V)"
+      },
+      "correctAnswer": "A",
+      "explanation": "To visit all nodes in all connected components, we must visit each edge once for each component. This corresponds to a total of O(V + E) operations.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Describe a scenario where you would use DFS instead of BFS to traverse a graph.",
+      "options": {
+        "A": "If you're searching for a path from a given source node to a target node in a sparse graph",
+        "B": "If you're looking for the shortest path from a source node to all other nodes in a dense graph",
+        "C": "If you're traversing a very large graph with many cycles",
+        "D": "If you're looking for the maximum value in a graph"
+      },
+      "correctAnswer": "A",
+      "explanation": "You would use DFS when you're searching for a path from a given source node to a target node in a sparse graph. This is because DFS explores edges more deeply, which is beneficial in this scenario.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Suppose you have a graph with two strongly connected components, each with a different number of nodes. What will be the time complexity of using DFS on this graph to identify all connected components?",
+      "options": {
+        "A": "O(V + E)",
+        "B": "O(V * E)",
+        "C": "O(E)",
+        "D": "O(V)"
+      },
+      "correctAnswer": "A",
+      "explanation": "The time complexity remains O(V + E), which includes the cost of traversing the edges in all strongly connected components.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What happens to the order of visited nodes when using DFS traversal if we swap the order of edges between two nodes in a graph?",
+      "options": {
+        "A": "It remains the same",
+        "B": "It remains the same in general, but depends on the specific swap",
+        "C": "It may change, but the DFS still explores edges more deeply",
+        "D": "The order may not be a depth first traversal of the graph anymore"
+      },
+      "correctAnswer": "C",
+      "explanation": "Swapping edges does not change the underlying structure of the graph, but it may affect the DFS traversal. However, DFS still explores edges more deeply in this case, maintaining its key property.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Consider a sparse graph containing many trees. How many traversals will you need to use DFS to iterate over all connected components?",
+      "options": {
+        "A": "At least one",
+        "B": "At most the number of nodes in the graph",
+        "C": "At most the number of edges in each strongly connected component",
+        "D": "Depends on the graph structure"
+      },
+      "correctAnswer": "B",
+      "explanation": "Since DFS must visit each node once to find all connected components, at most the number of nodes in the graph will be traversed.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "If a graph is very dense and has many nodes and edges, what is an efficient approach for traversing it with DFS?",
+      "options": {
+        "A": "Depth-First Ordering",
+        "B": "Breadth-First Ordering",
+        "C": "Topological Sorting",
+        "D": "None of the above"
+      },
+      "correctAnswer": "D",
+      "explanation": "In this scenario, it's likely that the graph is so dense that traditional DFS might not be the best choice. Other approaches such as breadth-first search or a different traversal strategy may be more suitable.",
+      "difficulty": "Medium"
+    }
+  ]
+}
