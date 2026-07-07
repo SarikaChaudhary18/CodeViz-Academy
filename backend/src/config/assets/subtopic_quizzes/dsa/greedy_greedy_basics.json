@@ -1,0 +1,173 @@
+{
+  "topic": "Greedy - Greedy Basics",
+  "questions": [
+    {
+      "question": "Consider a greedy algorithm that always makes the locally optimal choice to ensure the global optimum. What is this characteristic called?",
+      "options": {
+        "A": "Greedy Choice Property",
+        "B": "Local Search Algorithmic Principle",
+        "C": "Local Optimum",
+        "D": "Optimized Global Minimum"
+      },
+      "correctAnswer": "A",
+      "explanation": "The Greedy Choice Property is a characteristic of greedy algorithms that makes locally optimal choices with the intention of solving the overall problem efficiently.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following is a key assumption in greedy algorithms?",
+      "options": {
+        "A": "Problems are inherently dynamic",
+        "B": "The problem can be solved in a single pass",
+        "C": "Optimal substructure and Greedy Choice Property",
+        "D": "A fixed-size problem space"
+      },
+      "correctAnswer": "C",
+      "explanation": "Greedy algorithms assume two key properties: optimal substructure and the Greedy Choice Property. This allows them to select the locally optimal choice, which leads to the global optimum.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Why do greedy algorithms not always work?",
+      "options": {
+        "A": "They are not optimized for large problem sets",
+        "B": "They don't have access to an optimal solution",
+        "C": "They are not designed to handle dynamic problems",
+        "D": "They often rely on the Greedy Choice Property without optimal substructure"
+      },
+      "correctAnswer": "D",
+      "explanation": "Greedy algorithms often fail when they rely solely on the Greedy Choice Property without having optimal substructure. The absence of both properties makes greedy algorithms unsuitable for such problems.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following problems is suitable for a greedy approach?",
+      "options": {
+        "A": "Scheduling tasks based on deadlines",
+        "B": "Sorting a list of numbers",
+        "C": "The Traveling Salesman Problem",
+        "D": "Finding the longest common subsequence"
+      },
+      "correctAnswer": "A",
+      "explanation": "The Problem of Scheduling tasks based on deadlines is an example where the optimal substructure and Greedy Choice Property can be applied to arrive at the global optimum. ",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "A greedy algorithm is applied to the Huffman Coding problem. What is the primary goal of this algorithm?",
+      "options": {
+        "A": "To minimize code lengths for all characters in a given text",
+        "B": "To assign variable-sized codes to symbols based on their frequencies",
+        "C": "To maximize code lengths for all characters in a given text",
+        "D": "To assign the same fixed code length for each character"
+      },
+      "correctAnswer": "B",
+      "explanation": "The primary goal of the greedy algorithm in the Huffman Coding problem is to assign variable-sized codes to symbols based on their frequencies, resulting in a more compact binary representation of the input text.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "A greedy algorithm is designed to find the minimum number of coins required to sum up to a target amount 'n'. What is a key consideration when choosing which denomination to select next?",
+      "options": {
+        "A": "Selecting the smallest denomination available",
+        "B": "Selecting denominations that maximize the coin value per unit",
+        "C": "Selecting the denomination with the highest value",
+        "D": "Selecting the minimum number of denominations required"
+      },
+      "correctAnswer": "C",
+      "explanation": "The key consideration in the greedy algorithm is selecting denominations with the highest value, which allows the algorithm to minimize the total number of coins required while maximizing the overall value.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Why is the Coin Changing problem suitable for a greedy approach?",
+      "options": {
+        "A": "The problem has optimal substructure but does not have the Greedy Choice Property",
+        "B": "The problem has the Greedy Choice Property but does not have optimal substructure",
+        "C": "The problem neither has optimal substructure nor the Greedy Choice Property",
+        "D": "The problem has both optimal substructure and the Greedy Choice Property"
+      },
+      "correctAnswer": "D",
+      "explanation": "The Coin Changing problem has both optimal substructure and the Greedy Choice Property, making it a suitable candidate for a greedy algorithm to provide an optimal solution.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "In the context of the Fractional Knapsack problem, what does the greedy algorithm optimize?",
+      "options": {
+        "A": "Maximizing the total value",
+        "B": "Minimizing the total cost",
+        "C": "Maximizing the total weight",
+        "D": "Minimizing the total value"
+      },
+      "correctAnswer": "A",
+      "explanation": "The greedy algorithm for the Fractional Knapsack problem optimizes the total value, ensuring that the items included in the knapsack maximize the overall value while not exceeding the weight capacity.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "In a greedy algorithm for the Activity Selection problem, what is the greedy choice?",
+      "options": {
+        "A": "Choosing the activity that starts earliest",
+        "B": "Choosing the activity with the longest duration",
+        "C": "Choosing the activity that finishes earliest",
+        "D": "Choosing the activity that starts the latest"
+      },
+      "correctAnswer": "A",
+      "explanation": "The greedy choice in the Activity Selection problem involves selecting the activity that starts the earliest, ensuring overlap minimization.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is a scenario where a greedy algorithm would be unsuitable?",
+      "options": {
+        "A": "When problems have the Greedy Choice Property but do not have optimal substructure",
+        "B": "When problems have optimal substructure but do not have the Greedy Choice Property",
+        "C": "When problems are inherently dynamic",
+        "D": "When problems neither have optimal substructure nor the Greedy Choice Property"
+      },
+      "correctAnswer": "D",
+      "explanation": "Greedy algorithms would be unsuitable when the problems do not have either optimal substructure or the Greedy Choice Property.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Consider a greedy algorithm for the coin changing problem. What is the most efficient approach?",
+      "options": {
+        "A": "Use a greedy algorithm to minimize the number of coins required",
+        "B": "Use a greedy algorithm to maximize the total value of the coins",
+        "C": "Use a greedy algorithm to minimize the value of the coins used",
+        "D": "Use a dynamic programming approach to solve the problem"
+      },
+      "correctAnswer": "C",
+      "explanation": "The most efficient approach to the coin changing problem is using a greedy algorithm to minimize the value of the coins used while finding a solution with at least the maximum amount specified. ",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "For the Fractional Knapsack problem, why is it essential to know the value and weight of the items?",
+      "options": {
+        "A": "To apply the greedy algorithm effectively",
+        "B": "To compute the optimal value",
+        "C": "To apply a brute-force algorithm",
+        "D": "To solve the problem with an approximation algorithm"
+      },
+      "correctAnswer": "A",
+      "explanation": "It is essential to know the value and weight of each item for the Fractional Knapsack problem to apply the greedy algorithm efficiently, making the optimal choice to maximize the total value within the knapsack's weight capacity.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is an example of a greedy algorithm failing to provide an optimal solution?",
+      "options": {
+        "A": "Huffman encoding for binary representation of text",
+        "B": "Finding the longest common subsequence",
+        "C": "Coin changing problem where the minimum amount of coins are selected",
+        "D": "Finding a path through a weighted graph with optimal costs"
+      },
+      "correctAnswer": "D",
+      "explanation": "Greedy algorithms can fail for problems that have optimal substructure and the shortest path but not the optimal substructure to provide a correct solution.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the primary characteristic of a greedy algorithm that prevents it from being used for optimization problems with overlapping subproblems?",
+      "options": {
+        "A": "They do not handle overlapping subproblems",
+        "B": "They always choose the greedy choice",
+        "C": "They have optimal substructure",
+        "D": "They do not have optimal substructure"
+      },
+      "correctAnswer": "A",
+      "explanation": "The primary characteristic of greedy algorithms is that they cannot handle optimization problems with overlapping subproblems, which prevents them from solving such problems effectively.",
+      "difficulty": "Hard"
+    }
+  ]
+}
