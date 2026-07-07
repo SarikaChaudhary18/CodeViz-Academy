@@ -1,0 +1,173 @@
+{
+  "topic": "Graphs - BFS",
+  "questions": [
+    {
+      "question": "What is the time complexity of Breadth-First Search (BFS) algorithm in an unweighted graph?",
+      "options": {
+        "A": "O(|V| + |E|)",
+        "B": "O(|V| + |E|^2)",
+        "C": "O(|E|)",
+        "D": "O(|V|^2)"
+      },
+      "correctAnswer": "A",
+      "explanation": "The time complexity of BFS in an unweighted graph is O(|V| + |E|) because we need to visit each vertex once and each edge once to traverse the graph.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the main difference between BFS and DFS traversal order?",
+      "options": {
+        "A": "BFS explores the graph level by level whereas DFS explores the graph depth by depth.",
+        "B": "BFS explores the graph depth by depth whereas DFS explores the graph level by level.",
+        "C": "BFS uses queue data structure while DFS uses stack data structure.",
+        "D": "BFS starts traversal from a leaf node whereas DFS starts traversal from a root node."
+      },
+      "correctAnswer": "A",
+      "explanation": "The main difference between BFS and DFS traversal order is that BFS explores the graph level by level whereas DFS explores the graph depth by depth. This affects the order in which the nodes are visited.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the purpose of maintaining a queue data structure in BFS algorithm?",
+      "options": {
+        "A": "To store the nodes that have been visited before.",
+        "B": "To store the nodes that have not been visited yet.",
+        "C": "To calculate the shortest distance from the source node to all other nodes.",
+        "D": "To detect cycles in the graph."
+      },
+      "correctAnswer": "B",
+      "explanation": "The main purpose of maintaining a queue data structure in BFS algorithm is to store the nodes that have not been visited yet. This allows us to keep track of the nodes that need to be visited next.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the time complexity of BFS traversal when the graph is represented using an adjacency matrix?",
+      "options": {
+        "A": "O(|V|^2)",
+        "B": "O(|V| + |E|)",
+        "C": "O(|E|)",
+        "D": "O(|V|^3)"
+      },
+      "correctAnswer": "A",
+      "explanation": "The time complexity of BFS traversal when the graph is represented using an adjacency matrix is O(|V|^2) because we need to visit each vertex and check its neighbors.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "In the context of BFS, what is the source node?",
+      "options": {
+        "A": "The node from which the traversal starts.",
+        "B": "The last node to be visited.",
+        "C": "The node with the highest degree.",
+        "D": "The node with the smallest degree."
+      },
+      "correctAnswer": "A",
+      "explanation": "The source node is the node from which the traversal starts. It is the starting point for BFS traversal.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the use of level-order traversal in computer networks?",
+      "options": {
+        "A": "To detect cycles in the network.",
+        "B": "To calculate the shortest distance between nodes.",
+        "C": "To identify the nodes that need to be updated.",
+        "D": "To identify the nodes that need to be removed."
+      },
+      "correctAnswer": "C",
+      "explanation": "Level-order traversal is used to identify the nodes that need to be updated in a computer network. It allows us to access all the nodes at a given level.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the difference between graph traversal and graph search?",
+      "options": {
+        "A": "Graph traversal involves finding the solution path whereas graph search involves finding the solution node.",
+        "B": "Graph traversal involves finding the solution node whereas graph search involves finding the solution path.",
+        "C": "Graph traversal involves searching for nodes whereas graph search involves searching for edges.",
+        "D": "Graph traversal involves searching for edges whereas graph search involves searching for nodes."
+      },
+      "correctAnswer": "A",
+      "explanation": "Graph traversal involves finding the solution path whereas graph search involves finding the solution node. Graph traversal is about searching all nodes, while graph search is about searching for a specific node.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the use of BFS in social network analysis?",
+      "options": {
+        "A": "To detect clusters in the network.",
+        "B": "To identify influential nodes in the network.",
+        "C": "To calculate the shortest distance between users.",
+        "D": "To predict user behavior."
+      },
+      "correctAnswer": "B",
+      "explanation": "BFS is used to identify influential nodes in a social network. It helps in finding the nodes that have the highest degree centrality.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the time complexity of BFS traversal when the graph is represented using an adjacency list?",
+      "options": {
+        "A": "O(|V| + |E|)",
+        "B": "O(|V|*|E|)",
+        "C": "O(|E|)",
+        "D": "O(|V|^2)"
+      },
+      "correctAnswer": "A",
+      "explanation": "The time complexity of BFS traversal when the graph is represented using an adjacency list is O(|V| + |E|) because we need to visit each vertex once and each edge once to traverse the graph.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the difference between BFS and DFS traversal order in a graph with cycles?",
+      "options": {
+        "A": "BFS explores the graph level by level whereas DFS explores the graph depth by depth.",
+        "B": "BFS explores the graph depth by depth whereas DFS explores the graph level by level.",
+        "C": "The difference is not relevant in this case.",
+        "D": "BFS is not applicable in this case."
+      },
+      "correctAnswer": "A",
+      "explanation": "In a graph with cycles, BFS explores the graph level by level whereas DFS explores the graph depth by depth. However, the traversal order can be different due to the cycles.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the purpose of maintaining a visited array in BFS algorithm?",
+      "options": {
+        "A": "To store the nodes that have not been visited yet.",
+        "B": "To store the nodes that have been visited before.",
+        "C": "To calculate the shortest distance from the source node to all other nodes.",
+        "D": "To detect cycles in the graph."
+      },
+      "correctAnswer": "B",
+      "explanation": "The main purpose of maintaining a visited array in BFS algorithm is to store the nodes that have been visited before. This allows us to avoid revisiting nodes.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the time complexity of BFS traversal in a directed acyclic graph (DAG)?",
+      "options": {
+        "A": "O(|V| + |E|)",
+        "B": "O(|V|^2)",
+        "C": "O(|V|*|E|)",
+        "D": "O(|E|)"
+      },
+      "correctAnswer": "A",
+      "explanation": "The time complexity of BFS traversal in a DAG is O(|V| + |E|) because we need to visit each vertex once and each edge once to traverse the graph.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the use of BFS in web crawlers?",
+      "options": {
+        "A": "To detect cycles in the web graph.",
+        "B": "To calculate the shortest distance between web pages.",
+        "C": "To identify the most influential web pages.",
+        "D": "To predict user behavior."
+      },
+      "correctAnswer": "C",
+      "explanation": "BFS is used to identify the most influential web pages in web crawlers. It helps in finding the pages that have the highest PageRank.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the time complexity of BFS traversal when the graph is represented using a disjoint-set data structure?",
+      "options": {
+        "A": "O(|V| + |E|)",
+        "B": "O(|V|*|E|)",
+        "C": "O(|V|^2)",
+        "D": "O(|E|)"
+      },
+      "correctAnswer": "A",
+      "explanation": "The time complexity of BFS traversal when the graph is represented using a disjoint-set data structure is O(|V| + |E|) because we need to visit each vertex once and each edge once to traverse the graph.",
+      "difficulty": "Hard"
+    }
+  ]
+}
