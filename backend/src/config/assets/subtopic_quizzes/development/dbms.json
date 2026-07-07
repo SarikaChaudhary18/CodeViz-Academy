@@ -1,0 +1,206 @@
+{
+  "topic": "Development - DBMS",
+  "questions": [
+    {
+      "question": "What is the main function of a Database Management System (DBMS)?",
+      "options": {
+        "A": "Managing data storage and retrieval for multiple applications",
+        "B": "Providing a user interface for data manipulation",
+        "C": "Ensuring data consistency and integrity",
+        "D": "Optimizing query performance"
+      },
+      "correctAnswer": "A",
+      "explanation": "A DBMS enables multiple applications to share data and manage it efficiently. It acts as an intermediary between the applications and the database, providing a standardized interface for data access, manipulation, and storage.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following indexing techniques is best suited for tables with mostly sequential data access?",
+      "options": {
+        "A": "B-tree indexing",
+        "B": "Hash indexing",
+        "C": "Full-text indexing",
+        "D": "Primary key indexing"
+      },
+      "correctAnswer": "B",
+      "explanation": "Hash indexing is efficient for tables with mostly sequential data access, as it provides direct access to the data. B-tree indexing, on the other hand, is better suited for tables with frequent range queries.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the purpose of a transaction in a database system?",
+      "options": {
+        "A": "To maintain data consistency",
+        "B": "To improve query performance",
+        "C": "To optimize data storage",
+        "D": "To provide access control"
+      },
+      "correctAnswer": "A",
+      "explanation": "A transaction ensures that multiple operations are executed as a single, atomic unit, maintaining data consistency and integrity.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following is a characteristic of a relational database management system (RDBMS)?",
+      "options": {
+        "A": "It uses a hierarchical data model",
+        "B": "It supports SQL (Structured Query Language)",
+        "C": "It is designed for large-scale enterprise applications",
+        "D": "It is optimized for real-time analytics"
+      },
+      "correctAnswer": "B",
+      "explanation": "An RDBMS is built around the relational data model and typically supports SQL, a standard language for managing relational databases.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the primary advantage of using a database clustering architecture?",
+      "options": {
+        "A": "Improved data recovery",
+        "B": "Increased storage capacity",
+        "C": "Enhanced query performance",
+        "D": "Improved load balancing"
+      },
+      "correctAnswer": "D",
+      "explanation": "Database clustering enables load balancing across multiple nodes, ensuring that no single node becomes a bottleneck and impacting overall system performance.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which data storage option is best suited for storing large amounts of semi-structured data?",
+      "options": {
+        "A": "Column-oriented storage",
+        "B": "NoSQL storage",
+        "C": "Graph databases",
+        "D": "Document-oriented storage"
+      },
+      "correctAnswer": "D",
+      "explanation": "Document-oriented storage is designed for storing semi-structured data, such as JSON documents, and provides efficient querying and indexing.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the purpose of using a database normalization technique?",
+      "options": {
+        "A": "To reduce data redundancy",
+        "B": "To improve query performance",
+        "C": "To optimize data storage",
+        "D": "To provide data integrity"
+      },
+      "correctAnswer": "A",
+      "explanation": "Normalization reduces data redundancy by splitting large tables into smaller ones, each with a more limited set of data.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Which of the following database architectures is best suited for real-time analytics and machine learning applications?",
+      "options": {
+        "A": "Traditional relational databases",
+        "B": "Column-oriented databases",
+        "C": "Document-oriented databases",
+        "D": "In-memory databases"
+      },
+      "correctAnswer": "D",
+      "explanation": "In-memory databases are optimized for low-latency, high-throughput applications and are well-suited for real-time analytics and machine learning.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the main difference between a database schema and a database instance?",
+      "options": {
+        "A": "A schema defines the physical data storage, while an instance defines the logical data structure",
+        "B": "A schema defines the logical data structure, while an instance defines the physical data storage",
+        "C": "A schema defines the application logic, while an instance defines the database configuration",
+        "D": "A schema defines the database configuration, while an instance defines the application logic"
+      },
+      "correctAnswer": "B",
+      "explanation": "A database schema defines the logical data structure, including tables, fields, and relationships, while a database instance defines the physical data storage, including location and configuration.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Which of the following database systems is designed for high-volume, real-time data processing?",
+      "options": {
+        "A": "Amazon Redshift",
+        "B": "Apache Cassandra",
+        "C": "Hbase",
+        "D": "Amazon DynamoDB"
+      },
+      "correctAnswer": "B",
+      "explanation": "Apache Cassandra is a NoSQL database system designed for high-volume, real-time data processing and is well-suited for applications like IoT and social media.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the purpose of using a database trigger?",
+      "options": {
+        "A": "To enforce data integrity constraints",
+        "B": "To optimize data storage",
+        "C": "To improve data retrieval performance",
+        "D": "To execute repetitive tasks automatically"
+      },
+      "correctAnswer": "A",
+      "explanation": "A database trigger is a stored procedure that executes automatically in response to specific events, such as data insertions or updates.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Which of the following database systems is designed for graph data storage and querying?",
+      "options": {
+        "A": "Neo4j",
+        "B": "Amazon Redshift",
+        "C": "Apache Cassandra",
+        "D": "Microsoft Azure Cosmos DB"
+      },
+      "correctAnswer": "A",
+      "explanation": "Neo4j is a NoSQL database system designed for graph data storage and querying and is well-suited for applications like social network analysis and recommendation engines.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the purpose of using a database index?",
+      "options": {
+        "A": "To improve query performance",
+        "B": "To reduce data storage",
+        "C": "To optimize data retrieval",
+        "D": "To enforce data consistency"
+      },
+      "correctAnswer": "A",
+      "explanation": "A database index is a data structure used to speed up data retrieval and improve query performance by allowing the database to quickly locate specific data.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Which of the following database systems is designed for time-series data storage and querying?",
+      "options": {
+        "A": "InfluxDB",
+        "B": "Amazon DynamoDB",
+        "C": "Apache Cassandra",
+        "D": "TimescaleDB"
+      },
+      "correctAnswer": "A",
+      "explanation": "InfluxDB is a NoSQL database system designed for time-series data storage and querying and is well-suited for applications like IoT and monitoring.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the primary advantage of using a master-master replication architecture?",
+      "options": {
+        "A": "Improved data recovery",
+        "B": "Increased storage capacity",
+        "C": "Enhanced query performance",
+        "D": "Improved load balancing"
+      },
+      "correctAnswer": "D",
+      "explanation": "Master-master replication allows for load balancing across multiple masters, ensuring that no single master becomes a bottleneck and impacting overall system performance.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Which of the following database systems is designed for cloud-native applications?",
+      "options": {
+        "A": "Amazon Redshift",
+        "B": "Amazon DynamoDB",
+        "C": "Google Cloud Spanner",
+        "D": "Microsoft Azure Cosmos DB"
+      },
+      "correctAnswer": "D",
+      "explanation": "Microsoft Azure Cosmos DB is a globally distributed, multi-model database designed for cloud-native applications and provides high availability, horizontal scaling, and consistency.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the primary purpose of using a database schema design tool?",
+      "options": {
+        "A": "To create database objects and queries",
+        "B": "To design and optimize database schema",
+        "C": "To manage database users and permissions",
+        "D": "To monitor database performance and metrics"
+      }
+    }
+  ]
+}
