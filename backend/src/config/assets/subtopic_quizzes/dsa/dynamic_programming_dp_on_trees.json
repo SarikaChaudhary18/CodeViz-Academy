@@ -1,0 +1,137 @@
+{
+  "topic": "Dynamic Programming - DP on Trees",
+  "questions": [
+    {
+      "question": "What is the primary characteristic of Dynamic Programming (DP) on Trees?",
+      "options": {
+        "A": "The ability to solve problems by breaking them down into smaller sub-problems and storing their solutions to sub-problems to avoid redundant computation.",
+        "B": "The use of Breadth-First Search (BFS) for traversing the tree",
+        "C": "The use of Depth-First Search (DFS) for traversing the tree",
+        "D": "The use of Union-Find data structure for solving tree problems"
+      },
+      "correctAnswer": "A",
+      "explanation": "Dynamic programming on trees relies on breaking down complex problems into smaller sub-problems and storing their solutions to avoid redundant computation, which is particularly useful for tree-like data structures.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following is an example of a problem that can be solved using DP on Trees?",
+      "options": {
+        "A": "Minimum Depth of a Binary Tree",
+        "B": "Lowest Common Ancestor",
+        "C": "Diameter of a Tree",
+        "D": "All of the above"
+      },
+      "correctAnswer": "D",
+      "explanation": "The Minimum Depth of a Binary Tree, Lowest Common Ancestor, and Diameter of a Tree are all examples of problems that can be solved using Dynamic Programming on Trees.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the main advantage of using DP on Trees?",
+      "options": {
+        "A": "Improved time complexity by avoiding redundant computation",
+        "B": "Improved space complexity by reducing the number of variables",
+        "C": "Simplified problem-solving by breaking it down into smaller sub-problems",
+        "D": "None of the above"
+      },
+      "correctAnswer": "A",
+      "explanation": "The primary advantage of using Dynamic Programming on Trees is that it avoids redundant computation, greatly improving the time complexity of the solution.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Consider a recursive function that computes the maximum depth of a binary tree. How can we convert this recursive function into an iterative version using DP?",
+      "options": {
+        "A": "By storing the maximum depth of each sub-tree in an array",
+        "B": "By using a recursive stack to store the sub-problems",
+        "C": "By using a HashMap to store the solutions to sub-problems",
+        "D": "By applying memoization using a 2D table"
+      },
+      "correctAnswer": "D",
+      "explanation": "To convert a recursive function into an iterative version using Dynamic Programming, we can apply memoization using a 2D table to store the solutions to sub-problems.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Consider a binary tree represented as an array. How can we compute the maximum depth of the tree using DP?",
+      "options": {
+        "A": "By traversing the tree in a level order and computing the maximum depth at each level",
+        "B": "By traversing the tree in a pre-order and incrementing the maximum depth at each node",
+        "C": "By traversing the tree in a post-order and storing the maximum depth at each node",
+        "D": "By using a Breadth-First Search (BFS) approach"
+      },
+      "correctAnswer": "A",
+      "explanation": "To compute the maximum depth of a binary tree represented as an array using Dynamic Programming, we can traverse the tree in a level order and compute the maximum depth at each level.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Consider a recursive function that computes the diameter of a binary tree. How can we convert this recursive function into an iterative version using DP?",
+      "options": {
+        "A": "By storing the diameter of each sub-tree in an array",
+        "B": "By using a recursive stack to store the sub-problems",
+        "C": "By using a HashMap to store the solutions to sub-problems",
+        "D": "By applying memoization using a 2D table"
+      },
+      "correctAnswer": "D",
+      "explanation": "To convert a recursive function into an iterative version using Dynamic Programming, we can apply memoization using a 2D table to store the solutions to sub-problems.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Consider a binary tree where each node has an associated integer value. How can we compute the maximum sum of a path from the root node to a leaf node using DP?",
+      "options": {
+        "A": "By traversing the tree in a level order and summing the values at each node",
+        "B": "By traversing the tree in a pre-order and summing the values at each node",
+        "C": "By traversing the tree in a post-order and summing the values at each node",
+        "D": "By using Dynamic Programming with memoization"
+      },
+      "correctAnswer": "D",
+      "explanation": "To compute the maximum sum of a path from the root node to a leaf node in a binary tree, we need to apply Dynamic Programming with memoization to store the solutions to sub-problems.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Consider a tree where each node has an associated cost of traversal. How can we compute the minimum cost of traversing the tree from the root node to a leaf node using DP?",
+      "options": {
+        "A": "By traversing the tree in a level order and summing the costs at each node",
+        "B": "By traversing the tree in a pre-order and summing the costs at each node",
+        "C": "By traversing the tree in a post-order and summing the costs at each node",
+        "D": "By using Dynamic Programming with memoization"
+      },
+      "correctAnswer": "D",
+      "explanation": "To compute the minimum cost of traversing the tree from the root node to a leaf node, we need to apply Dynamic Programming with memoization to store the solutions to sub-problems.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Consider a tree where each node has an associated set of attributes. How can we compute the maximum intersection of these attributes among all paths from the root node to a leaf node using DP?",
+      "options": {
+        "A": "By traversing the tree in a level order and intersecting the attributes at each node",
+        "B": "By traversing the tree in a pre-order and intersecting the attributes at each node",
+        "C": "By traversing the tree in a post-order and intersecting the attributes at each node",
+        "D": "By using Dynamic Programming with memoization"
+      },
+      "correctAnswer": "D",
+      "explanation": "To compute the maximum intersection of attributes among all paths from the root node to a leaf node, we need to apply Dynamic Programming with memoization to store the solutions to sub-problems.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Consider a tree where each node has an associated set of dependencies. How can we compute the maximum dependencies among all paths from the root node to a leaf node using DP?",
+      "options": {
+        "A": "By traversing the tree in a level order and intersecting the dependencies at each node",
+        "B": "By traversing the tree in a pre-order and intersecting the dependencies at each node",
+        "C": "By traversing the tree in a post-order and intersecting the dependencies at each node",
+        "D": "By using Dynamic Programming with memoization"
+      },
+      "correctAnswer": "D",
+      "explanation": "To compute the maximum dependencies among all paths from the root node to a leaf node, we need to apply Dynamic Programming with memoization to store the solutions to sub-problems.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Consider a tree where each node has an associated set of constraints. How can we compute the maximum set of constraints that can be satisfied among all paths from the root node to a leaf node using DP?",
+      "options": {
+        "A": "By traversing the tree in a level order and intersecting the constraints at each node",
+        "B": "By traversing the tree in a pre-order and intersecting the constraints at each node",
+        "C": "By traversing the tree in a post-order and intersecting the constraints at each node",
+        "D": "By using Dynamic Programming with memoization"
+      },
+      "correctAnswer": "D",
+      "explanation": "To compute the maximum set of constraints that can be satisfied among all paths from the root node to a leaf node, we need to apply Dynamic Programming with memoization to store the solutions to sub-problems.",
+      "difficulty": "Hard"
+    }
+  ]
+}
