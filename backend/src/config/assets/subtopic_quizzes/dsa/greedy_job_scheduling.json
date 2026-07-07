@@ -1,0 +1,134 @@
+{
+  "topic": "Greedy - Job Scheduling",
+  "questions": [
+    {
+      "question": "For which of the following scenarios does the greedy algorithm apply for job scheduling?",
+      "options": {
+        "A": "All of the above",
+        "B": "When all jobs have the same processing time",
+        "C": "When all jobs have the same deadline",
+        "D": "When jobs with smaller processing time should be scheduled first"
+      },
+      "correctAnswer": "A",
+      "explanation": "The greedy algorithm applies for job scheduling when all jobs have the same deadline, all jobs have the same processing time, or when jobs with smaller processing time should be scheduled first.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "The greedy strategy of job scheduling is optimal when jobs are ordered first by their",
+      "options": {
+        "A": "Deadline",
+        "B": "Processing time",
+        "C": "Arrival time",
+        "D": "Priority"
+      },
+      "correctAnswer": "B",
+      "explanation": "The greedy strategy of job scheduling is optimal when jobs are ordered first by their processing time. This is because the total processing time is minimized, and the number of jobs that can be completed on time is maximized.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "In job scheduling using the greedy algorithm, which of the following is a valid heuristic?",
+      "options": {
+        "A": "Prioritize jobs with earlier deadlines",
+        "B": "Prioritize jobs with higher priorities",
+        "C": "Prioritize jobs with smaller processing times",
+        "D": "Prioritize jobs with larger processing times"
+      },
+      "correctAnswer": "A",
+      "explanation": "Priorizing jobs with earlier deadlines is a valid heuristic for job scheduling using the greedy algorithm. This heuristic ensures that jobs with earlier deadlines are scheduled first, increasing the probability of meeting deadlines.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the time complexity of the greedy algorithm for job scheduling?",
+      "options": {
+        "A": "O(n^2)",
+        "B": "O(n log n)",
+        "C": "O(n)",
+        "D": "O(log n)"
+      },
+      "correctAnswer": "C",
+      "explanation": "The time complexity of the greedy algorithm for job scheduling is O(n), where n is the number of jobs. This is because the algorithm iterates through the list of jobs once to find the optimal schedule.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Consider a job scheduling problem where three jobs have the following processing times and deadlines:",
+      "options": {
+        "A": "Job 1: 10, Deadline: 10; Job 2: 5, Deadline: 12; Job 3: 5, Deadline: 12",
+        "B": "Job 1: 10, Deadline: 5; Job 2: 5, Deadline: 10; Job 3: 5, Deadline: 15",
+        "C": "Job 1: 5, Deadline: 10; Job 2: 10, Deadline: 15; Job 3: 5, Deadline: 10",
+        "D": "Job 1: 10, Deadline: 15; Job 2: 5, Deadline: 10; Job 3: 5, Deadline: 12"
+      },
+      "correctAnswer": "D",
+      "explanation": "The greedy algorithm applies job scheduling by prioritizing jobs with earlier deadlines. So the final correct order is Job 3: 5, Deadline: 12 then Job 1: 10, Deadline: 15 (not given) and then Job 2: 5, Deadline: 10",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Suppose we have three jobs with different processing times and deadlines. Using the greedy algorithm, what would be the order in which we schedule these jobs?",
+      "options": {
+        "A": "Job with smallest processing time first, then Job with smallest deadline second, then Job with largest deadline last",
+        "B": "Job with smallest processing time first, then Job with largest deadline second, then Job with largest processing time last",
+        "C": "Job with largest processing time first, then Job with largest deadline second, then Job with smallest processing time last",
+        "D": "Job with largest processing time first, then Job with smallest deadline second, then Job with smallest processing time last"
+      },
+      "correctAnswer": "A",
+      "explanation": "The greedy algorithm applies job scheduling by prioritizing jobs with smallest processing time first, then with the smallest deadlines. This is because the algorithm wants to minimize total processing time while meeting deadlines.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "If two jobs have the same deadline, which of the following are true for the greedy algorithm in job scheduling?",
+      "options": {
+        "A": "We prioritize the job with the smallest processing time first",
+        "B": "We prioritize the job with the largest processing time first",
+        "C": "We prioritize one of the jobs first randomly",
+        "D": "The greedy algorithm applies in this scenario"
+      },
+      "correctAnswer": "A",
+      "explanation": "When two jobs have the same deadline, we prioritize the job with the smallest processing time first. This ensures that we meet the deadline and minimize total processing time.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "For the following job scheduling problem:",
+      "options": {
+        "A": "Job 1: 5, Deadline: 10; Job 2: 10, Deadline: 15; Job 3: 5, Deadline: 10",
+        "B": "Job 1: 10, Deadline: 5; Job 2: 5, Deadline: 10; Job 3: 10, Deadline: 15",
+        "C": "Job 1: 10, Deadline: 10; Job 2: 10, Deadline: 15; Job 3: 5, Deadline: 10",
+        "D": "Job 1: 5, Deadline: 10; Job 2: 10, Deadline: 5; Job 3: 5, Deadline: 10"
+      },
+      "correctAnswer": "A",
+      "explanation": "The greedy algorithm applies job scheduling by prioritizing jobs with earliest deadlines. So the correct order is Job 3: 5, Deadline: 10 then Job 1: 5, Deadline: 10 then Job 2: 10, Deadline: 15",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "A job scheduling algorithm has the following jobs with different processing times and deadlines:",
+      "options": {
+        "A": "Job 1: 5, Deadline: 10; Job 2: 10, Deadline: 15; Job 3: 5, Deadline: 10; Job 4: 10, Deadline: 10; Job 5: 5, Deadline: 15",
+        "B": "Job 1: 5, Deadline: 10; Job 2: 10, Deadline: 15; Job 3: 10, Deadline: 10; Job 4: 5, Deadline: 10; Job 5: 10, Deadline: 15",
+        "C": "Job 1: 10, Deadline: 10; Job 2: 10, Deadline: 15; Job 3: 5, Deadline: 10; Job 4: 10, Deadline: 5; Job 5: 5, Deadline: 10",
+        "D": "Job 1: 5, Deadline: 15; Job 2: 10, Deadline: 10; Job 3: 5, Deadline: 10; Job 4: 10, Deadline: 15; Job 5: 5, Deadline: 10"
+      },
+      "correctAnswer": "B",
+      "explanation": "The correct answer follows from the greedy strategy that sorts the jobs in non-decreasing order of their deadlines. Then, we process the jobs in the sorted order.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Suppose we have a job scheduling problem where we want to schedule four jobs with different processing times and deadlines.",
+      "options": {
+        "A": "Use the greedy algorithm and sort jobs first by arrival time in non-decreasing order",
+        "B": "Use the greedy algorithm and sort jobs first by deadline in non-decreasing order",
+        "C": "Use the greedy algorithm and sort jobs first by processing time in non-decreasing order",
+        "D": "Use another algorithm for job scheduling"
+      },
+      "correctAnswer": "B",
+      "explanation": "To apply the greedy algorithm for job scheduling, we should sort jobs first by deadline in non-decreasing order. This makes it possible to find the optimal schedule.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What happens when two jobs have the same processing time?",
+      "options": {
+        "A": "We schedule them based on their deadlines",
+        "B": "We schedule them based on their arrival times",
+        "C": "We schedule them randomly",
+        "D": "The greedy algorithm does not apply"
+      }
+    }
+  ]
+}
