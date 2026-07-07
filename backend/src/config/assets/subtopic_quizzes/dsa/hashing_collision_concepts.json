@@ -1,0 +1,158 @@
+{
+  "topic": "Hashing - Collision Concepts",
+  "questions": [
+    {
+      "question": "What is the primary purpose of using a hash function in a hash table?",
+      "options": {
+        "A": "To perform a binary search on the table.",
+        "B": "To quickly map keys to their corresponding values.",
+        "C": "To implement a doubly linked list.",
+        "D": "To sort the elements in ascending order."
+      },
+      "correctAnswer": "B",
+      "explanation": "Hash functions are used to quickly map keys to their corresponding values in hash tables, allowing for efficient lookup and retrieval of data. This is the primary purpose of using a hash function.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is a collision in the context of hashing?",
+      "options": {
+        "A": "A situation where two keys hash to the same index without any conflicts.",
+        "B": "A situation where two keys hash to a different index, resulting in a perfect hash.",
+        "C": "A situation where two keys hash to the same index, resulting in a conflict.",
+        "D": "A situation where two keys hash to the same index, but the values are different."
+      },
+      "correctAnswer": "C",
+      "explanation": "A collision occurs when two keys hash to the same index, resulting in a conflict. This requires the hash table to handle the collision in some way, such as chaining or open addressing.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the difference between a perfect hash and a regular hash?",
+      "options": {
+        "A": "A perfect hash never collides, while a regular hash always collides.",
+        "B": "A perfect hash is a regular hash that never collides.",
+        "C": "A perfect hash is a type of hash that always results in a unique index, while a regular hash may result in collisions.",
+        "D": "A perfect hash is a type of hash that is slower than a regular hash."
+      },
+      "correctAnswer": "C",
+      "explanation": "A perfect hash is a type of hash that always results in a unique index, while a regular hash may result in collisions. This is because a perfect hash is designed to minimize collisions, making it more efficient in certain situations.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the benefit of using a hash function with a high number of collisions?",
+      "options": {
+        "A": "Fewer memory accesses are required, resulting in faster lookup times.",
+        "B": "The hash table can handle more keys, resulting in greater scalability.",
+        "C": "The hash table can recover from a power outage more easily.",
+        "D": "The hash table is more resistant to hash function tampering."
+      },
+      "correctAnswer": "C",
+      "explanation": "A hash function with a high number of collisions may seem counterintuitive, but it can actually make the hash table more resilient to power outages. This is because the hash table can recover more easily from a collision, as it can simply recreate the table without losing any data.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the average number of comparisons required to resolve a collision using linear probing?",
+      "options": {
+        "A": "1",
+        "B": "n",
+        "C": "(n+1)/2",
+        "D": "n^2"
+      },
+      "correctAnswer": "C",
+      "explanation": "Linear probing requires the hash table to search for an empty slot in the table, on average, (n+1)/2 comparisons. This is because linear probing searches the table in a linear fashion, starting from the initial index.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following is an example of a quadratic probing strategy?",
+      "options": {
+        "A": "Linear probing",
+        "B": "Circular probing",
+        "C": "Quadratic probing",
+        "D": "Double hashing"
+      },
+      "correctAnswer": "C",
+      "explanation": "Quadratic probing is an example of a probing strategy that uses a quadratic equation to calculate the new index after a collision. This strategy is designed to reduce cluster formation and improve the overall performance of the hash table.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the purpose of using a load factor in a hash table?",
+      "options": {
+        "A": "To determine the size of the hash table.",
+        "B": "To calculate the number of collisions.",
+        "C": "To determine when the hash table needs to be resized.",
+        "D": "To implement a search algorithm."
+      },
+      "correctAnswer": "C",
+      "explanation": "The load factor is a measure of how full the hash table is. It is typically used to determine when the hash table needs to be resized, as a high load factor can result in poor performance. When the load factor exceeds a certain threshold, typically 0.7 or 0.8, the hash table is resized to maintain optimal performance.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the difference between a direct address table and an indirect address table?",
+      "options": {
+        "A": "A direct address table uses less memory, while an indirect address table uses more memory.",
+        "B": "A direct address table uses more memory, while an indirect address table uses less memory.",
+        "C": "A direct address table is implemented as a hash table, while an indirect address table is implemented as a linked list.",
+        "D": "A direct address table uses a separate memory block for each entry, while an indirect address table uses a single memory block for all entries."
+      },
+      "correctAnswer": "D",
+      "explanation": "A direct address table uses a separate memory block for each entry, while an indirect address table uses a single memory block for all entries. This makes direct address tables more memory-efficient, but larger in overall size.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the benefit of using a hash table with a fixed-size bucket?",
+      "options": {
+        "A": "Faster lookup times, as all elements are stored in a single location.",
+        "B": "Greater scalability, as more elements can be stored in the bucket.",
+        "C": "Reduced overhead due to fewer memory allocations.",
+        "D": "Improved cache locality, as elements are stored in a contiguous block."
+      },
+      "correctAnswer": "C",
+      "explanation": "Using a fixed-size bucket reduces the overhead associated with dynamic memory allocation, which can be slower and less efficient. This makes fixed-size buckets ideal for use cases where memory access speed is critical.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the primary trade-off between using a hash table with a small bucket size and one with a large bucket size?",
+      "options": {
+        "A": "Lookup time vs. memory usage.",
+        "B": "Scalability vs. performance.",
+        "C": "Cache locality vs. memory fragmentation.",
+        "D": "Hash function quality vs. table collision rate."
+      },
+      "correctAnswer": "B",
+      "explanation": "The primary trade-off between a hash table with a small bucket size and one with a large bucket size is between scalability and performance. A small bucket size results in better worst-case performance but may not scale as well, while a large bucket size results in better scalability but may have poorer performance.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the average time complexity of a hash table insertion operation in a load-balanced table?",
+      "options": {
+        "A": "O(1)",
+        "B": "O(log n)",
+        "C": "O(n)",
+        "D": "O(n^2)"
+      },
+      "correctAnswer": "A",
+      "explanation": "When a load-balanced table is designed correctly, the average time complexity of a hash table insertion operation is constant, O(1). This is because load balancing ensures that each entry has an equal number of elements, making the insertion operation efficient.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the purpose of using a hash function with a high dispersion value?",
+      "options": {
+        "A": "To reduce the number of collisions.",
+        "B": "To increase the number of collisions.",
+        "C": "To minimize cluster formation.",
+        "D": "To make the hash table more resilient to power outages."
+      },
+      "correctAnswer": "C",
+      "explanation": "A hash function with a high dispersion value reduces the chance of cluster formation in the hash table. This is because a high dispersion value ensures that elements from different buckets collide less often, resulting in a more evenly distributed table.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is a key benefit of using a hash table with a chaining strategy?",
+      "options": {
+        "A": "Reduced memory usage, as fewer memory allocations are required.",
+        "B": "Improved cache locality, as elements are stored contiguously.",
+        "C": "Faster lookup times, as all elements are stored in a linked list.",
+        "D": "Increased scalability, as more elements can be stored in the table."
+      }
+    }
+  ]
+}
