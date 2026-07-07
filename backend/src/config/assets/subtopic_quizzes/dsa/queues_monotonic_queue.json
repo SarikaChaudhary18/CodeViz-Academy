@@ -1,0 +1,125 @@
+{
+  "topic": "Queues - Monotonic Queue",
+  "questions": [
+    {
+      "question": "A monotonic queue is a deque that only allows operations at one end.",
+      "options": {
+        "A": "True",
+        "B": "False",
+        "C": "This would make it both FIFO and LIFO",
+        "D": "This would make it only useful for a specific algorithm"
+      },
+      "correctAnswer": "B",
+      "explanation": "A monotonic queue is a deque that only allows operations (enques/deques in the order that the items were enqueued or dequeued, respectively)",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Consider a monotonic queue supporting enqueue, dequeue, peek operations. How would you add a pop operation that removes the smallest element (for a Min-mono-queue)?",
+      "options": {
+        "A": "Add a new 'popMin' operation",
+        "B": "Modify existing dequeue function",
+        "C": "Modify the 'peek' function to return the smallest element",
+        "D": "Implement the new function using an external priority queue"
+      },
+      "correctAnswer": "A",
+      "explanation": "To support a pop operation that removes the smallest element from the queue, we can add a specific function named 'popMin'. The operation would return the smallest value from the queue and then shift the next smallest value from the front of the queue.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Consider the scenario of applying a Max-mono-queue when solving a problem to find the maximum sum subarray of an array. What is the primary reason we choose to use a Monotonic Queue in this scenario?",
+      "options": {
+        "A": "It makes the implementation more efficient",
+        "B": "It allows us to track all subarrays",
+        "C": "It allows us to track the maximum prefix sum and suffix sum",
+        "D": "It allows us to maintain the maximum and minimum values"
+      },
+      "correctAnswer": "C",
+      "explanation": "The primary reason we would use a Max-mono-queue here is to track both the maximum prefix sum and the minimum prefix sum and the maximum suffix sum to effectively track the maximum sum subarray.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Which of the following data structures would require a Min-mono-queue to be implemented first?",
+      "options": {
+        "A": "Max Stack",
+        "B": "Min Queue",
+        "C": "Heap",
+        "D": "Array"
+      },
+      "correctAnswer": "B",
+      "explanation": "Implementing a Min-queue requires us to understand and apply the basic properties of Mono-Queues. A Min-queue has the ability to remove its smallest item efficiently, which is an operation we can do with a Monotonic-Queue.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "The following scenario is given: we have a monotonic queue that needs to store a sequence of elements. We only have the ability to add elements to the end, as well as peek at and remove elements from the front of the queue. What would happen if we wanted to remove the smallest element in place, given that we can't use an external priority queue?",
+      "options": {
+        "A": "Impossible because it only allows add at the end",
+        "B": "We need to swap elements before and after the front element",
+        "C": "We need to move elements around while not removing elements",
+        "D": "We have no way of doing this"
+      },
+      "correctAnswer": "B",
+      "explanation": "If we add an element that is smaller than what is at the front of the queue we'd need to 'bump up' the element at the front by 'bumping up' elements that are in front of it. We can do this in constant time using 'enqueue' and 'dequeue' to swap the front smallest with the new, smaller element.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "When choosing the operations to implement for a monotonic queue, which one should ideally come first?",
+      "options": {
+        "A": "Deque",
+        "B": "Enqueue",
+        "C": "Peek",
+        "D": "Implement the queue's operations for the Min-queue scenario"
+      },
+      "correctAnswer": "B",
+      "explanation": "The Enqueue and Dequeue operations are generally required to support all other operations of the queue. Enqueue (add an element to the end) comes first, as it is crucial to support all other operations including Dequeue (remove the first element), Peek, and the other scenarios (Min or Max-mono-queue) that could be implemented afterwards.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Suppose we have a situation in which we want to design a queue with the properties of a Min-mono-queue that can efficiently maintain the minimum element, but also have it be able to handle duplicate values. What is the approach we can use for the enqueue operation in this scenario?",
+      "options": {
+        "A": "Keep track of minimum values separately from the queue for duplicates",
+        "B": "Modify the current implementation to use binary heap",
+        "C": "Modify the enqueue function not to store duplicate elements",
+        "D": "Use an Array or Vector to store elements from queue"
+      },
+      "correctAnswer": "A",
+      "explanation": "To handle duplicate values, when encountering an element we already found in the queue we don't store the duplicate, since this won't change the minimum element in the queue. Instead we keep track of the values stored in a separate data structure.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "If we have to implement a Max-mono-queue which maintains at most one 'maximum' element, and we want to find the maximum element, then we will need to do what?",
+      "options": {
+        "A": "Implement 'peek' operation and check",
+        "B": "Check 'peek' to see if the current max is max before enqueuing",
+        "C": "We do need to implement a 'peek' operation which returns the maximum element",
+        "D": "We do not need to implement the 'peek' operation at all"
+      },
+      "correctAnswer": "C",
+      "explanation": "The 'peek' operation gives us access to the current head of the mono-queue which represents our 'max'. However it needs to be implemented for Max-mono-queue as well.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Consider a Max-mono-queue where the elements are numbers. What operation can you perform when you encounter a sequence of decreasing values that does not include any negative numbers, without violating the invariant of maintaining the max at the front?",
+      "options": {
+        "A": "Push all elements into the max mono queue",
+        "B": "Remove all elements that are not max from mono queue",
+        "C": "Implement a new operation called popMax",
+        "D": "Implement new 'peek' operation which doesn't return max"
+      },
+      "correctAnswer": "B",
+      "explanation": "In this case, when encountering a sequence of numbers decreasing, and all of them being positive, to not violate the invariant, we should keep track of what is currently at the front of the queue and make sure we only remove elements that are NOT max. This would ensure that our invariant continues to hold.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Consider the scenario where you are asked to implement the Min-mono-queue. What is the invariant that must hold for this mono-queue?",
+      "options": {
+        "A": "Invariant: At all times the smallest element is at the 'front', and all elements smaller are to the 'left', while elements larger are to the 'right'",
+        "B": "Invariant: At all times the largest element is at the 'front', and all elements greater are to the 'left', while elements lesser are to the 'right'",
+        "C": "Invariant: At all times the first element that was inserted is at the 'front', and all elements inserted after that are to the 'right'",
+        "D": "Invariant: At all times, elements that need to be popped from the front are popped from the front in the correct order based upon their values"
+      },
+      "correctAnswer": "A",
+      "explanation": "To implement a Min-mono-queue efficiently, we would need to have the invariant that the smallest element is at the front, and all smaller elements are to the left of that element, while elements larger are to the right.",
+      "difficulty": "Hard"
+    }
+  ]
+}
