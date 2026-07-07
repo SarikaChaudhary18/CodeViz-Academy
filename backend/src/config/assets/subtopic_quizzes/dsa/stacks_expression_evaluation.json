@@ -1,0 +1,161 @@
+{
+  "topic": "Stacks - Expression Evaluation",
+  "questions": [
+    {
+      "question": "Evaluate the expression  ( ( A + B ) * C )  - D using a stack. What should be the last operation performed?",
+      "options": {
+        "A": "Push (A + B) onto the stack",
+        "B": "Perform (A + B) * C",
+        "C": "Pop (A + B) from the stack and multiply by C",
+        "D": "Pop (A + B) from the stack and subtract D"
+      },
+      "correctAnswer": "D",
+      "explanation": "To evaluate the expression using a stack, we push (A + B) onto the stack. Then, we pop it and multiply by C, but our next operation is to subtract D.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How many times would you push the operator '+' onto the stack when evaluating the postfix expression  A B + using a stack?",
+      "options": {
+        "A": "1",
+        "B": "2",
+        "C": "0",
+        "D": "There is no operator + in the postfix expression"
+      },
+      "correctAnswer": "A",
+      "explanation": "Since the expression is in postfix, the operations should be pushed onto the stack when we encounter them. In this case, we would push '+'.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How would you handle a mismatched parentheses error in an infix expression while evaluating it using a stack?",
+      "options": {
+        "A": "Raise a custom error with the unmatched parenthesis",
+        "B": "Ignore the unmatched closing parenthesis",
+        "C": "Push the unmatched open parenthesis back onto the stack",
+        "D": "Pop elements from the stack until a match is found for the unmatched parenthesis"
+      },
+      "correctAnswer": "D",
+      "explanation": "When evaluating an infix expression with a stack, a mismatched closing parenthesis indicates that there is an unmatched opening parenthesis in the input string. To handle this, we pop elements from the stack until we find a match for the unmatched open parenthesis.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What data structure should you use to implement a simple arithmetic expression evaluator?",
+      "options": {
+        "A": "Linked List",
+        "B": "Queue",
+        "C": "Stack",
+        "D": "Hash Table"
+      },
+      "correctAnswer": "C",
+      "explanation": "Given the nature of arithmetic expressions, which involves a last-in-first-out (LIFO) evaluation strategy, the stack is the ideal data structure for a simple arithmetic expression evaluator.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following statements about the evaluation of postfix expressions is true?",
+      "options": {
+        "A": "Operands are typically pushed onto the stack before their corresponding operators.",
+        "B": "The stack is typically empty before evaluating a postfix expression.",
+        "C": "The first operand in a postfix expression is pushed onto the stack before the second operand.",
+        "D": "The operator of a postfix expression is always popped first from the stack."
+      },
+      "correctAnswer": "A",
+      "explanation": "In postfix notation, operands are pushed onto the stack before their corresponding operators. This order ensures that the correct calculations are performed when operators are finally applied.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How would you design a stack-based infix-to-postfix converter?",
+      "options": {
+        "A": "Use two stacks, one for operators and one for operands.",
+        "B": "Push operators onto the stack when operands are encountered.",
+        "C": "Pop operators from the stack when operands are encountered.",
+        "D": "Use a queue instead of a stack for operator management."
+      },
+      "correctAnswer": "B",
+      "explanation": "To convert an infix expression to postfix, you should push operators onto the stack when operands are encountered. When an operator with higher precedence is encountered, pop operators from the stack and append them to the output.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "When evaluating an infix expression using a stack, what is the purpose of the stack's 'top' index?",
+      "options": {
+        "A": "Indicates the index of the most recent addition to the stack.",
+        "B": "References the index of the stack where the operands are stored.",
+        "C": "Points to the location of the current operation being processed.",
+        "D": "Identifies the position of the stack where we should store the next operator."
+      },
+      "correctAnswer": "A",
+      "explanation": "In essence, the top index of a stack in the context of infix expression evaluation keeps track of the most recently added element, which represents the current operation being processed. This value is useful for various stack operations.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Design an algorithm to evaluate the expression  ( ( A + B ) * ( C + D ) )  using prefix notation and a stack.",
+      "options": {
+        "A": "Push the subexpressions (A + B) and (C + D) onto the stack, then multiply them.",
+        "B": "Evaluate (C + D) first, followed by (A + B), then perform the multiplication.",
+        "C": "Push the operators onto the stack, then perform the corresponding subexpressions.",
+        "D": "Pop operators from the stack, then evaluate the subexpressions."
+      },
+      "correctAnswer": "A",
+      "explanation": "Prefix notation requires operators to come before operands. Therefore, we should push the subexpressions onto the stack, followed by the multiplication operator to evaluate the final result.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "When implementing an infix-to-prefix expression converter, what should be the initial state of the stack and output queue?",
+      "options": {
+        "A": "The stack should be empty and the output queue should contain only the input expression.",
+        "B": "The stack should be empty and the output queue should be empty.",
+        "C": "The stack should contain the input expression and the output queue should be empty.",
+        "D": "The stack should be empty and the output queue should contain only the operator symbols."
+      },
+      "correctAnswer": "B",
+      "explanation": "The stack should be empty initially to ensure that we are not pre-populating it with any elements. The output queue, on the other hand, should also be empty since we have not generated any output yet.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Evaluate the infix expression (A + (B * C)) using a stack and explain your reasoning.",
+      "options": {
+        "A": "+ is pushed onto the stack, followed by *",
+        "B": "+ is pushed onto the stack after B and C",
+        "C": "+ is pushed onto the stack, followed by (B * C)",
+        "D": "+ is pushed before B and C"
+      },
+      "correctAnswer": "B",
+      "explanation": "When evaluating the infix expression (A + (B * C)) using a stack, we push '+' onto the stack after the operands B and C. This ensures that we perform the multiplication before adding the result to A.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the primary role of a stack in an arithmetic expression evaluator?",
+      "options": {
+        "A": "Storing operand values temporarily",
+        "B": "Managing operator precedence and order of operation",
+        "C": "Evaluating the final result of an expression",
+        "D": "Handling input/output operations"
+      },
+      "correctAnswer": "B",
+      "explanation": "A stack plays a crucial role in evaluating arithmetic expressions by managing operator precedence, ensuring that higher-precedence operations are performed before lower-precedence ones, and correctly following the order of operations.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Design an algorithm to evaluate the prefix expression (A + B) * (C + D) using a stack.",
+      "options": {
+        "A": "Push A, B, +, C, D, +, *",
+        "B": "Push +, A, B, +, C, D, *",
+        "C": "Push *, A, +, B, C, +, D",
+        "D": "Push *, +, A, B, +, C, D"
+      },
+      "correctAnswer": "A",
+      "explanation": "To evaluate the prefix expression (A + B) * (C + D) using a stack, we push the operands and operators in reverse order. This ensures that we apply the correct operations in the correct order to obtain the final result.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How would you optimize the infix-to-postfix conversion process when handling operator precedence rules?",
+      "options": {
+        "A": "Always append higher-precedence operators to the postfix expression.",
+        "B": "Never append operators to the postfix expression.",
+        "C": "Append the highest-precedence operator that can be executed to the postfix expression.",
+        "D": "Always use a stack to store operands and operators temporarily."
+      },
+      "correctAnswer": "C",
+      "explanation": "In infix-to-postfix conversion, operators are appended to the postfix expression when their precedence is higher than the currently top operator on the stack, or when there is no operator on the stack.",
+      "difficulty": "Medium"
+    }
+  ]
+}
