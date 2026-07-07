@@ -109,7 +109,7 @@ const navigation = {
         },
         {
           id: "resources",
-          name: "Workspace",
+          name: "Resources",
           items: [
             { name: "Documentation", href: "/login" },
             { name: "Platform FAQ", href: "#faq" },

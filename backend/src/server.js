@@ -65,7 +65,7 @@ if (cluster.isPrimary && process.env.NODE_ENV === 'production') {
         }
       }
 
-      server.listen(PORT, () => {
+      server.listen(PORT, '127.0.0.1', () => {
         logger.info(`Worker process ${process.pid} started. Server running on port ${PORT}`);
       });
     } catch (err) {

@@ -288,15 +288,6 @@
       "correctAnswer": "A",
       "explanation": "Arrays are a suitable data structure for memoization, because they can be used to store the results of sub-problems and reuse them when needed. Memoization typically involves storing the results of expensive function calls in a table, and arrays can be used to implement this table.",
       "difficulty": "Hard"
-    },
-    {
-      "question": "What is the purpose of the 'recursive case' in a recursive function?",
-      "options": {
-        "A": "To start the recursion process",
-        "B": "To stop the recursion process",
-        "C": "To pass values back up the call stack",
-        "D": "To call itself to solve a smaller version of the same problem"
-      }
     }
   ]
 }

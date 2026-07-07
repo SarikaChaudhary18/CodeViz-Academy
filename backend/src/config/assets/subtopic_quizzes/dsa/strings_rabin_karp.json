@@ -240,15 +240,6 @@
       "correctAnswer": "C",
       "explanation": "The Boyer-Moore algorithm typically requires more preprocessing than the Rabin-Karp algorithm. The Boyer-Moore algorithm preprocesses the pattern to create lookup tables that help in skipping characters during the search, which can be computationally intensive for large patterns. In contrast, the Rabin-Karp algorithm's preprocessing is relatively simpler, involving the calculation of the initial hash value of the pattern and possibly other constants. Therefore, in terms of preprocessing requirements, the Boyer-Moore algorithm generally has a higher overhead.",
       "difficulty": "Medium"
-    },
-    {
-      "question": "Can the Rabin-Karp algorithm be adapted for use in real-time string matching applications?",
-      "options": {
-        "A": "Yes, it can be used without modifications",
-        "B": "Yes, but it requires adjustments for handling streaming data",
-        "C": "No, it is not suitable for real-time applications due to its average-case complexity",
-        "D": "Only for offline processing of logged data"
-      }
     }
   ]
 }

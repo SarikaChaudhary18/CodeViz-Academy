@@ -288,15 +288,6 @@
       "correctAnswer": "C",
       "explanation": "The sliding window technique can be used to solve problems with dynamic arrays or data structures, but the specific implementation depends on the problem requirements. The technique is versatile and can be applied to different types of data, but the complexity and difficulty of the problem may increase when dealing with dynamic arrays or data structures.",
       "difficulty": "Hard"
-    },
-    {
-      "question": "What is the main challenge when implementing the sliding window technique for problems with multiple arrays or data structures?",
-      "options": {
-        "A": "Maintaining the window boundaries",
-        "B": "Updating the window sum",
-        "C": "Handling edge cases",
-        "D": "All of the above"
-      }
     }
   ]
 }

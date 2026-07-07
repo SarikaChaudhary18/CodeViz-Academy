@@ -300,15 +300,6 @@
       "correctAnswer": "B",
       "explanation": "The Z Algorithm can significantly improve the efficiency of pattern matching in text search engines. By preprocessing the indexed text, search engines can quickly identify matches for user queries, potentially leading to faster and more accurate search results.",
       "difficulty": "Medium"
-    },
-    {
-      "question": "Can the Z Algorithm be applied to non-text data, such as images or audio?",
-      "options": {
-        "A": "No, it is strictly limited to text data",
-        "B": "Yes, with appropriate conversion to a symbolic representation",
-        "C": "Yes, it can be directly applied to any type of data",
-        "D": "Only for certain types of non-text data"
-      }
     }
   ]
 }

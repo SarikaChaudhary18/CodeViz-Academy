@@ -145,11 +145,13 @@ const seedQuizzes = async () => {
               
             const existing = await Quiz.findOne({ topic: slug });
             const answerMap = { 'A': 0, 'B': 1, 'C': 2, 'D': 3 };
-            const mappedQuestions = rawQuiz.questions.map(q => ({
-              q: q.question,
-              options: [q.options.A, q.options.B, q.options.C, q.options.D],
-              answer: answerMap[q.correctAnswer.trim().toUpperCase()] ?? 0
-            }));
+            const mappedQuestions = rawQuiz.questions
+              .filter(q => q && q.question && q.options && q.options.A && q.options.B && q.options.C && q.options.D && q.correctAnswer)
+              .map(q => ({
+                q: q.question,
+                options: [q.options.A, q.options.B, q.options.C, q.options.D],
+                answer: answerMap[q.correctAnswer.trim().toUpperCase()] ?? 0
+              }));
             
             if (!existing) {
               await Quiz.create({

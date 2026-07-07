@@ -312,15 +312,6 @@
       "correctAnswer": "B",
       "explanation": "The lower() method in Python strings is used to convert a string to lowercase. This method returns a new string where all uppercase characters are converted to lowercase.",
       "difficulty": "Easy"
-    },
-    {
-      "question": "In Java, which method is used to get the substring starting from a specified index?",
-      "options": {
-        "A": "substring(int beginIndex)",
-        "B": "substring(int beginIndex, int endIndex)",
-        "C": "startsWith(String prefix)",
-        "D": "endsWith(String suffix)"
-      }
     }
   ]
 }

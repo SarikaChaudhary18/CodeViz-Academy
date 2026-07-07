@@ -120,15 +120,6 @@
       "correctAnswer": "A",
       "explanation": "Yes, it is possible to solve the N Queens problem using a simple backtracking search without recursion. This approach involves using an iterative algorithm that explores the solution space without using function calls or recursion. By maintaining a stack or a queue of open columns, the algorithm can efficiently explore the solution space and find a valid solution.",
       "difficulty": "Medium"
-    },
-    {
-      "question": "What is the key challenge in solving the N Queens problem?",
-      "options": {
-        "A": "To find a solution that minimizes the number of conflicts.",
-        "B": "To determine whether a given board is valid.",
-        "C": "To find all possible solutions in the most efficient way.",
-        "D": "To prove the NP-completeness of this problem."
-      }
     }
   ]
 }

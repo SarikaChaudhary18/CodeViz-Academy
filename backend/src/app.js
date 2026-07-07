@@ -27,8 +27,26 @@ const app = express();
 
 // Security configuration
 app.use(helmet());
+const allowedOrigins = [
+  'http://localhost:3000',
+  'http://127.0.0.1:3000'
+];
+if (process.env.CLIENT_ORIGIN) {
+  const envOrigins = process.env.CLIENT_ORIGIN.split(',').map(o => o.trim());
+  envOrigins.forEach(o => {
+    if (!allowedOrigins.includes(o)) allowedOrigins.push(o);
+  });
+}
+
 app.use(cors({
-  origin: process.env.CLIENT_ORIGIN || '*',
+  origin: (origin, callback) => {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin) || allowedOrigins.includes('*')) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));

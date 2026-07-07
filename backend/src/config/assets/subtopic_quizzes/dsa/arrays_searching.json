@@ -276,15 +276,6 @@
       "correctAnswer": "B",
       "explanation": "Interpolation Search is a special case of Binary Search. Interpolation Search is an algorithm that estimates the position of the target element based on the values of the elements at the low and high indices, whereas Binary Search simply divides the search interval in half. Interpolation Search can be viewed as an optimization of Binary Search for certain types of data, where the values of the elements are uniformly distributed.",
       "difficulty": "Hard"
-    },
-    {
-      "question": "Can Binary Search be used to find the closest match to a target element in an array?",
-      "options": {
-        "A": "Yes, Binary Search can be used to find the closest match",
-        "B": "No, Binary Search cannot be used to find the closest match",
-        "C": "Only if the array is sorted",
-        "D": "Only if the target element is present in the array"
-      }
     }
   ]
 }

@@ -300,15 +300,6 @@
       "correctAnswer": "C",
       "explanation": "Graph algorithms are used to analyze the structure of a graph, including finding the shortest path between nodes, detecting cycles, and finding the minimum spanning tree. These algorithms are used in many applications, such as social network analysis, traffic optimization, and more.",
       "difficulty": "Hard"
-    },
-    {
-      "question": "How do you implement a graph algorithm in Python?",
-      "options": {
-        "A": "Using a recursive function",
-        "B": "Using an iterative algorithm",
-        "C": "Using a library such as NetworkX",
-        "D": "Using a data structure such as a stack or queue"
-      }
     }
   ]
 }

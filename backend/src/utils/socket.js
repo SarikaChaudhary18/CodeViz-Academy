@@ -7,9 +7,27 @@ let io = null;
 const matchmakingQueue = []; // Queue storing { userId, username, level, socket }
 
 const initializeSocket = (server) => {
+  const allowedOrigins = [
+    'http://localhost:3000',
+    'http://127.0.0.1:3000'
+  ];
+  if (process.env.CLIENT_ORIGIN) {
+    const envOrigins = process.env.CLIENT_ORIGIN.split(',').map(o => o.trim());
+    envOrigins.forEach(o => {
+      if (!allowedOrigins.includes(o)) allowedOrigins.push(o);
+    });
+  }
+
   io = new Server(server, {
     cors: {
-      origin: process.env.CLIENT_ORIGIN || '*',
+      origin: (origin, callback) => {
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.includes(origin) || allowedOrigins.includes('*')) {
+          callback(null, true);
+        } else {
+          callback(new Error('Not allowed by CORS'));
+        }
+      },
       methods: ['GET', 'POST'],
     },
     pingTimeout: 60000,
