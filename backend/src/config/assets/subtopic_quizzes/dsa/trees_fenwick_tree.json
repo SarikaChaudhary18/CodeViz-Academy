@@ -1,0 +1,209 @@
+{
+  "topic": "Trees - Fenwick Tree",
+  "questions": [
+    {
+      "question": "What is a Fenwick Tree?",
+      "options": {
+        "A": "A compact, binary representation of sparse data structures",
+        "B": "A dynamic data structure supporting both insertion and deletion",
+        "C": "A self-balancing binary search tree",
+        "D": "A graph data structure"
+      },
+      "correctAnswer": "A",
+      "explanation": "A Fenwick Tree is a bit array used for efficient range sum queries and updates. It's suitable for sparse binary vectors. This structure is also known as a Binary Indexed Tree (BIT).",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following is an advantage of using a Fenwick Tree?",
+      "options": {
+        "A": "Supports fast updates and range sum queries",
+        "B": "Has a low space complexity",
+        "C": "Is easy to implement",
+        "D": "Is suitable for dense data structures"
+      },
+      "correctAnswer": "A",
+      "explanation": "Fenwick Trees offer a great compromise between query and update time complexity. They can update in O(log n) time and can query a range in O(log n) time, where n is the number of elements.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is a use case for a Fenwick Tree?",
+      "options": {
+        "A": "Solving the 0/1 Knapsack problem",
+        "B": "Finding the longest common subsequence between two sequences",
+        "C": "Range sum queries and updates",
+        "D": "Solving the Travelling Salesman Problem"
+      },
+      "correctAnswer": "C",
+      "explanation": "A Fenwick Tree is particularly useful when dealing with sparse data structures and requires efficient range sum queries and updates.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Fenwick Trees are often called what?",
+      "options": {
+        "A": "Binary Indexed Tree",
+        "B": "Sparse Data Structure Tree",
+        "C": "Tree Binary Index",
+        "D": "Binary Data Structure Tree"
+      },
+      "correctAnswer": "A",
+      "explanation": "Both Fenwick Tree and Binary Indexed Tree (BIT) are used to refer to the same data structure.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following is not a characteristic of a Fenwick Tree?",
+      "options": {
+        "A": "Supports binary search",
+        "B": "Supports efficient range sum queries",
+        "C": "Is a dynamic data structure",
+        "D": "Can update in O(1) time"
+      },
+      "correctAnswer": "D",
+      "explanation": "Fenwick Trees update in O(log n) time because of the requirement to update the parent node after changing the child node.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the time complexity of updating a Fenwick Tree?",
+      "options": {
+        "A": "O(1)",
+        "B": "O(log n)",
+        "C": "O(n)",
+        "D": "O(n log n)"
+      },
+      "correctAnswer": "B",
+      "explanation": "Fenwick Trees update in O(log n) time because the size of the parent node is halved with each update.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Fenwick Trees are useful when dealing with sparse data structures. What does this mean?",
+      "options": {
+        "A": "The data set contains most information in a few areas",
+        "B": "The data set contains most information in almost all areas",
+        "C": "The data set contains no information",
+        "D": "The data set contains all information"
+      },
+      "correctAnswer": "A",
+      "explanation": "Sparse data structures have the property that most of the elements have a value of 0. Fenwick Trees make use of this property to optimize range sum queries and updates.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What data structure is a Fenwick Tree based on?",
+      "options": {
+        "A": "An array",
+        "B": "A linked list",
+        "C": "A stack",
+        "D": "A queue"
+      },
+      "correctAnswer": "A",
+      "explanation": "Fenwick Trees are based on arrays, specifically bit arrays.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the time complexity of querying a Fenwick Tree?",
+      "options": {
+        "A": "O(1)",
+        "B": "O(log n)",
+        "C": "O(n)",
+        "D": "O(n log n)"
+      },
+      "correctAnswer": "B",
+      "explanation": "Fenwick Trees query in O(log n) time because it requires traversing through the parent nodes to the root node.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "When would you prefer to use a Fenwick Tree over an array?",
+      "options": {
+        "A": "When dealing with large sparse arrays",
+        "B": "When dealing with large dense arrays",
+        "C": "When dealing with linked lists",
+        "D": "When dealing with stack data structures"
+      },
+      "correctAnswer": "A",
+      "explanation": "Fenwick Trees offer efficient range sum queries and updates, which is particularly useful when dealing with sparse data structures.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following operations can be performed on a Fenwick Tree?",
+      "options": {
+        "A": "Insertion",
+        "B": "Deletion",
+        "C": "Updating",
+        "D": "All of the above"
+      },
+      "correctAnswer": "C",
+      "explanation": "Fenwick Trees primarily support updating, whereas insertion and deletion are not directly supported.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Why is a Fenwick Tree suitable for sparse data structures?",
+      "options": {
+        "A": "Because it supports fast updates and range sum queries",
+        "B": "Because it has a low storage overhead",
+        "C": "Because most elements are 0",
+        "D": "All of the above"
+      },
+      "correctAnswer": "C",
+      "explanation": "Most of the elements in sparse data structures have a value of 0, and Fenwick Trees are based on bit arrays, which store one bit per element.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following data structures does a Fenwick Tree NOT support?",
+      "options": {
+        "A": "Binary Search",
+        "B": "Range Sum Queries",
+        "C": "Insertion/Deletion",
+        "D": "Dynamic Arrays"
+      },
+      "correctAnswer": "D",
+      "explanation": "Fenwick Trees are specifically designed for dealing with static arrays.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How does a Fenwick Tree represent sparse vectors?",
+      "options": {
+        "A": "Through the usage of linked nodes",
+        "B": "Through the usage of an array of integers",
+        "C": "Through the usage of bit operations",
+        "D": "Through the usage of hash functions"
+      },
+      "correctAnswer": "C",
+      "explanation": "Fenwick Trees represent sparse vectors using bit operations, where each bit stands for an element in the vector.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Can a Fenwick Tree handle queries that span multiple elements?",
+      "options": {
+        "A": "Yes",
+        "B": "No",
+        "C": "It depends on the elements involved",
+        "D": "Maybe"
+      },
+      "correctAnswer": "A",
+      "explanation": "Fenwick Trees can efficiently compute range sum queries, which include queries spanning multiple elements.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How is a Fenwick Tree typically represented in code?",
+      "options": {
+        "A": "Using a binary heap data structure",
+        "B": "Using an array of integers",
+        "C": "Using a linked list data structure",
+        "D": "Using a balanced binary tree"
+      },
+      "correctAnswer": "B",
+      "explanation": "Fenwick Trees are typically represented as an array of integers, where each integer stores the cumulative sum for the corresponding range.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Fenwick Trees can efficiently perform updates, which of the following operations can a Fenwick Tree NOT update in O(1) time?",
+      "options": {
+        "A": "Individual element sum",
+        "B": "Range sum query",
+        "C": "Bitwise XOR",
+        "D": "Range sum query and individual element sum"
+      },
+      "correctAnswer": "C",
+      "explanation": "Fenwick Trees can update individual element sums and range sums in O(log n) time. However, updating with bitwise XOR operations cannot be directly supported.",
+      "difficulty": "Easy"
+    }
+  ]
+}
