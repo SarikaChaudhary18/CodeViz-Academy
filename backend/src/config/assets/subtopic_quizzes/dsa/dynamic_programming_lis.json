@@ -1,0 +1,329 @@
+{
+  "topic": "Dynamic Programming - LIS",
+  "questions": [
+    {
+      "question": "What does LIS stand for in Dynamic Programming?",
+      "options": {
+        "A": "Longest Increasing Sequence",
+        "B": "Longest Decreasing Sequence",
+        "C": "Longest Identical Sequence",
+        "D": "Longest Static Sequence"
+      },
+      "correctAnswer": "A",
+      "explanation": "LIS stands for Longest Increasing Sequence, which is a fundamental problem in Dynamic Programming that involves finding the longest sequence of elements in an array that are in increasing order.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the primary approach to solving LIS problems?",
+      "options": {
+        "A": "Divide and Conquer",
+        "B": "Greedy Algorithm",
+        "C": "Dynamic Programming",
+        "D": "Backtracking"
+      },
+      "correctAnswer": "C",
+      "explanation": "Dynamic Programming is the primary approach to solving LIS problems as it involves breaking down the problem into smaller sub-problems, solving each sub-problem only once, and storing the solutions to sub-problems to avoid redundant computation.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the time complexity of the standard Dynamic Programming solution for LIS?",
+      "options": {
+        "A": "O(n log n)",
+        "B": "O(n^2)",
+        "C": "O(2^n)",
+        "D": "O(n)"
+      },
+      "correctAnswer": "B",
+      "explanation": "The time complexity of the standard Dynamic Programming solution for LIS is O(n^2) because for each element in the array, we potentially compare it with every other element.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the benefit of using Dynamic Programming to solve LIS problems?",
+      "options": {
+        "A": "It reduces the space complexity",
+        "B": "It increases the time complexity",
+        "C": "It avoids redundant computation and optimizes the solution",
+        "D": "It only works for small inputs"
+      },
+      "correctAnswer": "C",
+      "explanation": "Dynamic Programming avoids redundant computation by storing the solutions to sub-problems, which leads to an optimized solution for LIS problems.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following statements about LIS is NOT true?",
+      "options": {
+        "A": "LIS must be a contiguous subsequence",
+        "B": "LIS can be solved using Dynamic Programming",
+        "C": "LIS involves finding the longest sequence that is strictly increasing",
+        "D": "LIS can have multiple optimal solutions"
+      },
+      "correctAnswer": "A",
+      "explanation": "The statement 'LIS must be a contiguous subsequence' is NOT true because the Longest Increasing Sequence does not need to be contiguous in the original array.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Consider an array {10, 22, 9, 33, 21, 50, 41, 60}. What is the length of the LIS of this array?",
+      "options": {
+        "A": "3",
+        "B": "5",
+        "C": "4",
+        "D": "6"
+      },
+      "correctAnswer": "B",
+      "explanation": "One of the longest increasing subsequences for the given array is {10, 22, 33, 50, 60}. Therefore, the length of the LIS is 5.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How would you initialize the 'dp' array in a Dynamic Programming solution for LIS?",
+      "options": {
+        "A": "Initialize all elements to 0",
+        "B": "Initialize all elements to the value of the corresponding element in the input array",
+        "C": "Initialize all elements to 1 because a single element is always an increasing sequence of length 1",
+        "D": "Initialize all elements to the maximum possible value"
+      },
+      "correctAnswer": "C",
+      "explanation": "In a Dynamic Programming solution for LIS, the 'dp' array should be initialized with all elements set to 1, as a single element is itself an increasing sequence of length 1.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the purpose of the 'dp' array in the Dynamic Programming solution for LIS?",
+      "options": {
+        "A": "To store the elements of the input array",
+        "B": "To store the length of the LIS ending at each position",
+        "C": "To store the actual LIS",
+        "D": "To store the indices of elements in the input array"
+      },
+      "correctAnswer": "B",
+      "explanation": "The 'dp' array is used to store the length of the Longest Increasing Subsequence ending at each position in the input array, which helps in efficiently computing the LIS.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Consider an array {1, 2, 3, 4, 5}. How many different LIS can be formed from this array?",
+      "options": {
+        "A": "1",
+        "B": "2",
+        "C": "5",
+        "D": "More than 5"
+      },
+      "correctAnswer": "A",
+      "explanation": "For the array {1, 2, 3, 4, 5}, there is exactly one Longest Increasing Subsequence which is the array itself {1, 2, 3, 4, 5}. Therefore, only 1 different LIS can be formed from this array.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Can the Dynamic Programming solution for LIS be optimized further?",
+      "options": {
+        "A": "No, the Dynamic Programming solution is the most efficient",
+        "B": "Yes, by using a more efficient algorithm like binary search",
+        "C": "Yes, but only for specific types of input arrays",
+        "D": "It depends on the size of the input array"
+      },
+      "correctAnswer": "B",
+      "explanation": "The Dynamic Programming solution for LIS can be optimized further by using more efficient algorithms or data structures, such as binary search, to reduce the time complexity.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Suppose we are given an array and we want to find the length of the LIS and also construct the actual LIS. What approach would you use?",
+      "options": {
+        "A": "Use Dynamic Programming to find the length and then backtrack to construct the LIS",
+        "B": "Use a greedy algorithm to directly construct the LIS",
+        "C": "Use divide and conquer to find the length and construct the LIS",
+        "D": "Use a recursive approach to find the length and construct the LIS"
+      },
+      "correctAnswer": "A",
+      "explanation": "To find the length of the LIS and construct the actual LIS, we can use Dynamic Programming to find the length and then backtrack through the 'dp' array to construct the LIS. This approach ensures efficiency and correctness.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "How does the presence of duplicate elements in the input array affect the Dynamic Programming solution for LIS?",
+      "options": {
+        "A": "It does not affect the solution",
+        "B": "It increases the time complexity",
+        "C": "It reduces the space complexity",
+        "D": "It changes the way we initialize the 'dp' array"
+      },
+      "correctAnswer": "A",
+      "explanation": "The presence of duplicate elements in the input array does not fundamentally affect the Dynamic Programming solution for LIS, as the solution focuses on increasing subsequences and treats duplicate elements as part of the sequence only if they contribute to an increasing subsequence.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What happens to the Dynamic Programming solution for LIS if the input array is sorted in descending order?",
+      "options": {
+        "A": "The solution becomes more efficient",
+        "B": "The solution becomes less efficient",
+        "C": "The length of the LIS becomes 1",
+        "D": "The solution does not change"
+      },
+      "correctAnswer": "C",
+      "explanation": "If the input array is sorted in descending order, the length of the LIS would be 1 because there can be no increasing subsequence of length greater than 1 in a descending sequence.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Consider an array of size n. What is the maximum possible length of the LIS for this array?",
+      "options": {
+        "A": "n",
+        "B": "n/2",
+        "C": "log n",
+        "D": "n log n"
+      },
+      "correctAnswer": "A",
+      "explanation": "The maximum possible length of the LIS for an array of size n is n, which occurs when the array is sorted in ascending order. In such a case, the entire array forms the LIS.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How would you handle the case where the input array is empty in the Dynamic Programming solution for LIS?",
+      "options": {
+        "A": "Return an error",
+        "B": "Return 0 as the length of the LIS",
+        "C": "Return a default value",
+        "D": "Ignore the empty array and continue with the next input"
+      },
+      "correctAnswer": "B",
+      "explanation": "In the Dynamic Programming solution for LIS, if the input array is empty, the function should return 0 as the length of the LIS because an empty array does not contain any elements to form a subsequence.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Can the Dynamic Programming solution for LIS be parallelized?",
+      "options": {
+        "A": "Yes, easily",
+        "B": "Yes, but with difficulty",
+        "C": "No, because it has recursive dependencies",
+        "D": "It depends on the specific implementation"
+      },
+      "correctAnswer": "C",
+      "explanation": "The Dynamic Programming solution for LIS has intrinsic recursive dependencies due to its nature of solving sub-problems and storing their results. This makes it challenging to parallelize the solution effectively.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Consider two arrays A and B of the same size n. Array A contains the elements of array B in a permuted order. How do the lengths of the LIS of A and B compare?",
+      "options": {
+        "A": "They are always equal",
+        "B": "They are always different",
+        "C": "The length of the LIS of A is always less than that of B",
+        "D": "It depends on the specific permutation and the arrays themselves"
+      },
+      "correctAnswer": "D",
+      "explanation": "The lengths of the LIS of two arrays that are permutations of each other can vary based on the specific arrangement of elements in each array. The LIS length depends on the increasing subsequences present, which can differ significantly between permutations.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the relationship between the LIS problem and the Shortest Path problem in graphs?",
+      "options": {
+        "A": "They are equivalent problems",
+        "B": "LIS is a special case of the Shortest Path problem",
+        "C": "The Shortest Path problem is a special case of the LIS problem",
+        "D": "They are unrelated problems"
+      },
+      "correctAnswer": "D",
+      "explanation": "The LIS problem and the Shortest Path problem in graphs are fundamentally different. While both involve finding optimal paths or sequences, they operate under different constraints and objectives, making them distinct problems in computer science.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Can the Dynamic Programming solution for LIS be applied to find the Longest Decreasing Subsequence (LDS)?",
+      "options": {
+        "A": "Yes, with minor modifications",
+        "B": "Yes, without any modifications",
+        "C": "No, because it's a fundamentally different problem",
+        "D": "It depends on the specific implementation"
+      },
+      "correctAnswer": "A",
+      "explanation": "The Dynamic Programming solution for LIS can be adapted to find the Longest Decreasing Subsequence (LDS) with minor modifications, primarily by changing the comparison operator in the algorithm to find decreasing sequences instead of increasing ones.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How does the Dynamic Programming solution for LIS handle arrays with negative numbers?",
+      "options": {
+        "A": "It treats negative numbers as special cases",
+        "B": "It ignores negative numbers",
+        "C": "It treats negative numbers the same as positive numbers",
+        "D": "The solution fails for arrays with negative numbers"
+      },
+      "correctAnswer": "C",
+      "explanation": "The Dynamic Programming solution for LIS treats negative numbers the same as positive numbers, considering only the relative order of elements to determine increasing subsequences.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Consider an array where all elements are distinct. What is the time complexity of constructing the actual LIS after finding its length using Dynamic Programming?",
+      "options": {
+        "A": "O(n)",
+        "B": "O(n log n)",
+        "C": "O(n^2)",
+        "D": "O(2^n)"
+      },
+      "correctAnswer": "A",
+      "explanation": "After finding the length of the LIS, constructing the actual LIS from the 'dp' array can be done in O(n) time, as it involves tracing back the elements that contribute to the longest increasing subsequence.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Can the concept of LIS be applied to multidimensional arrays?",
+      "options": {
+        "A": "Yes, directly",
+        "B": "Yes, with modifications to the algorithm",
+        "C": "No, it's limited to one-dimensional arrays",
+        "D": "It depends on the specific structure of the multidimensional array"
+      },
+      "correctAnswer": "B",
+      "explanation": "The concept of LIS can be extended to multidimensional arrays, but it requires modifications to the algorithm to handle the additional dimensions and define what constitutes an 'increasing' subsequence in a multidimensional context.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the relationship between the LIS problem and the Matrix Chain Multiplication problem?",
+      "options": {
+        "A": "They are closely related and share similar dynamic programming solutions",
+        "B": "They are distinct problems with different objectives",
+        "C": "The Matrix Chain Multiplication problem is a special case of the LIS problem",
+        "D": "The LIS problem is a special case of the Matrix Chain Multiplication problem"
+      },
+      "correctAnswer": "B",
+      "explanation": "The LIS problem and the Matrix Chain Multiplication problem are distinct problems in computer science. While both can be solved using Dynamic Programming, they have different objectives and are applied in different contexts.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "How does the space complexity of the Dynamic Programming solution for LIS change if we use a more space-efficient data structure?",
+      "options": {
+        "A": "It remains the same",
+        "B": "It increases",
+        "C": "It decreases",
+        "D": "It becomes constant"
+      },
+      "correctAnswer": "C",
+      "explanation": "The space complexity of the Dynamic Programming solution for LIS can be reduced by using more space-efficient data structures or techniques, such as using a single array instead of multiple arrays for tracking subsequences.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Consider an array with a mix of increasing and decreasing subsequences. What is the significance of the 'dp' array in this context?",
+      "options": {
+        "A": "It stores the length of the longest decreasing subsequence",
+        "B": "It stores the length of the longest increasing subsequence",
+        "C": "It stores the indices of the elements in increasing order",
+        "D": "It stores the actual longest increasing subsequence"
+      },
+      "correctAnswer": "B",
+      "explanation": "In the context of an array with a mix of increasing and decreasing subsequences, the 'dp' array is crucial as it stores the length of the longest increasing subsequence ending at each position, aiding in the computation of the overall LIS.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the role of the base case in the Dynamic Programming solution for LIS?",
+      "options": {
+        "A": "To initialize the 'dp' array with the final solution",
+        "B": "To define the stopping condition for the recursion",
+        "C": "To compute the length of the LIS for the smallest possible sub-problem",
+        "D": "To sort the input array"
+      },
+      "correctAnswer": "C",
+      "explanation": "The base case in the Dynamic Programming solution for LIS is critical as it defines the smallest possible sub-problem, typically when the subsequence has only one element, thus providing a foundation for solving larger sub-problems.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How does the optimization of the Dynamic Programming solution for LIS impact its practical applicability?",
+      "options": {
+        "A": "It makes the solution less practical",
+        "B": "It has no impact on practical applicability",
+        "C": "It makes the solution more efficient and scalable",
+        "D": "It changes the solution's correctness"
+      },
+      "correctAnswer": "C",
+      "explanation": "Optimizing the Dynamic Programming solution for LIS, such as reducing its time or space complexity, enhances its practical applicability by making it more efficient and capable of handling larger inputs within reasonable computational resources.",
+      "difficulty": "Hard"
+    }
+  ]
+}
