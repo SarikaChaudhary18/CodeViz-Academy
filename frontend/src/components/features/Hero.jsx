@@ -254,16 +254,6 @@ export default function Hero() {
         {/* HERO SECTION */}
         <header className="max-w-7xl mx-auto px-6 pt-20 pb-16 flex flex-col items-center text-center">
           
-          {/* Subtle Tag Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4 }}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-slate-900 border border-slate-800 rounded-full text-[11px] font-medium text-slate-400 shadow-inner mb-6"
-          >
-            <Sparkles size={11} className="text-indigo-400" />
-            <span>Redesigned Modern Sandbox Platform</span>
-          </motion.div>
 
           {/* Focal Heading */}
           <motion.h1
