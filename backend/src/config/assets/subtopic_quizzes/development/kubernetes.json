@@ -1,0 +1,173 @@
+{
+  "topic": "Development - Kubernetes",
+  "questions": [
+    {
+      "question": "What is the primary function of the Kubernetes control plane?",
+      "options": {
+        "A": "To manage containerized applications",
+        "B": "To provision and manage infrastructure",
+        "C": "To deploy and manage microservices",
+        "D": "To monitor and log system activities"
+      },
+      "correctAnswer": "A",
+      "explanation": "The Kubernetes control plane is responsible for the overall management and orchestration of containerized applications, including deployment, scaling, and monitoring.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the difference between a Deployment and a ReplicaSet in Kubernetes?",
+      "options": {
+        "A": "A Deployment is a ReplicaSet that can roll out updates",
+        "B": "A ReplicaSet is a Deployment that can provide self-healing",
+        "C": "A ReplicaSet is a ReplicaController that can update pods",
+        "D": "A Deployment is a DaemonSet that can manage pod networks"
+      },
+      "correctAnswer": "A",
+      "explanation": "A Deployment is a Kubernetes object that manages the rollout of new versions of an application, and is built on top of a ReplicaSet. A ReplicaSet, on the other hand, is responsible for maintaining a specified number of replicas of a pod.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Can you describe a scenario where you would use a Kubernetes StatefulSet?",
+      "options": {
+        "A": "When deploying a pod with a high number of instances",
+        "B": "When an application requires predictable node IDs or persistent storage",
+        "C": "When running a pod that needs to be scaled horizontally",
+        "D": "When migrating applications from bare-metal to cloud platforms"
+      },
+      "correctAnswer": "B",
+      "explanation": "StatefulSets are used to deploy applications that require predictable node IDs, persistent storage, or other requirements that are not met by Deployments or ReplicaSets.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "A Kubernetes cluster has 3 nodes (1 master and 2 workers). What happens when the master node fails?",
+      "options": {
+        "A": "All pod operations are unavailable until the master node is repaired",
+        "B": "The control plane is not affected, as the master node is still online",
+        "C": "Two of the three workers continue to operate as if nothing happened",
+        "D": "The control plane is replicated on the two worker nodes automatically"
+      },
+      "correctAnswer": "C",
+      "explanation": "Kubernetes clusters are designed to be highly available, and the failure of the master node does not impact the operation of the pods. Workers will continue to operate and manage pods as normal.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the purpose of a Kubernetes Service Account?",
+      "options": {
+        "A": "To authenticate pods with external services",
+        "B": "To authorize API server requests from pods",
+        "C": "To configure pod network policies",
+        "D": "To schedule pod placement on nodes"
+      },
+      "correctAnswer": "B",
+      "explanation": "A Service Account provides a namespace for Kubernetes Service Account tokens, which are used to authenticate API server requests from pods.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "A user wants to use persistent storage for a Deployed application. What should be done?",
+      "options": {
+        "A": "Add persistent storage using a Kubernetes Volume",
+        "B": "Attach a disk from the host system to the pod",
+        "C": "Use a Kubernetes Storage Class to dynamically provision storage",
+        "D": "Configure a separate Persistent Volume for each pod instance"
+      },
+      "correctAnswer": "A",
+      "explanation": "Using a Kubernetes Volume is the most common and convenient way to provide persistent storage for a Deployed application.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How can a pod in a Kubernetes cluster communicate with other pods in the same namespace?",
+      "options": {
+        "A": "By using a LoadBalancer service",
+        "B": "By using a pod's hostNetwork to expose ports",
+        "C": "By using the pod's clusterIP to reference other pods",
+        "D": "By using a Service to provide a stable IP for the pod"
+      },
+      "correctAnswer": "D",
+      "explanation": "A Service provides a stable and load-balanced IP that other pods in the same namespace can use to communicate with.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the purpose of a Kubernetes ConfigMap?",
+      "options": {
+        "A": "To configure pod environment variables and command arguments",
+        "B": "To provide application configuration to the pod",
+        "C": "To store application secrets securely",
+        "D": "To define a network policy for a pod"
+      },
+      "correctAnswer": "B",
+      "explanation": "A ConfigMap is used to provide application configuration to a pod, making it easy to customize the behavior of the container without modifying the code.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What happens when a pod is deleted, but there is an outstanding Kubernetes API request waiting for the pod to come back up?",
+      "options": {
+        "A": "The API request will time out after a few seconds",
+        "B": "The API server will wait indefinitely for the pod to restart",
+        "C": "The API request will be retried automatically",
+        "D": "The API server will return an error stating that the pod does not exist"
+      },
+      "correctAnswer": "A",
+      "explanation": "The Kubernetes API server uses a short time-out, which can be adjusted to fit the needs of the deployment, to prevent API requests from hanging indefinitely.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Can you describe a use case for a Kubernetes Horizontal Pod Autoscaler?",
+      "options": {
+        "A": "When an application's workload is variable, and it requires scale-up/scale-down functionality",
+        "B": "When a pod needs to maintain a specific number of instances",
+        "C": "When an application has high latency and requires increased network bandwidth",
+        "D": "When an application's resources are exhausted due to high CPU usage"
+      },
+      "correctAnswer": "A",
+      "explanation": "Horizontal Pod Autoscalers are used to dynamically adjust the number of replicas of a pod based on CPU load or other metrics.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the primary difference between Kubernetes Ingress and an HAProxy?",
+      "options": {
+        "A": "Ingress is an HAProxy instance on the edge, while HAProxy is a pod within a cluster",
+        "B": "Ingress provides load balancing and SSL termination, while HAProxy is a simple TCP proxy",
+        "C": "Ingress requires an external HTTP server to be installed and configured",
+        "D": "HAProxy is a stateful load balancer, while Ingress provides stateless load balancing"
+      },
+      "correctAnswer": "B",
+      "explanation": "Ingress provides load balancing and SSL termination, while HAProxy is a simple TCP proxy.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Can you describe a scenario where you would use a Kubernetes Persistent Volume Claim (PVC)?",
+      "options": {
+        "A": "When an application requires dynamic storage assignment for new pods",
+        "B": "When running a containerized application that produces large output files",
+        "C": "When migrating a stateful application from an external database to Kubernetes",
+        "D": "When the storage backend is an external NFS share"
+      },
+      "correctAnswer": "D",
+      "explanation": "A PVC is used to bind a Pod to a Persistent Volume (PV) that is managed outside the cluster.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the primary purpose of Kubernetes Init Containers?",
+      "options": {
+        "A": "To configure networking settings for the pod",
+        "B": "To initialize the environment variables for the pod",
+        "C": "To run setup commands before the main container",
+        "D": "To execute a command that depends on another container to be running"
+      },
+      "correctAnswer": "C",
+      "explanation": "Init containers are special containers that run at the beginning of a pod's lifecycle, allowing you to perform setup tasks before the main container starts.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How does a Kubernetes Cluster Autoscaler work?",
+      "options": {
+        "A": "It automatically starts new nodes when demand is high",
+        "B": "It automatically removes nodes when demand is low",
+        "C": "It automatically adjusts node sizes based on resource utilization",
+        "D": "All of the above"
+      },
+      "correctAnswer": "D",
+      "explanation": "The Cluster Autoscaler dynamically adjusts the number of nodes in a cluster based on the resource utilization, and removes nodes when the demand is low.",
+      "difficulty": "Medium"
+    }
+  ]
+}
