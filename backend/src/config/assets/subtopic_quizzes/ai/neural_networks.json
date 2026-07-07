@@ -1,0 +1,170 @@
+{
+  "topic": "AI - Neural Networks",
+  "questions": [
+    {
+      "question": "What is the primary purpose of the Sigmoid activation function in a neural network?",
+      "options": {
+        "A": "To introduce non-linearity into the model",
+        "B": "To accelerate the training process",
+        "C": "To apply feature scaling",
+        "D": "To improve generalization"
+      },
+      "correctAnswer": "A",
+      "explanation": "The Sigmoid activation function maps real-valued numbers to a range between 0 and 1, which is crucial in binary classification problems. This mapping enables the model to introduce non-linearity, allowing it to learn more complex relationships between inputs and outputs.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is backpropagation in neural networks?",
+      "options": {
+        "A": "Forward propagation is reversed through the network",
+        "B": "The weights are adjusted based on the output of each layer",
+        "C": "The input data is modified to improve performance",
+        "D": "The activation functions are fine-tuned for better generalization"
+      },
+      "correctAnswer": "A",
+      "explanation": "Backpropagation is an error minimization algorithm that uses the chain rule to calculate the gradients of the loss function with respect to each model parameter. This process updates the model weights and biases to optimize its performance.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the difference between a feedforward neural network and a recurrent neural network (RNN)?",
+      "options": {
+        "A": "An RNN has a hidden layer, while a feedforward network does not",
+        "B": "An RNN uses the output from the current time step as input to the next time step",
+        "C": "An RNN has more layers than a feedforward network",
+        "D": "An RNN is slower in training than a feedforward network"
+      },
+      "correctAnswer": "B",
+      "explanation": "In a feedforward neural network, each input is only passed through the network once, whereas in an RNN, the output from the current time step is fed back into the network as input for the next time step, allowing it to handle sequential data.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is overfitting in neural networks?",
+      "options": {
+        "A": "The model performs well on the training data but poorly on new data",
+        "B": "The model performs well on the validation data but poorly on the training data",
+        "C": "The model fails to generalize to new data due to a lack of model capacity",
+        "D": "The model performs well on multiple datasets simultaneously"
+      },
+      "correctAnswer": "C",
+      "explanation": "Overfitting occurs when a model becomes too specialized to the training data and fails to generalize to new, unseen data. This can be due to a model having too many parameters, making it more capable of fitting noise in the training data.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is batch normalization in neural networks?",
+      "options": {
+        "A": "A technique to adjust the input data before passing it to the model",
+        "B": "A technique to adjust the output data after passing it through a layer",
+        "C": "A technique to normalize the activations of neurons by scaling and shuffling",
+        "D": "A technique to apply regularization to the model"
+      },
+      "correctAnswer": "C",
+      "explanation": "Batch normalization normalizes the activations of neurons by subtracting the mean and scaling by the standard deviation for each mini-batch. This helps stabilize the training process, reduces internal covariate shift, and promotes faster learning.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the primary advantage of convolutional neural networks (CNNs)?",
+      "options": {
+        "A": "They are computationally expensive and require large amounts of data",
+        "B": "They are effective in handling sequential data and can learn complex patterns",
+        "C": "They are well-suited for handling small images and reducing data",
+        "D": "They are able to learn hierarchical feature representations from data"
+      },
+      "correctAnswer": "D",
+      "explanation": "CNNs are particularly effective in learning hierarchical feature representations from data. By learning local patterns first and gradually combining them to represent more complex features, CNNs can efficiently extract features from images and other grid-like data.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the term for the process of modifying model weights based on the input data during backpropagation?",
+      "options": {
+        "A": "Forward pass",
+        "B": "Backpropagation",
+        "C": "Stochastic gradient descent",
+        "D": "Weight adjustment"
+      },
+      "correctAnswer": "D",
+      "explanation": "During backpropagation, model weights are adjusted according to the input data to minimize the loss function. This is an essential component of the training process.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the advantage of using a neural network with more hidden layers?",
+      "options": {
+        "A": "It can learn complex relationships between inputs",
+        "B": "It can reduce the effect of overfitting",
+        "C": "It can generalize well to new data",
+        "D": "It can train faster than a model with fewer hidden layers"
+      },
+      "correctAnswer": "A",
+      "explanation": "A neural network with more hidden layers can learn complex relationships between inputs by combining the outputs of previous layers to produce a more accurate representation of the input data.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the primary difference between perceptron and multilayer perceptron networks?",
+      "options": {
+        "A": "The number of hidden layers",
+        "B": "The activation function used",
+        "C": "The number of nodes",
+        "D": "The ability to learn non-linear relationships"
+      },
+      "correctAnswer": "D",
+      "explanation": "The primary difference between a perceptron and a multilayer perceptron is that a perceptron can only learn linearly separable relationships, whereas a multilayer perceptron can learn complex, non-linear relationships.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the term for a neural network that learns to perform a specific task through trial and error?",
+      "options": {
+        "A": "Reinforcement learning",
+        "B": "Supervised learning",
+        "C": "Unsupervised learning",
+        "D": "Deep learning"
+      },
+      "correctAnswer": "A",
+      "explanation": "Reinforcement learning involves a neural network learning to make decisions by receiving feedback in the form of rewards or penalties.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What are the major issues that arise when using a deep neural network for object recognition?",
+      "options": {
+        "A": "Overfitting and vanishing gradients",
+        "B": "Overfitting and exploding gradients",
+        "C": "Computational complexity and training speed",
+        "D": "Generalization and data efficiency"
+      },
+      "correctAnswer": "B",
+      "explanation": "Deep neural networks can suffer from exploding gradients, which hinder effective training. This is because the gradients of the loss function with respect to the model parameters tend to increase exponentially as the network becomes deeper.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the role of the Adam optimizer in training a neural network?",
+      "options": {
+        "A": "To reduce the value of the learning rate",
+        "B": "To adaptively adjust the learning rate",
+        "C": "To improve the network's ability to generalize",
+        "D": "To decrease the impact of overfitting"
+      },
+      "correctAnswer": "B",
+      "explanation": "The Adam optimizer calculates the learning rate for each parameter based on the gradient and the second moment of the gradient. This makes it more efficient than traditional optimizers like SGD in terms of convergence speed and stability.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the purpose of using data augmentation techniques in neural networks?",
+      "options": {
+        "A": "To reduce overfitting by increasing the model capacity",
+        "B": "To improve the model's ability to generalize to new datasets",
+        "C": "To speed up training of the model by increasing the batch size",
+        "D": "To improve the model's understanding of image data"
+      },
+      "correctAnswer": "B",
+      "explanation": "Data augmentation is a technique used to artificially increase the size of a dataset, enabling the model to learn more robust feature representations and generalize better to unseen data.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Why is it challenging to train very deep neural networks?",
+      "options": {
+        "A": "Due to the vanishing gradient problem",
+        "B": "Due to the exploding gradient problem",
+        "C": "Due to the lack of representational power",
+        "D": "Due to the difficulty of backpropagation"
+      }
+    }
+  ]
+}
