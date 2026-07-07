@@ -1,0 +1,146 @@
+{
+  "topic": "Trees - Trie",
+  "questions": [
+    {
+      "question": "What is a Trie?",
+      "options": {
+        "A": "A data structure that organizes a set of strings in a way that allows for efficient retrieval of all strings that match a given prefix.",
+        "B": "A type of tree data structure that stores only strings of equal length.",
+        "C": "A hash table that stores strings as keys.",
+        "D": "A recursive data structure that stores a set of strings in a tree-like structure."
+      },
+      "correctAnswer": "A",
+      "explanation": "Tries are data structures that store a set of strings in a way that allows for efficient retrieval of all strings that match a given prefix.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the advantage of using a Trie over a hash table for storing a set of strings?",
+      "options": {
+        "A": "Tries are faster for insertions but slower for lookups.",
+        "B": "Hash tables are faster for lookups but slower for insertions.",
+        "C": "Tries allow for efficient retrieval of all strings that match a given prefix.",
+        "D": "Tries require more memory than hash tables."
+      },
+      "correctAnswer": "C",
+      "explanation": "The key advantage of using a Trie over a hash table is that it allows for efficient retrieval of all strings that match a given prefix, making it ideal for autocompletion and other prefix matching applications.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "A string is inserted into a Trie. What happens to the nodes in the Trie that are used to store the string?",
+      "options": {
+        "A": "The nodes are removed from the Trie.",
+        "B": "The nodes are not removed from the Trie.",
+        "C": "The nodes are replaced with a new node.",
+        "D": "The nodes are set to a null or undefined state."
+      },
+      "correctAnswer": "B",
+      "explanation": "When a string is inserted into a Trie, the nodes that are used to store the string are not removed from the Trie, but rather marked as active or visited to differentiate them from non-active nodes.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How do you determine the height of a Trie?",
+      "options": {
+        "A": "By counting the number of nodes in the Trie.",
+        "B": "By counting the number of edges in the Trie.",
+        "C": "By counting the maximum number of nodes at any given level of the Trie.",
+        "D": "By counting the maximum depth of the Trie."
+      },
+      "correctAnswer": "D",
+      "explanation": "The height of a Trie is determined by counting the maximum depth of the Trie, which is equivalent to the highest level of the Trie with at least one node.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "You are given a Trie data structure and a string. Can you write an algorithm to find if the string exists in the Trie?",
+      "options": {
+        "A": "Yes, you can use a recursive algorithm to traverse the Trie and check if the string exists.",
+        "B": "No, you cannot find the string in the Trie without traversing it.",
+        "C": "Yes, you can use a stack-based algorithm to traverse the Trie and check if the string exists.",
+        "D": "Yes, you can use a breadth-first algorithm to traverse the Trie and check if the string exists."
+      },
+      "correctAnswer": "A",
+      "explanation": "Yes, you can write an algorithm to find if the string exists in the Trie by using a recursive algorithm to traverse the Trie and check if the string exists.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the time complexity of searching for a string in a Trie?",
+      "options": {
+        "A": "O(n), where n is the number of nodes in the Trie.",
+        "B": "O(m), where m is the length of the string.",
+        "C": "O(n + m), where n is the number of nodes in the Trie and m is the length of the string.",
+        "D": "O(log n)"
+      },
+      "correctAnswer": "B",
+      "explanation": "The time complexity of searching for a string in a Trie is O(m), where m is the length of the string, because for each character in the string, you need to traverse the Trie and check if it exists, which takes constant time.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the difference between a Trie and a prefix tree?",
+      "options": {
+        "A": "A Trie is a data structure that only stores strings, while a prefix tree is a data structure that can store other types of data.",
+        "B": "A Trie is a data structure that only stores strings of length 1, while a prefix tree can store strings of any length.",
+        "C": "A Trie and a prefix tree are the same data structure.",
+        "D": "There is no difference between a Trie and a prefix tree."
+      },
+      "correctAnswer": "C",
+      "explanation": "A Trie and a prefix tree are the same data structure, as both data structures organize a set of strings in a way that allows for efficient retrieval of all strings that match a given prefix.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "You are given a Trie data structure and a string. Can you write an algorithm to find all strings in the Trie that start with the given string?",
+      "options": {
+        "A": "Yes, you can use a depth-first search algorithm to traverse the Trie and find all strings that start with the given string.",
+        "B": "No, you cannot find all strings in the Trie that start with the given string without traversing the Trie.",
+        "C": "Yes, you can use a breadth-first search algorithm to traverse the Trie and find all strings that start with the given string.",
+        "D": "Yes, you can use a recursive algorithm to traverse the Trie and find all strings that start with the given string."
+      },
+      "correctAnswer": "A",
+      "explanation": "Yes, you can write an algorithm to find all strings in the Trie that start with the given string by using a depth-first search algorithm to traverse the Trie and check for the given string.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the time complexity of inserting a string into a Trie?",
+      "options": {
+        "A": "O(n), where n is the number of nodes in the Trie.",
+        "B": "O(m), where m is the length of the string.",
+        "C": "O(n + m), where n is the number of nodes in the Trie and m is the length of the string.",
+        "D": "O(log n)"
+      },
+      "correctAnswer": "C",
+      "explanation": "The time complexity of inserting a string into a Trie is O(n + m), where n is the number of nodes in the Trie and m is the length of the string, because you need to traverse the Trie to find the existing nodes and update the existing nodes.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Can a Trie store non-string data, such as integers or dates?",
+      "options": {
+        "A": "Yes, a Trie can store non-string data, such as integers or dates.",
+        "B": "No, a Trie is specifically designed to store strings only.",
+        "C": "Yes, but it depends on the implementation of the Trie.",
+        "D": "There is no consensus on whether a Trie can store non-string data or not."
+      },
+      "correctAnswer": "C",
+      "explanation": "Whether a Trie can store non-string data, such as integers or dates, depends on the implementation of the Trie. Some implementations might allow storing non-string data, while others restrict it to strings only.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "How do you balance the memory usage of a Trie with its search performance?",
+      "options": {
+        "A": "By reducing the memory usage of the Trie, you can improve its search performance.",
+        "B": "By increasing the memory usage of the Trie, you can improve its search performance.",
+        "C": "There is no direct relationship between the memory usage of a Trie and its search performance.",
+        "D": "It depends on the specific requirements of the application."
+      },
+      "correctAnswer": "D",
+      "explanation": "The relationship between the memory usage of a Trie and its search performance is not straightforward. The memory usage of a Trie is affected by factors like the number of nodes, the size of the nodes, and the compression algorithm used, whereas the search performance is affected by factors like the search algorithm and the number of edges.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Can a Trie be used as an index for a relational database?",
+      "options": {
+        "A": "Yes, a Trie can be used as an index for a relational database.",
+        "B": "No, a Trie is not suitable for indexing in a relational database.",
+        "C": "It depends on the specific relational database system being used.",
+        "D": "Yes, but it requires significant modifications to the database system."
+      }
+    }
+  ]
+}
