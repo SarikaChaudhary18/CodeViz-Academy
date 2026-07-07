@@ -1,0 +1,149 @@
+{
+  "topic": "Bit Manipulation - Bit Tricks",
+  "questions": [
+    {
+      "question": "What is the decimal value of the binary number 1011?",
+      "options": {
+        "A": "Decimal value of binary 1011",
+        "B": "Decimal value 11",
+        "C": "Decimal value 12",
+        "D": "Decimal value 13"
+      },
+      "correctAnswer": "A",
+      "explanation": "In binary, each digit can represent a power of 2. So, 1*8 + 0*4 + 1*2 + 1*1 = 11. Therefore, the decimal value of binary 1011 is 11.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following bit shifts left and right operations can be represented using only bitwise shift operators?",
+      "options": {
+        "A": "Shift left and right operators",
+        "B": "Only shift left operator",
+        "C": "Only shift right operator",
+        "D": "Neither shift left nor right operator"
+      },
+      "correctAnswer": "A",
+      "explanation": "Shift left and right operations can be performed using only bitwise shift operators. In C++ or Java, you can perform these operations using << (left shift) and >> (right shift).",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How can we check if a given number is even or odd using bitwise operations?",
+      "options": {
+        "A": "Check the last bit in binary representation",
+        "B": "Check the first bit in binary representation",
+        "C": "Use bitwise AND operation with 1",
+        "D": "Use bitwise XOR operation with 1"
+      },
+      "correctAnswer": "A",
+      "explanation": "A number is even if the least significant bit (LSB) is 0 and odd if the LSB is 1. We can achieve this using a bitwise check by looking at the last bit in the binary representation.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the output of the expression a & 7?",
+      "options": {
+        "A": "0 if a is odd otherwise 1",
+        "B": "7 if a is odd otherwise 0",
+        "C": "Result of bitwise AND operation between a and 7",
+        "D": "None of the above"
+      },
+      "correctAnswer": "C",
+      "explanation": "Bitwise AND operator (&) compares two binary numbers and returns the ones that are present in both. In this case, &7 will perform the AND operation between the binary representation of a and 7.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Which property of bitwise addition does NOT hold for bitwise substraction?",
+      "options": {
+        "A": "Associative",
+        "B": "Distributive",
+        "C": "Commutative",
+        "D": "Identity"
+      },
+      "correctAnswer": "B",
+      "explanation": "In bitwise subtraction, the distributive property does NOT hold. Bitwise addition allows us to break up the addition of two binary numbers into separate additions. This is not the case with bitwise substraction. In substraction, each bit is compared. This is a case where the distributive property does not apply, as subtraction has different effects for each different bit in the numbers.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the result of the expression 3 & 4?",
+      "options": {
+        "A": "0",
+        "B": "3",
+        "C": "4",
+        "D": "7"
+      },
+      "correctAnswer": "D",
+      "explanation": "We can get the result using the binary representation of 3 and 4 and perform the AND operation, where each bit is compared.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How can you find the largest power of 2 less than the given number using bitwise operation?",
+      "options": {
+        "A": "Shift bit to right and subtract 1",
+        "B": "Shift the bit to left and subtract",
+        "C": "Perform bitwise AND operation with the number and the result of shift operation of 1 by the number of 1s in the binary number",
+        "D": "Subtract 1 from the number and shift right"
+      },
+      "correctAnswer": "A",
+      "explanation": "In order to find the largest power of 2 less than the number using bitwise operation, we can subtract 1 from the number. This will flip all the bits and set the highest order bit, because flipping an integer turns off all the bits to the right of the highest 1, because of how they are stored. Then we shift the binary representation of the number to the right, and that will give us the largest power of 2. If we shift one position right, we have shifted all powers in a position higher, so to find the highest power of 2, we subtract 1 and then perform the shift to the right. ",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the output of a << 2 if a is 12?",
+      "options": {
+        "A": "0",
+        "B": "24",
+        "C": "-6",
+        "D": "Not enough information"
+      },
+      "correctAnswer": "B",
+      "explanation": "To shift a binary number to the left, the bit on the end shifts in with a 0, adding a place for more digits. Therefore, shifting a 12 to the left by 2 places is equivalent to multiplying by two squared. Two squared is 4, so shifting 12 by 2 places to the left is 12 x 4 = 48.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the decimal value of the octal number 17?",
+      "options": {
+        "A": "13",
+        "B": "10",
+        "C": "14",
+        "D": "15"
+      },
+      "correctAnswer": "C",
+      "explanation": "In octal, each digit can represent a power of 8. 1*8 + 7*1 = 15.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is a bitwise XOR operation?",
+      "options": {
+        "A": "Compare two bits and return 0 if they match, 1 if they don't match",
+        "B": "Compare two bits and return 1 if they match, 0 if they don't match",
+        "C": "Compare the value of two bits and return the value where they are different",
+        "D": "Neither  A, B nor C"
+      },
+      "correctAnswer": "D",
+      "explanation": "We need to compare the values as well as the location of the binary numbers. So if a number is 7 (111 in binary) and the other number is 5 (101 in binary) the output will be 111 XOR 101 which will be 110 (6 for the decimal). The first bit at the far left is 1, because the first number is 7, but the second one has a 0. So the output is where the first number is 1 and the second is a 0, and also where the second number is a 1, and the first is a 0. Hence we get 110 in binary. 110 is 6 in decimal",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Can you explain what happens when you multiply two numbers, using only bitwise shift and addition?",
+      "options": {
+        "A": "You perform the multiplication by adding the number shifted by its position to the total",
+        "B": "You add the number to the result shifted by its position, to the total",
+        "C": "You multiply the two results of the two bitwise shift, by shifting the first number and then add the result after that, but after shifting the first number",
+        "D": "None of the above"
+      },
+      "correctAnswer": "A",
+      "explanation": "Here's how to multiply two numbers using bitwise shift and addition. Multiplying is the same as adding the first number, shifted by its position. This is why multiplication can be seen as an efficient way of shifting. For example, if you want to multiply two numbers, it's faster to shift and add, than it would be to perform the multiplication as is",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Can you perform the division of 8 divided by 2?",
+      "options": {
+        "A": "4",
+        "B": "8",
+        "C": "16",
+        "D": "Shift the number to the right and subtract the divisor till we get to zero"
+      },
+      "correctAnswer": "D",
+      "explanation": "Performing division with a divisor of 2 can be represented as shifting the bits of the number one position to the right. Since 8 divided by 2 is 4, which can be represented as 101 shifted one bit right. Thus, 8 divided by 2 is 4.",
+      "difficulty": "Hard"
+    }
+  ]
+}
