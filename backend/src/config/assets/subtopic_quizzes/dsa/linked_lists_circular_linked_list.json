@@ -1,0 +1,161 @@
+{
+  "topic": "Linked Lists - Circular Linked List",
+  "questions": [
+    {
+      "question": "What is a Circular Linked List?",
+      "options": {
+        "A": "A type of doubly-linked list where the last node points back to the first node",
+        "B": "A type of singly-linked list with no head node",
+        "C": "A type of doubly-linked list with only forward links",
+        "D": "A type of singly-linked list with a fixed size"
+      },
+      "correctAnswer": "A",
+      "explanation": "A Circular Linked List is a type of data structure where the last node points back to the first node, forming a circular loop.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the main advantage of a Circular Linked List?",
+      "options": {
+        "A": "It allows fast insertion and deletion of nodes at any position",
+        "B": "It conserves memory by not allocating space for the head node",
+        "C": "It simplifies the implementation of traversal and searching algorithms",
+        "D": "It improves the performance of sorting and merging operations"
+      },
+      "correctAnswer": "C",
+      "explanation": "The main advantage of a Circular Linked List is that it simplifies the implementation of traversal and searching algorithms, as the last node always points to the first node.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the time complexity of traversing a Circular Linked List?",
+      "options": {
+        "A": "O(n), where n is the number of nodes",
+        "B": "O(log n), where n is the number of nodes",
+        "C": "O(1), since the last node always points to the first node",
+        "D": "O(n^2), where n is the number of nodes"
+      },
+      "correctAnswer": "A",
+      "explanation": "The time complexity of traversing a Circular Linked List is O(n), where n is the number of nodes, since we need to visit each node once.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the space complexity of a Circular Linked List?",
+      "options": {
+        "A": "O(n), where n is the number of nodes",
+        "B": "O(log n), where n is the number of nodes",
+        "C": "O(1), since we only need to store the last node",
+        "D": "O(n^2), where n is the number of nodes"
+      },
+      "correctAnswer": "A",
+      "explanation": "The space complexity of a Circular Linked List is O(n), where n is the number of nodes, since we need to store each node and its link to the next node.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How do you implement the remove operation in a Circular Linked List?",
+      "options": {
+        "A": "By simply deleting the node at the specified position and updating the links of the adjacent nodes",
+        "B": "By first traversing the list to find the node to remove and then deleting it",
+        "C": "By keeping track of the current node and removing it after traversal",
+        "D": "By using a doubly-linked list implementation"
+      },
+      "correctAnswer": "A",
+      "explanation": "To implement the remove operation in a Circular Linked List, you delete the node at the specified position and update the links of the adjacent nodes.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How do you detect a cycle in a Circular Linked List?",
+      "options": {
+        "A": "By using Floyd's Cycle Detection algorithm, which uses two pointers that move at different speeds",
+        "B": "By simply traversing the list to find the node where the cycle begins",
+        "C": "By keeping track of the visited nodes to detect the cycle",
+        "D": "By using a doubly-linked list implementation"
+      },
+      "correctAnswer": "A",
+      "explanation": "You can detect a cycle in a Circular Linked List using Floyd's Cycle Detection algorithm, which uses two pointers that move at different speeds.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the time complexity of detecting a cycle in a Circular Linked List?",
+      "options": {
+        "A": "O(n), where n is the number of nodes",
+        "B": "O(n^2), where n is the number of nodes",
+        "C": "O(1), since we only need to traverse the list once",
+        "D": "O(log n), where n is the number of nodes"
+      },
+      "correctAnswer": "A",
+      "explanation": "The time complexity of detecting a cycle in a Circular Linked List is O(n), where n is the number of nodes, since we need to traverse the list once to detect the cycle.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How do you implement the merge operation in a Circular Linked List?",
+      "options": {
+        "A": "By merging the two lists into a new list and updating the links of the adjacent nodes",
+        "B": "By simply concatenating the two lists",
+        "C": "By keeping track of the current node and merging the lists after traversal",
+        "D": "By using a doubly-linked list implementation"
+      },
+      "correctAnswer": "A",
+      "explanation": "To implement the merge operation in a Circular Linked List, you merge the two lists into a new list and update the links of the adjacent nodes.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the space complexity of the merge operation in a Circular Linked List?",
+      "options": {
+        "A": "O(n + m), where n and m are the number of nodes in the two lists",
+        "B": "O(max(n, m)), where n and m are the number of nodes in the two lists",
+        "C": "O(min(n, m)), where n and m are the number of nodes in the two lists",
+        "D": "O(n^2), where n is the number of nodes"
+      },
+      "correctAnswer": "A",
+      "explanation": "The space complexity of the merge operation in a Circular Linked List is O(n + m), where n and m are the number of nodes in the two lists, since we need to create a new list to store the merged nodes.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How do you implement the insert operation at the beginning of a Circular Linked List?",
+      "options": {
+        "A": "By creating a new node and updating the links of the adjacent nodes",
+        "B": "By simply traversing the list to find the node before the insertion point and updating the links",
+        "C": "By keeping track of the current node and inserting the new node after traversal",
+        "D": "By using a doubly-linked list implementation"
+      },
+      "correctAnswer": "A",
+      "explanation": "To implement the insert operation at the beginning of a Circular Linked List, you create a new node and update the links of the adjacent nodes.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the time complexity of inserting a node at the beginning of a Circular Linked List?",
+      "options": {
+        "A": "O(1), since we only need to update the links of the adjacent nodes",
+        "B": "O(n), where n is the number of nodes",
+        "C": "O(log n), where n is the number of nodes",
+        "D": "O(n^2), where n is the number of nodes"
+      },
+      "correctAnswer": "A",
+      "explanation": "The time complexity of inserting a node at the beginning of a Circular Linked List is O(1), since we only need to update the links of the adjacent nodes.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How do you implement the delete operation for a node at the beginning of a Circular Linked List?",
+      "options": {
+        "A": "By updating the last node to point to the new first node",
+        "B": "By simply removing the node at the beginning and updating the links of the adjacent nodes",
+        "C": "By keeping track of the current node and deleting the node after traversal",
+        "D": "By using a doubly-linked list implementation"
+      },
+      "correctAnswer": "A",
+      "explanation": "To implement the delete operation for a node at the beginning of a Circular Linked List, you update the last node to point to the new first node.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the time complexity of deleting a node at the beginning of a Circular Linked List?",
+      "options": {
+        "A": "O(1), since we only need to update the last node",
+        "B": "O(n), where n is the number of nodes",
+        "C": "O(log n), where n is the number of nodes",
+        "D": "O(n^2), where n is the number of nodes"
+      },
+      "correctAnswer": "A",
+      "explanation": "The time complexity of deleting a node at the beginning of a Circular Linked List is O(1), since we only need to update the last node.",
+      "difficulty": "Medium"
+    }
+  ]
+}
