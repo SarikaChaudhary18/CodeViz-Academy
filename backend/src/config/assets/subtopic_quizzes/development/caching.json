@@ -1,0 +1,185 @@
+{
+  "topic": "Development - Caching",
+  "questions": [
+    {
+      "question": "What is the main purpose of caching in software development?",
+      "options": {
+        "A": "To store sensitive user data",
+        "B": "To reduce the load on servers and improve application performance",
+        "C": "To handle authentication and authorization",
+        "D": "To implement business logic"
+      },
+      "correctAnswer": "B",
+      "explanation": "Caching helps store frequently accessed data in a temporary storage area, called a cache, which reduces the load on servers and improves the overall performance of the application. This allows for faster data retrieval and improved user experience.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following is an example of a cache hit?",
+      "options": {
+        "A": "A request for data that is not present in the cache",
+        "B": "A request for data that is present in the cache",
+        "C": "A request for data that requires additional processing",
+        "D": "A request for data that triggers a database query"
+      },
+      "correctAnswer": "B",
+      "explanation": "A cache hit occurs when a request for data is fulfilled from the cache, rather than from the original data source. This reduces the load on the server and improves performance.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the difference between cache expiration and cache invalidation?",
+      "options": {
+        "A": "Cache expiration is the process of setting a time limit for cache data, while cache invalidation is the process of removing cache data when it becomes outdated.",
+        "B": "Cache expiration is the process of automatically removing cache data when it becomes outdated, while cache invalidation is the process of manually removing cache data",
+        "C": "Cache expiration is the process of setting a time limit for cache data, while cache invalidation is the process of manually removing cache data.",
+        "D": "Cache expiration is the process of manually removing cache data, while cache invalidation is the process of automatically removing cache data when it becomes outdated."
+      },
+      "correctAnswer": "A",
+      "explanation": "Cache expiration refers to the automatic removal of cache data after a set time limit has expired, whereas cache invalidation refers to the manual removal of cache data when it becomes outdated or incorrect.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the purpose of cache keys?",
+      "options": {
+        "A": "To store cache data",
+        "B": "To retrieve cache data",
+        "C": "To identify cache data",
+        "D": "To cache metadata"
+      },
+      "correctAnswer": "C",
+      "explanation": "Cache keys are used to identify and manage cache data. They serve as a unique identifier for each piece of cached data, allowing the cache to determine whether the data has expired or become outdated.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following caching strategies is best suited for real-time data?",
+      "options": {
+        "A": "Time-to-Live (TTL) caching",
+        "B": "Cache-Aside pattern",
+        "C": "Write-Through caching",
+        "D": "Eventual Consistency caching"
+      },
+      "correctAnswer": "C",
+      "explanation": "Write-Through caching is the most robust caching strategy for real-time data, as it ensures that data written to the cache is immediately written to the original data source, maintaining data consistency.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the main advantage of using an in-memory cache?",
+      "options": {
+        "A": "Improved disk storage",
+        "B": "Reduced data transfer",
+        "C": "Faster data access",
+        "D": "Increased data security"
+      },
+      "correctAnswer": "C",
+      "explanation": "In-memory caching stores data in the RAM, reducing the need to access slower disk storage. This allows for faster data access and improved application performance.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Which of the following patterns uses a cache to decouple the cache layer from the data layer?",
+      "options": {
+        "A": "Cache-Aside pattern",
+        "B": "Read-Through pattern",
+        "C": "Write-Through pattern",
+        "D": "Cache-Write pattern"
+      },
+      "correctAnswer": "A",
+      "explanation": "The Cache-Aside pattern uses a cache to decouple the cache layer from the data layer, allowing the cache to operate independently and reducing the complexity of data access.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the purpose of cache clustering?",
+      "options": {
+        "A": "To increase cache memory",
+        "B": "To distribute cache load",
+        "C": "To replicate cache data",
+        "D": "To implement cache security"
+      },
+      "correctAnswer": "B",
+      "explanation": "Cache clustering is a technique used to distribute the cache load across multiple nodes, improving cache availability and reducing the load on individual nodes.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Which of the following caching techniques uses a cache to store a copy of the entire data structure?",
+      "options": {
+        "A": "Data Duplication caching",
+        "B": "Data Replication caching",
+        "C": "Data Cloning caching",
+        "D": "Data Mirroring caching"
+      },
+      "correctAnswer": "B",
+      "explanation": "Data Replication caching involves storing a copy of the entire data structure in the cache, which improves cache performance by reducing the number of cache misses.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the main advantage of using a hybrid caching approach?",
+      "options": {
+        "A": "Improved cache hit ratio",
+        "B": "Reduced cache memory",
+        "C": "Increased cache performance",
+        "D": "Improved data security"
+      },
+      "correctAnswer": "C",
+      "explanation": "Hybrid caching combines multiple caching techniques to achieve improved performance by exploiting the strengths of each approach. This allows for faster data retrieval and improved overall performance.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Which of the following caching algorithms is best suited for applications with high memory constraints?",
+      "options": {
+        "A": "Least Frequently Used (LFU) caching",
+        "B": "Least Recently Used (LRU) caching",
+        "C": "Most Frequently Used (MFU) caching",
+        "D": "Most Recently Used (MRU) caching"
+      },
+      "correctAnswer": "A",
+      "explanation": "LFU caching algorithm is best suited for applications with high memory constraints, as it removes the least frequently used data first, minimizing memory usage.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the purpose of cache invalidation in a distributed caching system?",
+      "options": {
+        "A": "To maintain cache coherence",
+        "B": "To improve cache hit ratio",
+        "C": "To increase cache memory",
+        "D": "To reduce cache latency"
+      },
+      "correctAnswer": "A",
+      "explanation": "Cache invalidation in a distributed caching system is used to maintain cache coherence across multiple nodes. This ensures that each node's cache is up-to-date with the latest data, even after changes have been made.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Which of the following caching patterns uses a cache to store a copy of the entire data structure and provides strong consistency guarantees?",
+      "options": {
+        "A": "Read-Through pattern",
+        "B": "Write-Through pattern",
+        "C": "Cache-Aside pattern",
+        "D": "Eventual Consistency caching"
+      },
+      "correctAnswer": "B",
+      "explanation": "The Write-Through pattern uses a cache to store a copy of the entire data structure and provides strong consistency guarantees by writing data to the cache and the original data source simultaneously.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the main advantage of using a caching service?",
+      "options": {
+        "A": "Improved scalability",
+        "B": "Reduced maintenance",
+        "C": "Faster data access",
+        "D": "Increased data security"
+      },
+      "correctAnswer": "C",
+      "explanation": "A caching service allows for faster data access by storing frequently accessed data in a temporary storage area, called a cache. This reduces the load on the underlying data storage and improves overall application performance.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following caching algorithms is best suited for applications with low memory constraints?",
+      "options": {
+        "A": "LFU caching",
+        "B": "LRU caching",
+        "C": "MFU caching",
+        "D": "MRU caching"
+      },
+      "correctAnswer": "D",
+      "explanation": "MRU caching algorithm is best suited for applications with low memory constraints, as it removes the most recently used data first, maximizing memory usage.",
+      "difficulty": "Hard"
+    }
+  ]
+}
