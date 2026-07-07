@@ -1,0 +1,173 @@
+{
+  "topic": "Trees - AVL Tree",
+  "questions": [
+    {
+      "question": "What is the primary purpose of an AVL tree?",
+      "options": {
+        "A": "To store a sorted list of elements",
+        "B": "To provide a time-efficient way to search, insert, and delete elements",
+        "C": "To balance the height of the tree after insertion or deletion",
+        "D": "To minimize memory usage in the tree"
+      },
+      "correctAnswer": "C",
+      "explanation": "The primary purpose of an AVL tree is to maintain the balance between the height of the left and right subtrees. This balance is crucial for efficient search, insert, and delete operations. AVL trees use rotations to rebalance the tree when necessary.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What happens when the balance factor of a node becomes -2 or 2?",
+      "options": {
+        "A": "The tree becomes unbalanced and search, insert, and delete operations slow down significantly",
+        "B": "The tree automatically adjusts its height to ensure balance",
+        "C": "A rotation is performed to balance the tree",
+        "D": "None of the above"
+      },
+      "correctAnswer": "C",
+      "explanation": "When the balance factor of a node becomes -2 or 2, a rotation is performed to balance the tree. This prevents the tree from becoming severely unbalanced, which would lead to poor performance during search, insert, and delete operations.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Can an AVL tree be empty?",
+      "options": {
+        "A": "Yes, an AVL tree can be empty",
+        "B": "No, an AVL tree must contain at least one node",
+        "C": "It depends on the specific implementation",
+        "D": "Only if it is a multi-threaded application"
+      },
+      "correctAnswer": "A",
+      "explanation": "Yes, an AVL tree can be empty. The empty tree is a valid AVL tree, although it may seem counterintuitive.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following operations affects the height of an AVL tree?",
+      "options": {
+        "A": "Search operation",
+        "B": "Insert operation",
+        "C": "Delete operation",
+        "D": "Update operation"
+      },
+      "correctAnswer": "B",
+      "explanation": "The insert operation is the one that affects the height of an AVL tree. If the inserted node increases the height of the tree beyond what is allowed by the AVL tree property, rotations may be necessary to balance the tree.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What does the 'AVL' in AVL tree mean?",
+      "options": {
+        "A": "Algorithmic Verification and Languages",
+        "B": "Associative Vocabularies Linked",
+        "C": "Adelson-Velskii and Landis",
+        "D": "Arbitrary Values Linked"
+      },
+      "correctAnswer": "C",
+      "explanation": "The 'AVL' in AVL tree stands for Adelson-Velskii and Landis, which are the inventors of this data structure.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Can an AVL tree be self-balancing?",
+      "options": {
+        "A": "Yes, an AVL tree can be self-balancing",
+        "B": "No, an AVL tree cannot be self-balancing",
+        "C": "It depends on the implementation",
+        "D": "Only if it is a static tree"
+      },
+      "correctAnswer": "A",
+      "explanation": "Yes, an AVL tree can be self-balancing. This means that it can automatically adjust its height to maintain the AVL tree property, ensuring efficient search, insert, and delete operations.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the maximum number of nodes in an AVL tree of height h?",
+      "options": {
+        "A": "2^h",
+        "B": "(h+1)(h+1)",
+        "C": "h*h",
+        "D": "2^(h+1) - 1"
+      },
+      "correctAnswer": "D",
+      "explanation": "The maximum number of nodes in an AVL tree of height h is given by the formula 2^(h+1)-1. This formula gives us the maximum possible number of nodes in a balanced AVL tree.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How does the balance factor of a node affect the rotation of the tree?",
+      "options": {
+        "A": "A balance factor of -1 requires a left rotation",
+        "B": "A balance factor of 1 requires a right rotation",
+        "C": "A balance factor of greater than 1 requires a right rotation",
+        "D": "A balance factor of greater than 0 requires a right rotation"
+      },
+      "correctAnswer": "C",
+      "explanation": "The balance factor affects the rotation of the tree in the following way: a balance factor greater than 1 requires a right rotation, while a balance factor greater than -1 requires a left rotation. This maintains the balance of the tree and ensures efficient search, insert, and delete operations.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Can an AVL tree have multiple left or right children at the same level?",
+      "options": {
+        "A": "Yes, an AVL tree can have multiple left or right children at the same level",
+        "B": "No, an AVL tree cannot have multiple left or right children at the same level",
+        "C": "It depends on the implementation",
+        "D": "Only if the tree is a degenerate case"
+      },
+      "correctAnswer": "B",
+      "explanation": "No, an AVL tree cannot have multiple left or right children at the same level. According to the AVL tree property, each node must have a balance factor of -1, 0, or 1. This prevents multiple nodes at the same level from having the same child.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the time complexity of the search operation in an AVL tree?",
+      "options": {
+        "A": "O(1)",
+        "B": "O(n)",
+        "C": "O(log n)",
+        "D": "O(n^2)"
+      },
+      "correctAnswer": "C",
+      "explanation": "The search operation in an AVL tree has a time complexity of O(log n). This is because the tree is self-balancing, with each node having a constant balance factor, ensuring efficient search operations.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Can an AVL tree be used for a database?",
+      "options": {
+        "A": "Yes, an AVL tree can be used for a database",
+        "B": "No, an AVL tree cannot be used for a database",
+        "C": "It depends on the size of the database",
+        "D": "Only if the database is static"
+      },
+      "correctAnswer": "A",
+      "explanation": "Yes, an AVL tree can be used for a database. This is because AVL trees provide efficient search, insert, and delete operations, which are essential for a database that requires dynamic updates.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the space complexity of an AVL tree?",
+      "options": {
+        "A": "O(1)",
+        "B": "O(n)",
+        "C": "O(log n)",
+        "D": "O(n^2)"
+      },
+      "correctAnswer": "C",
+      "explanation": "The space complexity of an AVL tree is O(log n). This is because the tree's height can be up to log n, which represents the maximum number of nodes.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Can an AVL tree be used for a priority queue?",
+      "options": {
+        "A": "Yes, an AVL tree can be used for a priority queue",
+        "B": "No, an AVL tree cannot be used for a priority queue",
+        "C": "It depends on the implementation",
+        "D": "Only if the priority queue is static"
+      },
+      "correctAnswer": "A",
+      "explanation": "Yes, an AVL tree can be used for a priority queue. This is because the tree's self-balancing property ensures that the node with the highest priority is always at the root, allowing for efficient retrieval of the highest priority element.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How does the height of an AVL tree affect its search time?",
+      "options": {
+        "A": "A higher height results in faster search times",
+        "B": "A higher height results in slower search times",
+        "C": "The height has no effect on search time",
+        "D": "It depends on the size of the tree"
+      },
+      "correctAnswer": "B",
+      "explanation": "A higher height in an AVL tree results in slower search times. This is because the tree becomes increasingly unbalanced as its height increases, which affects the search time.",
+      "difficulty": "Medium"
+    }
+  ]
+}
