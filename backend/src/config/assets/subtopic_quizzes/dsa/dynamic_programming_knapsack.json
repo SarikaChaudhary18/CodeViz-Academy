@@ -1,0 +1,302 @@
+{
+  "topic": "Dynamic Programming - Knapsack",
+  "questions": [
+    {
+      "question": "What is the primary goal of the 0/1 Knapsack problem?",
+      "options": {
+        "A": "To find the minimum weight that can be put in a knapsack",
+        "B": "To find the maximum value that can be put in a knapsack without exceeding its weight capacity",
+        "C": "To find the minimum value that can be put in a knapsack without exceeding its weight capacity",
+        "D": "To find the average weight that can be put in a knapsack"
+      },
+      "correctAnswer": "B",
+      "explanation": "The 0/1 Knapsack problem is a classic problem in dynamic programming where the goal is to determine the number of each item to include in a collection so as to maximize the total value while not exceeding the knapsack's weight capacity.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following statements about Dynamic Programming is true?",
+      "options": {
+        "A": "It is a method for solving problems by breaking them down into smaller sub-problems and solving each sub-problem only once",
+        "B": "It is a method for solving problems by breaking them down into smaller sub-problems and solving each sub-problem multiple times",
+        "C": "It is a method for solving problems without breaking them down into smaller sub-problems",
+        "D": "It is a method for solving problems using recursion only"
+      },
+      "correctAnswer": "A",
+      "explanation": "Dynamic Programming is a method for solving complex problems by breaking them down into smaller sub-problems, solving each sub-problem only once, and storing their solutions to sub-problems to avoid redundant computation.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the time complexity of the 0/1 Knapsack problem using Dynamic Programming?",
+      "options": {
+        "A": "O(nW)",
+        "B": "O(n^2W)",
+        "C": "O(nW^2)",
+        "D": "O(2^n)"
+      },
+      "correctAnswer": "A",
+      "explanation": "The time complexity of the 0/1 Knapsack problem using Dynamic Programming is O(nW), where n is the number of items and W is the weight capacity of the knapsack.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the purpose of the table in Dynamic Programming?",
+      "options": {
+        "A": "To store the solutions to sub-problems",
+        "B": "To store the input values",
+        "C": "To store the output values",
+        "D": "To store the intermediate results"
+      },
+      "correctAnswer": "A",
+      "explanation": "The table in Dynamic Programming is used to store the solutions to sub-problems so that they can be reused instead of being recomputed, thus avoiding redundant computation.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following is a characteristic of the 0/1 Knapsack problem?",
+      "options": {
+        "A": "It is a linear programming problem",
+        "B": "It is a non-linear programming problem",
+        "C": "It is an integer programming problem",
+        "D": "It is a fractional programming problem"
+      },
+      "correctAnswer": "C",
+      "explanation": "The 0/1 Knapsack problem is an integer programming problem because the decision variables are restricted to be either 0 or 1, indicating whether an item is included or not.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the difference between the 0/1 Knapsack problem and the Unbounded Knapsack problem?",
+      "options": {
+        "A": "The 0/1 Knapsack problem has a limited number of items, while the Unbounded Knapsack problem has an unlimited number of items",
+        "B": "The 0/1 Knapsack problem has an unlimited number of items, while the Unbounded Knapsack problem has a limited number of items",
+        "C": "The 0/1 Knapsack problem allows fractions of items, while the Unbounded Knapsack problem does not",
+        "D": "The 0/1 Knapsack problem does not allow fractions of items, while the Unbounded Knapsack problem allows fractions of items"
+      },
+      "correctAnswer": "A",
+      "explanation": "The main difference between the 0/1 Knapsack problem and the Unbounded Knapsack problem is that the 0/1 Knapsack problem has a limited number of items, while the Unbounded Knapsack problem has an unlimited number of items.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the goal of the Knapsack problem in the context of resource allocation?",
+      "options": {
+        "A": "To minimize the total cost of resources",
+        "B": "To maximize the total value of resources",
+        "C": "To optimize the allocation of resources",
+        "D": "To satisfy the constraints of resources"
+      },
+      "correctAnswer": "B",
+      "explanation": "The goal of the Knapsack problem in the context of resource allocation is to maximize the total value of resources while satisfying the constraints of the resources.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following is a common application of the Knapsack problem?",
+      "options": {
+        "A": "Financial portfolio optimization",
+        "B": "Production planning",
+        "C": "Inventory management",
+        "D": "All of the above"
+      },
+      "correctAnswer": "D",
+      "explanation": "The Knapsack problem has many applications in various fields, including financial portfolio optimization, production planning, and inventory management, where the goal is to optimize the allocation of resources.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the main challenge in solving the 0/1 Knapsack problem using recursion?",
+      "options": {
+        "A": "The recursive approach is too slow",
+        "B": "The recursive approach is too complex",
+        "C": "The recursive approach leads to redundant computation",
+        "D": "The recursive approach is not feasible"
+      },
+      "correctAnswer": "C",
+      "explanation": "The main challenge in solving the 0/1 Knapsack problem using recursion is that it leads to redundant computation, where the same sub-problems are solved multiple times, resulting in exponential time complexity.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How does memoization help in solving the 0/1 Knapsack problem?",
+      "options": {
+        "A": "It reduces the time complexity by avoiding redundant computation",
+        "B": "It increases the time complexity by adding extra computation",
+        "C": "It changes the space complexity by using more memory",
+        "D": "It does not affect the time or space complexity"
+      },
+      "correctAnswer": "A",
+      "explanation": "Memoization helps in solving the 0/1 Knapsack problem by storing the solutions to sub-problems and reusing them when needed, thus reducing the time complexity by avoiding redundant computation.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the difference between top-down and bottom-up dynamic programming approaches?",
+      "options": {
+        "A": "Top-down starts with the original problem and breaks it down, while bottom-up starts with the smallest sub-problems and combines them",
+        "B": "Top-down starts with the smallest sub-problems and combines them, while bottom-up starts with the original problem and breaks it down",
+        "C": "Top-down uses recursion, while bottom-up uses iteration",
+        "D": "Top-down uses iteration, while bottom-up uses recursion"
+      },
+      "correctAnswer": "A",
+      "explanation": "The top-down approach starts with the original problem and breaks it down into smaller sub-problems, while the bottom-up approach starts with the smallest sub-problems and combines them to solve the original problem.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How does the Knapsack problem relate to other optimization problems?",
+      "options": {
+        "A": "It is a special case of the Traveling Salesman Problem",
+        "B": "It is a special case of the Shortest Path Problem",
+        "C": "It is related to the Minimum Spanning Tree Problem",
+        "D": "It is a generalization of the Bin Packing Problem"
+      },
+      "correctAnswer": "D",
+      "explanation": "The Knapsack problem is a generalization of the Bin Packing Problem, where the goal is to pack items into bins of limited capacity, and it is also related to other optimization problems, such as the Traveling Salesman Problem and the Minimum Spanning Tree Problem.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the effect of changing the weight capacity of the Knapsack on the solution?",
+      "options": {
+        "A": "Increasing the weight capacity always increases the optimal value",
+        "B": "Decreasing the weight capacity always decreases the optimal value",
+        "C": "Changing the weight capacity has no effect on the optimal value",
+        "D": "The effect of changing the weight capacity depends on the specific problem instance"
+      },
+      "correctAnswer": "D",
+      "explanation": "The effect of changing the weight capacity of the Knapsack on the solution depends on the specific problem instance, as increasing or decreasing the weight capacity can either increase or decrease the optimal value, or have no effect at all.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How does the Knapsack problem relate to machine learning?",
+      "options": {
+        "A": "It is a type of supervised learning problem",
+        "B": "It is a type of unsupervised learning problem",
+        "C": "It is a type of reinforcement learning problem",
+        "D": "It is not related to machine learning"
+      },
+      "correctAnswer": "C",
+      "explanation": "The Knapsack problem can be related to machine learning, specifically reinforcement learning, where an agent learns to make decisions to maximize a reward, such as the value of items in the Knapsack.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the purpose of the state transition function in the Knapsack problem?",
+      "options": {
+        "A": "To define the possible states of the system",
+        "B": "To define the transitions between states",
+        "C": "To define the rewards for each state",
+        "D": "To define the optimal policy"
+      },
+      "correctAnswer": "B",
+      "explanation": "The state transition function in the Knapsack problem defines the transitions between states, where each state represents the current contents of the Knapsack, and the transition function specifies how the state changes when an item is added or removed.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How does the Knapsack problem relate to computational complexity theory?",
+      "options": {
+        "A": "It is an example of a problem in P",
+        "B": "It is an example of a problem in NP",
+        "C": "It is an example of a problem in NP-complete",
+        "D": "It is an example of a problem in NP-hard"
+      },
+      "correctAnswer": "C",
+      "explanation": "The Knapsack problem is an example of a problem in NP-complete, which means that it is at least as hard as the hardest problems in NP, and there is no known polynomial-time algorithm to solve it exactly.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the time complexity of the Knapsack problem using a greedy algorithm?",
+      "options": {
+        "A": "O(n log n)",
+        "B": "O(n^2)",
+        "C": "O(2^n)",
+        "D": "O(n)"
+      },
+      "correctAnswer": "A",
+      "explanation": "The time complexity of the Knapsack problem using a greedy algorithm is O(n log n), where n is the number of items, because the greedy algorithm sorts the items by their value-to-weight ratio and then selects the items with the highest ratio.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How does the Knapsack problem relate to approximation algorithms?",
+      "options": {
+        "A": "It is an example of a problem that can be approximated using a polynomial-time algorithm",
+        "B": "It is an example of a problem that cannot be approximated using a polynomial-time algorithm",
+        "C": "It is an example of a problem that can be approximated using a linear programming relaxation",
+        "D": "It is an example of a problem that cannot be approximated using a linear programming relaxation"
+      },
+      "correctAnswer": "A",
+      "explanation": "The Knapsack problem is an example of a problem that can be approximated using a polynomial-time algorithm, such as the greedy algorithm or the FPTAS algorithm, which provide a near-optimal solution in polynomial time.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the purpose of the Knapsack problem in the context of cryptography?",
+      "options": {
+        "A": "To create secure encryption algorithms",
+        "B": "To create secure decryption algorithms",
+        "C": "To create secure key exchange protocols",
+        "D": "To create secure digital signatures"
+      },
+      "correctAnswer": "A",
+      "explanation": "The Knapsack problem is used in cryptography to create secure encryption algorithms, such as the Merkle-Hellman knapsack cryptosystem, which is based on the hardness of the Knapsack problem.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How does the Knapsack problem relate to data compression?",
+      "options": {
+        "A": "It is an example of a problem that can be used to compress data",
+        "B": "It is an example of a problem that cannot be used to compress data",
+        "C": "It is an example of a problem that can be used to compress data using a lossy compression algorithm",
+        "D": "It is an example of a problem that can be used to compress data using a lossless compression algorithm"
+      },
+      "correctAnswer": "A",
+      "explanation": "The Knapsack problem can be used in data compression to compress data by selecting the most important items to include in the compressed data, while discarding the less important items.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the time complexity of the Knapsack problem using a branch and bound algorithm?",
+      "options": {
+        "A": "O(n log n)",
+        "B": "O(n^2)",
+        "C": "O(2^n)",
+        "D": "O(n)"
+      },
+      "correctAnswer": "C",
+      "explanation": "The time complexity of the Knapsack problem using a branch and bound algorithm is O(2^n), where n is the number of items, because the algorithm explores all possible branches of the solution tree.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "How does the Knapsack problem relate to the concept of Pareto optimality?",
+      "options": {
+        "A": "It is an example of a problem that can be solved using a Pareto optimal solution",
+        "B": "It is an example of a problem that cannot be solved using a Pareto optimal solution",
+        "C": "It is an example of a problem that can be solved using a Pareto optimal solution, but only in certain cases",
+        "D": "It is an example of a problem that can be solved using a Pareto optimal solution, and it is always the best solution"
+      },
+      "correctAnswer": "A",
+      "explanation": "The Knapsack problem is an example of a problem that can be solved using a Pareto optimal solution, where the goal is to find a solution that optimizes multiple objectives, such as the value and weight of the items.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the purpose of the Lagrangian relaxation in the context of the Knapsack problem?",
+      "options": {
+        "A": "To create a relaxation of the problem that can be solved more efficiently",
+        "B": "To create a relaxation of the problem that is more difficult to solve",
+        "C": "To create a relaxation of the problem that is equivalent to the original problem",
+        "D": "To create a relaxation of the problem that is not related to the original problem"
+      },
+      "correctAnswer": "A",
+      "explanation": "The Lagrangian relaxation is used in the context of the Knapsack problem to create a relaxation of the problem that can be solved more efficiently, by relaxing the constraints and introducing Lagrange multipliers to penalize the constraints.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "How does the Knapsack problem relate to the concept of duality in optimization?",
+      "options": {
+        "A": "It is an example of a problem that can be solved using duality",
+        "B": "It is an example of a problem that cannot be solved using duality",
+        "C": "It is an example of a problem that can be solved using duality, but only in certain cases",
+        "D": "It is an example of a problem that can be solved using duality, and it is always the best solution"
+      },
+      "correctAnswer": "A",
+      "explanation": "The Knapsack problem is an example of a problem that can be solved using duality, where the primal problem is to maximize the value of the items, and the dual problem is to minimize the weight capacity of the Knapsack.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the purpose of the cutting plane method in the context of the Knapsack problem?",
+      "options": {
+        "A": "To create a relaxation of the problem that can be solved more efficiently",
+        "B": "To create a relaxation of the problem that is more difficult to solve",
+        "C": "To create a relaxation of the problem that is equivalent to the original problem",
+        "D": "To create a relaxation of the problem that is not related to the original problem"
+      }
+    }
+  ]
+}
