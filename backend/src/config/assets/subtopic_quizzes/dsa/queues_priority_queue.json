@@ -1,0 +1,182 @@
+{
+  "topic": "Queues - Priority Queue",
+  "questions": [
+    {
+      "question": "What is the primary advantage of using a priority queue over a regular queue?",
+      "options": {
+        "A": "First-In-First-Out (FIFO) order ensures fairness",
+        "B": "Higher priority elements are dequeued before lower priority elements",
+        "C": "Efficient use of memory for storing large datasets",
+        "D": "Faster insertion speeds due to minimal overhead"
+      },
+      "correctAnswer": "B",
+      "explanation": "In regular queues, elements are dequeued based on their order of arrival. Priority queues, on the other hand, allow elements with higher priority to be dequeued before those with lower priority.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What type of data structure supports efficient insertion and deletion of elements while maintaining the highest-priority element at the front?",
+      "options": {
+        "A": "Stack",
+        "B": "Queue",
+        "C": "Heap",
+        "D": "Tree"
+      },
+      "correctAnswer": "C",
+      "explanation": "Heaps are a type of binary tree that satisfy the heap property and support efficient insertion and deletion at the expense of higher priority nodes.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "In a priority queue, what operation will maintain the heap property?",
+      "options": {
+        "A": "Insert",
+        "B": "Delete",
+        "C": "Heapify",
+        "D": "Bubble Sort"
+      },
+      "correctAnswer": "C",
+      "explanation": "Heapify is an operation that takes an existing heap and transforms it into a valid heap, ensuring the heap property is maintained.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Why do we use a max heap in a priority queue when dealing with the highest-priority element always being dequeued first?",
+      "options": {
+        "A": "Efficient use of memory for storing large datasets",
+        "B": "Maintaining the highest-priority element at the front requires a max heap",
+        "C": "Reducing the time complexity of insertions and deletions",
+        "D": "Minimizing the space complexity of the data structure"
+      },
+      "correctAnswer": "B",
+      "explanation": "Using a max heap ensures that the highest-priority element is always at the front of the queue, making it the first to be dequeued.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "When implementing a priority queue, what data structure would be most suitable for storing elements with multiple priorities?",
+      "options": {
+        "A": "Array",
+        "B": "Linked List",
+        "C": "Balanced Binary Search Tree",
+        "D": "Binary Heap"
+      },
+      "correctAnswer": "D",
+      "explanation": "A binary heap can store multiple elements with different priorities and is efficient for insertion and deletion operations.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the worst-case time complexity for inserting an element into a priority queue implemented using a binary heap?",
+      "options": {
+        "A": "O(1)",
+        "B": "O(log n)",
+        "C": "O(n log n)",
+        "D": "O(2^n)"
+      },
+      "correctAnswer": "B",
+      "explanation": "Insertion into a binary heap involves updating the heap property, which can take O(log n) time at worst.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the primary function of a min heap when used as the underlying data structure for a priority queue?",
+      "options": {
+        "A": "Maintaining the highest-priority element at the front",
+        "B": "Ensuring elements are dequeued in the order of their priority",
+        "C": "Supporting efficient insertion and deletion of elements",
+        "D": "Providing a way to search for specific elements efficiently"
+      },
+      "correctAnswer": "B",
+      "explanation": "A min heap ensures elements are dequeued in the order of their priority, which is necessary for maintaining the correctness of a priority queue.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "When should you use a priority queue over a regular queue?",
+      "options": {
+        "A": "When dealing with real-time systems with strict deadlines",
+        "B": "When performing a breadth-first search on a graph",
+        "C": "When dealing with large amounts of non-sensitive data",
+        "D": "When performing a depth-first search on a tree"
+      },
+      "correctAnswer": "A",
+      "explanation": "Priority queues are useful when dealing with real-time systems or situations where the order of processing elements is based on their priority.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How does a priority queue differ from a regular queue in terms of element order?",
+      "options": {
+        "A": "Elements are dequeued based on their creation time",
+        "B": "Elements are dequeued in the order of their insertion",
+        "C": "Elements are dequeued based on their priority",
+        "D": "Elements are dequeued in a cyclic order"
+      },
+      "correctAnswer": "C",
+      "explanation": "A priority queue dequeues elements based on their priority, whereas a regular queue dequeues elements in the order they were inserted.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is a typical use case for a priority queue in a real-world application?",
+      "options": {
+        "A": "Scheduling tasks for a real-time system",
+        "B": "Processing transactions in a bank",
+        "C": "Performing a breadth-first search on a graph",
+        "D": "Sorting a list of items"
+      },
+      "correctAnswer": "A",
+      "explanation": "Priority queues are useful in real-time systems where tasks need to be executed based on their priority.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Why would you use a max heap as the underlying data structure for a priority queue?",
+      "options": {
+        "A": "To maintain the lowest-priority element at the front",
+        "B": "To support efficient insertion and deletion of elements",
+        "C": "To maintain the highest-priority element at the front",
+        "D": "To optimize for searching elements efficiently"
+      },
+      "correctAnswer": "C",
+      "explanation": "A max heap is used in a priority queue to ensure that the highest-priority element is always at the front, ready to be dequeued.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How does a priority queue with a heap data structure compare to a regular queue in terms of time complexity?",
+      "options": {
+        "A": "Priority queue has O(1) time complexity for insertion and deletion",
+        "B": "Priority queue has O(log n) time complexity for insertion and deletion",
+        "C": "Regular queue has O(1) time complexity for insertion and deletion",
+        "D": "Regular queue has O(log n) time complexity for insertion and deletion"
+      },
+      "correctAnswer": "B",
+      "explanation": "A priority queue with a heap data structure supports efficient insertion and deletion, with a time complexity of O(log n).",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the purpose of the heapify operation in a priority queue?",
+      "options": {
+        "A": "To insert a new element into the heap",
+        "B": "To delete the highest-priority element from the heap",
+        "C": "To maintain the heap property after insertion or deletion",
+        "D": "To perform a heap sort on the elements"
+      },
+      "correctAnswer": "C",
+      "explanation": "Heapify is used to ensure the heap property is maintained after insertion or deletion of elements, which is essential for a priority queue.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What type of priority queue supports efficient insertion and deletion of elements at both ends?",
+      "options": {
+        "A": "Queue with a double-ended queue data structure",
+        "B": "Queue with a double-ended priority queue data structure",
+        "C": "Queue with a circular buffer data structure",
+        "D": "Queue with a linked list data structure"
+      },
+      "correctAnswer": "B",
+      "explanation": "A double-ended priority queue supports efficient insertion and deletion of elements at either end, making it suitable for scenarios where elements are inserted and deleted from both ends.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "In which scenario would you use a priority queue with a min heap instead of a max heap?",
+      "options": {
+        "A": "When dealing with real-time systems with strict deadlines",
+        "B": "When performing a breadth-first search on a graph",
+        "C": "When maintaining the highest-priority element at the front is necessary",
+        "D": "When implementing a topological sorting algorithm"
+      }
+    }
+  ]
+}
