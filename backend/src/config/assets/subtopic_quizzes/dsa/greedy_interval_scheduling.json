@@ -1,0 +1,170 @@
+{
+  "topic": "Greedy - Interval Scheduling",
+  "questions": [
+    {
+      "question": "What is the primary goal of Interval Scheduling?",
+      "options": {
+        "A": "To minimize the total number of intervals",
+        "B": "To maximize the total number of intervals",
+        "C": "To schedule all intervals without conflicts",
+        "D": "To find the longest duration of consecutive intervals"
+      },
+      "correctAnswer": "B",
+      "explanation": "The primary goal of Interval Scheduling is to select the maximum number of non-conflicting intervals. This is a classic problem in Computer Science.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Consider a schedule with the following intervals: [1-5], [2-4], [3-6]. Which interval should be scheduled first?",
+      "options": {
+        "A": "[1-5]",
+        "B": "[2-4]",
+        "C": "[3-6]",
+        "D": "No interval should be scheduled first"
+      },
+      "correctAnswer": "B",
+      "explanation": "To make our schedule as large as possible, we should schedule smaller intervals first. The interval [2-4] has the earliest end time, so it should be scheduled first.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "A company wants to book a meeting room for a team of employees. The available rooms are: Room 1 (8am-9am), Room 2 (9am-10am), Room 3 (10am-12pm), Room 4 (1pm-3pm). Which room should be booked first?",
+      "options": {
+        "A": "Room 3",
+        "B": "Room 2",
+        "C": "Room 1",
+        "D": "Room 4"
+      },
+      "correctAnswer": "C",
+      "explanation": "To maximize the usage of the room, we should book the room with the earliest available time slot. Room 1 is available from 8am, so it should be booked first.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following algorithms can be used to solve Interval Scheduling problems?",
+      "options": {
+        "A": "Dynamic Programming",
+        "B": "Greedy Algorithm",
+        "C": "Bipartite Matching",
+        "D": "All of the above"
+      },
+      "correctAnswer": "D",
+      "explanation": "Interval Scheduling problems can be solved using Dynamic Programming, Greedy Algorithm, or Bipartite Matching. Each approach has its own strengths and weaknesses.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Consider a schedule with the following intervals: [1-5], [5-7], [7-9]. How many non-conflicting intervals can be scheduled?",
+      "options": {
+        "A": "1",
+        "B": "2",
+        "C": "3",
+        "D": "4"
+      },
+      "correctAnswer": "C",
+      "explanation": "To count the number of non-conflicting intervals, we can sort the intervals by their end time and then select the intervals that do not conflict with each other. In this case, we can schedule all 3 intervals.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the time complexity of the Interval Scheduling algorithm?",
+      "options": {
+        "A": "O(1)",
+        "B": "O(n log n)",
+        "C": "O(n log n) using a priority queue",
+        "D": "O(n log n) using sorting"
+      },
+      "correctAnswer": "D",
+      "explanation": "The time complexity of the Interval Scheduling algorithm depends on the sorting step, which has a time complexity of O(n log n) in the worst case. Therefore, the overall time complexity is O(n log n).",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Can Interval Scheduling be used to solve the Minimum Interval Cover problem?",
+      "options": {
+        "A": "Yes, it can be used as a heuristic",
+        "B": "Yes, it is an exact algorithm",
+        "C": "No, it cannot be used to solve this problem",
+        "D": "Maybe, depending on the instance"
+      },
+      "correctAnswer": "A",
+      "explanation": "Interval Scheduling can be used as a heuristic to solve the Minimum Interval Cover problem. However, it may not always find the minimum cover, and there may be other methods that are more efficient.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Consider a schedule with the following intervals: [1-3], [3-5], [5-7]. If we add a new interval [2-6], what should be done with it?",
+      "options": {
+        "A": "Schedule it at the beginning",
+        "B": "Schedule it at the end",
+        "C": "Do not schedule it",
+        "D": "Schedule it after [1-3]"
+      },
+      "correctAnswer": "D",
+      "explanation": "To maintain the validity of the schedule, we need to insert the new interval at the correct position. In this case, we should schedule it after [1-3], so that it does not conflict with the existing intervals.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Can Interval Scheduling be used to solve the Minimum Spanning Tree problem?",
+      "options": {
+        "A": "Yes, it can be used as a heuristic",
+        "B": "Yes, it is an exact algorithm",
+        "C": "No, it cannot be used to solve this problem",
+        "D": "Maybe, depending on the instance"
+      },
+      "correctAnswer": "C",
+      "explanation": "Interval Scheduling is not directly applicable to the Minimum Spanning Tree problem. Other algorithms, such as Kruskal's or Prim's algorithms, are more suitable for this problem.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the key insight behind the Interval Scheduling algorithm?",
+      "options": {
+        "A": "Sort the intervals by their end time",
+        "B": "Schedule the intervals with the earliest start time",
+        "C": "Pick the largest interval first",
+        "D": "All of the above"
+      },
+      "correctAnswer": "D",
+      "explanation": "The Interval Scheduling algorithm relies on several key insights, including sorting the intervals by their end time, scheduling the intervals with the earliest start time, and always picking the interval that allows for the maximum number of intervals to be scheduled.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Consider a schedule with the following intervals: [1-3], [3-5], [5-7]. If we have an event [2-6] to schedule, how many intervals can we schedule afterwards?",
+      "options": {
+        "A": "0",
+        "B": "1",
+        "C": "2",
+        "D": "3"
+      },
+      "correctAnswer": "C",
+      "explanation": "After scheduling the event [2-6], we can only schedule 2 more intervals, namely [1-3] and [5-7].",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Can Interval Scheduling be extended to schedule recurring events?",
+      "options": {
+        "A": "Yes, it can be extended",
+        "B": "No, it cannot be extended",
+        "C": "Maybe, depending on the instance",
+        "D": "It depends on the specific requirements"
+      },
+      "correctAnswer": "A",
+      "explanation": "Interval Scheduling can be extended to schedule recurring events by introducing a new data structure to store the recurring events and modifying the algorithm to handle them.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the difference between Interval Scheduling and Resource Allocation?",
+      "options": {
+        "A": "Interval Scheduling is for scheduling tasks with fixed deadlines, while Resource Allocation is for scheduling tasks with flexible deadlines.",
+        "B": "Interval Scheduling is for scheduling tasks on a single machine, while Resource Allocation is for scheduling tasks on multiple machines.",
+        "C": "Interval Scheduling is for scheduling tasks without conflicts, while Resource Allocation is for scheduling tasks with conflicts.",
+        "D": "All of the above"
+      },
+      "correctAnswer": "D",
+      "explanation": "There are several differences between Interval Scheduling and Resource Allocation, including the type of deadline (fixed vs flexible) and the number of machines. Additionally, Interval Scheduling typically handles tasks with no conflicts, while Resource Allocation handles tasks with conflicts.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Consider a schedule with the following intervals: [1-3], [3-5], [5-7]. If we add a new interval [1-2], what should be done with it?",
+      "options": {
+        "A": "Schedule it at the beginning",
+        "B": "Schedule it at the end",
+        "C": "Do not schedule it",
+        "D": "Schedule it after [1-5]"
+      }
+    }
+  ]
+}
