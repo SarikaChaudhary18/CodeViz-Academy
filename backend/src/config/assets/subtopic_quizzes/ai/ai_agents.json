@@ -1,0 +1,194 @@
+{
+  "topic": "AI - AI Agents",
+  "questions": [
+    {
+      "question": "What is an AI agent?",
+      "options": {
+        "A": "A program that learns and improves on its own",
+        "B": "A software system that performs a specific task",
+        "C": "A computer program that perceives its environment and takes actions",
+        "D": "A machine learning model that processes large datasets"
+      },
+      "correctAnswer": "C",
+      "explanation": "An AI agent is a software system that perceives its environment through sensors and takes actions in that environment. It can be either narrow or general.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the main goal of reinforcement learning in AI agents?",
+      "options": {
+        "A": "To reduce decision-making time",
+        "B": "To increase the accuracy of predictions",
+        "C": "To maximize the cumulative reward over an agent's lifetime",
+        "D": "To minimize the number of actions taken"
+      },
+      "correctAnswer": "C",
+      "explanation": "The goal of reinforcement learning is to maximize the cumulative reward over an agent's lifetime, which is achieved by learning from trial and error.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is a type of AI agent that can exhibit goal-directed behavior?",
+      "options": {
+        "A": "Intelligence agent",
+        "B": "Rational agent",
+        "C": "Bounded rational agent",
+        "D": "Narrow AI"
+      },
+      "correctAnswer": "B",
+      "explanation": "A rational agent is a type of AI agent that can exhibit goal-directed behavior by reasoning about its environment and making optimal decisions.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the primary challenge faced by researchers when developing autonomous AI agents?",
+      "options": {
+        "A": "Developing algorithms that can learn from large datasets",
+        "B": "Designing systems that can interact with humans safely and effectively",
+        "C": "Creating models that can process and analyze vast amounts of data",
+        "D": "Building systems that can reason abnormally"
+      },
+      "correctAnswer": "B",
+      "explanation": "The primary challenge faced by researchers when developing autonomous AI agents is designing systems that can interact with humans safely and effectively.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is a key characteristic of narrow AI agents?",
+      "options": {
+        "A": "Ability to learn from data",
+        "B": "Ability to reason about abstract concepts",
+        "C": "Ability to perform a specific task",
+        "D": "Ability to interact with humans"
+      },
+      "correctAnswer": "C",
+      "explanation": "Narrow AI agents are designed to perform a specific task, such as image recognition or natural language processing.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the main advantage of using multi-agent systems in AI?",
+      "options": {
+        "A": "Increased computational power",
+        "B": "Improved decision-making capabilities",
+        "C": "Enhanced scalability and adaptability",
+        "D": "Reduced development time"
+      },
+      "correctAnswer": "C",
+      "explanation": "Multi-agent systems allow for enhanced scalability and adaptability, as they can distribute tasks and adapt to changing environments.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the primary purpose of a sensor in an AI agent?",
+      "options": {
+        "A": "To interact with the environment",
+        "B": "To perceive the environment",
+        "C": "To take actions in the environment",
+        "D": "To evaluate the effectiveness of the agent's actions"
+      },
+      "correctAnswer": "B",
+      "explanation": "The primary purpose of a sensor in an AI agent is to perceive the environment, which allows the agent to understand its surroundings and make informed decisions.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the term for the process by which an AI agent learns from experience?",
+      "options": {
+        "A": "Learning from data",
+        "B": "Learning by trial and error",
+        "C": "Learning through exploration",
+        "D": "Learning through reinforcement"
+      },
+      "correctAnswer": "B",
+      "explanation": "Learning from experience refers to the process by which an AI agent learns from its experiences, often through trial and error.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the key difference between a reactive agent and a deliberative agent?",
+      "options": {
+        "A": "Reactive agents respond immediately to stimuli, while deliberative agents take time to make decisions",
+        "B": "Reactive agents take time to make decisions, while deliberative agents respond immediately to stimuli",
+        "C": "Reactive agents learn from experience, while deliberative agents rely on innate knowledge",
+        "D": "Reactive agents rely on innate knowledge, while deliberative agents learn from experience"
+      },
+      "correctAnswer": "A",
+      "explanation": "Reactive agents respond immediately to stimuli, whereas deliberative agents take time to make decisions by reasoning about their environment.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the term for an AI agent that can learn from data and improve its performance over time?",
+      "options": {
+        "A": "Machine learning algorithm",
+        "B": "Neural network",
+        "C": "Deep reinforcement learning agent",
+        "D": "Autonomous learning agent"
+      },
+      "correctAnswer": "D",
+      "explanation": "An autonomous learning agent is an AI system that can learn from data and improve its performance over time without human intervention.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the key challenge in designing autonomous AI agents that can interact with humans safely and effectively?",
+      "options": {
+        "A": "Ensuring the agent's decision-making process is transparent and explainable",
+        "B": "Ensuring the agent's actions align with human values and preferences",
+        "C": "Ensuring the agent has access to sufficient computational resources",
+        "D": "Ensuring the agent is able to adapt to changing environmental conditions"
+      },
+      "correctAnswer": "B",
+      "explanation": "The key challenge in designing autonomous AI agents is to ensure their actions align with human values and preferences, which requires a deep understanding of human behavior and decision-making processes.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the primary advantage of using reinforcement learning in AI agent development?",
+      "options": {
+        "A": "Improved decision-making capabilities",
+        "B": "Increased computational efficiency",
+        "C": "Enhanced adaptability and scalability",
+        "D": "Faster development time"
+      },
+      "correctAnswer": "C",
+      "explanation": "Reinforcement learning enables AI agents to adapt and learn from their environment, making it an effective approach for developing agents that can operate in complex, dynamic settings.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the key limitation of narrow AI agents?",
+      "options": {
+        "A": "Ability to learn from data is severely limited",
+        "B": "Limited ability to reason about abstract concepts",
+        "C": "Ability to perform a specific task is limited",
+        "D": "Limited ability to interact with humans"
+      },
+      "correctAnswer": "C",
+      "explanation": "Narrow AI agents are limited in their ability to perform a specific task, which can lead to decreased effectiveness in complex, dynamic environments.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the primary purpose of an action in an AI agent?",
+      "options": {
+        "A": "To interact with the environment",
+        "B": "To perceive the environment",
+        "C": "To evaluate the effectiveness of previous actions",
+        "D": "To reason about the environment"
+      },
+      "correctAnswer": "A",
+      "explanation": "The primary purpose of an action in an AI agent is to interact with its environment, which can involve modifying the environment or taking specific actions to achieve a goal.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the term for an AI agent that can learn and adapt to changing environments?",
+      "options": {
+        "A": "Machine learning algorithm",
+        "B": "Narrow AI agent",
+        "C": "Autonomous learning agent",
+        "D": "General AI agent"
+      },
+      "correctAnswer": "C",
+      "explanation": "An autonomous learning agent can adapt to changing environments, learn from experience, and improve its performance over time.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the primary challenge in designing autonomous AI agents that can operate in uncertain and dynamic environments?",
+      "options": {
+        "A": "Ensuring the agent's decision-making process is transparent and explainable",
+        "B": "Ensuring the agent's actions align with human values and preferences",
+        "C": "Developing algorithms that can learn from experience and adapt to changing conditions",
+        "D": "Ensuring the agent has access to sufficient computational resources"
+      }
+    }
+  ]
+}
