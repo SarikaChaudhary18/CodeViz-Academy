@@ -1,0 +1,149 @@
+{
+  "topic": "Graphs - Topological Sort",
+  "questions": [
+    {
+      "question": "Which of the following statements is true about the properties of a correct topological sorting of a directed acyclic graph (DAG)?",
+      "options": {
+        "A": "All vertices in the topological sorting are adjacent to at least one other vertex.",
+        "B": "There are no cycles in the directed graph.",
+        "C": "The topological sorting visits all vertices before revisiting any vertex.",
+        "D": "In a correctly ordered topological sorting, each vertex comes before its parent node."
+      },
+      "correctAnswer": "B",
+      "explanation": "A correct topological sorting of a DAG implies the absence of cycles. However, adjacent vertices may or may not appear consecutively in the ordering.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the main motivation behind applying topological sorting?",
+      "options": {
+        "A": "To detect whether a given graph contains a cycle.",
+        "B": "To count the number of Hamiltonian cycles in a graph.",
+        "C": "To find the minimum number of edges that need to be removed to remove cycles.",
+        "D": "So that a graph can be visited using a Depth-First Search algorithm more efficiently."
+      },
+      "correctAnswer": "D",
+      "explanation": "Topological sorting is particularly useful when a graph or DAG needs to be processed in a specific order, and this order is critical for tasks such as scheduling or dependency resolution.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How do you determine if a topological sorting of a given graph is valid or incorrect, assuming no cycles exist in the directed graph?",
+      "options": {
+        "A": "By examining each vertex only once.",
+        "B": "By looking for cycles.",
+        "C": "By examining each edge and its endpoints.",
+        "D": "By counting the total number of edges and vertices."
+      },
+      "correctAnswer": "C",
+      "explanation": "In the absence of cycles, a valid topological ordering requires that each edge from vertex 'u' to vertex 'v' implies that vertex 'u' comes before vertex 'v'. Otherwise, the edge is misplaced.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Suppose you are asked to sort the vertices of a directed graph using topological sorting, resulting in order: A -> B -> C -> D. What would be the output of DFS traversal if started at vertex D?",
+      "options": {
+        "A": "D -> C -> B -> A.",
+        "B": "D -> B -> A -> C.",
+        "C": "A -> B -> D -> C.",
+        "D": "C -> A -> D -> B."
+      },
+      "correctAnswer": "B",
+      "explanation": "In a topological ordering, a vertex 'u' comes before another vertex 'v' if and only if all edges from 'u' to 'v' are traversed first. Otherwise, the output is misleading or incorrect.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Suppose you have been tasked with creating a directed acyclic graph (DAG) of students enrolled in a given course and their corresponding prerequisites. In what order would you perform a topological sorting on this graph to obtain a valid ordering for the course structure?",
+      "options": {
+        "A": "By student IDs, from lowest to highest.",
+        "B": "In order of increasing number of prerequisites.",
+        "C": "In a manner that satisfies the topological property.",
+        "D": "In a way that the course with the least prerequisites comes first."
+      },
+      "correctAnswer": "C",
+      "explanation": "A DAG can exhibit complex dependency relationships, and performing a topological sorting on such graphs is necessary for resolving these dependencies. A correct ordering must ensure that each vertex comes before its prerequisite, thereby preventing any cycles.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What are the necessary and sufficient conditions for a topological sorting to be valid for a DAG?",
+      "options": {
+        "A": "A -> All vertices must have a distinct color.",
+        "B": "B -> Vertices must appear in increasing 'degree'.",
+        "C": "C -> Each edge u-v should have u appearing before v in the sorting.",
+        "D": "D -> The number of vertices is an even number."
+      },
+      "correctAnswer": "C",
+      "explanation": "The key characteristic of a valid topological sorting of a DAG is the absence of cycles and adhering to the rule where 'u' appears before 'v' in the ordering only if there is an edge from 'u' to 'v'.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "An edge with a weight of 3.2 exists between nodes A and C. How can you apply topological sorting to the given graph to find a vertex that appears after vertex A?",
+      "options": {
+        "A": "First perform a non-weighted DFS traversal on the entire graph.",
+        "B": "Use Prim's or Dijkstra's algorithm to identify the next vertex in line.",
+        "C": "Topologically sort the given graph based on edge weights.",
+        "D": "Sort by node names alphabetically."
+      },
+      "correctAnswer": "C",
+      "explanation": "Given that we have weights on edges, we must apply topological sorting in a manner that respects edge weights, which helps identify the correct ordering for nodes.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Topological sorting of a given graph yields an order of nodes: A -> B -> C. Which of the following is a characteristic property of the given graph?",
+      "options": {
+        "A": "The given graph has two nodes.",
+        "B": "The number of vertices has a power of 2.",
+        "C": "The graph exhibits no cycles.",
+        "D": "The given graph contains only nodes 'A' and 'B'."
+      },
+      "correctAnswer": "C",
+      "explanation": "For a valid topological ordering, the absence of cycles is a primary feature since it ensures each vertex precedes all of its descendants.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Which graph does not allow for a topological sorting?",
+      "options": {
+        "A": "A bipartite multigraph.",
+        "B": "An unweighted multigraph.",
+        "C": "A directed graph with negative weighted edges.",
+        "D": "A weighted acyclic graph."
+      },
+      "correctAnswer": "C",
+      "explanation": "A correct topological ordering is only applicable to acyclic graphs because it ensures all edges are consistently 'in-coming'. Negative-weight edges can be part of a graph with topological ordering but must always be positive in topological sort.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "If DFS traversal starts at an arbitrary vertex of the same graph as the previous question, what is the order of visited nodes if we follow the topological ordering of the graph?",
+      "options": {
+        "A": "A -> C -> B.",
+        "B": "B -> C -> A.",
+        "C": "C -> A -> B.",
+        "D": "B -> A -> C."
+      },
+      "correctAnswer": "A",
+      "explanation": "When traversing a graph using DFS and following the topological ordering established for a valid acyclic graph, we visit nodes before exploring the next node that's in its domain.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "If topological sorting yields: S1 -> S2 -> S3, what can you conclude from this order about S2?",
+      "options": {
+        "A": "S2 appears as an independent vertex.",
+        "B": "S2 comes before S3.",
+        "C": "S2 may have an edge connected to a new vertex in the ordering.",
+        "D": "S2 has one prerequisite."
+      },
+      "correctAnswer": "B",
+      "explanation": "A correct topological ordering establishes a rule where a vertex u appears before another vertex v if there is an edge from u to v. This helps establish the relationship between the nodes.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Consider a graph where one of its nodes has both incoming and outgoing edges. Can we perform a valid topological ordering of this graph?",
+      "options": {
+        "A": "Yes, we can, and the correct ordering will place the node at its proper position.",
+        "B": "No, we may not obtain the correct ordering.",
+        "C": "Yes, the ordering can be achieved but would cause inconsistencies.",
+        "D": "Yes, it can be done using the topological sorting algorithm."
+      },
+      "correctAnswer": "C",
+      "explanation": "When a node contains both incoming and outgoing edges (in other words, a self-loop), the topological order is difficult to establish as the direction of edge from the vertex with a self-loop to itself could be ambiguous.",
+      "difficulty": "Hard"
+    }
+  ]
+}
