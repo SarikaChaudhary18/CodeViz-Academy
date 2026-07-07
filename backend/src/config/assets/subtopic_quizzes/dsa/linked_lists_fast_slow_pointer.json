@@ -1,0 +1,338 @@
+{
+  "topic": "Linked Lists - Fast & Slow Pointer",
+  "questions": [
+    {
+      "question": "What is the primary purpose of using a fast and slow pointer in a linked list?",
+      "options": {
+        "A": "To find the middle element of the list",
+        "B": "To detect a cycle in the list",
+        "C": "To sort the list",
+        "D": "To reverse the list"
+      },
+      "correctAnswer": "B",
+      "explanation": "The fast and slow pointer technique is often used to detect a cycle in a linked list. The fast pointer moves two steps at a time, while the slow pointer moves one step at a time. If there is a cycle, the fast and slow pointers will eventually meet. This technique is useful because it can detect a cycle in O(n) time complexity.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the time complexity of detecting a cycle in a linked list using the fast and slow pointer technique?",
+      "options": {
+        "A": "O(n^2)",
+        "B": "O(n log n)",
+        "C": "O(n)",
+        "D": "O(log n)"
+      },
+      "correctAnswer": "C",
+      "explanation": "The time complexity of detecting a cycle in a linked list using the fast and slow pointer technique is O(n), where n is the number of nodes in the list. This is because in the worst-case scenario, the fast and slow pointers may need to traverse the entire list.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the space complexity of detecting a cycle in a linked list using the fast and slow pointer technique?",
+      "options": {
+        "A": "O(n^2)",
+        "B": "O(n)",
+        "C": "O(log n)",
+        "D": "O(1)"
+      },
+      "correctAnswer": "D",
+      "explanation": "The space complexity of detecting a cycle in a linked list using the fast and slow pointer technique is O(1), which means it uses a constant amount of space. This is because the technique only uses a few variables to store the fast and slow pointers, regardless of the size of the input.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following is a common application of the fast and slow pointer technique?",
+      "options": {
+        "A": "Finding the maximum element in a linked list",
+        "B": "Detecting a cycle in a linked list",
+        "C": "Sorting a linked list",
+        "D": "Reversing a linked list"
+      },
+      "correctAnswer": "B",
+      "explanation": "The fast and slow pointer technique is commonly used to detect a cycle in a linked list. This is because it can detect a cycle in O(n) time complexity, making it an efficient solution for this problem.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What happens if the fast and slow pointers meet while traversing a linked list?",
+      "options": {
+        "A": "The list is empty",
+        "B": "The list has no cycle",
+        "C": "The list has a cycle",
+        "D": "The list is sorted"
+      },
+      "correctAnswer": "C",
+      "explanation": "If the fast and slow pointers meet while traversing a linked list, it means that there is a cycle in the list. This is because the fast pointer moves two steps at a time, so if it meets the slow pointer, it must have caught up to it in a cycle.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following is NOT a benefit of using the fast and slow pointer technique?",
+      "options": {
+        "A": "It can detect a cycle in O(n) time complexity",
+        "B": "It uses a constant amount of space",
+        "C": "It can find the maximum element in a linked list",
+        "D": "It can reverse a linked list"
+      },
+      "correctAnswer": "C",
+      "explanation": "The fast and slow pointer technique is not typically used to find the maximum element in a linked list. This is because it is designed to detect cycles, not find maximum or minimum elements.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How does the fast pointer move in the fast and slow pointer technique?",
+      "options": {
+        "A": "One step at a time",
+        "B": "Two steps at a time",
+        "C": "Three steps at a time",
+        "D": "Four steps at a time"
+      },
+      "correctAnswer": "B",
+      "explanation": "The fast pointer moves two steps at a time in the fast and slow pointer technique. This allows it to catch up to the slow pointer if there is a cycle in the list.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What happens if the fast pointer reaches the end of a linked list while using the fast and slow pointer technique?",
+      "options": {
+        "A": "The list has a cycle",
+        "B": "The list has no cycle",
+        "C": "The list is empty",
+        "D": "The list is sorted"
+      },
+      "correctAnswer": "B",
+      "explanation": "If the fast pointer reaches the end of a linked list while using the fast and slow pointer technique, it means that the list has no cycle. This is because the fast pointer would have caught up to the slow pointer if there was a cycle.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following is a type of linked list that can be detected using the fast and slow pointer technique?",
+      "options": {
+        "A": "Singly linked list",
+        "B": "Doubly linked list",
+        "C": "Circularly linked list",
+        "D": "All of the above"
+      },
+      "correctAnswer": "D",
+      "explanation": "The fast and slow pointer technique can be used to detect cycles in any type of linked list, including singly linked lists, doubly linked lists, and circularly linked lists.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the primary challenge of implementing the fast and slow pointer technique?",
+      "options": {
+        "A": "Handling edge cases",
+        "B": "Optimizing performance",
+        "C": "Reducing space complexity",
+        "D": "All of the above"
+      },
+      "correctAnswer": "A",
+      "explanation": "The primary challenge of implementing the fast and slow pointer technique is handling edge cases, such as an empty list or a list with a single node. This requires careful consideration of the boundary conditions to ensure that the algorithm works correctly.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How can you modify the fast and slow pointer technique to find the start of a cycle in a linked list?",
+      "options": {
+        "A": "By moving the fast pointer one step at a time",
+        "B": "By moving the slow pointer two steps at a time",
+        "C": "By resetting the slow pointer to the start of the list",
+        "D": "By resetting the fast pointer to the meeting point"
+      },
+      "correctAnswer": "C",
+      "explanation": "To find the start of a cycle in a linked list, you can modify the fast and slow pointer technique by resetting the slow pointer to the start of the list when the fast and slow pointers meet. The fast pointer should remain at the meeting point. Then, move both pointers one step at a time. They will meet again at the start of the cycle.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the time complexity of finding the start of a cycle in a linked list using the modified fast and slow pointer technique?",
+      "options": {
+        "A": "O(n^2)",
+        "B": "O(n log n)",
+        "C": "O(n)",
+        "D": "O(log n)"
+      },
+      "correctAnswer": "C",
+      "explanation": "The time complexity of finding the start of a cycle in a linked list using the modified fast and slow pointer technique is O(n), where n is the number of nodes in the list. This is because in the worst-case scenario, the algorithm needs to traverse the entire list to find the start of the cycle.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Which of the following is an advantage of using the fast and slow pointer technique to find the middle of a linked list?",
+      "options": {
+        "A": "It can handle large lists",
+        "B": "It can handle small lists",
+        "C": "It uses a constant amount of space",
+        "D": "All of the above"
+      },
+      "correctAnswer": "D",
+      "explanation": "The fast and slow pointer technique can be used to find the middle of a linked list, and it has several advantages, including the ability to handle large lists and use a constant amount of space.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How can you use the fast and slow pointer technique to find the nth node from the end of a linked list?",
+      "options": {
+        "A": "By moving the fast pointer n steps ahead of the slow pointer",
+        "B": "By moving the slow pointer n steps ahead of the fast pointer",
+        "C": "By moving the fast pointer n steps behind the slow pointer",
+        "D": "By moving the slow pointer n steps behind the fast pointer"
+      },
+      "correctAnswer": "A",
+      "explanation": "To find the nth node from the end of a linked list, you can use the fast and slow pointer technique by moving the fast pointer n steps ahead of the slow pointer. Then, move both pointers one step at a time. When the fast pointer reaches the end of the list, the slow pointer will be at the nth node from the end.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the primary challenge of implementing the fast and slow pointer technique in a multithreaded environment?",
+      "options": {
+        "A": "Handling concurrency issues",
+        "B": "Optimizing performance",
+        "C": "Reducing space complexity",
+        "D": "Handling edge cases"
+      },
+      "correctAnswer": "A",
+      "explanation": "The primary challenge of implementing the fast and slow pointer technique in a multithreaded environment is handling concurrency issues. This requires careful consideration of thread safety and synchronization to ensure that the algorithm works correctly in the presence of multiple threads.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "How can you modify the fast and slow pointer technique to handle a circularly linked list with multiple cycles?",
+      "options": {
+        "A": "By using a hash table to keep track of visited nodes",
+        "B": "By using a recursive function to traverse the list",
+        "C": "By using a queue to keep track of nodes to visit",
+        "D": "By using a stack to keep track of nodes to visit"
+      },
+      "correctAnswer": "A",
+      "explanation": "To handle a circularly linked list with multiple cycles, you can modify the fast and slow pointer technique by using a hash table to keep track of visited nodes. This allows you to detect and avoid revisiting nodes that have already been visited, even if they are part of a cycle.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the time complexity of finding the start of a cycle in a circularly linked list with multiple cycles using the modified fast and slow pointer technique?",
+      "options": {
+        "A": "O(n^2)",
+        "B": "O(n log n)",
+        "C": "O(n)",
+        "D": "O(log n)"
+      },
+      "correctAnswer": "C",
+      "explanation": "The time complexity of finding the start of a cycle in a circularly linked list with multiple cycles using the modified fast and slow pointer technique is O(n), where n is the number of nodes in the list. This is because in the worst-case scenario, the algorithm needs to traverse the entire list to find the start of the cycle.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Which of the following is a common application of the fast and slow pointer technique in real-world systems?",
+      "options": {
+        "A": "Database query optimization",
+        "B": "Network protocol implementation",
+        "C": "File system management",
+        "D": "All of the above"
+      },
+      "correctAnswer": "D",
+      "explanation": "The fast and slow pointer technique is used in a variety of real-world systems, including database query optimization, network protocol implementation, and file system management. It is a fundamental algorithmic technique that can be applied to a wide range of problems.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "How can you use the fast and slow pointer technique to implement a cache replacement policy?",
+      "options": {
+        "A": "By using a least recently used (LRU) cache",
+        "B": "By using a most recently used (MRU) cache",
+        "C": "By using a first-in-first-out (FIFO) cache",
+        "D": "By using a random replacement cache"
+      },
+      "correctAnswer": "A",
+      "explanation": "To implement a cache replacement policy using the fast and slow pointer technique, you can use a least recently used (LRU) cache. The fast pointer can be used to track the most recently accessed elements, while the slow pointer can be used to track the least recently used elements.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the primary challenge of implementing the fast and slow pointer technique in a distributed system?",
+      "options": {
+        "A": "Handling concurrency issues",
+        "B": "Optimizing performance",
+        "C": "Reducing space complexity",
+        "D": "Handling node failures"
+      },
+      "correctAnswer": "D",
+      "explanation": "The primary challenge of implementing the fast and slow pointer technique in a distributed system is handling node failures. This requires careful consideration of fault tolerance and redundancy to ensure that the algorithm works correctly even in the presence of node failures.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "How can you modify the fast and slow pointer technique to handle a linked list with duplicate nodes?",
+      "options": {
+        "A": "By using a hash table to keep track of unique nodes",
+        "B": "By using a recursive function to traverse the list",
+        "C": "By using a queue to keep track of nodes to visit",
+        "D": "By using a stack to keep track of nodes to visit"
+      },
+      "correctAnswer": "A",
+      "explanation": "To handle a linked list with duplicate nodes, you can modify the fast and slow pointer technique by using a hash table to keep track of unique nodes. This allows you to detect and avoid revisiting nodes that have already been visited, even if they are duplicates.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the time complexity of finding the start of a cycle in a linked list with duplicate nodes using the modified fast and slow pointer technique?",
+      "options": {
+        "A": "O(n^2)",
+        "B": "O(n log n)",
+        "C": "O(n)",
+        "D": "O(log n)"
+      },
+      "correctAnswer": "C",
+      "explanation": "The time complexity of finding the start of a cycle in a linked list with duplicate nodes using the modified fast and slow pointer technique is O(n), where n is the number of nodes in the list. This is because in the worst-case scenario, the algorithm needs to traverse the entire list to find the start of the cycle.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Which of the following is a benefit of using the fast and slow pointer technique in a real-time system?",
+      "options": {
+        "A": "Predictable performance",
+        "B": "Low latency",
+        "C": "High throughput",
+        "D": "All of the above"
+      },
+      "correctAnswer": "A",
+      "explanation": "The fast and slow pointer technique can provide predictable performance in a real-time system, which is critical for ensuring that the system meets its timing requirements. This is because the algorithm has a well-defined and predictable behavior, making it easier to analyze and optimize.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "How can you use the fast and slow pointer technique to implement a deadline scheduler?",
+      "options": {
+        "A": "By using a priority queue to schedule tasks",
+        "B": "By using a rate monotonic scheduler",
+        "C": "By using an earliest deadline first scheduler",
+        "D": "By using a least laxity first scheduler"
+      },
+      "correctAnswer": "C",
+      "explanation": "To implement a deadline scheduler using the fast and slow pointer technique, you can use an earliest deadline first scheduler. The fast pointer can be used to track the task with the earliest deadline, while the slow pointer can be used to track the task with the latest deadline.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the primary challenge of implementing the fast and slow pointer technique in a safety-critical system?",
+      "options": {
+        "A": "Handling concurrency issues",
+        "B": "Optimizing performance",
+        "C": "Reducing space complexity",
+        "D": "Ensuring fault tolerance"
+      },
+      "correctAnswer": "D",
+      "explanation": "The primary challenge of implementing the fast and slow pointer technique in a safety-critical system is ensuring fault tolerance. This requires careful consideration of error detection and correction, as well as fault containment and recovery, to ensure that the system remains safe and functional even in the presence of faults.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "How can you modify the fast and slow pointer technique to handle a linked list with varying node sizes?",
+      "options": {
+        "A": "By using a variable-size node data structure",
+        "B": "By using a fixed-size node data structure",
+        "C": "By using a dynamic memory allocation scheme",
+        "D": "By using a static memory allocation scheme"
+      },
+      "correctAnswer": "A",
+      "explanation": "To handle a linked list with varying node sizes, you can modify the fast and slow pointer technique by using a variable-size node data structure. This allows you to accommodate nodes of different sizes and optimize memory usage.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the time complexity of finding the start of a cycle in a linked list with varying node sizes using the modified fast and slow pointer technique?",
+      "options": {
+        "A": "O(n^2)",
+        "B": "O(n log n)",
+        "C": "O(n)",
+        "D": "O(log n)"
+      },
+      "correctAnswer": "C",
+      "explanation": "The time complexity of finding the start of a cycle in a linked list with varying node sizes using the modified fast and slow pointer technique is O(n), where n is the number of nodes in the list. This is because in the worst-case scenario, the algorithm needs to traverse the entire list to find the start of the cycle.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Which of the following is a benefit of using the fast and slow pointer technique in a data compression algorithm?",
+      "options": {
+        "A": "Improved compression ratio",
+        "B": "Faster compression time",
+        "C": "Reduced memory usage",
+        "D": "All of the above"
+      }
+    }
+  ]
+}
