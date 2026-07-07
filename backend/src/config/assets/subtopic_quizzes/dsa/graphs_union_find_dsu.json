@@ -1,0 +1,158 @@
+{
+  "topic": "Graphs - Union Find (DSU)",
+  "questions": [
+    {
+      "question": "What is the primary purpose of the Union Find algorithm?",
+      "options": {
+        "A": "To perform a depth-first search in a graph",
+        "B": "To find the connected components in a graph",
+        "C": "To unite two disjoint sets while maintaining the set identity",
+        "D": "To find the shortest path between two nodes"
+      },
+      "correctAnswer": "C",
+      "explanation": "The Union Find algorithm, also known as Disjoint Set Union (DSU), is primarily used to unite two disjoint sets while maintaining the set identity. This is done by keeping track of each element's representative (or parent) in the set.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the time complexity of the union operation in the Union Find algorithm?",
+      "options": {
+        "A": "O(1)",
+        "B": "O(log n)",
+        "C": "O(V^2)",
+        "D": "O(E log V)"
+      },
+      "correctAnswer": "A",
+      "explanation": "In the Union Find algorithm, the union operation has an average time complexity of O(α(n)), where α(n) is the inverse Ackermann function. In practice, the time complexity is considered constant, O(1).",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the difference between path compression and union by rank?",
+      "options": {
+        "A": "Path compression and union by rank are the same thing",
+        "B": "Path compression optimizes the tree while union by rank optimizes the path",
+        "C": "Path compression uses a stack while union by rank uses a queue",
+        "D": "Path compression is used for finding sets while union by rank is used for unioning sets"
+      },
+      "correctAnswer": "B",
+      "explanation": "Path compression optimizes the tree by compressing paths, while union by rank optimizes the path by choosing the tree with the higher rank for union. This improves the performance of the Union Find algorithm.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the role of a 'root' in the Union Find data structure?",
+      "options": {
+        "A": "To represent the parent of a node in the forest",
+        "B": "To represent the child of a node in the forest",
+        "C": "To represent the set containing multiple nodes",
+        "D": "To represent the graph as a whole"
+      },
+      "correctAnswer": "A",
+      "explanation": "In the Union Find data structure, the 'root' represents the parent of a node in the forest. If the root is equal to the current node, then it is the representative or root of the set.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is meant by a 'circle' in the context of the Union Find algorithm?",
+      "options": {
+        "A": "A cycle in the graph",
+        "B": "A path in the graph",
+        "C": "A set of connected nodes in the graph",
+        "D": "A loop in the Union Find data structure"
+      },
+      "correctAnswer": "A",
+      "explanation": "A 'circle' in the context of the Union Find algorithm is an operation that detects a cycle in the graph. This occurs when two paths from the same node in a graph meet at a common node, indicating a cycle.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Explain the purpose of the `Find` operation in the Union Find algorithm.",
+      "options": {
+        "A": "To find the parent of a node",
+        "B": "To find the rank of a node",
+        "C": "To find the size of a node",
+        "D": "To find the connected components in a graph"
+      },
+      "correctAnswer": "A",
+      "explanation": "The `Find` operation in the Union Find algorithm is used to find the parent of a node in the data structure. It traverses the tree upwards until it finds the representative or root of the set.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Describe how the Union Find algorithm handles path compression.",
+      "options": {
+        "A": "The Union Find algorithm always compresses paths",
+        "B": "The Union Find algorithm never compresses paths",
+        "C": "The Union Find algorithm compresses paths only during union",
+        "D": "The Union Find algorithm compresses paths only during find"
+      },
+      "correctAnswer": "D",
+      "explanation": "During the `Find` operation, the Union Find algorithm compresses paths by keeping track of the current node's representative or root. This compresses paths as we traverse upwards, reducing the number of nodes in the path.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How does the Union Find algorithm handle cycles in the graph?",
+      "options": {
+        "A": "It ignores cycles in the graph",
+        "B": "It detects cycles in the graph using the `Find` operation",
+        "C": "It detects cycles in the graph using the `Union` operation",
+        "D": "It raises an error when a cycle is detected"
+      },
+      "correctAnswer": "C",
+      "explanation": "The Union Find algorithm detects cycles in the graph using the `Union` operation. When two paths meet at a common node, it indicates a cycle in the graph.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the relationship between the path length and the number of steps in the Union Find algorithm?",
+      "options": {
+        "A": "The path length is equal to the number of steps",
+        "B": "The path length is greater than the number of steps",
+        "C": "The path length is less than the number of steps",
+        "D": "The path length has no relationship with the number of steps"
+      },
+      "correctAnswer": "C",
+      "explanation": "The path length is less than the number of steps in the Union Find algorithm. This occurs because path compression reduces the number of nodes in the path, making it shorter.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Explain the relationship between the rank and the size of a node in the Union Find algorithm.",
+      "options": {
+        "A": "The rank is always greater than the size",
+        "B": "The rank is always less than the size",
+        "C": "The rank has no relationship with the size",
+        "D": "The rank and size can be equal"
+      },
+      "correctAnswer": "B",
+      "explanation": "In the Union Find algorithm, the rank of a node is always less than or equal to its size. This property is used in the `Union` operation to maintain the property that for any node u that belongs to tree T and node v that belongs to tree T', the path from u to the root is shorter (in terms of edge and not node count) than the path from v to the root.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How does the Union Find algorithm handle the union of two nodes with the same parent?",
+      "options": {
+        "A": "It always merges the two nodes",
+        "B": "It never merges the two nodes",
+        "C": "It depends on the rank of the parent",
+        "D": "It depends on the size of the nodes"
+      },
+      "correctAnswer": "D",
+      "explanation": "If two nodes with the same parent are united, the larger node's size is combined with the smaller node's size, and the representative of the smaller node is updated to be the same as the larger node's representative or parent.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the role of the `root` variable in the Union Find algorithm?",
+      "options": {
+        "A": "To represent the parent of a node",
+        "B": "To represent the child of a node",
+        "C": "To represent the set containing multiple nodes",
+        "D": "To store the current root in the current find operation"
+      },
+      "correctAnswer": "D",
+      "explanation": "The `root` variable in the Union Find algorithm stores the current root of the set that contains the node that the `Find` operation is currently looking at. This is necessary for path compression in the `Find` operation.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How does the Union Find algorithm handle cycles using the `Find` operation?",
+      "options": {
+        "A": "It ignores cycles and always returns the last node",
+        "B": "It detects cycles using a separate loop and raises an error",
+        "C": "It detects cycles during the union operation",
+        "D": "It does not detect cycles, instead, always performs path compression"
+      }
+    }
+  ]
+}
