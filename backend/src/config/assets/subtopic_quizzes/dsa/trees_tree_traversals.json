@@ -1,0 +1,158 @@
+{
+  "topic": "Trees - Tree Traversals",
+  "questions": [
+    {
+      "question": "What is the time and space complexity of a pre-order tree traversal?",
+      "options": {
+        "A": "O(1) time and O(n) space",
+        "B": "O(n) time and O(n) space",
+        "C": "O(n) time and O(1) space",
+        "D": "O(n log n) time and O(n) space"
+      },
+      "correctAnswer": "A",
+      "explanation": "Pre-order tree traversal involves visiting the root, then the left subtree, and finally the right subtree. This operation is performed in a single pass, resulting in O(n) time complexity and O(1) additional space (excluding space required by recursion) due to constant additional space usage from method calls.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the main difference between pre-order and in-order tree traversals?",
+      "options": {
+        "A": "Pre-order visits the root before left child, whereas in-order visits the left child before the root and the right subtree.",
+        "B": "In-order visits the left child before the root, whereas in-order visits both children before the root.",
+        "C": "In-order visits both the left child and the right child before the root, whereas pre-order visits only the root.",
+        "D": "Pre-order visits both the left and right children before the root, whereas in-order visits the root before the left and right children."
+      },
+      "correctAnswer": "A",
+      "explanation": "The key difference between pre-order and in-order tree traversals lies in the order in which the nodes in the left subtree are visited in relation to the root. In pre-order traversal, the root is visited before the left child, whereas in in-order traversal, the left child is visited before the root.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What are the possible ways to traverse a binary tree?",
+      "options": {
+        "A": "Pre-order, in-order, and post-order traversals.",
+        "B": "Pre-order, in-order, post-order, and level-order traversals.",
+        "C": "DFS and BFS",
+        "D": "Traversal is only possible through level order."
+      },
+      "correctAnswer": "B",
+      "explanation": "Binary trees can be traversed using four distinct methods: pre-order, in-order, post-order, and level-order. Pre-order involves visiting the current node before its children, in-order visits the left child, then the current node, then the right child.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following algorithms is used for traversing a binary tree level by level?",
+      "options": {
+        "A": "Pre-order traversal",
+        "B": "In-order traversal",
+        "C": "Post-order traversal",
+        "D": "Breadth First Search (BFS)"
+      },
+      "correctAnswer": "D",
+      "explanation": "Level-order traversal of a binary tree is equivalent to performing a Breadth-First Search (BFS). BFS visits the nodes of the binary tree level by level, starting from the root and moving outwards.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which traversal method visits the left subtree first, then the current node, and finally the right subtree?",
+      "options": {
+        "A": "Pre-order Traversal",
+        "B": "In-order Traversal",
+        "C": "Post-order Traversal",
+        "D": "Depth-First Search (DFS)"
+      },
+      "correctAnswer": "B",
+      "explanation": "In-order traversal visits the left subtree, followed by the root node, and then finally the right subtree. This method provides a sorted order when traversing a binary search tree.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How does Post-order tree traversal differ from Pre-order tree traversal?",
+      "options": {
+        "A": "Post-order visits the left child before the right child, whereas pre-order visits the root before the left child.",
+        "B": "In post-order traversal, the left child is visited before the right child, whereas pre-order visits the root first.",
+        "C": "Post-order visits the left child before the right child, whereas pre-order visits the root before the left child.",
+        "D": "Post-order visits both the left child and the right child before the root, whereas pre-order only visits the root."
+      },
+      "correctAnswer": "C",
+      "explanation": "Post-order traversal visits the left child before the right child before visiting the root. This is different from pre-order traversal where the root is visited before the left child.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the primary purpose of In-Order Tree Traversal in a Binary Search Tree?",
+      "options": {
+        "A": "For sorting and arranging nodes in ascending order.",
+        "B": "For visiting nodes level by level.",
+        "C": "For traversing the tree in post-order.",
+        "D": "For finding the maximum and minimum values."
+      },
+      "correctAnswer": "A",
+      "explanation": "The primary purpose of In-Order Tree Traversal in a Binary Search Tree is to arrange the nodes in ascending order. This occurs because the left child nodes are always less than their parent, and the right child nodes are always more than their parent.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "When traversing a binary tree using Depth-First Search (DFS), what happens when we encounter a null child?",
+      "options": {
+        "A": "We do not visit the child.",
+        "B": "We continue to traverse other children but return to the parent eventually.",
+        "C": "We terminate the DFS traversal.",
+        "D": "We ignore the null child."
+      },
+      "correctAnswer": "B",
+      "explanation": "In DFS, if a node has no children, we can return immediately but if there are siblings we have to visit, we can still continue to other child nodes until we have exhausted all available nodes.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the average case time complexity of traversing a balanced binary search tree using In-Order traversal?",
+      "options": {
+        "A": "O(log n)",
+        "B": "O(n)",
+        "C": "O(log n log n)",
+        "D": "O(n log n)"
+      },
+      "correctAnswer": "A",
+      "explanation": "A balanced binary search tree has a height of O(log n) so In-Order traversal visits n nodes (where n is the size of the tree). Hence, the average case time complexity is given by the number of operations, which is O(n), and n is O(log n) as it's a binary tree.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Which of the following can be used to determine the correctness of an In-Order traversal algorithm in a binary search tree?",
+      "options": {
+        "A": "By comparing the traversal order with a pre-order or level-order traversal.",
+        "B": "By checking the order in which each node is visited.",
+        "C": "By verifying if it visits all nodes in a binary search tree.",
+        "D": "All of the above."
+      },
+      "correctAnswer": "D",
+      "explanation": "The correctness of an algorithm for in-order traversal can be tested by confirming that it follows the correct order of node visits in a binary search tree. This also involves checking if all nodes are visited. Comparing it with pre-order or level-order traversal is a way to verify this behavior.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "For an n-node binary tree, how many traversals are required using Breadth-First Search (BFS) when the root is given a weight of 1?",
+      "options": {
+        "A": "n-1",
+        "B": "n-2",
+        "C": "n",
+        "D": "2^n"
+      },
+      "correctAnswer": "C",
+      "explanation": "Since BFS performs traversals level by level, we visit every node exactly once. Hence in a tree with n nodes, BFS performs exactly n traversals.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How many operations are performed in a Breadth-First Search (BFS) on a binary tree with n nodes?",
+      "options": {
+        "A": "n*log(n)",
+        "B": "n^2",
+        "C": "n+2",
+        "D": "n"
+      },
+      "correctAnswer": "D",
+      "explanation": "Each node in the tree is visited exactly once, which means we need to visit the n nodes. Since this operation is constant time (it does not depend on input size) then it's simply n operations.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Given that a binary tree has a maximum height of 3 and contains n nodes, how many nodes must it have in order to achieve that height?",
+      "options": {
+        "A": "n >= 4",
+        "B": "n = 6",
+        "C": "n >= 5",
+        "D": "n = 4"
+      }
+    }
+  ]
+}
