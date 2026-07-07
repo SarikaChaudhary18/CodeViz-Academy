@@ -1,0 +1,194 @@
+{
+  "topic": "AI - Embeddings",
+  "questions": [
+    {
+      "question": "What are word embeddings?",
+      "options": {
+        "A": "They are a way to represent words as vectors in a high-dimensional space",
+        "B": "They are a type of neural network architecture",
+        "C": "They are used for text classification tasks only",
+        "D": "They are similar to one-hot encoding"
+      },
+      "correctAnswer": "A",
+      "explanation": "Word embeddings are a method of representing words as dense vectors in a high-dimensional space, allowing for semantic relationships between words to be captured.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is a key challenge in word embedding methods like Word2Vec?",
+      "options": {
+        "A": "Handling out-of-vocabulary words",
+        "B": "Capturing nuances in context-dependent word meanings",
+        "C": "Incorporating synonyms and antonyms",
+        "D": "All of the above"
+      },
+      "correctAnswer": "D",
+      "explanation": "Word embedding methods like Word2Vec face several challenges, including handling out-of-vocabulary words, capturing nuances in context-dependent word meanings, and incorporating synonyms and antonyms.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Which of the following is a disadvantage of using pre-trained word embeddings?",
+      "options": {
+        "A": "They require less training data",
+        "B": "They are not specific to the task or domain",
+        "C": "They can be used directly in models",
+        "D": "All of the above"
+      },
+      "correctAnswer": "B",
+      "explanation": "Pre-trained word embeddings may not capture task-specific or domain knowledge, making them less effective for certain applications.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How do Sentence-BERT (SBERT) embeddings differ from regular BERT embeddings?",
+      "options": {
+        "A": "They use a different architecture",
+        "B": "They use a different training objective",
+        "C": "They are designed for sentence-level representation",
+        "D": "All of the above"
+      },
+      "correctAnswer": "C",
+      "explanation": "Sentence-BERT embeddings are specifically designed for tasks requiring sentence-level representation, whereas regular BERT embeddings can be used for various tasks.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the primary benefit of using knowledge graph embeddings?",
+      "options": {
+        "A": "They can be used for node classification tasks only",
+        "B": "They can capture entity relationships and context",
+        "C": "They are computationally expensive",
+        "D": "They require large amounts of data"
+      },
+      "correctAnswer": "B",
+      "explanation": "Knowledge graph embeddings are designed to capture complex entity relationships and contextual information, making them useful for various applications.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How do entity embeddings differ from word embeddings?",
+      "options": {
+        "A": "They are one-hot encoded",
+        "B": "They require less training data",
+        "C": "They capture contextual relationships between entities",
+        "D": "All of the above"
+      },
+      "correctAnswer": "C",
+      "explanation": "Entity embeddings are designed to capture contextual relationships between entities, whereas word embeddings primarily focus on local semantic relationships.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Which of the following is not a technique used in word embedding methods?",
+      "options": {
+        "A": "Matrix factorization",
+        "B": "Random projections",
+        "C": "Hierarchical clustering",
+        "D": "Deep learning"
+      },
+      "correctAnswer": "C",
+      "explanation": "Hierarchical clustering is not a direct technique used in word embedding methods, although it may be employed as a preprocessing step or for visualization.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "In the context of graph neural networks, what do node embeddings represent?",
+      "options": {
+        "A": "The node's degree centrality",
+        "B": "The node's community membership",
+        "C": "The node's intrinsic properties and relationships",
+        "D": "The edge weights between nodes"
+      },
+      "correctAnswer": "C",
+      "explanation": "Node embeddings in graph neural networks represent the intrinsic properties and relationships of each node, capturing both local and global information.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the advantage of using graph attention mechanism in graph neural networks?",
+      "options": {
+        "A": "It can handle very large graphs easily",
+        "B": "It can focus on relevant nodes",
+        "C": "It can capture long-range dependencies",
+        "D": "All of the above"
+      },
+      "correctAnswer": "D",
+      "explanation": "The graph attention mechanism in graph neural networks can handle very large graphs, focus on relevant nodes, and capture long-range dependencies, making it a powerful tool for graph-level tasks.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Which of the following is not a property of vector space representations?",
+      "options": {
+        "A": "It can capture semantic relationships",
+        "B": "It can be used for visualization",
+        "C": "It can be used for clustering",
+        "D": "It is inherently probabilistic"
+      },
+      "correctAnswer": "D",
+      "explanation": "Vector space representations are typically deterministic and do not inherently capture probabilistic information.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "How do graph neural networks (GNNs) adapt to changing graph structures?",
+      "options": {
+        "A": "They use a static graph representation",
+        "B": "They use a dynamic graph representation",
+        "C": "They learn to generate a new graph",
+        "D": "They update the graph attention weights"
+      },
+      "correctAnswer": "D",
+      "explanation": "Graph neural networks learn to update the graph attention weights in response to changes in the graph structure, enabling them to adapt to dynamic environments.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the key difference between graph neural networks (GNNs) and graph autoencoders (GAEs)?",
+      "options": {
+        "A": "GNNs are designed for node-level tasks",
+        "B": "GAEs are designed for graph-level tasks",
+        "C": "GNNs are trained with a reconstruction loss",
+        "D": "GAEs are trained with a prediction loss"
+      },
+      "correctAnswer": "C",
+      "explanation": "Graph neural networks are typically trained with a prediction loss for classification or regression tasks, whereas graph autoencoders are trained with a reconstruction loss to learn a compact graph representation.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "In the context of graph neural networks (GNNs), what is meant by 'equivariance to graph permutations'?",
+      "options": {
+        "A": "The GNN remains unchanged under different permutations of nodes",
+        "B": "The GNN captures node-specific information only",
+        "C": "The GNN ignores edge weights",
+        "D": "The GNN uses a separate representation for nodes"
+      },
+      "correctAnswer": "A",
+      "explanation": "Equivariance to graph permutations ensures that the GNN's output remains invariant under different permutations of the nodes, capturing structural properties of the graph.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "How do graph attention mechanisms (GATs) differ from traditional GNNs?",
+      "options": {
+        "A": "GATs use a different architecture",
+        "B": "GATs use a attention mechanism",
+        "C": "GATs are designed for node-level tasks only",
+        "D": "GATs are designed for edge-level tasks only"
+      },
+      "correctAnswer": "B",
+      "explanation": "Graph attention mechanisms employ an attention mechanism to selectively focus on relevant nodes and edges, making them effective for capturing complex relationships in the graph.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the primary challenge in training large-scale graph neural networks (GNNs)?",
+      "options": {
+        "A": "Computational complexity of the graph",
+        "B": "Scalability of the training process",
+        "C": "Handling edge and node heterogeneities",
+        "D": "All of the above"
+      },
+      "correctAnswer": "D",
+      "explanation": "Large-scale graph neural networks face several challenges, including computational complexity, scalability, and handling edge and node heterogeneities.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Which of the following is not a key benefit of using graph neural networks (GNNs) for node classification tasks?",
+      "options": {
+        "A": "Improved accuracy",
+        "B": "Efficient use of node features",
+        "C": "Handling high degree nodes",
+        "D": "Incorporating meta learning"
+      }
+    }
+  ]
+}
