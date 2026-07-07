@@ -1,0 +1,180 @@
+{
+  "topic": "Trees - Heap",
+  "questions": [
+    {
+      "question": "What is a heap data structure?",
+      "options": {
+        "A": "A type of tree data structure used for sorting and priority queuing.",
+        "B": "A type of graph data structure used for finding shortest paths.",
+        "C": "A type of array used for storing data in a sequence.",
+        "D": "A type of database used for storing large amounts of data."
+      },
+      "correctAnswer": "A",
+      "explanation": "A heap is a specialized tree-based data structure that satisfies the heap property, where the parent node is either greater than its child nodes (max heap) or less than its child nodes (min heap).",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the time complexity of inserting a node into a max heap?",
+      "options": {
+        "A": "O(log n)",
+        "B": "O(n)",
+        "C": "O(1)",
+        "D": "O(Log n)^2"
+      },
+      "correctAnswer": "A",
+      "explanation": "When inserting a node into a max heap, the node needs to be bubble-sorted up to its correct position. This requires at most log n steps, resulting in a time complexity of O(log n).",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the purpose of heapify in heap data structure?",
+      "options": {
+        "A": "To delete a node from the heap.",
+        "B": "To insert a node into the heap.",
+        "C": "To restore the heap property after deletion or insertion of a node.",
+        "D": "To sort an array using the heap algorithm."
+      },
+      "correctAnswer": "C",
+      "explanation": "Heapify is a process that ensures the heap property is maintained after a node is inserted or deleted from the heap. It may involve swapping nodes to ensure that the parent-child relationship is preserved.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "A min-heap is defined as a binary heap where the parent node is always?",
+      "options": {
+        "A": "Greater than or equal to its child nodes.",
+        "B": "Less than its child nodes.",
+        "C": "Either less than or equal to its child nodes.",
+        "D": "Either greater than or equal to its child nodes."
+      },
+      "correctAnswer": "B",
+      "explanation": "A min-heap is a specific type of binary heap where the parent node is less than its child nodes. This ensures that the smallest element is always at the root of the heap.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the time complexity of finding the maximum element in a max-heap?",
+      "options": {
+        "A": "O(n)",
+        "B": "O(log n)",
+        "C": "O(1)",
+        "D": "O(Log n)^2"
+      },
+      "correctAnswer": "C",
+      "explanation": "The maximum element in a max-heap is always at the root, so finding it requires constant time.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How does the heap property handle ties when the child nodes are equal in value?",
+      "options": {
+        "A": "The heap property considers the child node with the higher index as the greater value.",
+        "B": "The heap property considers the child node with the lower index as the smaller value.",
+        "C": "The heap property breaks the tie arbitrarily and does not change the heap.",
+        "D": "The heap property does not handle ties in this case."
+      },
+      "correctAnswer": "B",
+      "explanation": "When the child nodes are equal, the heap property considers the child node with the lower index as the smaller value. This ensures the heap property is maintained.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Why is it not recommended to implement a heap using a list data structure?",
+      "options": {
+        "A": "Because linked lists are slower than arrays.",
+        "B": "Because it is harder to maintain the heap property using a list.",
+        "C": "Because the parent-child relationship requires more complex arithmetic operations.",
+        "D": "Because it results in slower heap operation performance."
+      },
+      "correctAnswer": "C",
+      "explanation": "To maintain the parent-child relationship in a heap, we need to perform arithmetic operations like calculating parent and child indices. This can be inefficient using a list data structure, as it requires more complex arithmetic operations.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the time complexity of deleting the root node from a max-heap?",
+      "options": {
+        "A": "O(n)",
+        "B": "O(log n)",
+        "C": "O(1)",
+        "D": "O(Log n)^2"
+      },
+      "correctAnswer": "B",
+      "explanation": "When deleting the root node from a max-heap, we need to heapify the tree to restore the heap property. This involves swapping nodes and requires at most log n steps, resulting in a time complexity of O(log n).",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the worst-case time complexity of building a heap from an array?",
+      "options": {
+        "A": "O(n)",
+        "B": "O(log n)",
+        "C": "O(1)",
+        "D": "O(Log n)^2"
+      },
+      "correctAnswer": "A",
+      "explanation": "The worst-case scenario occurs when the array is already sorted. In this case, we need to iterate through the entire array to build the heap, resulting in a time complexity of O(n).",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Can a min-heap be represented as a max-heap?",
+      "options": {
+        "A": "Yes, by negating all node values.",
+        "B": "Yes, by flipping all node values."
+      },
+      "correctAnswer": "A",
+      "explanation": "By negating all node values in a min-heap, we can represent it as a max-heap, where the parent node is greater than its child nodes.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How does the heap data structure enable efficient sorting?",
+      "options": {
+        "A": "By repeatedly removing the maximum element and adding it to the sorted list.",
+        "B": "By repeatedly removing the minimum element and adding it to the sorted list.",
+        "C": "By building a heap and performing a linear sort.",
+        "D": "By using a separate sorting algorithm."
+      },
+      "correctAnswer": "A",
+      "explanation": "Heapsort is a comparison-based sorting algorithm that repeatedly removes the maximum element from the heap and adds it to the sorted list. This ensures efficient sorting of elements.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Can a dynamic array be used as a heap?",
+      "options": {
+        "A": "Yes, as a max-heap or min-heap.",
+        "B": "No, due to lack of flexibility."
+      },
+      "correctAnswer": "A",
+      "explanation": "A dynamic array can be used as a heap, but it may require additional overhead for handling growth and shrinkages. However, it can be effective for both max-heap and min-heap implementations.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How does the min heap implement its root node as the smallest value?",
+      "options": {
+        "A": "By always placing the smallest value at the root.",
+        "B": "By maintaining a separate min-value index.",
+        "C": "By maintaining a list of smallest values."
+      },
+      "correctAnswer": "B",
+      "explanation": "The min heap maintains a separate index for the smallest value, which is updated when a new smaller value is added. This ensures the root node always contains the smallest value.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "A max heap may have which of the following characteristics?",
+      "options": {
+        "A": "The root is the largest element.",
+        "B": "The heap property holds for all nodes.",
+        "C": "The height of the tree is always greater or equal than the maximum height of a complete binary tree of the same order.",
+        "D": "The maximum element is always at the root."
+      },
+      "correctAnswer": "D",
+      "explanation": "A max heap is a tree-based data structure where the parent node is greater than its child nodes. By definition, the maximum element is always at the root.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "The heap data structure is used primarily for?",
+      "options": {
+        "A": "Sorting elements in ascending order.",
+        "B": "Finding the maximum element in an array.",
+        "C": "Implementing a priority queue.",
+        "D": "Both sorting and priority queueing."
+      },
+      "correctAnswer": "D",
+      "explanation": "Heaps can be used for both sorting elements in ascending order and implementing a priority queue, where elements are ordered by priority.",
+      "difficulty": "Medium"
+    }
+  ]
+}
