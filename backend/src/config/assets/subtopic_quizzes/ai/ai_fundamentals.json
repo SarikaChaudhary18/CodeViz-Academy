@@ -1,0 +1,230 @@
+{
+  "topic": "AI - AI Fundamentals",
+  "questions": [
+    {
+      "question": "What is the primary function of Artificial Intelligence?",
+      "options": {
+        "A": "To imitate human behavior",
+        "B": "To make decisions based on data analysis",
+        "C": "To automate tedious tasks",
+        "D": "To create original art"
+      },
+      "correctAnswer": "C",
+      "explanation": "AI is used to automate tasks that are repetitive and can be done by machines quickly and accurately.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What type of learning requires labeled training data?",
+      "options": {
+        "A": "Supervised",
+        "B": "Unsupervised",
+        "C": "Reinforcement",
+        "D": "Semi-Supervised"
+      },
+      "correctAnswer": "A",
+      "explanation": "Supervised learning requires labeled training data to learn and make predictions or decisions.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the term for a machine's ability to improve its performance on a task over time?",
+      "options": {
+        "A": "Machine Learning",
+        "B": "Deep Learning",
+        "C": "Artificial General Intelligence",
+        "D": "Transfer Learning"
+      },
+      "correctAnswer": "A",
+      "explanation": "Machine learning enables machines to improve their performance on a task over time through experience and learning.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which AI concept involves an agent learning through trial and error to maximize a reward?",
+      "options": {
+        "A": "Supervised Learning",
+        "B": "Unsupervised Learning",
+        "C": "Reinforcement Learning",
+        "D": "Semi-Supervised Learning"
+      },
+      "correctAnswer": "C",
+      "explanation": "Reinforcement learning involves an agent learning through trial and error to maximize a reward signal.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What type of neural network is a multilayer perceptron?",
+      "options": {
+        "A": "Feedforward",
+        "B": "Convolutional",
+        "C": "Recurrent",
+        "D": "Autoencoder"
+      },
+      "correctAnswer": "A",
+      "explanation": "A multilayer perceptron is a type of feedforward neural network that consists of multiple layers of interconnected nodes.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the term for a neural network that can modify its connections and weights?",
+      "options": {
+        "A": "RNN",
+        "B": "LSTM",
+        "C": "ANN",
+        "D": "DNN"
+      },
+      "correctAnswer": "C",
+      "explanation": "A traditional feedforward neural network (ANN) can modify its connections and weights.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What type of machine learning algorithm is used for image classification?",
+      "options": {
+        "A": "Decision Tree",
+        "B": "Random Forest",
+        "C": "Support Vector Machine",
+        "D": "Convolutional Neural Network"
+      },
+      "correctAnswer": "D",
+      "explanation": "Convolutional neural networks (CNNs) are commonly used for image classification tasks due to their ability to handle spatial hierarchies of features.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Which AI concept involves creating a model that can learn to classify inputs into predefined categories?",
+      "options": {
+        "A": "Classification",
+        "B": "Regression",
+        "C": "Clustering",
+        "D": "Dimensionality Reduction"
+      },
+      "correctAnswer": "A",
+      "explanation": "Classification involves creating a model that can learn to classify inputs into predefined categories to predict outcomes.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What type of AI system can adapt to new situations and tasks without extensive retraining?",
+      "options": {
+        "A": "Narrow or Weak AI",
+        "B": "Artificial General Intelligence",
+        "C": "Superintelligence",
+        "D": "Semi-Supervised Learning"
+      },
+      "correctAnswer": "A",
+      "explanation": "Narrow or weak AI systems can adapt to new situations and tasks without extensive retraining.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What neural network type is capable of processing sequential data such as speech or text?",
+      "options": {
+        "A": "Convolutional Neural Network",
+        "B": "Recurrent Neural Network",
+        "C": "Autoencoder",
+        "D": "Generative Adversarial Network"
+      },
+      "correctAnswer": "B",
+      "explanation": "Recurrent neural networks (RNNs) are capable of processing sequential data such as speech or text.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Which type of neural network is commonly used for generating new, synthetic data?",
+      "options": {
+        "A": "Convolutional Neural Network",
+        "B": "Generative Adversarial Network",
+        "C": "Recurrent Neural Network",
+        "D": "Autoencoder"
+      },
+      "correctAnswer": "B",
+      "explanation": "Generative adversarial networks (GANs) are commonly used for generating new, synthetic data.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What type of machine learning problem involves predicting a continuous target variable?",
+      "options": {
+        "A": "Classification",
+        "B": "Regression",
+        "C": "Clustering",
+        "D": "Dimensionality Reduction"
+      },
+      "correctAnswer": "B",
+      "explanation": "Regression involves predicting a continuous target variable.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Which type of reinforcement learning involves a critic network that predicts the expected return at each state?",
+      "options": {
+        "A": "Actor-Critic",
+        "B": "Deep Deterministic Policy Gradients",
+        "C": "Proximal Policy Optimization",
+        "D": "Semi-gradient TD Learning"
+      },
+      "correctAnswer": "A",
+      "explanation": "Actor-critic algorithms involve a critic network that predicts the expected return at each state.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the term for the phenomenon where a model becomes overly confident in its predictions due to memorization of patterns?",
+      "options": {
+        "A": "Overfitting",
+        "B": "Underfitting",
+        "C": "Regularization",
+        "D": "Hyperparameter Tuning"
+      },
+      "correctAnswer": "A",
+      "explanation": "Overfitting occurs when a model becomes overly confident in its predictions due to memorization of patterns.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Which type of neural network is commonly used for image generation and style transfer?",
+      "options": {
+        "A": "Convolutional Neural Network",
+        "B": "Generative Adversarial Network",
+        "C": "Recurrent Neural Network",
+        "D": "Autoencoder"
+      },
+      "correctAnswer": "B",
+      "explanation": "Generative adversarial networks (GANs) are commonly used for image generation and style transfer.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What type of machine learning problem involves clustering similar data points into groups?",
+      "options": {
+        "A": "Classification",
+        "B": "Regression",
+        "C": "Clustering",
+        "D": "Dimensionality Reduction"
+      },
+      "correctAnswer": "C",
+      "explanation": "Clustering involves grouping similar data points into clusters.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Which type of neural network is capable of handling multiple inputs and outputs simultaneously?",
+      "options": {
+        "A": "Feedforward Neural Network",
+        "B": "Recurrent Neural Network",
+        "C": "Convolutional Neural Network",
+        "D": "Graph Neural Network"
+      },
+      "correctAnswer": "D",
+      "explanation": "Graph neural networks (GNNs) are capable of handling multiple inputs and outputs simultaneously.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What type of machine learning algorithm is used for dimensionality reduction in high-dimensional data?",
+      "options": {
+        "A": "Principal Component Analysis",
+        "B": "t-SNE",
+        "C": "Autoencoders",
+        "D": "Gradient Boosting"
+      },
+      "correctAnswer": "A",
+      "explanation": "Principal Component Analysis (PCA) is commonly used for dimensionality reduction in high-dimensional data.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Which type of reinforcement learning involves learning to predict the expected return at each state?",
+      "options": {
+        "A": "Actor-Critic",
+        "B": "Deep Deterministic Policy Gradients",
+        "C": "Proximal Policy Optimization",
+        "D": "Q-Learning"
+      }
+    }
+  ]
+}
