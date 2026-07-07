@@ -1,0 +1,161 @@
+{
+  "topic": "AI - Prompt Engineering",
+  "questions": [
+    {
+      "question": "What is the primary goal of prompt engineering in AI model training?",
+      "options": {
+        "A": "To develop the AI model's ability to recognize patterns",
+        "B": "To create more descriptive and specific input prompts",
+        "C": "To improve the accuracy of the AI model's output",
+        "D": "To increase the computational resources required for AI model training"
+      },
+      "correctAnswer": "B",
+      "explanation": "Prompt engineering aims to design input prompts that elicit the desired output from AI models. This typically involves crafting clear, concise, and specific language to guide the AI's understanding and response.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the difference between an open-ended prompt and a constrained prompt?",
+      "options": {
+        "A": "Constrained prompts are more specific and open-ended prompts are less descriptive",
+        "B": "Open-ended prompts are more restrictive and constrained prompts allow for creative responses",
+        "C": "Constrained prompts provide more flexibility in the AI model's response and open-ended prompts limit the model's output",
+        "D": "Open-ended prompts are used for multi-turn conversations and constrained prompts are used for single-turn conversations"
+      },
+      "correctAnswer": "B",
+      "explanation": "A constrained prompt provides specific guidance to the AI model, limiting its output and ensuring a precise response. In contrast, open-ended prompts offer more freedom, inviting the AI model to provide a creative or diverse response.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which prompt engineering technique focuses on identifying and mitigating bias in AI model outputs?",
+      "options": {
+        "A": "Prompt filtering",
+        "B": "Prompt optimization",
+        "C": "Prompt debiasing",
+        "D": "Prompt personalization"
+      },
+      "correctAnswer": "C",
+      "explanation": "Prompt debiasing is a crucial technique in AI engineering, aimed at removing or minimizing bias from AI model outputs. This involves designing and refining prompts to ensure they do not introduce or perpetuate unfair or discriminatory attitudes or outcomes.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the purpose of using multi-modality in prompt engineering?",
+      "options": {
+        "A": "To handle large volumes of user input",
+        "B": "To enable users to interact with AI models through various interfaces",
+        "C": "To improve the diversity of AI model responses",
+        "D": "To enhance the accuracy of AI model outputs"
+      },
+      "correctAnswer": "B",
+      "explanation": "Multi-modality involves incorporating various input channels, such as text, images, audio or even human-computer interactive interfaces to provide more comprehensive and user-centric information for AI model training.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following is NOT a characteristic of a well-designed prompt?",
+      "options": {
+        "A": "Specific and clear language",
+        "B": "Contextualization and grounding",
+        "C": "Conversational flow and turn-taking",
+        "D": "Unstructured and ambiguous language"
+      },
+      "correctAnswer": "D",
+      "explanation": "A well-designed prompt should be specific, clear, and well-structured to elicit the desired response from the AI model. In contrast, an unstructured and ambiguous prompt is more likely to confuse or mislead the AI model.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What is the difference between a retrieval-based and a generative-based AI model?",
+      "options": {
+        "A": "Retrieval-based models rely on pre-existing data, while generative models create novel responses",
+        "B": "Generative models require larger datasets and more computational resources than retrieval-based models",
+        "C": "Retrieval-based models are better suited for short-form answers and generative models are better suited for long-form essays",
+        "D": "Generative models are used for text classification tasks and retrieval-based models are used for sentiment analysis"
+      },
+      "correctAnswer": "C",
+      "explanation": "Retrieval-based models rely on pre-existing data to respond to user queries, while generative models create original text based on the context and information provided. Generative models are often more versatile but require larger datasets.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Which of the following is an advantage of using multi-parallel prompts?",
+      "options": {
+        "A": "Increased interpretability of AI model outputs",
+        "B": "Improved generalizability of AI model learning",
+        "C": "Enhanced creativity in AI model responses",
+        "D": "Better contextualization of input information"
+      },
+      "correctAnswer": "B",
+      "explanation": "Multi-parallel prompts involve presenting the AI model with multiple, diverse prompt types in parallel, which helps it learn to generalize across various input formats. This increases the AI model's adaptability and flexibility.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Which prompt design feature is particularly well-suited for facilitating creative and divergent thinking in AI models?",
+      "options": {
+        "A": "Specificity and precision",
+        "B": "Generality and flexibility",
+        "C": "Relevance and coherence",
+        "D": "Depth and accuracy"
+      },
+      "correctAnswer": "B",
+      "explanation": "Generality and flexibility in prompts invite AI models to explore novel and creative solutions. By providing more freedom to the AI model, prompt designers can encourage divergent thinking and innovative responses.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the primary distinction between a 'soft' and a 'cold start' prompt?",
+      "options": {
+        "A": "Soft start prompts assume knowledge of the topic, while cold start prompts do not",
+        "B": "Soft start prompts are used in formal settings, while cold start prompts are used in casual conversations",
+        "C": "Soft start prompts require the AI model to respond immediately, while cold start prompts allow for deliberation",
+        "D": "Soft start prompts prioritize understanding and context, while cold start prompts prioritize speed and efficiency"
+      },
+      "correctAnswer": "D",
+      "explanation": "A soft start prompt assumes some basic understanding of the topic and aims to facilitate a productive conversation. In contrast, a cold start prompt starts from a 'clean slate' and focuses on rapidly getting the conversation started.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the name of the prompt engineering paradigm that involves using analogies and metaphors to facilitate AI model understanding?",
+      "options": {
+        "A": "Contextual analogical learning",
+        "B": "Concept-grounded cognition",
+        "C": "Cognitive grounding",
+        "D": "Analogical learning"
+      },
+      "correctAnswer": "B",
+      "explanation": "Concept-grounded cognition involves teaching AI models through metaphors, analogies, and other cognitive tools to increase their ability to understand and generalize from a vast range of input data.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "Which prompt engineering technique helps to evaluate and refine the quality of an AI model's output?",
+      "options": {
+        "A": "Prompt filtering",
+        "B": "Prompt pruning",
+        "C": "Prompt tuning",
+        "D": "Prompt benchmarking"
+      },
+      "correctAnswer": "D",
+      "explanation": "Prompt benchmarking involves evaluating and comparing the performance of AI models on a range of tasks, providing insights into the effectiveness and relevance of the prompts used during training.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the primary goal of using self-supervised learning with prompts?",
+      "options": {
+        "A": "To optimize the prompt itself",
+        "B": "To fine-tune the AI model on a smaller set of labels",
+        "C": "To encourage exploration in the AI model",
+        "D": "To remove explicit task definitions from the prompt"
+      },
+      "correctAnswer": "C",
+      "explanation": "Self-supervised learning with prompts helps to encourage AI model exploration and understanding of context and patterns, rather than focusing solely on the explicit task or label.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "What is the distinction between a 'knowledge retrieval' and an 'inference engine'?",
+      "options": {
+        "A": "Inference engines perform reasoning and inference, while knowledge retrieval involves extracting pre-existing knowledge",
+        "B": "Inference engines involve multi-modal interaction with user data, while knowledge retrieval involves retrieving knowledge from pre-existing databases",
+        "C": "Inference engines are used for short-form answers, while inference engines are used for long-form responses",
+        "D": "Knowledge retrieval is better suited for sentiment analysis tasks, while inference engines are better suited for text classification"
+      },
+      "correctAnswer": "A",
+      "explanation": "A knowledge retrieval model focuses on extracting specific, existing knowledge, while an inference engine uses reasoning and inference to derive new insights, make connections between ideas, and generate novel responses.",
+      "difficulty": "Hard"
+    }
+  ]
+}
