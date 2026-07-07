@@ -1,0 +1,149 @@
+{
+  "topic": "Stacks - Monotonic Stack",
+  "questions": [
+    {
+      "question": "A monotonic stack is a type of stack where elements are added and removed in a specific order.",
+      "options": {
+        "A": "True",
+        "B": "False",
+        "C": "It's a data structure with LIFO property",
+        "D": "It's a data structure with FILO property"
+      },
+      "correctAnswer": "A",
+      "explanation": "A monotonic stack is indeed a type of stack where elements are added and removed in a specific order.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Which of the following is a key property of a monotonic stack?",
+      "options": {
+        "A": "Elements are added and removed in random order",
+        "B": "Elements are added and removed in a way that the stack always increases in value",
+        "C": "Elements are added and removed in a way that the stack always decreases in value",
+        "D": "Elements are added and removed in a way that the stack remains unchanged"
+      },
+      "correctAnswer": "C",
+      "explanation": "A monotonic stack is a type of stack where the elements are added and removed in a way that the stack always decreases in value.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "A developer is trying to solve a problem using a monotonic stack, but they keep getting incorrect results. Which of the following might be the reason?",
+      "options": {
+        "A": "They aren't using a stack correctly",
+        "B": "They aren't using a monotonic stack correctly",
+        "C": "The problem doesn't need a monotonic stack to solve it",
+        "D": "The problem is unsolvable"
+      },
+      "correctAnswer": "B",
+      "explanation": "If a developer is trying to use a monotonic stack but isn't using it correctly, they might get incorrect results. A monotonic stack is a specific type of stack that requires a specific order of addition and removal.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "A company wants to implement a system to manage their inventory using a monotonic stack data structure. What type of operations would they be interested in?",
+      "options": {
+        "A": "Add elements at the beginning and remove elements from the end",
+        "B": "Add elements at the end and remove elements from the beginning",
+        "C": "Add elements at the end and remove elements from the end",
+        "D": "Add elements at the beginning and remove elements from the beginning"
+      },
+      "correctAnswer": "C",
+      "explanation": "A monotonic stack typically involves adding elements at the end and removing elements from the end. This is in a way that the stack always decreases in value. This type of behavior is typical of a Last-In-First-Out (LIFO) stack.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "Write a pseudocode for implementing a monotonic stack. Assume you have a function `push(element)` to add an element, a function `pop()` to remove an element, and a function `isEmpty()` to check if the stack is empty.",
+      "options": {
+        "A": "Pseudocode implementation... ",
+        "B": "Pseudocode implementation... ",
+        "C": "Pseudocode implementation... ",
+        "D": "Pseudocode implementation... "
+      },
+      "correctAnswer": "C",
+      "explanation": "Here's a possible implementation of a monotonic stack using pseudocode:\n```while not isEmpty(stk):\n    temp = pop(stk)\n    if temp >= top(stk):\n        stk.push(temp)\n```\nThis code keeps removing elements from the stack and adding them back if they are less than or equal to the top element.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "Why would you want to use a monotonic stack in a real-world application?",
+      "options": {
+        "A": "To process a large amount of data quickly",
+        "B": "To solve a mathematical problem that requires a stack",
+        "C": "To implement a LIFO data structure",
+        "D": "To maintain a sorted order of elements"
+      },
+      "correctAnswer": "C",
+      "explanation": "You might want to use a monotonic stack in a real-world application if you need to implement a Last-In-First-Out (LIFO) data structure. This data structure can be useful for maintaining a sorted order of elements, but it can be slow for large datasets.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "A monotonic stack is a type of data structure that can help you maintain a sorted order of elements. Which of the following is a benefit of using a monotonic stack?",
+      "options": {
+        "A": "It can process a large amount of data quickly",
+        "B": "It can solve mathematical problems that require a stack",
+        "C": "It can maintain a sorted order of elements",
+        "D": "It can reduce the risk of data corruption"
+      },
+      "correctAnswer": "C",
+      "explanation": "One benefit of using a monotonic stack is that it can help you maintain a sorted order of elements. This can be useful for applications that require data to be processed in order.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "How would you implement a monotonic stack in a programming language that doesn't have a built-in stack data structure?",
+      "options": {
+        "A": "Use a linked list to implement a stack",
+        "B": "Use a vector to implement a stack",
+        "C": "Use a monotonic deque to implement a stack",
+        "D": "Use a set to implement a stack"
+      },
+      "correctAnswer": "A",
+      "explanation": "To implement a monotonic stack in a programming language that doesn't have a built-in stack data structure, you might want to use a linked list. You can implement a stack using a linked list by using a pointer to the top element.",
+      "difficulty": "Hard"
+    },
+    {
+      "question": "What is the main difference between a monotonic stack and a regular stack?",
+      "options": {
+        "A": "A monotonic stack is more efficient than a regular stack",
+        "B": "A monotonic stack is less efficient than a regular stack",
+        "C": "A monotonic stack requires more memory than a regular stack",
+        "D": "A monotonic stack always decreases in value, while a regular stack doesn't have this property"
+      },
+      "correctAnswer": "D",
+      "explanation": "The main difference between a monotonic stack and a regular stack is that a monotonic stack requires elements to be added and removed in a way that the stack always decreases in value. This is not the case for regular stacks.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "A developer wants to implement a system to manage their company's financial data. What type of data structure would they be interested in using?",
+      "options": {
+        "A": "Monotonic queue",
+        "B": "Monotonic stack",
+        "C": "Priority queue",
+        "D": "Tree data structure"
+      },
+      "correctAnswer": "B",
+      "explanation": "A company might want to use a monotonic stack to maintain a sorted order of financial data, which can be useful for applications that require data to be processed in order.",
+      "difficulty": "Easy"
+    },
+    {
+      "question": "What type of problem is best suited for a monotonic stack?",
+      "options": {
+        "A": "Mathematical problem that requires a stack",
+        "B": "Problem that requires maintaining a sorted order of elements",
+        "C": "Problem that requires processing a large amount of data quickly",
+        "D": "Problem that requires implementing a LIFO data structure"
+      },
+      "correctAnswer": "B",
+      "explanation": "A monotonic stack is best suited for problems that require maintaining a sorted order of elements. This is because a monotonic stack ensures that the elements are added and removed in a way that the stack always decreases in value.",
+      "difficulty": "Medium"
+    },
+    {
+      "question": "A company is processing a large dataset and wants to implement a system to maintain a sorted order of their data. What type of data structure would they be interested in using?",
+      "options": {
+        "A": "Heapsort",
+        "B": "Monotonic stack",
+        "C": "Sorting algorithm",
+        "D": "Binary search tree"
+      },
+      "correctAnswer": "B",
+      "explanation": "A company might want to use a monotonic stack to maintain a sorted order of their data. This is because a monotonic stack ensures that the elements are added and removed in a way that the stack always decreases in value.",
+      "difficulty": "Easy"
+    }
+  ]
+}
