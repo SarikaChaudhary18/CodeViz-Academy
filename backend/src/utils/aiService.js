@@ -1,8 +1,9 @@
 const axios = require('axios');
 const logger = require('../config/logger');
+const path = require('path');
 
 // Load env variables (in case they are not loaded yet)
-require('dotenv').config();
+require('dotenv').config({ path: path.join(__dirname, '..', '..', '.env') });
 
 // Define cooling down map: key -> expiration timestamp
 const cooldowns = new Map();

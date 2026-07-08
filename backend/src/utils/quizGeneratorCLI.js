@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-require('dotenv').config();
+require('dotenv').config({ path: path.join(__dirname, '..', '..', '.env') });
 const aiService = require('./aiService');
 
 const CATEGORIES = {
@@ -209,7 +209,7 @@ JSON Format:
 }`;
 
   try {
-    const result = await aiService.generateContentJSON(prompt);
+    const result = await aiService.generateWithNemotron(prompt);
     
     if (!result || !result.questions || !Array.isArray(result.questions)) {
       throw new Error("Invalid output format returned from AI Service.");
@@ -313,3 +313,5 @@ if (require.main === module) {
     process.exit(1);
   });
 }
+
+module.exports = { CATEGORIES, generateQuizForTopic, slugify };
