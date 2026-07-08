@@ -27,9 +27,12 @@ const app = express();
 
 // Security configuration
 app.use(helmet());
+const port = process.env.PORT || 5050;
 const allowedOrigins = [
   'http://localhost:3000',
-  'http://127.0.0.1:3000'
+  'http://127.0.0.1:3000',
+  `http://localhost:${port}`,
+  `http://127.0.0.1:${port}`
 ];
 if (process.env.CLIENT_ORIGIN) {
   const envOrigins = process.env.CLIENT_ORIGIN.split(',').map(o => o.trim());
@@ -67,7 +70,7 @@ app.use(morgan(morganFormat, {
 }));
 
 // Health Check
-app.get('/health', (req, res) => {
+app.get(['/health', '/api/health'], (req, res) => {
   res.status(200).json({ status: 'OK', timestamp: new Date() });
 });
 

@@ -1,4 +1,5 @@
 // Entry point for clustered server
+require('dotenv').config();
 const http = require('http');
 const cluster = require('cluster');
 const numCPUs = require('os').cpus().length;
@@ -9,7 +10,6 @@ const { startHackathonScraper } = require('./utils/hackathonScraper');
 const { triggerDsaSeeding } = require('./utils/dsaScraper');
 const { triggerRoadmapSeeding } = require('./utils/roadmapScraper');
 const logger = require('./config/logger');
-require('dotenv').config();
 
 const PORT = process.env.PORT || 5000;
 
@@ -41,13 +41,6 @@ if (cluster.isPrimary && process.env.NODE_ENV === 'production') {
       // Connect to MongoDB connection pool
       await connectDB();
 
-      // Start background scraper scheduler & seeders
-      if (process.env.NODE_ENV !== 'production' || (cluster.worker && cluster.worker.id === 1)) {
-        startHackathonScraper();
-        triggerDsaSeeding().catch(err => logger.error('DSA Seeding failed: ' + err.message));
-        triggerRoadmapSeeding().catch(err => logger.error('Roadmap Seeding failed: ' + err.message));
-      }
-
       const server = http.createServer(app);
 
       // Initialize Socket.io WebSockets
@@ -65,8 +58,19 @@ if (cluster.isPrimary && process.env.NODE_ENV === 'production') {
         }
       }
 
-      server.listen(PORT, '127.0.0.1', () => {
+      server.listen(PORT, '0.0.0.0', () => {
         logger.info(`Worker process ${process.pid} started. Server running on port ${PORT}`);
+
+        // Defer background scraper scheduler & seeders to avoid blocking startup / Render health checks
+        if (process.env.NODE_ENV !== 'production' || (cluster.worker && cluster.worker.id === 1)) {
+          const startupDelay = process.env.NODE_ENV === 'production' ? 15000 : 2000; // 15s in prod, 2s in dev
+          setTimeout(() => {
+            logger.info(`Starting deferred background jobs (scrapers & seeders) after ${startupDelay}ms...`);
+            startHackathonScraper();
+            triggerDsaSeeding().catch(err => logger.error('DSA Seeding failed: ' + err.message));
+            triggerRoadmapSeeding().catch(err => logger.error('Roadmap Seeding failed: ' + err.message));
+          }, startupDelay);
+        }
       });
     } catch (err) {
       logger.error(`Failed to launch server on worker process ${process.pid}: ${err.message}`);
