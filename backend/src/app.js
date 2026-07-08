@@ -74,6 +74,33 @@ app.get(['/health', '/api/health'], (req, res) => {
   res.status(200).json({ status: 'OK', timestamp: new Date() });
 });
 
+// Temporary Debug Route for checking dist assets
+app.get('/api/debug-dist', (req, res) => {
+  const fs = require('fs');
+  const path = require('path');
+  const distPath = path.join(__dirname, '../../frontend/dist');
+  try {
+    if (!fs.existsSync(distPath)) {
+      return res.status(404).json({ error: 'dist folder does not exist', path: distPath });
+    }
+    const files = [];
+    const scanDir = (dir) => {
+      fs.readdirSync(dir).forEach(file => {
+        const fullPath = path.join(dir, file);
+        if (fs.statSync(fullPath).isDirectory()) {
+          scanDir(fullPath);
+        } else {
+          files.push(path.relative(distPath, fullPath));
+        }
+      });
+    };
+    scanDir(distPath);
+    res.json({ path: distPath, files });
+  } catch (err) {
+    res.status(500).json({ error: err.message, path: distPath });
+  }
+});
+
 // App API limiter
 app.use('/api', apiLimiter);
 
