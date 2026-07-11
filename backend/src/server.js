@@ -1,5 +1,8 @@
 // Entry point for clustered server
 require('dotenv').config();
+if (process.env.RENDER === 'true') {
+  process.env.NODE_ENV = 'production';
+}
 const http = require('http');
 const cluster = require('cluster');
 const numCPUs = require('os').cpus().length;
