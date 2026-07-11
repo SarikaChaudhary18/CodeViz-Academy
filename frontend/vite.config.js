@@ -19,11 +19,11 @@ export default defineConfig({
     host: '127.0.0.1',
     proxy: {
       '/api': {
-        target: 'http://localhost:5050',
+        target: 'https://codeviz-academy-backend.onrender.com',
         changeOrigin: true,
       },
       '/socket.io': {
-        target: 'http://localhost:5050',
+        target: 'https://codeviz-academy-backend.onrender.com',
         ws: true,
         changeOrigin: true,
       },
