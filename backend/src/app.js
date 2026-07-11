@@ -28,30 +28,9 @@ const app = express();
 // Security configuration
 app.use(helmet());
 const port = process.env.PORT || 5050;
-const allowedOrigins = [
-  'http://localhost:3000',
-  'http://127.0.0.1:3000',
-  `http://localhost:${port}`,
-  `http://127.0.0.1:${port}`
-];
-if (process.env.CLIENT_ORIGIN) {
-  const envOrigins = process.env.CLIENT_ORIGIN.split(',').map(o => o.trim());
-  envOrigins.forEach(o => {
-    if (!allowedOrigins.includes(o)) allowedOrigins.push(o);
-  });
-}
-
 app.use(cors({
-  origin: (origin, callback) => {
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin) || allowedOrigins.includes('*')) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  origin: true,
+  credentials: true
 }));
 
 // Prevention against MongoDB Query Injection
