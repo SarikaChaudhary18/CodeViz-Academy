@@ -98,7 +98,8 @@ ${messageText}`;
 
     try {
       const response = await api.post('/copilot/chat', {
-        prompt: finalPrompt
+        prompt: finalPrompt,
+        history: messages.map(msg => ({ role: msg.role, text: msg.text }))
       });
 
       // Refresh daily limit usage from backend user profile state

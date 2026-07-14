@@ -5,7 +5,8 @@ import { api } from '../../../lib/api';
 const INITIAL_MESSAGES = [
   {
     sender: 'bot',
-    text: "Greetings, Learner. I am your Socratic Mentor. I will not solve your code for you; instead, I will ask questions to guide you. What programming concept or logic constraint are you struggling with today?"
+    explanation: "Greetings, Learner. I am your Socratic Mentor. I will not solve your code for you; instead, I will ask questions to guide you.",
+    question: "What programming concept or logic constraint are you struggling with today?"
   }
 ];
 
@@ -35,19 +36,22 @@ export default function SocraticMentor() {
         payload: userText
       });
       
-      let botText = res.data?.response || "I am reflecting on your question...";
-      try {
-        if (typeof botText === 'string' && (botText.trim().startsWith('{') || botText.trim().startsWith('['))) {
-          const parsed = JSON.parse(botText);
-          botText = parsed.response || parsed.text || botText;
+      let botData = res.data;
+      if (typeof botData === 'string') {
+        try {
+          botData = JSON.parse(botData);
+        } catch (e) {
+          botData = { explanation: botData, question: '' };
         }
-      } catch (e) {
-        console.error("JSON parsing fallback:", e);
       }
-      setMessages(prev => [...prev, { sender: 'bot', text: botText }]);
+      
+      const explanation = botData?.explanation || botData?.response || botData?.text || "I am reflecting on your question...";
+      const question = botData?.question || "";
+      
+      setMessages(prev => [...prev, { sender: 'bot', explanation, question }]);
     } catch (err) {
       console.error('Failed to get response from Socratic Mentor:', err.message);
-      setMessages(prev => [...prev, { sender: 'bot', text: "My cognitive pathways are currently jammed. Let's try reflecting on the problem again in a moment." }]);
+      setMessages(prev => [...prev, { sender: 'bot', explanation: "My cognitive pathways are currently jammed. Let's try reflecting on the problem again in a moment.", question: "" }]);
     } finally {
       setIsTyping(false);
     }
@@ -94,7 +98,19 @@ export default function SocraticMentor() {
                 ? 'bg-orange-600 text-white border-orange-500 rounded-tr-none'
                 : 'bg-zinc-50 text-zinc-900 border-zinc-200 rounded-tl-none'
             }`}>
-              {msg.text}
+              {msg.explanation ? (
+                <div className="space-y-3">
+                  <p className="whitespace-pre-wrap">{msg.explanation}</p>
+                  {msg.question && (
+                    <div className="bg-orange-50/70 border border-orange-100 p-3.5 rounded-xl text-zinc-800 font-medium relative mt-2">
+                      <span className="block text-[8px] font-mono text-orange-600 uppercase tracking-widest font-black mb-1">Mentor's Inquiry</span>
+                      {msg.question}
+                    </div>
+                  )}
+                </div>
+              ) : (
+                msg.text
+              )}
             </div>
           </div>
         ))}

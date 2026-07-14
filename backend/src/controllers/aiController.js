@@ -1,6 +1,50 @@
 const aiService = require('../utils/aiService');
 const logger = require('../config/logger');
 
+const aiCache = new Map();
+
+const getMockEscapeRoom = (topic) => {
+  const cleanTopic = (topic || '').toLowerCase();
+  
+  if (cleanTopic.includes('prototype') || cleanTopic.includes('inherit')) {
+    return {
+      riddle: "I am a hidden link that binds objects together in JS. Every object inherits my secrets, tracing back to the ultimate root. If you ask for a property I do not own, I look up my chain. I terminate at the value 'null'. What is the name of this binding chain? (Hint: Think prototype chain)",
+      passcode: "prototype",
+      hint: "I am the standard mechanism by which objects inherit features from one another in JavaScript. Enter 'prototype' in lowercase."
+    };
+  }
+  
+  if (cleanTopic.includes('closure')) {
+    return {
+      riddle: "I am a function born within another function. I carry my lexical scope wherever I go, long after my parent has finished execution. I allow private variables and persistent states. What am I?",
+      passcode: "closure",
+      hint: "I have access to the outer function's scope even after the outer function has returned. Enter 'closure' in lowercase."
+    };
+  }
+
+  if (cleanTopic.includes('loop') || cleanTopic.includes('queue')) {
+    return {
+      riddle: "I am the continuous cycle that manages JavaScript's operations. I monitor the call stack and dequeue microtasks and macrotasks to keep the thread non-blocking. What is my name?",
+      passcode: "eventloop",
+      hint: "I continuously poll the execution stack and the callback queue. Enter 'eventloop' in lowercase (without spaces)."
+    };
+  }
+
+  if (cleanTopic.includes('promise') || cleanTopic.includes('async')) {
+    return {
+      riddle: "I represent a value that may not be available yet but will resolve in the future. I have three states: Pending, Fulfilled, or Rejected. What JavaScript object am I?",
+      passcode: "promise",
+      hint: "I represent the eventual completion or failure of an asynchronous operation. Enter 'promise' in lowercase."
+    };
+  }
+
+  return {
+    riddle: "I am the parser behavior where declarations of functions and variables are moved to the top of their containing scope before code execution. I cause variables declared with 'var' to return 'undefined' instead of throwing a ReferenceError. What am I?",
+    passcode: "hoisting",
+    hint: "Declarations are hoisted to the top of their execution scope. Enter 'hoisting' in lowercase."
+  };
+};
+
 exports.processAiTool = async (req, res, next) => {
   try {
     const { toolType, payload } = req.body;
@@ -12,6 +56,19 @@ exports.processAiTool = async (req, res, next) => {
       });
     }
 
+    let cacheKey = null;
+    if (toolType === 'bug-detective' || toolType === 'code-review') {
+      const codeString = typeof payload === 'string' ? payload : JSON.stringify(payload);
+      cacheKey = `${toolType}:${codeString}`;
+      if (aiCache.has(cacheKey)) {
+        logger.info(`AI Controller: returning cached analysis for ${toolType}`);
+        return res.status(200).json({
+          status: 'success',
+          data: aiCache.get(cacheKey)
+        });
+      }
+    }
+
     let aiResult;
 
     if (toolType === 'socratic') {
@@ -19,21 +76,23 @@ exports.processAiTool = async (req, res, next) => {
 Guidelines for your response:
 1. Empathy & Balance: If the student asks you to explain, says "you tell me", "I don't know", or is clearly stuck, do not keep asking questions repeatedly. Instead, provide a brief, clear, and friendly explanation of the underlying concept, logic, or strategy. After explaining, ask a single follow-up question to check their understanding or guide them to the next step.
 2. Socratic Style: If they are not stuck and are asking how to do something, do not give them the direct copy-paste solution or full code. Instead, guide them by explaining the high-level concept or strategy, and ask 1 or 2 leading questions to help them figure out the details themselves.
-3. Scope: Your guidance should cover coding, systems, architecture, placements, and job search/openings logic, rather than being strictly limited to code.
-Respond directly in plain text.`;
-      const responseText = await aiService.generateCopilotResponse(prompt);
-      
-      let cleanedText = responseText;
+3. Scope: Your guidance should cover coding, systems, architecture, placements, and job search/openings logic.
+
+You must respond with a JSON object matching this schema:
+{
+  "explanation": "Guiding explanation, conceptual analogy, or conceptual breakdown.",
+  "question": "A single leading follow-up question to guide the student's reasoning."
+}
+Only return valid JSON.`;
       try {
-        if (typeof responseText === 'string' && (responseText.trim().startsWith('{') || responseText.trim().startsWith('['))) {
-          const parsed = JSON.parse(responseText);
-          cleanedText = parsed.reply || parsed.response || parsed.text || parsed.message || parsed.content || responseText;
-        }
-      } catch (e) {
-        logger.error(`Error parsing socratic text: ${e.message}`);
+        aiResult = await aiService.generateContentJSON(prompt);
+      } catch (err) {
+        logger.warn(`Socratic AI Mentor request failed: ${err.message}. Serving local conceptual feedback.`);
+        aiResult = {
+          explanation: `Let's reflect on your query about "${payload}". Socratic guidance is designed to unpack structural concepts. Usually, when building solutions, we break them down into state management, logic cycles, and interface components.`,
+          question: "Which specific layer of this mechanism (e.g. state flow, logic structure, API integration) would you like to investigate first?"
+        };
       }
-      
-      aiResult = { response: cleanedText };
     } 
     else if (toolType === 'bug-detective') {
       const prompt = `Analyze the following code for bugs, syntax errors, security flaws, or potential resource leaks:
@@ -319,10 +378,19 @@ You must respond with a JSON object matching this schema:
   "passcode": "single-word passcode in lowercase",
   "hint": "Helpful hint explaining the concept"
 }`;
-      aiResult = await aiService.generateContentJSON(prompt);
+      try {
+        aiResult = await aiService.generateContentJSON(prompt);
+      } catch (err) {
+        logger.warn(`AI Escape Room spawn failed: ${err.message}. Serving high-fidelity local fallback.`);
+        aiResult = getMockEscapeRoom(topic);
+      }
     }
     else {
       return res.status(400).json({ status: 'fail', message: 'Invalid toolType specified.' });
+    }
+
+    if (cacheKey && aiResult) {
+      aiCache.set(cacheKey, aiResult);
     }
 
     res.status(200).json({

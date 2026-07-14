@@ -54,17 +54,32 @@ function cleanAndParseJSON(str) {
 /**
  * Call Gemini API
  */
-async function callGemini(key, prompt) {
+async function callGemini(key, prompt, history = []) {
   const model = process.env.GEMINI_MODEL || 'gemini-2.5-flash';
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${key}`;
   
   logger.info(`AI Service: Attempting with Gemini model ${model}`);
+  const contents = [];
+  if (history && history.length > 0) {
+    history.forEach(msg => {
+      contents.push({
+        role: msg.role === 'assistant' ? 'model' : 'user',
+        parts: [{ text: msg.text }]
+      });
+    });
+  }
+  contents.push({
+    role: 'user',
+    parts: [{ text: prompt }]
+  });
+
   const response = await axios.post(
     url,
     {
-      contents: [{ parts: [{ text: prompt }] }],
+      contents: contents,
       generationConfig: {
-        responseMimeType: "application/json"
+        responseMimeType: "application/json",
+        temperature: 0.0
       }
     },
     { timeout: 180000 }
@@ -79,7 +94,7 @@ async function callGemini(key, prompt) {
 /**
  * Call Groq API (OpenAI Compatible)
  */
-async function callGroq(key, prompt) {
+async function callGroq(key, prompt, history = []) {
   const model = process.env.GROQ_MODEL || 'llama-3.1-8b-instant';
   const url = 'https://api.groq.com/openai/v1/chat/completions';
   
@@ -88,12 +103,24 @@ async function callGroq(key, prompt) {
     : `${prompt}\n\nReturn the output as a JSON object.`;
 
   logger.info(`AI Service: Attempting with Groq model ${model}`);
+  const messages = [];
+  if (history && history.length > 0) {
+    history.forEach(msg => {
+      messages.push({
+        role: msg.role === 'assistant' ? 'assistant' : 'user',
+        content: msg.text
+      });
+    });
+  }
+  messages.push({ role: 'user', content: adjustedPrompt });
+
   const response = await axios.post(
     url,
     {
       model: model,
-      messages: [{ role: 'user', content: adjustedPrompt }],
-      response_format: { type: 'json_object' }
+      messages: messages,
+      response_format: { type: 'json_object' },
+      temperature: 0.0
     },
     {
       headers: {
@@ -123,7 +150,8 @@ async function callNvidia(key, prompt) {
     {
       model: model,
       messages: [{ role: 'user', content: prompt }],
-      response_format: { type: 'json_object' }
+      response_format: { type: 'json_object' },
+      temperature: 0.0
     },
     {
       headers: {
@@ -154,7 +182,7 @@ async function callNemotron(prompt) {
     {
       model: 'nvidia/nemotron-3-ultra-550b-a55b',
       messages: [{ role: 'user', content: prompt }],
-      temperature: 0.6,
+      temperature: 0.0,
       top_p: 0.95,
       max_tokens: 16384,
       extra_body: {
@@ -204,7 +232,7 @@ async function generateWithNemotron(prompt) {
           : `${prompt}\n\nReturn the output as a JSON object.`;
         const response = await axios.post(
           'https://api.groq.com/openai/v1/chat/completions',
-          { model, messages: [{ role: 'user', content: adjustedPrompt }], response_format: { type: 'json_object' } },
+          { model, messages: [{ role: 'user', content: adjustedPrompt }], response_format: { type: 'json_object' }, temperature: 0.0 },
           { headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' }, timeout: 180000 }
         );
         if (response.data?.choices?.[0]?.message?.content) {
@@ -307,26 +335,38 @@ async function generateContentJSON(prompt) {
 /**
  * Call Gemini Multimodal API with Base64 image
  */
-async function callGeminiMultimodal(key, prompt, imageBase64, mimeType) {
+async function callGeminiMultimodal(key, prompt, imageBase64, mimeType, history = []) {
   const model = process.env.GEMINI_MODEL || 'gemini-1.5-flash';
   const actualModel = model.includes('3.5') ? 'gemini-1.5-flash' : model;
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${actualModel}:generateContent?key=${key}`;
   
   logger.info(`AI Service: Attempting Multimodal with Gemini model ${actualModel}`);
+  const contents = [];
+  if (history && history.length > 0) {
+    history.forEach(msg => {
+      contents.push({
+        role: msg.role === 'assistant' ? 'model' : 'user',
+        parts: [{ text: msg.text }]
+      });
+    });
+  }
+  contents.push({
+    role: 'user',
+    parts: [
+      { text: prompt },
+      {
+        inlineData: {
+          mimeType: mimeType || 'image/png',
+          data: imageBase64
+        }
+      }
+    ]
+  });
+
   const response = await axios.post(
     url,
     {
-      contents: [{
-        parts: [
-          { text: prompt },
-          {
-            inlineData: {
-              mimeType: mimeType || 'image/png',
-              data: imageBase64
-            }
-          }
-        ]
-      }]
+      contents: contents
     },
     { timeout: 30000 }
   );
@@ -340,7 +380,7 @@ async function callGeminiMultimodal(key, prompt, imageBase64, mimeType) {
 /**
  * Generate responses for the multimodal copilot chat (markdown output)
  */
-async function generateCopilotResponse(prompt, imageBase64 = null, mimeType = null) {
+async function generateCopilotResponse(prompt, imageBase64 = null, mimeType = null, history = []) {
   const geminiKeys = getKeys(process.env.GEMINI_API_KEY);
   const groqKeys = getKeys(process.env.GROQ_API_KEY);
 
@@ -349,7 +389,7 @@ async function generateCopilotResponse(prompt, imageBase64 = null, mimeType = nu
   if (!imageBase64) {
     groqKeys.forEach(key => {
       if (!isKeyOnCooldown(key)) {
-        candidates.push({ provider: 'Groq', key, callFn: callGroq });
+        candidates.push({ provider: 'Groq', key, callFn: (k, p, hist) => callGroq(k, p, hist) });
       }
     });
   }
@@ -360,10 +400,10 @@ async function generateCopilotResponse(prompt, imageBase64 = null, mimeType = nu
         candidates.push({
           provider: 'Gemini',
           key,
-          callFn: (k, p) => callGeminiMultimodal(k, p, imageBase64, mimeType)
+          callFn: (k, p, hist) => callGeminiMultimodal(k, p, imageBase64, mimeType, hist)
         });
       } else {
-        candidates.push({ provider: 'Gemini', key, callFn: callGemini });
+        candidates.push({ provider: 'Gemini', key, callFn: (k, p, hist) => callGemini(k, p, hist) });
       }
     }
   });
@@ -374,7 +414,7 @@ async function generateCopilotResponse(prompt, imageBase64 = null, mimeType = nu
 
   for (const candidate of candidates) {
     try {
-      const responseText = await candidate.callFn(candidate.key, prompt);
+      const responseText = await candidate.callFn(candidate.key, prompt, history);
       if (typeof responseText === 'string') {
         const trimmed = responseText.trim();
         if (trimmed.startsWith('{') || trimmed.startsWith('[')) {

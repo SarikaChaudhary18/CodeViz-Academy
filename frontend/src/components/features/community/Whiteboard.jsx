@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { PenTool, Eraser, Trash2, ShieldAlert, Award, Grid } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -10,14 +10,77 @@ export default function Whiteboard() {
     { type: 'rect', x: 300, y: 60, w: 120, h: 80, label: "Reverse Proxy" }
   ]);
 
+  const canvasRef = useRef(null);
+  const [isDrawing, setIsDrawing] = useState(false);
+  const [lastPos, setLastPos] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (canvas) {
+      canvas.width = canvas.parentElement.clientWidth || 800;
+      canvas.height = canvas.parentElement.clientHeight || 500;
+    }
+  }, []);
+
+  const handleMouseDown = (e) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    setIsDrawing(true);
+    setLastPos({ x, y });
+  };
+
+  const handleMouseMove = (e) => {
+    if (!isDrawing) return;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    ctx.beginPath();
+    ctx.moveTo(lastPos.x, lastPos.y);
+    ctx.lineTo(x, y);
+
+    if (tool === 'eraser') {
+      ctx.globalCompositeOperation = 'destination-out';
+      ctx.lineWidth = 30;
+    } else {
+      ctx.globalCompositeOperation = 'source-over';
+      ctx.strokeStyle = '#ea580c';
+      ctx.lineWidth = 3;
+    }
+    
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.stroke();
+
+    setLastPos({ x, y });
+  };
+
+  const handleMouseUp = () => {
+    setIsDrawing(false);
+  };
+
   const handleClear = () => {
     setShapes([]);
+    const canvas = canvasRef.current;
+    if (canvas) {
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
   };
 
   const handleAddShape = () => {
+    const randomX = 100 + Math.random() * 200;
+    const randomY = 100 + Math.random() * 150;
     setShapes(prev => [
       ...prev,
-      { type: 'rect', x: 150, y: 160, w: 140, h: 80, label: "New Server Node" }
+      { type: 'rect', x: randomX, y: randomY, w: 140, h: 80, label: "Server Node" }
     ]);
   };
 
@@ -81,8 +144,18 @@ export default function Whiteboard() {
           {/* Board Grid Overlay */}
           <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] bg-[size:16px_16px] opacity-60 pointer-events-none" />
 
+          {/* Interactive drawing canvas */}
+          <canvas
+            ref={canvasRef}
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseUp}
+            className="absolute inset-0 w-full h-full cursor-crosshair z-10"
+          />
+
           {/* SVG shapes drawing */}
-          <svg className="absolute inset-0 w-full h-full">
+          <svg className="absolute inset-0 w-full h-full z-20 pointer-events-none">
             <defs>
               <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
                 <path d="M 0 0 L 10 5 L 0 10 z" fill="#71717a" />

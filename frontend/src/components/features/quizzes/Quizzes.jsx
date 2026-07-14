@@ -14,6 +14,8 @@ export default function Quizzes() {
   const [quizFinished, setQuizFinished] = useState(false);
   const [submitLoading, setSubmitLoading] = useState(false);
   const [xpEarned, setXpEarned] = useState(0);
+  const [userAnswers, setUserAnswers] = useState({});
+  const [showDetailedResults, setShowDetailedResults] = useState(false);
 
   useEffect(() => {
     fetchQuizzes();
@@ -45,6 +47,8 @@ export default function Quizzes() {
         setScore(0);
         setQuizFinished(false);
         setXpEarned(0);
+        setUserAnswers({});
+        setShowDetailedResults(false);
       }
     } catch (err) {
       console.error('Failed to load quiz questions:', err.message);
@@ -63,6 +67,11 @@ export default function Quizzes() {
       currentScore += 1;
       setScore(currentScore);
     }
+    
+    setUserAnswers(prev => ({
+      ...prev,
+      [currentQuestionIndex]: selectedOption
+    }));
     
     if (currentQuestionIndex + 1 < questions.length) {
       setCurrentQuestionIndex(prev => prev + 1);
@@ -262,6 +271,59 @@ export default function Quizzes() {
                     <span className="text-xl font-mono font-black text-green-600">+{xpEarned} XP</span>
                   </div>
                 </div>
+
+                {/* Detailed Results Check */}
+                <button
+                  type="button"
+                  onClick={() => setShowDetailedResults(prev => !prev)}
+                  className="w-full flex items-center justify-center gap-1.5 py-2.5 bg-orange-50 border border-orange-200 text-orange-700 font-mono font-bold text-xs rounded-xl hover:bg-orange-100/50 transition-all cursor-pointer"
+                >
+                  {showDetailedResults ? 'Hide Detailed Results' : 'Show Detailed Results'}
+                </button>
+
+                {showDetailedResults && (
+                  <div className="space-y-4 max-h-80 overflow-y-auto pr-1 text-left scrollbar-thin">
+                    {questions.map((q, idx) => {
+                      const ansIdx = q.answer;
+                      const userAnsIdx = userAnswers[idx];
+                      
+                      return (
+                        <div key={idx} className="p-4 bg-zinc-50 border border-zinc-200 rounded-2xl space-y-3">
+                          <div className="text-xs font-bold text-zinc-950 flex gap-2">
+                            <span className="text-zinc-400 font-mono">Q{idx + 1}.</span>
+                            <span>{q.q}</span>
+                          </div>
+
+                          <div className="grid grid-cols-1 gap-2">
+                            {q.options.map((opt, oIdx) => {
+                              const isOptionCorrect = oIdx === ansIdx;
+                              const isOptionSelected = oIdx === userAnsIdx;
+                              
+                              let borderClass = "border-zinc-200 bg-white text-zinc-800";
+                              if (isOptionCorrect) {
+                                borderClass = "border-emerald-500 bg-emerald-50/50 text-emerald-800 font-semibold";
+                              } else if (isOptionSelected) {
+                                borderClass = "border-rose-500 bg-rose-50/50 text-rose-800 font-semibold";
+                              }
+
+                              return (
+                                <div key={oIdx} className={`p-3 rounded-xl border text-[11px] flex justify-between items-center ${borderClass}`}>
+                                  <span>{opt}</span>
+                                  {isOptionCorrect && (
+                                    <span className="text-[8px] bg-emerald-550 text-white font-mono font-bold px-1.5 py-0.5 rounded uppercase shrink-0">Correct</span>
+                                  )}
+                                  {isOptionSelected && !isOptionCorrect && (
+                                    <span className="text-[8px] bg-rose-550 text-white font-mono font-bold px-1.5 py-0.5 rounded uppercase shrink-0">Your Answer (Wrong)</span>
+                                  )}
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
 
                 {/* Info spaced repetition */}
                 <div className="text-[10px] text-zinc-500 font-mono bg-orange-50 border border-orange-100 p-3 rounded-xl leading-normal text-left">

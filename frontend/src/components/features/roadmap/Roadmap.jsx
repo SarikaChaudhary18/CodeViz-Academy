@@ -8,7 +8,7 @@ import {
   ChevronRight, ChevronDown, ExternalLink, BookOpen, Code2,
   CheckCircle2, Circle, Lock, Zap, Target, Terminal, Lightbulb,
   Trophy, HelpCircle, ChevronLeft, Search, X, Clock, BarChart2,
-  BookOpenCheck, Shield, ChevronUp, Layers, Cpu, Award, Globe, Brain, Settings, Smartphone, MapPin
+  BookOpenCheck, Shield, ChevronUp, Layers, Cpu, Award, Globe, Brain, Settings, Smartphone, MapPin, Sparkles
 } from 'lucide-react';
 import { TRACKS, ROADMAPS } from './roadmapData.js';
 
@@ -396,6 +396,7 @@ export default function Roadmap() {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchOpen, setSearchOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
+  const [activeTab, setActiveTab] = useState('roadmap');
   
   // Custom filters
   const [difficultyFilter, setDifficultyFilter] = useState('All');
@@ -774,9 +775,41 @@ export default function Roadmap() {
           </div>
         </section>
 
+        {/* Tab Navigation Menu */}
+        <div className="flex border-b border-white/10 gap-6 select-none justify-start pb-1 overflow-x-auto">
+          {[
+            { id: 'roadmap', label: 'Interactive Pathway', icon: Target },
+            { id: 'docs', label: 'Reference Handbook', icon: BookOpen },
+            { id: 'resources', label: 'Curated Resources', icon: Layers },
+            { id: 'ai', label: 'AI Career Planner', icon: Sparkles }
+          ].map(tab => {
+            const isActive = activeTab === tab.id;
+            const Icon = tab.icon;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`flex items-center gap-2 pb-3 text-xs font-mono font-bold uppercase tracking-wider transition-all border-b-2 relative cursor-pointer whitespace-nowrap ${
+                  isActive ? 'text-white border-violet-500 font-extrabold' : 'text-slate-500 border-transparent hover:text-slate-350'
+                }`}
+              >
+                <Icon size={14} className={isActive ? 'text-violet-400' : 'text-slate-500'} />
+                {tab.label}
+                {isActive && (
+                  <motion.div
+                    layoutId="activeRoadmapTabLine"
+                    className="absolute bottom-0 left-0 right-0 h-0.5 bg-violet-500"
+                  />
+                )}
+              </button>
+            );
+          })}
+        </div>
 
-        {/* ─── 3️⃣ ROADMAP SELECTOR SECTION (Cards) ─── */}
-        <section id="selector" className="space-y-6 scroll-mt-10">
+        {activeTab === 'roadmap' && (
+          <>
+            {/* ─── 3️⃣ ROADMAP SELECTOR SECTION (Cards) ─── */}
+            <section id="selector" className="space-y-6 scroll-mt-10">
           <div>
             <h3 className="text-xl font-extrabold text-white flex items-center gap-2">
               <Layers size={18} className="text-violet-400" />
@@ -1017,25 +1050,33 @@ export default function Roadmap() {
           </div>
         </section>
 
-        {/* ─── 9️⃣ KNOWLEDGE TOPOLOGY GRAPH ─── */}
-        <section id="graph" className="scroll-mt-10">
-          <KnowledgeGraph roadmapId={selectedTrackId} />
-        </section>
+            {/* ─── 9️⃣ KNOWLEDGE TOPOLOGY GRAPH ─── */}
+            <section id="graph" className="scroll-mt-10">
+              <KnowledgeGraph roadmapId={selectedTrackId} />
+            </section>
+          </>
+        )}
 
-        {/* ─── 7️⃣ DOCUMENTATION ENGINE (VS Code Feel) ─── */}
-        <section id="docs" className="scroll-mt-10">
-          <DocEngine trackId={selectedTrackId} />
-        </section>
+        {activeTab === 'docs' && (
+          /* ─── 7️⃣ DOCUMENTATION ENGINE (VS Code Feel) ─── */
+          <section id="docs" className="scroll-mt-10">
+            <DocEngine trackId={selectedTrackId} />
+          </section>
+        )}
 
-        {/* ─── 8️⃣ RESOURCE INDEX (Netflix Style Carousels) ─── */}
-        <section id="resources" className="scroll-mt-10">
-          <ResourceEngine trackId={selectedTrackId} />
-        </section>
+        {activeTab === 'resources' && (
+          /* ─── 8️⃣ RESOURCE INDEX (Netflix Style Carousels) ─── */
+          <section id="resources" className="scroll-mt-10">
+            <ResourceEngine trackId={selectedTrackId} />
+          </section>
+        )}
 
-        {/* ─── 6️⃣ AI CAREER BLUEPRINT PLANNER ─── */}
-        <section id="ai" className="scroll-mt-10">
-          <AICareerEngine />
-        </section>
+        {activeTab === 'ai' && (
+          /* ─── 6️⃣ AI CAREER BLUEPRINT PLANNER ─── */
+          <section id="ai" className="scroll-mt-10">
+            <AICareerEngine />
+          </section>
+        )}
 
       </div>
 

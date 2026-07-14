@@ -24,12 +24,17 @@ export default function InterviewSimulator() {
   const [submitting, setSubmitting] = useState(false);
   const [feedback, setFeedback] = useState(null);
   const [history, setHistory] = useState([]);
+  const [currentQuestion, setCurrentQuestion] = useState('');
+  const [aiNextQuestion, setAiNextQuestion] = useState('');
 
   const startSimulator = () => {
     setActiveQuestionIdx(0);
+    const randomStartQuestion = INTERVIEW_QUESTIONS[Math.floor(Math.random() * INTERVIEW_QUESTIONS.length)].question;
+    setCurrentQuestion(randomStartQuestion);
     setAnswerText('');
     setFeedback(null);
     setHistory([]);
+    setAiNextQuestion('');
   };
 
   const handleAnswerSubmit = async (e) => {
@@ -39,7 +44,7 @@ export default function InterviewSimulator() {
     setSubmitting(true);
     setFeedback(null);
 
-    const question = INTERVIEW_QUESTIONS[activeQuestionIdx].question;
+    const question = currentQuestion;
 
     try {
       const res = await api.post('/ai/tool', {
@@ -59,9 +64,11 @@ export default function InterviewSimulator() {
         setFeedback({
           score: evaluationScore,
           strengths: result.evaluation || 'Feedback processed successfully.',
-          gaps: result.nextQuestion || 'Ready to proceed.',
+          gaps: result.nextQuestion || 'Click Next Question to continue.',
           verdict: evaluationScore >= 70 ? 'Strong Answer.' : 'Needs Improvement.'
         });
+        
+        setAiNextQuestion(result.nextQuestion || 'Tell me about a challenging technical problem you solved.');
 
         // Save progress history state
         setHistory(prev => [...prev, { q: question, a: answerText, score: evaluationScore }]);
@@ -80,8 +87,9 @@ export default function InterviewSimulator() {
   };
 
   const handleNext = () => {
-    if (activeQuestionIdx + 1 < INTERVIEW_QUESTIONS.length) {
+    if (activeQuestionIdx + 1 < 3) {
       setActiveQuestionIdx(prev => prev + 1);
+      setCurrentQuestion(aiNextQuestion || INTERVIEW_QUESTIONS[Math.min(2, activeQuestionIdx + 1)].question);
       setAnswerText('');
       setFeedback(null);
     } else {
@@ -148,7 +156,7 @@ export default function InterviewSimulator() {
               <div className="p-4 bg-zinc-50 border border-zinc-150 rounded-2xl flex gap-3 items-start">
                 <Volume2 className="text-orange-600 shrink-0 mt-0.5" size={16} />
                 <p className="text-xs text-zinc-900 font-extrabold leading-relaxed">
-                  {INTERVIEW_QUESTIONS[activeQuestionIdx].question}
+                  {currentQuestion}
                 </p>
               </div>
 

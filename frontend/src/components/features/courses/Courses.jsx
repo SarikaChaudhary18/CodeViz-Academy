@@ -122,7 +122,7 @@ export default function Courses() {
                 <iframe 
                   width="100%" 
                   height="100%" 
-                  src={`https://www.youtube.com/embed/${activeVideo.videoId}?rel=0&modestbranding=1`}
+                  src={`https://www.youtube-nocookie.com/embed/${activeVideo.videoId}?rel=0&modestbranding=1`}
                   title={activeVideo.title} 
                   frameBorder="0" 
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
@@ -304,7 +304,15 @@ export default function Courses() {
               {/* Thumbnail */}
               {course.thumbnail ? (
                 <div className="relative w-full aspect-video bg-zinc-950 overflow-hidden">
-                  <img src={course.thumbnail} alt={course.title} className="w-full h-full object-cover" />
+                  <img 
+                    src={course.thumbnail} 
+                    alt={course.title} 
+                    className="w-full h-full object-cover" 
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = 'https://images.unsplash.com/photo-1516116211223-5c359a36298a?w=800&auto=format&fit=crop&q=60';
+                    }}
+                  />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                   <div className="absolute bottom-2 left-3 flex gap-1.5">
                     <span className="px-2 py-0.5 bg-orange-600 text-[9px] font-bold text-white font-mono rounded">{course.category}</span>

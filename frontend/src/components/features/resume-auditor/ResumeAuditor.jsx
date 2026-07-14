@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { api } from '../../../lib/api';
 import { FileText, Award, Terminal, Copy, ClipboardCheck, Sparkles, ExternalLink, HelpCircle } from 'lucide-react';
-import { cn } from "@/lib/utils";
+import { cn } from "../../../lib/utils";
 
 const Input = React.forwardRef(({ className, type, ...props }, ref) => {
   return (

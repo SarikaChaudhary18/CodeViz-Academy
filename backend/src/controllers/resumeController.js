@@ -3,6 +3,18 @@ const axios = require('axios');
 const User = require('../models/User');
 const aiService = require('../utils/aiService');
 
+const escapeLatex = (str) => {
+  if (typeof str !== 'string') return '';
+  return str
+    .replace(/&/g, '\\&')
+    .replace(/%/g, '\\%')
+    .replace(/\$/g, '\\$')
+    .replace(/#/g, '\\#')
+    .replace(/_/g, '\\_')
+    .replace(/{/g, '\\{')
+    .replace(/}/g, '\\}');
+};
+
 const HARSHIBAR_LATEX_TEMPLATE = `%-------------------------
 % Resume in Latex
 % Author : Harshibar
@@ -185,6 +197,8 @@ Your objective is to help the candidate achieve a 90+ ATS Score on modern recrui
 LaTeX Template:
 ${HARSHIBAR_LATEX_TEMPLATE}
 
+4. CRITICAL: In the generated "latexCode", you MUST escape all LaTeX special characters found in the resume contents (e.g., replace '&' with '\\&', '_' with '\\_', '%' with '\\%', '$' with '\\$', '#' with '\\#'). Failure to escape these characters will crash the Overleaf compilation.
+
 Return a valid JSON object matching this schema:
 {
   "atsScore": 92, // An integer score out of 100
@@ -245,16 +259,16 @@ Return ONLY valid JSON. No markdown codeblock wrapping.`;
       \\resumeItemListEnd`;
 
     let finalLatex = HARSHIBAR_LATEX_TEMPLATE
-      .replace('%NAME%', candidateName)
-      .replace('%PHONE%', phone)
-      .replace('%EMAIL%', email)
+      .replace('%NAME%', escapeLatex(candidateName))
+      .replace('%PHONE%', escapeLatex(phone))
+      .replace('%EMAIL%', escapeLatex(email))
       .replace('%YOUTUBE_GITHUB%', 'github.com/profile')
       .replace('%LOCATION%', 'U.S. Citizen / Remote')
       .replace('%EXPERIENCE%', experienceLatex)
       .replace('%PROJECTS%', projectsLatex)
       .replace('%EDUCATION%', educationLatex)
-      .replace('%LANGUAGES%', 'JavaScript (React.js), Node.js, HTML/CSS, SQL, MongoDB')
-      .replace('%TOOLS%', 'Figma, Git, Docker, Socket.IO, Winston, VS Code, Overleaf');
+      .replace('%LANGUAGES%', escapeLatex('JavaScript (React.js), Node.js, HTML/CSS, SQL, MongoDB'))
+      .replace('%TOOLS%', escapeLatex('Figma, Git, Docker, Socket.IO, Winston, VS Code, Overleaf'));
 
     const mockResponse = {
       atsScore: 94,

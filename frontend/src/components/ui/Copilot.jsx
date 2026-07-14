@@ -101,7 +101,8 @@ export default function Copilot() {
       const response = await api.post('/copilot/chat', {
         prompt: userPrompt,
         image: userImage,
-        mimeType: userMime
+        mimeType: userMime,
+        history: messages.map(msg => ({ role: msg.role, text: msg.text }))
       });
 
       // Update local profile to sync quota

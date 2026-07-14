@@ -3,7 +3,7 @@ const logger = require('../config/logger');
 
 exports.chat = async (req, res, next) => {
   try {
-    const { prompt, image, mimeType } = req.body;
+    const { prompt, image, mimeType, history } = req.body;
 
     if (!prompt) {
       return res.status(400).json({
@@ -18,9 +18,9 @@ exports.chat = async (req, res, next) => {
     if (image) {
       // Strip off the prefix if it's a data URL, e.g., "data:image/png;base64,"
       const base64Data = image.includes('base64,') ? image.split('base64,')[1] : image;
-      responseText = await aiService.generateCopilotResponse(prompt, base64Data, mimeType);
+      responseText = await aiService.generateCopilotResponse(prompt, base64Data, mimeType, history);
     } else {
-      responseText = await aiService.generateCopilotResponse(prompt);
+      responseText = await aiService.generateCopilotResponse(prompt, null, null, history);
     }
 
     res.status(200).json({
